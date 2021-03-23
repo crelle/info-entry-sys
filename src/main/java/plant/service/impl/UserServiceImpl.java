@@ -10,6 +10,7 @@ import plant.model.entity.User;
 import plant.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author:crelle
@@ -46,5 +47,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> queryUsers() {
         return userDao.findAll();
+    }
+
+    @Override
+    public Optional<User> queryUserById(Long id) {
+        return userDao.findById(id);
     }
 }

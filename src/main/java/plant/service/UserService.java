@@ -4,6 +4,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import plant.model.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author:crelle
@@ -19,6 +20,8 @@ public interface UserService extends UserDetailsService {
     void deleteUserById(Long id);
 
     List<User> queryUsers();
+
+    Optional<User> queryUserById(Long id);
 
 
 }

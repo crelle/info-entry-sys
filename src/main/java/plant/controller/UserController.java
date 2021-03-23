@@ -13,6 +13,7 @@ import plant.service.impl.UserServiceImpl;
 
 import javax.print.attribute.standard.MediaTray;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author:crelle
@@ -79,6 +80,21 @@ public class UserController {
         ResponseResult<List<User>> responseResult = new ResponseResult<>();
         try {
             List<User> userList = userService.queryUsers();
+        } catch (Exception e) {
+            responseResult.setCode(ResponseEnum.FAIL.getCode());
+            responseResult.setMessage(ResponseEnum.FAIL.getName());
+        }
+        return responseResult;
+    }
+
+    @ApiOperation(value = "根据用户标识查询用户")
+    @ApiParam(required = true, name = "user", value = "入参")
+    @RequestMapping(value = "queryUserById", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<Optional<User>> queryUserById(@RequestBody Long id ) {
+        ResponseResult<Optional<User>> responseResult = new ResponseResult<>();
+        try {
+            Optional<User> user = userService.queryUserById(id);
+            responseResult.setData(user);
         } catch (Exception e) {
             responseResult.setCode(ResponseEnum.FAIL.getCode());
             responseResult.setMessage(ResponseEnum.FAIL.getName());
