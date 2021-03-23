@@ -4,8 +4,10 @@ import ch.qos.logback.core.encoder.EchoEncoder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import plant.common.ResponseResult;
 import plant.common.enumeration.ResponseEnum;
 import plant.model.entity.Menu;
+import plant.model.entity.Role;
 import plant.service.MenuService;
 
 import java.util.List;
@@ -39,6 +42,10 @@ public class MenuController {
     public ResponseResult<Menu> addMenu(@RequestBody Menu menu) {
         ResponseResult<Menu> responseResult = new ResponseResult<>();
         try {
+            if (checkAddMenuParams(menu, responseResult)) {
+                return responseResult;
+            }
+
             Menu menu1 = menuService.saveMenu(menu);
             responseResult.setData(menu1);
 
@@ -48,6 +55,51 @@ public class MenuController {
             responseResult.setMessage(ResponseEnum.FAIL.getName());
         }
         return responseResult;
+    }
+
+    /**
+     * @author:crelle
+     * @date:2021/3/23
+     * @title:checkAddMenuParams
+     * @description:
+     * @params:[menu, responseResult]
+     * @return:boolean
+     * @throw:
+     */
+    private boolean checkAddMenuParams(Menu menu, ResponseResult<Menu> responseResult) {
+        if (StringUtils.isNotBlank(String.valueOf(menu.getId()))) {
+            responseResult.buildFail("菜单标识使用jpa自动生成，不需要传入！");
+            return true;
+        }
+        if (StringUtils.isBlank(menu.getName())) {
+            responseResult.buildFail("菜单名称为空！");
+            return true;
+        }
+        if (StringUtils.isBlank(menu.getUrl())) {
+            responseResult.buildFail("菜单对应的资源路径为空！");
+            return true;
+        }
+        if (StringUtils.isBlank(menu.getPath())) {
+            responseResult.buildFail("菜单对应的页面路径为空！");
+            return true;
+        }
+        if (StringUtils.isBlank(menu.getComponent())) {
+            responseResult.buildFail("菜单对应的页面组件为空！");
+            return true;
+        }
+        if (CollectionUtils.isEmpty(menu.getRoles())) {
+            responseResult.buildFail("菜单对应的角色为空！");
+            return true;
+        }
+        if (!CollectionUtils.isEmpty(menu.getRoles())) {
+            for (Role role : menu.getRoles()) {
+                if (StringUtils.isNotBlank(String.valueOf(role.getId()))) {
+                    responseResult.buildFail("角色标识使用jpa自动生成，不需要传入！");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @ApiOperation(value = "删除所有菜单")
@@ -70,6 +122,10 @@ public class MenuController {
     public ResponseResult<String> deleteMenuById(@RequestBody Long menuId) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
+            if (StringUtils.isNotBlank(String.valueOf(menuId))) {
+                responseResult.buildFail("菜单标识位空！");
+                return responseResult;
+            }
             menuService.deleteMenuById(menuId);
         } catch (Exception e) {
             responseResult.setCode(ResponseEnum.FAIL.getCode());
@@ -81,8 +137,14 @@ public class MenuController {
     @ApiOperation(value = "修改菜单")
     @ApiParam(required = true, name = "menu", value = "入参")
     @RequestMapping(value = "/updateMenu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String updateMenu(@RequestBody Menu menu) {
-        return "hello";
+    public ResponseResult<Menu> updateMenu(@RequestBody Menu menu) {
+        ResponseResult<Menu> responseResult = new ResponseResult<>();
+        try {
+            menuService.saveMenu(menu);
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 
     @ApiOperation(value = "查询菜单")

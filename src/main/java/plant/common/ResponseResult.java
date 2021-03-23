@@ -30,7 +30,7 @@ public class ResponseResult<T> implements Serializable {
     private long total;
 
     public ResponseResult() {
-        this(ResponseEnum.SUCCESS.getCode(),ResponseEnum.SUCCESS.getName());
+        this(ResponseEnum.SUCCESS.getCode(), ResponseEnum.SUCCESS.getName());
     }
 
     public ResponseResult(String code, String message) {
@@ -44,9 +44,14 @@ public class ResponseResult<T> implements Serializable {
         this.data = data;
     }
 
-    public void buildFail(){
+    public void buildFail() {
         this.code = ResponseEnum.FAIL.getCode();
         this.message = ResponseEnum.FAIL.getName();
+    }
+
+    public void buildFail(String message) {
+        this.code = ResponseEnum.FAIL.getCode();
+        this.message = message;
     }
 
     public static long getSerialVersionUID() {
