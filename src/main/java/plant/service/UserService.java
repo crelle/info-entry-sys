@@ -2,6 +2,7 @@ package plant.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import plant.model.entity.User;
+import plant.model.entity.UserForMyBaties;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,8 @@ public interface UserService extends UserDetailsService {
     User addUser(User user);
 
     void deleteUserById(Long id);
+
+    int updateUser(User user);
 
     List<User> queryUsers();
 

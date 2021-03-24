@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import plant.dao.UserDao;
+import plant.mapper.UserMapper;
 import plant.model.entity.User;
+import plant.model.entity.UserForMyBaties;
 import plant.service.UserService;
 
 import java.util.List;
@@ -26,6 +28,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
 
+    @Autowired(required = false)
+    UserMapper userMapper;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDao.findUserByUsername(username);
@@ -42,6 +47,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserById(Long id) {
         userDao.deleteById(id);
+    }
+
+    @Override
+    public int updateUser(User user) {
+        return userMapper.updateUserById(user);
     }
 
     @Override

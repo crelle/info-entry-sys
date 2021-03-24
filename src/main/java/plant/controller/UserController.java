@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import plant.common.ResponseResult;
 import plant.common.enumeration.ResponseEnum;
 import plant.model.entity.User;
+import plant.model.entity.UserForMyBaties;
 import plant.service.impl.UserServiceImpl;
 
 import javax.print.attribute.standard.MediaTray;
@@ -47,14 +48,14 @@ public class UserController {
 
     @ApiOperation(value = "删除用户")
     @ApiParam(required = true, name = "user", value = "入参")
-    @RequestMapping(value = "deleteUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String deleteUser(@RequestBody User user) {
         return "admin";
     }
 
     @ApiOperation(value = "根据用户标识删除用户")
     @ApiParam(required = true, name = "user", value = "入参")
-    @RequestMapping(value = "deleteUserById", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/deleteUserById", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<String> deleteUserById(@RequestBody Long userId) {
         ResponseResult<String> responseResult = new ResponseResult<String>();
         try {
@@ -68,14 +69,20 @@ public class UserController {
 
     @ApiOperation(value = "更新用户")
     @ApiParam(required = true, name = "user", value = "入参")
-    @RequestMapping(value = "updateUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String updateUser(@RequestBody User user) {
-        return "user";
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> updateUser(@RequestBody User user) {
+        ResponseResult<String> responseResult = new ResponseResult<>();
+        try {
+            userService.updateUser(user);
+        } catch (Exception e) {
+            responseResult.buildFail();
+        }
+        return responseResult;
     }
 
     @ApiOperation(value = "查询用户")
     @ApiParam(required = true, name = "user", value = "入参")
-    @RequestMapping(value = "queryUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/queryUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<List<User>> queryUser(@RequestBody User user) {
         ResponseResult<List<User>> responseResult = new ResponseResult<>();
         try {
@@ -89,8 +96,8 @@ public class UserController {
 
     @ApiOperation(value = "根据用户标识查询用户")
     @ApiParam(required = true, name = "user", value = "入参")
-    @RequestMapping(value = "queryUserById", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<Optional<User>> queryUserById(@RequestBody Long id ) {
+    @RequestMapping(value = "/queryUserById", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<Optional<User>> queryUserById(@RequestBody Long id) {
         ResponseResult<Optional<User>> responseResult = new ResponseResult<>();
         try {
             Optional<User> user = userService.queryUserById(id);
