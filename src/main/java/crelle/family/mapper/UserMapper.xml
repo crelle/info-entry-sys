@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="crelle.family.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="crelle.family.model.entity.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="userNickName" property="userNickName" jdbcType="VARCHAR"/>
+        <result column="userPhone" property="userPhone" jdbcType="VARCHAR"/>
+        <result column="userEmail" property="userEmail" jdbcType="BIT"/>
+        <result column="accountNonExpired" property="accountNonExpired" jdbcType="VARCHAR"/>
+        <result column="accountNonLocked" property="accountNonLocked" jdbcType="VARCHAR"/>
+        <result column="credentialsNonExpired" property="credentialsNonExpired" jdbcType="VARCHAR"/>
+        <result column="enabled" property="enabled" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="UserWithRoles" type="crelle.family.model.entity.User" extends="BaseResultMap">
+        <collection property="roles" ofType="crelle.family.model.entity.Role">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="nameZh" property="nameZh"/>
+        </collection>
+    </resultMap>
+
+    <update id="updatePasswdById">
+        update user set password = #{encodePass} where id=#{id};
+    </update>
+    <update id="updateUserById" parameterType="crelle.family.model.entity.User">
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=CHAR},
+      user_nick_name = #{userNickName,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_Email = #{userEmail,jdbcType=BIT},
+      username = #{username,jdbcType=VARCHAR},
+      account_non_expired = #{accountNonExpired,jdbcType=VARCHAR},
+      account_non_locked = #{accountNonLocked,jdbcType=VARCHAR},
+      credentials_non_expired = #{credentialsNonExpired,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
