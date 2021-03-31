@@ -114,10 +114,10 @@ public class MenuController {
     @ApiOperation(value = "根据角色标识查询菜单")
     @ApiParam(required = true, name = "menu", value = "入参")
     @RequestMapping(value = "/queryMenusByRoleId", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<List<Menu>> queryMenusByRoleId() {
+    public ResponseResult<List<Menu>> queryMenusByRoleId(@RequestBody String roleId) {
         ResponseResult<List<Menu>> responseResult = new ResponseResult<>();
         try {
-            List<Menu> menuList = menuService.queryMenus();
+            List<Menu> menuList = menuService.queryMenuByRoleId(roleId);
             responseResult.setData(menuList);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());

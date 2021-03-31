@@ -23,7 +23,7 @@ public interface MenuService {
 
     void deleteMenus(List<Menu> menus);
 
-    List<Menu> queryMenuByRoleId();
+    List<Menu> queryMenuByRoleId(String roleId);
 
     List<Menu> queryMenus();
 

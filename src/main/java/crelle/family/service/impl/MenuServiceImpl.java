@@ -47,8 +47,8 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Menu> queryMenuByRoleId() {
-        return null;
+    public List<Menu> queryMenuByRoleId(String roleId) {
+        return menuDao.
     }
 
     @Override
