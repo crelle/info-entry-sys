@@ -25,7 +25,7 @@ import java.util.Optional;
  **/
 @Api(tags = "角色服务")
 @RestController
-@RequestMapping(value = "role")
+@RequestMapping(value = "/role")
 public class RoleController {
 
     @Autowired

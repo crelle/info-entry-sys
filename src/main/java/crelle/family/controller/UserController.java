@@ -57,13 +57,6 @@ public class UserController {
         return responseResult;
     }
 
-//    @ApiOperation(value = "删除用户")
-//    @ApiParam(required = true, name = "user", value = "入参")
-//    @RequestMapping(value = "/deleteUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public String deleteUser(@RequestBody User user) {
-//        return "admin";
-//    }
-
     @ApiOperation(value = "根据用户标识删除用户")
     @ApiParam(required = true, name = "user", value = "入参")
     @RequestMapping(value = "/deleteUserById", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

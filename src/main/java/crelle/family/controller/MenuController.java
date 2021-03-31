@@ -27,7 +27,7 @@ import java.util.List;
  **/
 @Api(tags = "菜单服务")
 @RestController
-@RequestMapping(value = "menu")
+@RequestMapping(value = "/menu")
 public class MenuController {
 
     @Autowired
@@ -53,50 +53,6 @@ public class MenuController {
         return responseResult;
     }
 
-    /**
-     * @author:crelle
-     * @date:2021/3/23
-     * @title:checkAddMenuParams
-     * @description:
-     * @params:[menu, responseResult]
-     * @return:boolean
-     * @throw:
-     */
-    private boolean checkAddMenuParams(Menu menu, ResponseResult<Menu> responseResult) {
-        if (!(null == menu.getId())) {
-            responseResult.buildFail("菜单标识使用jpa自动生成，不需要传入！");
-            return true;
-        }
-        if (StringUtils.isBlank(menu.getName())) {
-            responseResult.buildFail("菜单名称为空！");
-            return true;
-        }
-        if (StringUtils.isBlank(menu.getUrl())) {
-            responseResult.buildFail("菜单对应的资源路径为空！");
-            return true;
-        }
-        if (StringUtils.isBlank(menu.getPath())) {
-            responseResult.buildFail("菜单对应的页面路径为空！");
-            return true;
-        }
-        if (StringUtils.isBlank(menu.getComponent())) {
-            responseResult.buildFail("菜单对应的页面组件为空！");
-            return true;
-        }
-        if (CollectionUtils.isEmpty(menu.getRoles())) {
-            responseResult.buildFail("菜单对应的角色为空！");
-            return true;
-        }
-        if (!CollectionUtils.isEmpty(menu.getRoles())) {
-            for (Role role : menu.getRoles()) {
-                if (StringUtils.isNotBlank(String.valueOf(role.getId()))) {
-                    responseResult.buildFail("角色标识使用jpa自动生成，不需要传入！");
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     @ApiOperation(value = "删除所有菜单")
     @ApiParam(required = true, name = "menu", value = "入参")
@@ -153,5 +109,64 @@ public class MenuController {
             responseResult.buildFail(e.getMessage());
         }
         return responseResult;
+    }
+
+    @ApiOperation(value = "根据角色标识查询菜单")
+    @ApiParam(required = true, name = "menu", value = "入参")
+    @RequestMapping(value = "/queryMenusByRoleId", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<List<Menu>> queryMenusByRoleId() {
+        ResponseResult<List<Menu>> responseResult = new ResponseResult<>();
+        try {
+            List<Menu> menuList = menuService.queryMenus();
+            responseResult.setData(menuList);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
+    }
+
+    /**
+     * @author:crelle
+     * @date:2021/3/23
+     * @title:checkAddMenuParams
+     * @description:
+     * @params:[menu, responseResult]
+     * @return:boolean
+     * @throw:
+     */
+    private boolean checkAddMenuParams(Menu menu, ResponseResult<Menu> responseResult) {
+        if (!(null == menu.getId())) {
+            responseResult.buildFail("菜单标识使用jpa自动生成，不需要传入！");
+            return true;
+        }
+        if (StringUtils.isBlank(menu.getName())) {
+            responseResult.buildFail("菜单名称为空！");
+            return true;
+        }
+        if (StringUtils.isBlank(menu.getUrl())) {
+            responseResult.buildFail("菜单对应的资源路径为空！");
+            return true;
+        }
+        if (StringUtils.isBlank(menu.getPath())) {
+            responseResult.buildFail("菜单对应的页面路径为空！");
+            return true;
+        }
+        if (StringUtils.isBlank(menu.getComponent())) {
+            responseResult.buildFail("菜单对应的页面组件为空！");
+            return true;
+        }
+        if (CollectionUtils.isEmpty(menu.getRoles())) {
+            responseResult.buildFail("菜单对应的角色为空！");
+            return true;
+        }
+        if (!CollectionUtils.isEmpty(menu.getRoles())) {
+            for (Role role : menu.getRoles()) {
+                if (StringUtils.isNotBlank(String.valueOf(role.getId()))) {
+                    responseResult.buildFail("角色标识使用jpa自动生成，不需要传入！");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
