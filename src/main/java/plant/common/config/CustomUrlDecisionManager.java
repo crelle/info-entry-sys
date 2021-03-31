@@ -15,7 +15,7 @@ import java.util.Collection;
  *@author:crelle
  *@date:2021/3/24
  *@title:
- *@description:
+ *@description:分析用户请求的资源路径是否有权限访问
  *@params:
  *@return:
  *@throw:

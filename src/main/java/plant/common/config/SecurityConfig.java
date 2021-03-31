@@ -51,9 +51,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     CustomUrlDecisionManager customUrlDecisionManager;
 
+    //密文
+//    @Bean
+//    PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+
+    //明文
     @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    NoOpPasswordEncoder passwordEncoder(){
+        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
 
     @Override
@@ -63,7 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**", "/js/**", "/login.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode");
+        web.ignoring().antMatchers("/css/**", "/js/**", "/login.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode"
+                ,"/swagger-ui.html","/swagger-resources/**","/webjars/**","/v2/**","/api/**");
     }
 
     @Bean
