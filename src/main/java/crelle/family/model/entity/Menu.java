@@ -20,7 +20,7 @@ import java.util.Set;
 
 @Entity(name = "menu")
 @Table(name = "menu")
-@ApiModel(value = "menu",description = "菜单实体")
+@ApiModel(value = "menu", description = "菜单实体")
 public class Menu {
 
     @Id
@@ -66,11 +66,7 @@ public class Menu {
     private String enabled;
 
     @ApiModelProperty(value = "角色列表")
-    @ManyToMany(targetEntity = Role.class ,fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinTable(name = "menu_role",
-            joinColumns = { @JoinColumn(name = "menu_id",referencedColumnName = "id") },
-            inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")}
-    )
+    @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Role> roles = new HashSet<>();
 
 

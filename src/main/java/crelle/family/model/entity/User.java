@@ -66,8 +66,8 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private boolean enabled;
 
+    //用户为主表,角色为从表
     @ApiModelProperty(value = "角色列表")
-    @Column(name = "")
     @ManyToMany(targetEntity = Role.class ,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},

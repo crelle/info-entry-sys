@@ -11,7 +11,10 @@ import crelle.family.model.entity.Role;
 import crelle.family.model.entity.User;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 class SysAplicationTests {
@@ -25,6 +28,7 @@ class SysAplicationTests {
     @Autowired
     RoleDao roleDao;
 
+    //初始化用户和用户对应的角色
     @Test
     void initUserWithRole() {
         User u1 = new User();
@@ -86,29 +90,64 @@ class SysAplicationTests {
 
     }
 
-    void initMenuWithRole(){
-        List<Menu> menus = new ArrayList<>();
-        Menu menu1 = new Menu();
-        menu1.setName("系统管理");
-        menu1.setUrl("/sys/");
-        menu1.setComponent("/sys/component/");
+    //为角色初始化菜单
+    @Test
+    void initMenuWithAdmin() {
+        List<Menu> menus = menuDao.findAll();
+        Set<Menu> adminMenus = new HashSet<>();
+        Set<Menu> userMenus = new HashSet<>();
+        Set<Menu> guestMenus = new HashSet<>();
+        menus.forEach(menu -> {
+            if (menu.getName().equals("系统管理")) {
+                adminMenus.add(menu);
+                userMenus.add(menu);
+            } else if (menu.getName().equals("植物管理")) {
+                adminMenus.add(menu);
+                userMenus.add(menu);
+            } else if (menu.getName().equals("学科管理")) {
+                adminMenus.add(menu);
+                guestMenus.add(menu);
+            }
+        });
 
-        List<Role> roles = roleDao.findAll();
-        menus.add(menu1);
 
-        Menu menu2 = new Menu();
-        menu2.setName("植物管理");
-        menu2.setUrl("/plant/");
-        menu2.setComponent("/plant/component/");
-        menus.add(menu2);
+        List<Role> allRoles = roleDao.findAll();
+        allRoles.forEach(role -> {
+            if (role.getName().equals("ROLE_admin")) {
+                role.setMenus(adminMenus);
+                roleDao.save(role);
+            } else if (role.getName().equals("ROLE_user")) {
+                role.setMenus(userMenus);
+                roleDao.save(role);
+            } else if (role.getName().equals("ROLE_guest")) {
+                role.setMenus(guestMenus);
+                roleDao.save(role);
+            }
+        });
 
-        Menu menu3 = new Menu();
-        menu3.setName("学科管理");
-        menu3.setUrl("/object/");
-        menu3.setComponent("/object/component/");
-        menus.add(menu3);
-
-        menuDao.saveAll(menus);
     }
+
+//    //初始化user角色对应的菜单
+//    @Test
+//    void initMenuWithUser() {
+//        List<Role> roles = roleDao.findAll();
+//        List<Menu> userMenus = menuDao.findAll();
+//        Set<Role> roleSet = roles.stream().filter(role -> role.getName().equals("ROLE_user")).collect(Collectors.toSet());
+//
+//        userMenus = userMenus.stream().filter(menu -> menu.getName().equals("植物管理") || menu.getName().equals("学科管理")).collect(Collectors.toList());
+//        userMenus.forEach(menu -> menu.setRoles(roleSet));
+//        menuDao.saveAll(userMenus);
+//    }
+//
+//    //初始化guest角色对应的菜单
+//    @Test
+//    void initMenuWithGuest() {
+//        List<Role> roles = roleDao.findAll();
+//        List<Menu> guestMenus = menuDao.findAll();
+//        Set<Role> roleSet = roles.stream().filter(role -> role.getName().equals("ROLE_guest")).collect(Collectors.toSet());
+//        guestMenus = guestMenus.stream().filter(menu -> menu.getName().equals("植物管理")).collect(Collectors.toList());
+//        guestMenus.forEach(menu -> menu.setRoles(roleSet));
+//        menuDao.saveAll(guestMenus);
+//    }
 
 }
