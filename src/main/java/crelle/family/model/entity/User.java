@@ -1,5 +1,6 @@
 package crelle.family.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.security.core.GrantedAuthority;
@@ -68,6 +69,7 @@ public class User implements UserDetails {
 
     //用户为主表,角色为从表
     @ApiModelProperty(value = "角色列表")
+    @JsonIgnoreProperties(value = "users")
     @ManyToMany(targetEntity = Role.class ,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
@@ -180,6 +182,9 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
+        for (Role r: this.roles){
+            r.getUsers().clear();
+        }
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +

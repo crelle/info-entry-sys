@@ -1,5 +1,6 @@
 package crelle.family.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -35,6 +36,7 @@ public class Role {
     private String nameZh;
 
     //角色为主表,菜单为从表
+    @JsonIgnoreProperties(value = "roles")
     @ManyToMany(targetEntity = Menu.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "role_menu",
             //中间表role_menu中角色外键对应的字段名称
@@ -45,6 +47,7 @@ public class Role {
     private Set<Menu> menus = new HashSet<>();
 
     //配置角色和用户多对多关系
+    @JsonIgnoreProperties(value = "roles")
     @ManyToMany(targetEntity = User.class, mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
 
@@ -88,8 +91,15 @@ public class Role {
         this.menus = menus;
     }
 
+
     @Override
     public String toString() {
+        for(User user: this.users){
+            user.getRoles().clear();
+        }
+        for(Menu menu: this.menus){
+            menu.getRoles().clear();
+        }
         return "Role{" +
                 "id=" + id +
                 ", name='" + name + '\'' +

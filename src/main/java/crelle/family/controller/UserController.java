@@ -31,7 +31,7 @@ public class UserController {
 
     @ApiOperation(value = "新增用户")
     @ApiParam(required = true, name = "user", value = "入参")
-    @RequestMapping(value = "/addUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<User> addUser(@RequestBody User user) {
         ResponseResult<User> responseResult = new ResponseResult<User>();
         try {
@@ -57,26 +57,14 @@ public class UserController {
         return responseResult;
     }
 
-    @ApiOperation(value = "根据用户标识删除用户")
-    @ApiParam(required = true, name = "user", value = "入参")
-    @RequestMapping(value = "/deleteUserById", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> deleteUserById(@RequestBody Long userId) {
-        ResponseResult<String> responseResult = new ResponseResult<String>();
+    @ApiOperation(value = "根据用户标识查询用户")
+    @ApiParam(required = true, name = "id", value = "入参")
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<Optional<User>> queryUserById(@PathVariable Long id) {
+        ResponseResult<Optional<User>> responseResult = new ResponseResult<>();
         try {
-            userService.deleteUserById(userId);
-        } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
-        }
-        return responseResult;
-    }
-
-    @ApiOperation(value = "更新用户")
-    @ApiParam(required = true, name = "user", value = "入参")
-    @RequestMapping(value = "/updateUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> updateUser(@RequestBody User user) {
-        ResponseResult<String> responseResult = new ResponseResult<>();
-        try {
-            userService.updateUser(user);
+            Optional<User> user = userService.queryUserById(id);
+            responseResult.setData(user);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
@@ -85,7 +73,7 @@ public class UserController {
 
     @ApiOperation(value = "查询所有用户")
     @ApiParam(required = true, name = "user", value = "入参")
-    @RequestMapping(value = "/queryUsers", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<List<User>> queryUser() {
         ResponseResult<List<User>> responseResult = new ResponseResult<>();
         try {
@@ -97,17 +85,34 @@ public class UserController {
         return responseResult;
     }
 
-    @ApiOperation(value = "根据用户标识查询用户")
+    @ApiOperation(value = "更新用户")
     @ApiParam(required = true, name = "user", value = "入参")
-    @RequestMapping(value = "/queryUserById", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<Optional<User>> queryUserById(@RequestBody Long id) {
-        ResponseResult<Optional<User>> responseResult = new ResponseResult<>();
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> updateUser(@PathVariable Long id, @RequestBody User user) {
+        ResponseResult<String> responseResult = new ResponseResult<>();
         try {
-            Optional<User> user = userService.queryUserById(id);
-            responseResult.setData(user);
+            int result = userService.updateUser(id, user);
+            if (0 == result) {
+                responseResult.buildFail("没有此用户，无法更新！");
+            }
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
         return responseResult;
     }
+
+    @ApiOperation(value = "根据用户标识删除用户")
+    @ApiParam(required = true, name = "user", value = "入参")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> deleteUserById(@PathVariable Long id) {
+        ResponseResult<String> responseResult = new ResponseResult<String>();
+        try {
+            userService.deleteUserById(id);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
+    }
+
+
 }

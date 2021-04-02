@@ -19,7 +19,7 @@ public interface UserService extends UserDetailsService {
 
     void deleteUserById(Long id);
 
-    int updateUser(User user);
+    int updateUser(Long id, User user);
 
     List<User> queryUsers();
 

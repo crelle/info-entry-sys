@@ -1,5 +1,6 @@
 package crelle.family.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.JoinColumnOrFormula;
@@ -66,6 +67,7 @@ public class Menu {
     private String enabled;
 
     @ApiModelProperty(value = "角色列表")
+    @JsonIgnoreProperties(value = "menus")
     @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Role> roles = new HashSet<>();
 
@@ -160,6 +162,10 @@ public class Menu {
 
     @Override
     public String toString() {
+        for(Role role: this.getRoles()){
+            role.getUsers().clear();
+            role.getMenus().clear();
+        }
         return "Menu{" +
                 "id=" + id +
                 ", url='" + url + '\'' +

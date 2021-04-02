@@ -1,5 +1,7 @@
 package crelle.family.service.impl;
 
+import crelle.family.common.ResponseResult;
+import crelle.family.common.util.ResultUtils;
 import crelle.family.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,8 +50,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updateUser(User user) {
-        return userMapper.updateUserById(user);
+    public int updateUser(Long id, User user) {
+        if (null == userDao.findById(id)) {
+            return 0;
+        }
+        userDao.save(user);
+        return 1;
     }
 
     @Override
