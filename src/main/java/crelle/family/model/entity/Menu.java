@@ -2,9 +2,13 @@ package crelle.family.model.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.annotations.JoinColumnOrFormula;
 
 import javax.persistence.*;
+import javax.websocket.ClientEndpoint;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author:crelle
@@ -15,44 +19,60 @@ import java.util.List;
  **/
 
 @Entity(name = "menu")
+@Table(name = "menu")
 @ApiModel(value = "menu",description = "菜单实体")
 public class Menu {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     @ApiModelProperty(value = "菜单标识")
     private Long id;
 
     @ApiModelProperty(value = "后台资源地址")
+    @Column(name = "url")
     private String url;
 
     @ApiModelProperty(value = "前台页面路径")
+    @Column(name = "paht")
     private String path;
 
     @ApiModelProperty(value = "前台组件名称")
+    @Column(name = "component")
     private String component;
 
     @ApiModelProperty(value = "菜单名称")
+    @Column(name = "name")
     private String name;
 
     @ApiModelProperty(value = "菜单图标")
+    @Column(name = "icon_ls")
     private String iconCls;
 
     @ApiModelProperty(value = "是否存活")
+    @Column(name = "keep_alive")
     private String keepAlive;
 
     @ApiModelProperty(value = "是否需要鉴权")
+    @Column(name = "require_auth")
     private String requireAuth;
 
     @ApiModelProperty(value = "父菜单标识")
+    @Column(name = "parent_id")
     private String parentId;
 
     @ApiModelProperty(value = "是否可用")
+    @Column(name = "enabled")
     private String enabled;
 
     @ApiModelProperty(value = "角色列表")
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
-    private List<Role> roles;
+    @ManyToMany(targetEntity = Role.class ,fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinTable(name = "menu_role",
+            joinColumns = { @JoinColumn(name = "menu_id",referencedColumnName = "id") },
+            inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")}
+    )
+    private Set<Role> roles = new HashSet<>();
+
 
     public Long getId() {
         return id;
@@ -134,11 +154,11 @@ public class Menu {
         this.enabled = enabled;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

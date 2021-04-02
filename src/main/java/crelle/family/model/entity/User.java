@@ -21,42 +21,57 @@ import java.util.List;
  *@throw:
  */
 @Entity(name = "user")
+@Table(name = "user")
 @ApiModel(value = "User",description = "用户实体")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     @ApiModelProperty(value = "用户标识")
     private Long id;
 
     @ApiModelProperty(value = "用户名")
+    @Column(name = "username")
     private String username;
 
     @ApiModelProperty(value = "密码")
+    @Column(name = "password")
     private String password;
 
     @ApiModelProperty(value = "用户昵称")
+    @Column(name = "user_nick_name")
     private String userNickName;
 
     @ApiModelProperty(value = "用户手机号")
+    @Column(name = "user_phone")
     private String userPhone;
 
     @ApiModelProperty(value = "用户邮箱")
+    @Column(name = "user_email")
     private String userEmail;
 
     @ApiModelProperty(value = "账号是否过期")
+    @Column(name = "account_non_expired")
     private boolean accountNonExpired;
 
     @ApiModelProperty(value = "账号是否被锁定")
+    @Column(name = "account_non_locked")
     private boolean accountNonLocked;
 
     @ApiModelProperty(value = "账号是否过期")
+    @Column(name = "credentails_non_expired")
     private boolean credentialsNonExpired;
 
     @ApiModelProperty(value = "账号是否可用")
+    @Column(name = "enabled")
     private boolean enabled;
 
     @ApiModelProperty(value = "角色列表")
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+    @Column(name = "")
+    @ManyToMany(targetEntity = Role.class ,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")})
     private List<Role> roles;
 
     public void setAccountNonExpired(boolean accountNonExpired) {
@@ -161,6 +176,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
 
     @Override
     public String toString() {

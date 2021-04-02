@@ -2,6 +2,7 @@ package crelle.family.dao;
 
 import crelle.family.model.entity.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
  * @author:crelle
@@ -10,6 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date:2021/3/22
  * @description:XX
  **/
-public interface MenuDao extends JpaRepository<Menu,Long> {
+public interface MenuDao extends JpaRepository<Menu,Long>, JpaSpecificationExecutor<Menu> {
 
 }
