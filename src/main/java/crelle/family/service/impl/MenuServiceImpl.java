@@ -1,5 +1,6 @@
 package crelle.family.service.impl;
 
+import crelle.family.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import crelle.family.dao.MenuDao;
@@ -7,6 +8,7 @@ import crelle.family.model.entity.Menu;
 import crelle.family.service.MenuService;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author:crelle
@@ -21,39 +23,33 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private MenuDao menuDao;
 
+
     @Override
-    public Menu saveMenu(Menu menu) {
-        return menuDao.save(menu);
+    public Menu create(Menu role) {
+        return menuDao.save(role);
     }
 
     @Override
-    public List<Menu> saveMenus(List<Menu> menus) {
-        return menuDao.saveAll(menus);
+    public Optional<Menu> queryById(Long id) {
+        return menuDao.findById(id);
     }
 
     @Override
-    public void deleteMenus() {
-        menuDao.deleteAll();
-    }
-
-    @Override
-    public void deleteMenuById(Long id) {
-        menuDao.deleteById(id);
-    }
-
-    @Override
-    public void deleteMenus(List<Menu> menus) {
-        menuDao.deleteAll(menus);
-    }
-
-    @Override
-    public List<Menu> queryMenuByRoleId(String roleId) {
-        return null;
-    }
-
-    @Override
-    public List<Menu> queryMenus() {
+    public List<Menu> queryAll() {
         return menuDao.findAll();
     }
 
+    @Override
+    public int update(Long id, Menu menu) {
+        if (null == menuDao.findById(id)) {
+            return 0;
+        }
+        menuDao.save(menu);
+        return 1;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        menuDao.deleteById(id);
+    }
 }

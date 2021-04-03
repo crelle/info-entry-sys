@@ -17,6 +17,7 @@ import crelle.family.model.entity.Role;
 import crelle.family.service.MenuService;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author:crelle
@@ -28,23 +29,23 @@ import java.util.List;
 @Api(tags = "菜单服务")
 @RestController
 @RequestMapping(value = "/menu")
-public class MenuController {
+public class MenuController implements BaseController<Menu> {
 
     @Autowired
     private MenuService menuService;
 
-    @ApiOperation(value = "新增菜单")
-    @ApiParam(required = true, name = "menu", value = "入参")
-    @RequestMapping(value = "/addMenu", method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<Menu> addMenu(@RequestBody Menu menu) {
+    @ApiOperation(value = "创建菜单")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @Override
+    public ResponseResult<Menu> create(Menu menu) {
         ResponseResult<Menu> responseResult = new ResponseResult<>();
         try {
             if (checkAddMenuParams(menu, responseResult)) {
                 return responseResult;
             }
 
-            Menu menu1 = menuService.saveMenu(menu);
+            Menu menu1 = menuService.create(menu);
             responseResult.setData(menu1);
 
         } catch (Exception e) {
@@ -53,72 +54,61 @@ public class MenuController {
         return responseResult;
     }
 
-
-    @ApiOperation(value = "删除所有菜单")
-    @ApiParam(required = true, name = "menu", value = "入参")
-    @RequestMapping(value = "/deleteMenu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> deleteMenu() {
-        ResponseResult<String> responseResult = new ResponseResult<>();
+    @ApiOperation(value = "根据菜单标识查询菜单")
+    @ApiParam(required = true, name = "id", value = "入参")
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @Override
+    public ResponseResult<Optional<Menu>> queryById(Long id) {
+        ResponseResult<Optional<Menu>> responseResult = new ResponseResult<>();
         try {
-            menuService.deleteMenus();
+            Optional<Menu> menuList = menuService.queryById(id);
+            responseResult.setData(menuList);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
         return responseResult;
     }
 
-    @ApiOperation(value = "根据菜单标识删除菜单")
-    @ApiParam(required = true, name = "menu", value = "入参")
-    @RequestMapping(value = "/deleteMenuById", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> deleteMenuById(@RequestBody Long menuId) {
-        ResponseResult<String> responseResult = new ResponseResult<>();
+    @ApiOperation(value = "查询所有菜单")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @Override
+    public ResponseResult<List<Menu>> queryAll() {
+        ResponseResult<List<Menu>> responseResult = new ResponseResult<>();
         try {
-            if (StringUtils.isNotBlank(String.valueOf(menuId))) {
-                responseResult.buildFail("菜单标识位空！");
-                return responseResult;
-            }
-            menuService.deleteMenuById(menuId);
+            List<Menu> menuList = menuService.queryAll();
+            responseResult.setData(menuList);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
         return responseResult;
     }
 
-    @ApiOperation(value = "修改菜单")
-    @ApiParam(required = true, name = "menu", value = "入参")
-    @RequestMapping(value = "/updateMenu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<Menu> updateMenu(@RequestBody Menu menu) {
+    @ApiOperation(value = "更新菜单")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @Override
+    public ResponseResult<String> updateById(Long id, Menu menu) {
         ResponseResult<Menu> responseResult = new ResponseResult<>();
         try {
-            menuService.saveMenu(menu);
+            int result = menuService.update(id, menu);
+            if (0 == result) {
+                responseResult.buildFail("没有此菜单，无法更新！");
+            }
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
         return null;
     }
 
-    @ApiOperation(value = "查询所有菜单")
-    @ApiParam(required = true, name = "menu", value = "入参")
-    @RequestMapping(value = "/queryMenus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<List<Menu>> queryMenus() {
-        ResponseResult<List<Menu>> responseResult = new ResponseResult<>();
+    @ApiOperation(value = "根据菜单标识删除菜单")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @Override
+    public ResponseResult<String> deleteById(Long id) {
+        ResponseResult<String> responseResult = new ResponseResult<>();
         try {
-            List<Menu> menuList = menuService.queryMenus();
-            responseResult.setData(menuList);
-        } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
-        }
-        return responseResult;
-    }
-
-    @ApiOperation(value = "根据角色标识查询菜单")
-    @ApiParam(required = true, name = "menu", value = "入参")
-    @RequestMapping(value = "/queryMenusByRoleId", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<List<Menu>> queryMenusByRoleId(@RequestBody String roleId) {
-        ResponseResult<List<Menu>> responseResult = new ResponseResult<>();
-        try {
-            List<Menu> menuList = menuService.queryMenuByRoleId(roleId);
-            responseResult.setData(menuList);
+            menuService.deleteById(id);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }

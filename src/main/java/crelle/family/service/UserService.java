@@ -13,17 +13,9 @@ import java.util.Optional;
  * @date:2021/3/23
  * @description:XX
  **/
-public interface UserService extends UserDetailsService {
+public interface UserService  extends UserDetailsService,BaseService<User> {
 
-    User addUser(User user);
 
-    void deleteUserById(Long id);
-
-    int updateUser(Long id, User user);
-
-    List<User> queryUsers();
-
-    Optional<User> queryUserById(Long id);
 
 
 }

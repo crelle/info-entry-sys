@@ -24,7 +24,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/user")
 @Api(tags = "用户服务")
-public class UserController {
+public class UserController implements BaseController<User> {
 
     @Autowired
     private UserServiceImpl userService;
@@ -32,7 +32,7 @@ public class UserController {
     @ApiOperation(value = "新增用户")
     @ApiParam(required = true, name = "user", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<User> addUser(@RequestBody User user) {
+    public ResponseResult<User> create(@RequestBody User user) {
         ResponseResult<User> responseResult = new ResponseResult<User>();
         try {
             if (!(null == user.getId())) {
@@ -49,7 +49,7 @@ public class UserController {
                 responseResult.buildFail("密码为空！");
                 return responseResult;
             }
-            User user1 = userService.addUser(user);
+            User user1 = userService.create(user);
             responseResult.setData(user1);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
@@ -60,10 +60,10 @@ public class UserController {
     @ApiOperation(value = "根据用户标识查询用户")
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<Optional<User>> queryUserById(@PathVariable Long id) {
+    public ResponseResult<Optional<User>> queryById(@PathVariable Long id) {
         ResponseResult<Optional<User>> responseResult = new ResponseResult<>();
         try {
-            Optional<User> user = userService.queryUserById(id);
+            Optional<User> user = userService.queryById(id);
             responseResult.setData(user);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
@@ -74,10 +74,10 @@ public class UserController {
     @ApiOperation(value = "查询所有用户")
     @ApiParam(required = true, name = "user", value = "入参")
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<List<User>> queryUser() {
+    public ResponseResult<List<User>> queryAll() {
         ResponseResult<List<User>> responseResult = new ResponseResult<>();
         try {
-            List<User> userList = userService.queryUsers();
+            List<User> userList = userService.queryAll();
             responseResult.setData(userList);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
@@ -88,10 +88,10 @@ public class UserController {
     @ApiOperation(value = "更新用户")
     @ApiParam(required = true, name = "user", value = "入参")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseResult<String> updateById(@PathVariable Long id, @RequestBody User user) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
-            int result = userService.updateUser(id, user);
+            int result = userService.update(id, user);
             if (0 == result) {
                 responseResult.buildFail("没有此用户，无法更新！");
             }
@@ -104,10 +104,10 @@ public class UserController {
     @ApiOperation(value = "根据用户标识删除用户")
     @ApiParam(required = true, name = "user", value = "入参")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> deleteUserById(@PathVariable Long id) {
+    public ResponseResult<String> deleteById(@PathVariable Long id) {
         ResponseResult<String> responseResult = new ResponseResult<String>();
         try {
-            userService.deleteUserById(id);
+            userService.deleteById(id);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }

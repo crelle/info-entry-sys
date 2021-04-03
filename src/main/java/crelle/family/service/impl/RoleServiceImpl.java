@@ -2,6 +2,7 @@ package crelle.family.service.impl;
 
 import crelle.family.dao.RoleDao;
 import crelle.family.model.entity.Role;
+import crelle.family.service.BaseService;
 import crelle.family.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,24 +23,33 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDao roleDao;
 
-
     @Override
-    public Role addRole(Role role) {
+    public Role create(Role role) {
         return roleDao.save(role);
     }
 
     @Override
-    public List<Role> queryRoles() {
-        return roleDao.findAll();
-    }
-
-    @Override
-    public Optional<Role> queryRoleById(Long id) {
+    public Optional<Role> queryById(Long id) {
         return roleDao.findById(id);
     }
 
     @Override
-    public void deleteRoleById(Long id) {
+    public List<Role> queryAll() {
+        return roleDao.findAll();
+    }
+
+    @Override
+    public int update(Long id, Role role) {
+        if (null == roleDao.findById(id)) {
+            return 0;
+        }
+        roleDao.save(role);
+        return 1;
+    }
+
+    @Override
+    public void deleteById(Long id) {
         roleDao.deleteById(id);
     }
+
 }

@@ -11,20 +11,7 @@ import java.util.List;
  * @date:2021/3/22
  * @description:XX
  **/
-public interface MenuService {
+public interface MenuService extends BaseService<Menu> {
 
-    Menu saveMenu(Menu menu);
-
-    List<Menu> saveMenus(List<Menu> menus);
-
-    void deleteMenus();
-
-    void deleteMenuById(Long id);
-
-    void deleteMenus(List<Menu> menus);
-
-    List<Menu> queryMenuByRoleId(String roleId);
-
-    List<Menu> queryMenus();
 
 }

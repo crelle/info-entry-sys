@@ -1,14 +1,13 @@
 package crelle.family.controller;
 
+import crelle.family.model.entity.User;
+import crelle.family.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import crelle.family.common.ResponseResult;
 import crelle.family.dao.RoleDao;
 import crelle.family.model.entity.Role;
@@ -26,20 +25,23 @@ import java.util.Optional;
 @Api(tags = "角色服务")
 @RestController
 @RequestMapping(value = "/role")
-public class RoleController {
+public class RoleController implements BaseController<Role>{
 
     @Autowired
-    private RoleDao roleDao;
+    private RoleService roleService;
 
-    @ApiOperation(value = "查询所有角色")
+
+
+
+    @ApiOperation(value = "创建角色")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/queryRoles", method = RequestMethod.POST,
+    @RequestMapping(value = "/create", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<List<Role>> queryRoles() {
-        ResponseResult<List<Role>> responseResult = new ResponseResult<>();
+    public ResponseResult<Role> create(@RequestBody Role role) {
+        ResponseResult<Role> responseResult = new ResponseResult<>();
         try {
-            List<Role> roles = roleDao.findAll();
-            responseResult.setData(roles);
+            Role newRole = roleService.create(role);
+            responseResult.setData(newRole);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
@@ -48,13 +50,45 @@ public class RoleController {
 
     @ApiOperation(value = "根据角色标识查询角色")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/queryRoleById", method = RequestMethod.POST,
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<Optional<Role>> queryRoleById(@RequestBody Long id) {
+    public ResponseResult<Optional<Role>> queryById(@PathVariable Long id) {
         ResponseResult<Optional<Role>> responseResult = new ResponseResult<>();
         try {
-            Optional<Role> roles = roleDao.findById(id);
+            Optional<Role> role = roleService.queryById(id);
+            responseResult.setData(role);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
+    }
+
+    @ApiOperation(value = "查询所有角色")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/all", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<List<Role>> queryAll() {
+        ResponseResult<List<Role>> responseResult = new ResponseResult<>();
+        try {
+            List<Role> roles = roleService.queryAll();
             responseResult.setData(roles);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
+    }
+
+    @ApiOperation(value = "根据角色标识更新角色")
+    @ApiParam(required = true, name = "id", value = "入参")
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> updateById(@PathVariable Long id,@RequestBody Role role) {
+        ResponseResult<String> responseResult = new ResponseResult<>();
+        try {
+            int result = roleService.update(id, role);
+            if (0 == result) {
+                responseResult.buildFail("没有此角色，无法更新！");
+            }
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
@@ -63,12 +97,12 @@ public class RoleController {
 
     @ApiOperation(value = "根据角色标识删除角色")
     @ApiParam(required = true, name = "id", value = "入参")
-    @RequestMapping(value = "/deleteRole", method = RequestMethod.POST,
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<List<Role>> deleteRole(@RequestBody Long id) {
-        ResponseResult<List<Role>> responseResult = new ResponseResult<>();
+    public ResponseResult<String> deleteById(@RequestBody Long id) {
+        ResponseResult<String> responseResult = new ResponseResult<>();
         try {
-            roleDao.deleteById(id);
+            roleService.deleteById(id);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }

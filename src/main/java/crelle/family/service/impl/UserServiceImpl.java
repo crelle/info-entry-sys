@@ -32,25 +32,22 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findUserByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("用户不存在");
-        }
-        return user;
-    }
-
-    public User addUser(User user) {
+    public User create(User user) {
         return userDao.save(user);
     }
 
     @Override
-    public void deleteUserById(Long id) {
-        userDao.deleteById(id);
+    public Optional<User> queryById(Long id) {
+        return userDao.findById(id);
     }
 
     @Override
-    public int updateUser(Long id, User user) {
+    public List<User> queryAll() {
+        return userDao.findAll();
+    }
+
+    @Override
+    public int update(Long id, User user) {
         if (null == userDao.findById(id)) {
             return 0;
         }
@@ -59,12 +56,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> queryUsers() {
-        return userDao.findAll();
+    public void deleteById(Long id) {
+        userDao.deleteById(id);
     }
 
     @Override
-    public Optional<User> queryUserById(Long id) {
-        return userDao.findById(id);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userDao.findUserByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("用户不存在");
+        }
+        return user;
     }
+
+
 }
