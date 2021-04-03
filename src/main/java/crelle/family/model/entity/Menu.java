@@ -1,5 +1,6 @@
 package crelle.family.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -35,7 +36,7 @@ public class Menu {
     private String url;
 
     @ApiModelProperty(value = "前台页面路径")
-    @Column(name = "paht")
+    @Column(name = "path")
     private String path;
 
     @ApiModelProperty(value = "前台组件名称")
@@ -59,12 +60,23 @@ public class Menu {
     private String requireAuth;
 
     @ApiModelProperty(value = "父菜单标识")
-    @Column(name = "parent_id")
-    private String parentId;
+    @Column(name = "parent_id",insertable = false,updatable = false)
+    private Long parentId;
 
     @ApiModelProperty(value = "是否可用")
     @Column(name = "enabled")
     private String enabled;
+
+
+    @OneToMany(targetEntity = Menu.class, mappedBy = "parentMenu", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Menu> childrenMenus = new HashSet<>();
+
+    //解决循环嵌套问题，忽略关联对象任意一方的结果输出
+    @JsonIgnore
+    @ManyToOne(targetEntity = Menu.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    private Menu parentMenu;
+
 
     @ApiModelProperty(value = "角色列表")
     @JsonIgnoreProperties(value = "menus")
@@ -136,12 +148,28 @@ public class Menu {
         this.requireAuth = requireAuth;
     }
 
-    public String getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(String parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public Set<Menu> getChildrenMenus() {
+        return childrenMenus;
+    }
+
+    public void setChildrenMenus(Set<Menu> childrenMenus) {
+        this.childrenMenus = childrenMenus;
+    }
+
+    public Menu getParentMenu() {
+        return parentMenu;
+    }
+
+    public void setParentMenu(Menu parentMenu) {
+        this.parentMenu = parentMenu;
     }
 
     public String getEnabled() {
@@ -162,10 +190,6 @@ public class Menu {
 
     @Override
     public String toString() {
-        for(Role role: this.getRoles()){
-            role.getUsers().clear();
-            role.getMenus().clear();
-        }
         return "Menu{" +
                 "id=" + id +
                 ", url='" + url + '\'' +
@@ -175,8 +199,10 @@ public class Menu {
                 ", iconCls='" + iconCls + '\'' +
                 ", keepAlive='" + keepAlive + '\'' +
                 ", requireAuth='" + requireAuth + '\'' +
-                ", parentId='" + parentId + '\'' +
+                ", parentId=" + parentId +
                 ", enabled='" + enabled + '\'' +
+                ", childrenMenus=" + childrenMenus +
+                ", parentMenu=" + parentMenu +
                 ", roles=" + roles +
                 '}';
     }
