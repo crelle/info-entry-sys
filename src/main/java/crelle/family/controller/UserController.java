@@ -1,10 +1,13 @@
 package crelle.family.controller;
 
+import crelle.family.model.PageBean;
+import crelle.family.model.ao.UserAO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import crelle.family.common.ResponseResult;
@@ -24,7 +27,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/user")
 @Api(tags = "用户服务")
-public class UserController implements BaseController<User> {
+public class UserController implements BaseController<User, UserAO> {
 
     @Autowired
     private UserServiceImpl userService;
@@ -69,6 +72,11 @@ public class UserController implements BaseController<User> {
             responseResult.buildFail(e.getMessage());
         }
         return responseResult;
+    }
+
+    @Override
+    public ResponseResult<Page<User>> pageByCondition(PageBean<UserAO> pageBean) {
+        return null;
     }
 
     @ApiOperation(value = "查询所有用户")

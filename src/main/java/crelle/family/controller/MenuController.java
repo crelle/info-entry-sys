@@ -1,10 +1,13 @@
 package crelle.family.controller;
 
+import crelle.family.model.PageBean;
+import crelle.family.model.ao.MenuAO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +32,7 @@ import java.util.Optional;
 @Api(tags = "菜单服务")
 @RestController
 @RequestMapping(value = "/menu")
-public class MenuController implements BaseController<Menu> {
+public class MenuController implements BaseController<Menu, MenuAO> {
 
     @Autowired
     private MenuService menuService;
@@ -68,6 +71,22 @@ public class MenuController implements BaseController<Menu> {
         }
         return responseResult;
     }
+
+    @ApiOperation(value = "根据条件分页查询菜单")
+    @ApiParam(required = true, name = "id", value = "入参")
+    @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @Override
+    public ResponseResult<Page<Menu>> pageByCondition(@RequestBody PageBean<MenuAO> pageBean) {
+        ResponseResult<Page<Menu>> responseResult = new ResponseResult<>();
+        try {
+            Page<Menu> page = menuService.pageByCondition(pageBean);
+            responseResult.setData(page);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
+    }
+
 
     @ApiOperation(value = "查询所有菜单")
     @ApiParam(required = true, name = "xx", value = "入参")

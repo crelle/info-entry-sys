@@ -3,7 +3,10 @@ package crelle.family.service.impl;
 import crelle.family.common.ResponseResult;
 import crelle.family.common.util.ResultUtils;
 import crelle.family.mapper.UserMapper;
+import crelle.family.model.PageBean;
+import crelle.family.model.ao.UserAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -39,6 +42,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> queryById(Long id) {
         return userDao.findById(id);
+    }
+
+    @Override
+    public Page<User> pageByCondition(PageBean<UserAO> pageBean) {
+        return null;
     }
 
     @Override

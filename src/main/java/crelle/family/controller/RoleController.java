@@ -1,11 +1,14 @@
 package crelle.family.controller;
 
+import crelle.family.model.PageBean;
+import crelle.family.model.ao.RoleAO;
 import crelle.family.model.entity.User;
 import crelle.family.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import crelle.family.common.ResponseResult;
@@ -25,7 +28,7 @@ import java.util.Optional;
 @Api(tags = "角色服务")
 @RestController
 @RequestMapping(value = "/role")
-public class RoleController implements BaseController<Role>{
+public class RoleController implements BaseController<Role, RoleAO>{
 
     @Autowired
     private RoleService roleService;
@@ -61,6 +64,11 @@ public class RoleController implements BaseController<Role>{
             responseResult.buildFail(e.getMessage());
         }
         return responseResult;
+    }
+
+    @Override
+    public ResponseResult<Page<Role>> pageByCondition(PageBean<RoleAO> pageBean) {
+        return null;
     }
 
     @ApiOperation(value = "查询所有角色")

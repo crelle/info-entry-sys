@@ -1,12 +1,21 @@
 package crelle.family.service.impl;
 
+import crelle.family.model.PageBean;
+import crelle.family.model.ao.MenuAO;
 import crelle.family.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import crelle.family.dao.MenuDao;
 import crelle.family.model.entity.Menu;
 import crelle.family.service.MenuService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +46,14 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<Menu> queryAll() {
         return menuDao.findAll();
+    }
+
+    @Override
+    public Page<Menu> pageByCondition(PageBean<MenuAO> pageBean) {
+        Specification specification = null;
+        Pageable pageable = PageRequest.of(pageBean.getPageNo(), pageBean.getPageSize(), Sort.by(Sort.Direction.ASC, "id"));
+        Page<Menu> page = menuDao.findAll(specification, pageable);
+        return page;
     }
 
     @Override

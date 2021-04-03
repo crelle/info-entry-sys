@@ -1,10 +1,13 @@
 package crelle.family.service.impl;
 
 import crelle.family.dao.RoleDao;
+import crelle.family.model.PageBean;
+import crelle.family.model.ao.RoleAO;
 import crelle.family.model.entity.Role;
 import crelle.family.service.BaseService;
 import crelle.family.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +39,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<Role> queryAll() {
         return roleDao.findAll();
+    }
+
+    @Override
+    public Page<Role> pageByCondition(PageBean<RoleAO> pageBean) {
+        return null;
     }
 
     @Override

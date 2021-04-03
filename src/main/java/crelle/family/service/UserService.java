@@ -1,5 +1,6 @@
 package crelle.family.service;
 
+import crelle.family.model.ao.UserAO;
 import crelle.family.model.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
  * @date:2021/3/23
  * @description:XX
  **/
-public interface UserService  extends UserDetailsService,BaseService<User> {
+public interface UserService  extends UserDetailsService,BaseService<User, UserAO> {
 
 
 
