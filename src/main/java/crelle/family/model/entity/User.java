@@ -70,7 +70,7 @@ public class User implements UserDetails {
     //用户为主表,角色为从表
     @ApiModelProperty(value = "角色列表")
     @JsonIgnoreProperties(value = "users")
-    @ManyToMany(targetEntity = Role.class ,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Role.class ,fetch = FetchType.EAGER,cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")})

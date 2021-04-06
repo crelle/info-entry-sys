@@ -25,34 +25,20 @@ import java.util.Optional;
  **/
 public interface BaseController<T,A> {
 
-    @ApiOperation(value = "xx")
-    @ApiParam(required = true, name = "xx", value = "入参")
-    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+
     ResponseResult<T> create(@RequestBody T obj);
 
 
-    @ApiOperation(value = "xx")
-    @ApiParam(required = true, name = "id", value = "入参")
-    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<Optional<T>> queryById(@PathVariable Long id);
 
-    @ApiOperation(value = "xx")
-    @ApiParam(required = true, name = "id", value = "入参")
-    @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+
     public ResponseResult<Page<T>> pageByCondition(@RequestBody PageBean<A> pageBean);
 
 
-    @ApiParam(required = true, name = "xx", value = "入参")
-    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<List<T>> queryAll();
 
-    @ApiOperation(value = "xx")
-    @ApiParam(required = true, name = "xx", value = "入参")
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+
     public ResponseResult<String> updateById(@PathVariable Long id, @RequestBody T obj);
 
-    @ApiOperation(value = "xx")
-    @ApiParam(required = true, name = "xx", value = "入参")
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<String> deleteById(@PathVariable Long id);
 }
