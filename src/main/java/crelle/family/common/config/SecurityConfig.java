@@ -55,8 +55,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //明文
     @Bean
-    NoOpPasswordEncoder passwordEncoder(){
+    NoOpPasswordEncoder passwordEncoder() {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+    }
+
+    @Bean
+    RestAccessDeniedHandler accessDeniedHandler() {
+        return new RestAccessDeniedHandler();
     }
 
     @Override
@@ -68,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/login.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode",
 //                "/user/**" , "/role/**" , "/menu/**" ,
-                "/swagger-ui.html","/swagger-resources/**","/webjars/**","/v2/**","/api/**");
+                "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/**", "/api/**");
     }
 
     @Bean
@@ -88,7 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 out.close();
             }
         });
-            loginFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandler() {
+        loginFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandler() {
             @Override
             public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
                 response.setContentType("application/json;charset=utf-8");
@@ -157,7 +162,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         out.flush();
                         out.close();
                     }
-                });
+                })
+                //自定处理accessDeniedException异常
+                .and()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+
         http.addFilterAt(loginFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

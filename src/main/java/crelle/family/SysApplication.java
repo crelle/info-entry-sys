@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import javax.persistence.Entity;
 
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "crelle.family.*")
 @MapperScan(basePackages = "crelle.family.mapper")
 @EntityScan("crelle.family.model.entity")
 public class SysApplication {
