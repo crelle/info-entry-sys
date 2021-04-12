@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -40,10 +41,13 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
         for (Menu menu : menus) {
             if (antPathMatcher.match(menu.getUrl(), requestUrl)) {
                 Set<Role> roles = menu.getRoles();
-                Role[] roleArr = (Role[]) roles.toArray();
+                ArrayList<Role> roleList = new ArrayList<Role>(roles);
+                if (CollectionUtils.isEmpty(roles)) {
+                    continue;
+                }
                 String[] str = new String[roles.size()];
                 for (int i = 0; i < roles.size(); i++) {
-                    str[i] = roleArr[i].getName();
+                    str[i] = roleList.get(i).getName();
                 }
                 return SecurityConfig.createList(str);
             }

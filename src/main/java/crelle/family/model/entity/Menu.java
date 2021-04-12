@@ -60,7 +60,7 @@ public class Menu {
     private boolean requireAuth;
 
     @ApiModelProperty(value = "父菜单标识")
-    @Column(name = "parent_id",insertable = false,updatable = false)
+    @Column(name = "parent_id", insertable = false, updatable = false)
     private Long parentId;
 
     @ApiModelProperty(value = "是否可用")
@@ -73,14 +73,14 @@ public class Menu {
 
     //解决循环嵌套问题，忽略关联对象任意一方的结果输出
     @JsonIgnore
-    @ManyToOne(targetEntity = Menu.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @ManyToOne(targetEntity = Menu.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Menu parentMenu;
 
 
     @ApiModelProperty(value = "角色列表")
     @JsonIgnoreProperties(value = "menus")
-    @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = {CascadeType.MERGE,CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
     public Long getId() {
@@ -189,6 +189,10 @@ public class Menu {
 
     @Override
     public String toString() {
+        for (Role role : this.getRoles()) {
+            role.getUsers().clear();
+            role.getMenus().clear();
+        }
         return "Menu{" +
                 "id=" + id +
                 ", url='" + url + '\'' +

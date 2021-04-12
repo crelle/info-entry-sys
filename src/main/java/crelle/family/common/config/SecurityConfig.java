@@ -88,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 out.close();
             }
         });
-        loginFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandler() {
+            loginFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandler() {
             @Override
             public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
                 response.setContentType("application/json;charset=utf-8");
@@ -151,7 +151,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         PrintWriter out = resp.getWriter();
                         ResponseResult responseResult = ResultUtils.fail("访问失败!");
                         if (authException instanceof InsufficientAuthenticationException) {
-                            responseResult.setMessage("请求失败，请联系管理员!");
+                            responseResult.setMessage("没有登录认证，请先登录!");
                         }
                         out.write(new ObjectMapper().writeValueAsString(responseResult));
                         out.flush();

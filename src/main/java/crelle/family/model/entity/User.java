@@ -13,17 +13,17 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- *@author:crelle
- *@date:2021/3/18
- *@title:
- *@description:
- *@params:
- *@return:
- *@throw:
+ * @author:crelle
+ * @date:2021/3/18
+ * @title:
+ * @description:
+ * @params:
+ * @return:
+ * @throw:
  */
 @Entity(name = "user")
 @Table(name = "user")
-@ApiModel(value = "User",description = "用户实体")
+@ApiModel(value = "User", description = "用户实体")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,10 +70,10 @@ public class User implements UserDetails {
     //用户为主表,角色为从表
     @ApiModelProperty(value = "角色列表")
     @JsonIgnoreProperties(value = "users")
-    @ManyToMany(targetEntity = Role.class ,fetch = FetchType.EAGER,cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")})
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles;
 
     public Long getId() {
@@ -180,6 +180,10 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
+        for (Role r : this.roles) {
+            r.getUsers().clear();
+        }
+
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
