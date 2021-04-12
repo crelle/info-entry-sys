@@ -36,6 +36,13 @@ public class LoginController {
         return ResultUtils.fail("尚未登录，请登录!");
     }
 
+    @ApiOperation(value = "注销")
+    @ApiParam(required = true, name = "", value = "入参")
+    @GetMapping("/logout")
+    public ResponseResult<String> logout() {
+        return ResultUtils.fail("尚未登录，请登录!");
+    }
+
     @GetMapping("/verifyCode")
     @ApiOperation(value = "获取验证码")
     @ApiParam(required = true, name = "request and resp", value = "入参")
