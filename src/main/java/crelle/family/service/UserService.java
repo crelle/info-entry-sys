@@ -14,9 +14,7 @@ import java.util.Optional;
  * @date:2021/3/23
  * @description:XX
  **/
-public interface UserService  extends UserDetailsService,BaseService<User, UserAO> {
+public interface UserService extends UserDetailsService, BaseService<User, UserAO> {
 
-
-
-
+    User findUserByUsernameAndPassword(UserAO userAO);
 }

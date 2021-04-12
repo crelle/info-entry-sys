@@ -90,9 +90,71 @@ class SysAplicationTests {
 
     }
 
+    //初始化菜单
+    @Test
+    void initMenu() {
+        Menu menu1 = new Menu();
+        menu1.setName("系统管理");
+        menu1.setPath("/sys/component/");
+        menu1.setUrl("/sys/");
+        menu1.setRequireAuth(true);
+        menu1.setEnabled(true);
+        menu1.setKeepAlive(true);
+        menuDao.save(menu1);
+
+        Menu menu2 = new Menu();
+        menu2.setName("植物管理");
+        menu2.setPath("/plant/component/");
+        menu2.setUrl("/plant/");
+        menu2.setRequireAuth(true);
+        menu2.setEnabled(true);
+        menu2.setKeepAlive(true);
+        menuDao.save(menu2);
+
+        Menu menu3 = new Menu();
+        menu3.setName("学科管理");
+        menu3.setPath("/object/component/");
+        menu3.setUrl("/object/");
+        menu3.setRequireAuth(true);
+        menu3.setEnabled(true);
+        menu3.setKeepAlive(true);
+        menuDao.save(menu3);
+
+        Menu menu4 = new Menu();
+        menu4.setName("权限管理");
+        menu4.setPath("/sys/privilege/");
+        menu4.setUrl("/privilege/");
+        menu4.setRequireAuth(true);
+        menu4.setEnabled(true);
+        menu4.setKeepAlive(true);
+        menu4.setParentId(new Long(1));
+        menuDao.save(menu4);
+
+        Menu menu5 = new Menu();
+        menu5.setName("数学");
+        menu5.setPath("/object/math/");
+        menu5.setUrl("/math/");
+        menu5.setRequireAuth(true);
+        menu5.setEnabled(true);
+        menu5.setKeepAlive(true);
+        menu5.setParentId(new Long(3));
+        menuDao.save(menu5);
+
+        Menu menu6 = new Menu();
+        menu6.setName("语文");
+        menu6.setPath("/object/chinese/");
+        menu6.setUrl("/chinese/");
+        menu6.setRequireAuth(true);
+        menu6.setEnabled(true);
+        menu6.setKeepAlive(true);
+        menu6.setParentId(new Long(3));
+        menuDao.save(menu6);
+
+    }
+
     //为角色初始化菜单
     @Test
-    void initMenuWithAdmin() {
+    void initMenuWithRole() {
         List<Menu> menus = menuDao.findAll();
         Set<Menu> adminMenus = new HashSet<>();
         Set<Menu> userMenus = new HashSet<>();
@@ -126,28 +188,5 @@ class SysAplicationTests {
         });
 
     }
-
-//    //初始化user角色对应的菜单
-//    @Test
-//    void initMenuWithUser() {
-//        List<Role> roles = roleDao.findAll();
-//        List<Menu> userMenus = menuDao.findAll();
-//        Set<Role> roleSet = roles.stream().filter(role -> role.getName().equals("ROLE_user")).collect(Collectors.toSet());
-//
-//        userMenus = userMenus.stream().filter(menu -> menu.getName().equals("植物管理") || menu.getName().equals("学科管理")).collect(Collectors.toList());
-//        userMenus.forEach(menu -> menu.setRoles(roleSet));
-//        menuDao.saveAll(userMenus);
-//    }
-//
-//    //初始化guest角色对应的菜单
-//    @Test
-//    void initMenuWithGuest() {
-//        List<Role> roles = roleDao.findAll();
-//        List<Menu> guestMenus = menuDao.findAll();
-//        Set<Role> roleSet = roles.stream().filter(role -> role.getName().equals("ROLE_guest")).collect(Collectors.toSet());
-//        guestMenus = guestMenus.stream().filter(menu -> menu.getName().equals("植物管理")).collect(Collectors.toList());
-//        guestMenus.forEach(menu -> menu.setRoles(roleSet));
-//        menuDao.saveAll(guestMenus);
-//    }
 
 }

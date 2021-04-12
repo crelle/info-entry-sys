@@ -89,8 +89,42 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>dev</id><!--执行打包命令时将使用此处的id进行定位-->
+            <properties>
+                <env>dev</env><!--此处为对应的环境放置配置文件的目录，上一步创建的为dev,这里设置为dev。下面两个目录配置参照此处-->
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault><!--此处将dev设置为默认环境-->
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
+        <finalName>fes-menu</finalName>
         <resources>
+            <resource><!--此处的设置是打包的时候排除不相关的目录-->
+                <directory>src/main/resources/env</directory><!--此处设置为上面在resources目录下创建的文件夹-->
+                <excludes>
+                    <exclude>dev/*</exclude>
+                    <exclude>test/*</exclude>
+                    <exclude>prod/*</exclude>
+                </excludes>
+                <filtering>true</filtering><!--开启过滤器，此处不能忽略！-->
+            </resource>
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
@@ -99,6 +133,9 @@
                 <includes>
                     <include>**/*.xml</include>
                 </includes>
+            </resource>
+            <resource><!--此处设置是配置相应配置文件夹的路径-->
+                <directory>src/main/resources/env/${env}</directory>
             </resource>
         </resources>
         <plugins>

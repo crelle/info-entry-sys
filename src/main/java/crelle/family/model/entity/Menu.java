@@ -53,11 +53,11 @@ public class Menu {
 
     @ApiModelProperty(value = "是否存活")
     @Column(name = "keep_alive")
-    private String keepAlive;
+    private boolean keepAlive;
 
     @ApiModelProperty(value = "是否需要鉴权")
     @Column(name = "require_auth")
-    private String requireAuth;
+    private boolean requireAuth;
 
     @ApiModelProperty(value = "父菜单标识")
     @Column(name = "parent_id",insertable = false,updatable = false)
@@ -65,7 +65,7 @@ public class Menu {
 
     @ApiModelProperty(value = "是否可用")
     @Column(name = "enabled")
-    private String enabled;
+    private boolean enabled;
 
 
     @OneToMany(targetEntity = Menu.class, mappedBy = "parentMenu", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -82,7 +82,6 @@ public class Menu {
     @JsonIgnoreProperties(value = "menus")
     @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = {CascadeType.MERGE,CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private Set<Role> roles = new HashSet<>();
-
 
     public Long getId() {
         return id;
@@ -132,19 +131,19 @@ public class Menu {
         this.iconCls = iconCls;
     }
 
-    public String getKeepAlive() {
+    public boolean isKeepAlive() {
         return keepAlive;
     }
 
-    public void setKeepAlive(String keepAlive) {
+    public void setKeepAlive(boolean keepAlive) {
         this.keepAlive = keepAlive;
     }
 
-    public String getRequireAuth() {
+    public boolean isRequireAuth() {
         return requireAuth;
     }
 
-    public void setRequireAuth(String requireAuth) {
+    public void setRequireAuth(boolean requireAuth) {
         this.requireAuth = requireAuth;
     }
 
@@ -154,6 +153,14 @@ public class Menu {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Set<Menu> getChildrenMenus() {
@@ -170,14 +177,6 @@ public class Menu {
 
     public void setParentMenu(Menu parentMenu) {
         this.parentMenu = parentMenu;
-    }
-
-    public String getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(String enabled) {
-        this.enabled = enabled;
     }
 
     public Set<Role> getRoles() {
@@ -197,10 +196,10 @@ public class Menu {
                 ", component='" + component + '\'' +
                 ", name='" + name + '\'' +
                 ", iconCls='" + iconCls + '\'' +
-                ", keepAlive='" + keepAlive + '\'' +
-                ", requireAuth='" + requireAuth + '\'' +
+                ", keepAlive=" + keepAlive +
+                ", requireAuth=" + requireAuth +
                 ", parentId=" + parentId +
-                ", enabled='" + enabled + '\'' +
+                ", enabled=" + enabled +
                 ", childrenMenus=" + childrenMenus +
                 ", parentMenu=" + parentMenu +
                 ", roles=" + roles +

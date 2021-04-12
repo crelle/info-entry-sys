@@ -78,4 +78,12 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public User findUserByUsernameAndPassword(UserAO userAO) {
+        User user = userDao.findUserByUsernameAndPassword(userAO.getUsername(),userAO.getPassword());
+        if (user == null) {
+            throw new UsernameNotFoundException("用户不存在");
+        }
+        return user;
+    }
 }

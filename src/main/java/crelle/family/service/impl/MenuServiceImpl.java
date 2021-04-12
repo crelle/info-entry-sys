@@ -3,6 +3,7 @@ package crelle.family.service.impl;
 import crelle.family.model.PageBean;
 import crelle.family.model.ao.MenuAO;
 import crelle.family.service.BaseService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import crelle.family.dao.MenuDao;
 import crelle.family.model.entity.Menu;
 import crelle.family.service.MenuService;
 
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +52,22 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Page<Menu> pageByCondition(PageBean<MenuAO> pageBean) {
-        Specification specification = null;
+        Specification<Menu> specification = new Specification<Menu>() {
+            @Override
+            public Predicate toPredicate(Root<Menu> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                //条件1
+                Predicate predicate1 = null;
+                if (StringUtils.isNotBlank(pageBean.getCondition().getName())) {
+                    predicate1 = criteriaBuilder.equal(root.get("name"), pageBean.getCondition().getName());
+                }
+                //条件3
+                Predicate predicate2 = criteriaBuilder.equal(root.get("requireAuth"), pageBean.getCondition().isRequireAuth());
+                //条件4
+                Predicate predicate3 = criteriaBuilder.equal(root.get("enabled"), pageBean.getCondition().isEnabled());
+                criteriaQuery.where(predicate1, predicate2, predicate3);
+                return null;
+            }
+        };
         Pageable pageable = PageRequest.of(pageBean.getPageNo(), pageBean.getPageSize(), Sort.by(Sort.Direction.ASC, "id"));
         Page<Menu> page = menuDao.findAll(specification, pageable);
         return page;

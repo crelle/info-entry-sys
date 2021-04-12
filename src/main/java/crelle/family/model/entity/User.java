@@ -76,22 +76,6 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")})
     private List<Role> roles;
 
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public Long getId() {
         return id;
     }
@@ -100,8 +84,26 @@ public class User implements UserDetails {
         this.id = id;
     }
 
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : getRoles()) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
@@ -132,6 +134,42 @@ public class User implements UserDetails {
         this.userEmail = userEmail;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public List<Role> getRoles() {
         return roles;
     }
@@ -141,50 +179,7 @@ public class User implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-        return authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return accountNonExpired;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return accountNonLocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-
-    @Override
     public String toString() {
-        for (Role r: this.roles){
-            r.getUsers().clear();
-        }
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +

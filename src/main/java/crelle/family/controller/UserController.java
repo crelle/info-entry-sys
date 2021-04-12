@@ -1,5 +1,6 @@
 package crelle.family.controller;
 
+import crelle.family.common.util.ResultUtils;
 import crelle.family.model.PageBean;
 import crelle.family.model.ao.UserAO;
 import io.swagger.annotations.Api;
@@ -54,6 +55,22 @@ public class UserController implements BaseController<User, UserAO> {
             }
             User user1 = userService.create(user);
             responseResult.setData(user1);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
+    }
+
+    @ApiOperation(value = "用户登录")
+    @ApiParam(required = true, name = "user", value = "入参")
+    @RequestMapping(value = "/xx", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> login(@RequestBody UserAO userAO ) {
+        ResponseResult<String> responseResult = new ResponseResult<String>();
+        try {
+           User user =  userService.findUserByUsernameAndPassword(userAO);
+           if(null == user){
+               return ResultUtils.fail("用户或者密码不正确！");
+           }
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
@@ -121,6 +138,8 @@ public class UserController implements BaseController<User, UserAO> {
         }
         return responseResult;
     }
+
+
 
 
 }
