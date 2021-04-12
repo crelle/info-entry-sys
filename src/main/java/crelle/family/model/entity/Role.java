@@ -1,5 +1,6 @@
 package crelle.family.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -47,6 +48,7 @@ public class Role {
     private Set<Menu> menus = new HashSet<>();
 
     //配置角色和用户多对多关系
+    @JsonIgnore
     @JsonIgnoreProperties(value = "roles")
     @ManyToMany(targetEntity = User.class, mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<User> users = new HashSet<>();
