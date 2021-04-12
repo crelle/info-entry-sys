@@ -68,19 +68,19 @@ public class Menu {
     private boolean enabled;
 
 
-    @OneToMany(targetEntity = Menu.class, mappedBy = "parentMenu", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Menu.class, mappedBy = "parentMenu", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Menu> childrenMenus = new HashSet<>();
 
     //解决循环嵌套问题，忽略关联对象任意一方的结果输出
     @JsonIgnore
-    @ManyToOne(targetEntity = Menu.class, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @ManyToOne(targetEntity = Menu.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Menu parentMenu;
 
 
     @ApiModelProperty(value = "角色列表")
     @JsonIgnoreProperties(value = "menus")
-    @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = {CascadeType.MERGE,CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = {CascadeType.MERGE,CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
     public Long getId() {

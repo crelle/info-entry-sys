@@ -30,7 +30,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             throw new AuthenticationServiceException(
                     "Authentication method not supported: " + request.getMethod());
         }
-        String verify_code = (String) request.getSession().getAttribute("verify_code");
+        String verifyCode = (String) request.getSession().getAttribute("verifyCode");
         if (request.getContentType().equals(MediaType.APPLICATION_JSON_VALUE) || request.getContentType().equals(MediaType.APPLICATION_JSON_UTF8_VALUE)) {
             Map<String, String> loginData = new HashMap<>();
             try {
@@ -38,7 +38,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             } catch (IOException e) {
             }finally {
                 String code = loginData.get("code");
-//                checkCode(response, code, verify_code);
+                checkCode(response, code, verifyCode);
             }
             String username = loginData.get(getUsernameParameter());
             String password = loginData.get(getPasswordParameter());
@@ -54,13 +54,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             setDetails(request, authRequest);
             return this.getAuthenticationManager().authenticate(authRequest);
         } else {
-//            checkCode(response, request.getParameter("code"), verify_code);
+            checkCode(response, request.getParameter("code"), verifyCode);
             return super.attemptAuthentication(request, response);
         }
     }
 
-    public void checkCode(HttpServletResponse resp, String code, String verify_code) {
-        if (code == null || verify_code == null || "".equals(code) || !verify_code.toLowerCase().equals(code.toLowerCase())) {
+    public void checkCode(HttpServletResponse resp, String code, String verifyCode) {
+        if (code == null || verifyCode == null || "".equals(code) || !verifyCode.toLowerCase().equals(code.toLowerCase())) {
             //验证码不正确
             throw new AuthenticationServiceException("验证码不正确");
         }
