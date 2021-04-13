@@ -41,8 +41,8 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Optional<Menu> queryById(Long id) {
-        return menuDao.findById(id);
+    public Menu queryById(Long id) {
+        return menuDao.findById(id).get();
     }
 
     @Override

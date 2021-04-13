@@ -5,7 +5,9 @@ import crelle.family.common.util.ResultUtils;
 import crelle.family.mapper.UserMapper;
 import crelle.family.model.PageBean;
 import crelle.family.model.ao.UserAO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,8 +42,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> queryById(Long id) {
-        return userDao.findById(id);
+    public User queryById(Long id) {
+        return userDao.findById(id).get();
     }
 
     @Override
@@ -56,10 +58,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int update(Long id, User user) {
-        if (null == userDao.findById(id)) {
+        Optional<User> userOpt = userDao.findById(id);
+        if (!userOpt.isPresent()) {
             return 0;
         }
-        userDao.save(user);
+        User userOld = userOpt.get();
+        //忽略id和roles属性的拷贝,不然会报id为null错误导致无法更新
+        BeanUtils.copyProperties(user,userOld,"id","roles");
+        userDao.save(userOld);
         return 1;
     }
 

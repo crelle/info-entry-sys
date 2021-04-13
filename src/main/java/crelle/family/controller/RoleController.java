@@ -55,10 +55,10 @@ public class RoleController implements BaseController<Role, RoleAO>{
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<Optional<Role>> queryById(@PathVariable Long id) {
-        ResponseResult<Optional<Role>> responseResult = new ResponseResult<>();
+    public ResponseResult<Role> queryById(@PathVariable Long id) {
+        ResponseResult<Role> responseResult = new ResponseResult<>();
         try {
-            Optional<Role> role = roleService.queryById(id);
+            Role role = roleService.queryById(id);
             responseResult.setData(role);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());

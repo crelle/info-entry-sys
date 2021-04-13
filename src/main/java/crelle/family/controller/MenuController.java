@@ -61,11 +61,11 @@ public class MenuController implements BaseController<Menu, MenuAO> {
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Optional<Menu>> queryById(Long id) {
-        ResponseResult<Optional<Menu>> responseResult = new ResponseResult<>();
+    public ResponseResult<Menu> queryById(Long id) {
+        ResponseResult<Menu> responseResult = new ResponseResult<>();
         try {
-            Optional<Menu> menuList = menuService.queryById(id);
-            responseResult.setData(menuList);
+            Menu menu = menuService.queryById(id);
+            responseResult.setData(menu);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }

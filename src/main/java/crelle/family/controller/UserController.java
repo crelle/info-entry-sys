@@ -94,10 +94,10 @@ public class UserController implements BaseController<User, UserAO> {
     @ApiOperation(value = "根据用户标识查询用户")
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<Optional<User>> queryById(@PathVariable Long id) {
-        ResponseResult<Optional<User>> responseResult = new ResponseResult<>();
+    public ResponseResult<User> queryById(@PathVariable Long id) {
+        ResponseResult<User> responseResult = new ResponseResult<>();
         try {
-            Optional<User> user = userService.queryById(id);
+            User user = userService.queryById(id);
             responseResult.setData(user);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());

@@ -29,7 +29,7 @@ public interface BaseController<T,A> {
     ResponseResult<T> create(@RequestBody T obj);
 
 
-    public ResponseResult<Optional<T>> queryById(@PathVariable Long id);
+    public ResponseResult<T> queryById(@PathVariable Long id);
 
 
     public ResponseResult<Page<T>> pageByCondition(@RequestBody PageBean<A> pageBean);

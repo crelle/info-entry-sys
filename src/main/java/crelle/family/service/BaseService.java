@@ -18,7 +18,7 @@ public interface BaseService<T,A> {
 
     T create(T role);
 
-    Optional<T> queryById(Long id);
+    T queryById(Long id);
 
     List<T> queryAll();
 
