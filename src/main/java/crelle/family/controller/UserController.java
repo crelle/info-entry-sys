@@ -31,6 +31,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/user")
 @Api(tags = "用户服务")
+@CrossOrigin
 public class UserController implements BaseController<User, UserAO> {
 
     @Autowired

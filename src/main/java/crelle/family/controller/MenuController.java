@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import crelle.family.common.ResponseResult;
 import crelle.family.model.entity.Menu;
 import crelle.family.model.entity.Role;
@@ -32,6 +29,7 @@ import java.util.Optional;
 @Api(tags = "菜单服务")
 @RestController
 @RequestMapping(value = "/menu")
+@CrossOrigin
 public class MenuController implements BaseController<Menu, MenuAO> {
 
     @Autowired

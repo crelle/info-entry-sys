@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import crelle.family.common.ResponseResult;
 import crelle.family.dao.RoleDao;
@@ -28,6 +29,7 @@ import java.util.Optional;
 @Api(tags = "角色服务")
 @RestController
 @RequestMapping(value = "/role")
+@CrossOrigin
 public class RoleController implements BaseController<Role, RoleAO>{
 
     @Autowired
@@ -43,6 +45,11 @@ public class RoleController implements BaseController<Role, RoleAO>{
     public ResponseResult<Role> create(@RequestBody Role role) {
         ResponseResult<Role> responseResult = new ResponseResult<>();
         try {
+            List<Role> roles = roleService.findRolesByName(role.getName());
+            if(!CollectionUtils.isEmpty(roles)){
+                 responseResult.buildFail("新增的角色已经存在!");
+                return responseResult;
+            }
             Role newRole = roleService.create(role);
             responseResult.setData(newRole);
         } catch (Exception e) {
