@@ -45,7 +45,11 @@ public class MenuController implements BaseController<Menu, MenuAO> {
             if (checkAddMenuParams(menu, responseResult)) {
                 return responseResult;
             }
-
+            List<Menu> menus = menuService.findMenusByName(menu.getName());
+            if (!CollectionUtils.isEmpty(menus)) {
+                responseResult.buildFail("菜单已经存在,无法创建！");
+                return responseResult;
+            }
             Menu menu1 = menuService.create(menu);
             responseResult.setData(menu1);
 
@@ -106,7 +110,7 @@ public class MenuController implements BaseController<Menu, MenuAO> {
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> updateById(Long id, Menu menu) {
-        ResponseResult<Menu> responseResult = new ResponseResult<>();
+        ResponseResult<String> responseResult = new ResponseResult<>();
         try {
             int result = menuService.update(id, menu);
             if (0 == result) {
@@ -115,7 +119,7 @@ public class MenuController implements BaseController<Menu, MenuAO> {
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
-        return null;
+        return responseResult;
     }
 
     @ApiOperation(value = "根据菜单标识删除菜单")
@@ -125,6 +129,7 @@ public class MenuController implements BaseController<Menu, MenuAO> {
     public ResponseResult<String> deleteById(Long id) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
+            menuService.queryById(id);
             menuService.deleteById(id);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
@@ -162,10 +167,10 @@ public class MenuController implements BaseController<Menu, MenuAO> {
             responseResult.buildFail("菜单对应的页面组件为空！");
             return true;
         }
-        if (CollectionUtils.isEmpty(menu.getRoles())) {
-            responseResult.buildFail("菜单对应的角色为空！");
-            return true;
-        }
+//        if (CollectionUtils.isEmpty(menu.getRoles())) {
+//            responseResult.buildFail("菜单对应的角色为空！");
+//            return true;
+//        }
         if (!CollectionUtils.isEmpty(menu.getRoles())) {
             for (Role role : menu.getRoles()) {
                 if (StringUtils.isNotBlank(String.valueOf(role.getId()))) {

@@ -28,7 +28,7 @@ public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @ApiModelProperty(value = "菜单标识")
+    @ApiModelProperty(value = "菜单标识",hidden = true)
     private Long id;
 
     @ApiModelProperty(value = "后台资源地址")
@@ -59,7 +59,7 @@ public class Menu {
     @Column(name = "require_auth")
     private boolean requireAuth;
 
-    @ApiModelProperty(value = "父菜单标识")
+    @ApiModelProperty(value = "父菜单标识",hidden = true)
     @Column(name = "parent_id", insertable = false, updatable = false)
     private Long parentId;
 
@@ -68,17 +68,19 @@ public class Menu {
     private boolean enabled;
 
 
+    @ApiModelProperty(value = "子菜单集合",hidden = true)
     @OneToMany(targetEntity = Menu.class, mappedBy = "parentMenu", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Menu> childrenMenus = new HashSet<>();
 
     //解决循环嵌套问题，忽略关联对象任意一方的结果输出
+    @ApiModelProperty(value = "父亲菜单" ,hidden = true)
     @JsonIgnore
     @ManyToOne(targetEntity = Menu.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Menu parentMenu;
 
 
-    @ApiModelProperty(value = "角色列表")
+    @ApiModelProperty(value = "角色列表",hidden = true)
     @JsonIgnoreProperties(value = "menus")
     @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();

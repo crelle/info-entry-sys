@@ -15,5 +15,6 @@ import java.util.List;
  **/
 public interface MenuService extends BaseService<Menu, MenuAO> {
 
+    List<Menu> findMenusByName(String name);
 
 }

@@ -4,6 +4,7 @@ import crelle.family.model.PageBean;
 import crelle.family.model.ao.MenuAO;
 import crelle.family.service.BaseService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
@@ -75,15 +76,23 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public int update(Long id, Menu menu) {
-        if (null == menuDao.findById(id)) {
+            Optional<Menu> menuOpt = menuDao.findById(id);
+        if (!menuOpt.isPresent()) {
             return 0;
         }
-        menuDao.save(menu);
+        Menu oldMenu = menuOpt.get();
+        BeanUtils.copyProperties(menu,oldMenu,"id","parentId","childrenMenus","parentMenu","roles");
+        menuDao.save(oldMenu);
         return 1;
     }
 
     @Override
     public void deleteById(Long id) {
         menuDao.deleteById(id);
+    }
+
+    @Override
+    public List<Menu> findMenusByName(String name) {
+        return menuDao.findMenusByName(name);
     }
 }
