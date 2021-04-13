@@ -2,6 +2,7 @@ package crelle.family.service;
 
 import crelle.family.model.ao.UserAO;
 import crelle.family.model.entity.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -17,4 +18,8 @@ import java.util.Optional;
 public interface UserService extends UserDetailsService, BaseService<User, UserAO> {
 
     User findUserByUsernameAndPassword(UserAO userAO);
+
+    List<User> findUsersByUsername(String username);
+
+    User findUserByUsername(String username);
 }

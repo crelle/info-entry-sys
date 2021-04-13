@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import crelle.family.common.ResponseResult;
 import crelle.family.model.entity.User;
@@ -53,8 +54,13 @@ public class UserController implements BaseController<User, UserAO> {
                 responseResult.buildFail("密码为空！");
                 return responseResult;
             }
-            User user1 = userService.create(user);
-            responseResult.setData(user1);
+            List<User> users = userService.findUsersByUsername(user.getUsername());
+            if (!CollectionUtils.isEmpty(users)) {
+                responseResult.buildFail("用户名已经被占用！");
+                return responseResult;
+            }
+            User user2 = userService.create(user);
+            responseResult.setData(user2);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
@@ -64,13 +70,13 @@ public class UserController implements BaseController<User, UserAO> {
     @ApiOperation(value = "用户登录")
     @ApiParam(required = true, name = "user", value = "入参")
     @RequestMapping(value = "/xx", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> login(@RequestBody UserAO userAO ) {
+    public ResponseResult<String> login(@RequestBody UserAO userAO) {
         ResponseResult<String> responseResult = new ResponseResult<String>();
         try {
-           User user =  userService.findUserByUsernameAndPassword(userAO);
-           if(null == user){
-               return ResultUtils.fail("用户或者密码不正确！");
-           }
+            User user = userService.findUserByUsernameAndPassword(userAO);
+            if (null == user) {
+                return ResultUtils.fail("用户或者密码不正确！");
+            }
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
@@ -138,8 +144,6 @@ public class UserController implements BaseController<User, UserAO> {
         }
         return responseResult;
     }
-
-
 
 
 }

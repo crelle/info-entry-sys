@@ -1,11 +1,13 @@
 package crelle.family.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @ApiModelProperty(value = "用户标识")
+    @ApiModelProperty(value = "用户标识", hidden = true)
     private Long id;
 
     @ApiModelProperty(value = "用户名")
@@ -68,7 +70,7 @@ public class User implements UserDetails {
     private boolean enabled;
 
     //用户为主表,角色为从表
-    @ApiModelProperty(value = "角色列表")
+    @ApiModelProperty(value = "角色列表", hidden = true)
     @JsonIgnoreProperties(value = "users")
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "user_role",
@@ -93,6 +95,8 @@ public class User implements UserDetails {
         this.username = username;
     }
 
+    @JsonIgnore
+    @ApiModelProperty(value = "用户权限", hidden = true)
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         for (Role role : getRoles()) {
@@ -180,8 +184,13 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        for (Role r : this.roles) {
-            r.getUsers().clear();
+        if (!CollectionUtils.isEmpty(this.roles)) {
+            for (Role r : this.roles) {
+                r.getUsers().clear();
+            }
+            for (Role r : this.roles) {
+                r.getMenus().clear();
+            }
         }
 
         return "User{" +
