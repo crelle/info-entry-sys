@@ -36,6 +36,8 @@ public class RoleServiceImpl implements RoleService {
         return roleDao.findById(id);
     }
 
+
+
     @Override
     public List<Role> queryAll() {
         return roleDao.findAll();
@@ -60,4 +62,8 @@ public class RoleServiceImpl implements RoleService {
         roleDao.deleteById(id);
     }
 
+    @Override
+    public List<Role> findRolesByName(String name) {
+        return roleDao.findRolesByName(name);
+    }
 }

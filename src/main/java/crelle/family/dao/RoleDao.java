@@ -5,6 +5,8 @@ import crelle.family.model.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.List;
+
 /**
  * @author:crelle
  * @className:RoleDao
@@ -12,5 +14,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * @date:2021/3/23
  * @description:XX
  **/
-public interface RoleDao extends JpaRepository<Role,Long>, JpaSpecificationExecutor<Menu> {
+public interface RoleDao extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Menu> {
+
+    List<Role> findRolesByName(String name);
 }

@@ -68,7 +68,7 @@ public class Menu {
     private boolean enabled;
 
 
-    @OneToMany(targetEntity = Menu.class, mappedBy = "parentMenu", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Menu.class, mappedBy = "parentMenu", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Menu> childrenMenus = new HashSet<>();
 
     //解决循环嵌套问题，忽略关联对象任意一方的结果输出

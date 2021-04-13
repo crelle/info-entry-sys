@@ -3,6 +3,8 @@ package crelle.family.controller;
 import crelle.family.common.util.ResultUtils;
 import crelle.family.model.PageBean;
 import crelle.family.model.ao.UserAO;
+import crelle.family.model.entity.Role;
+import crelle.family.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,6 +36,9 @@ public class UserController implements BaseController<User, UserAO> {
     @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
+    private RoleService roleService;
+
     @ApiOperation(value = "新增用户")
     @ApiParam(required = true, name = "user", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -59,6 +64,9 @@ public class UserController implements BaseController<User, UserAO> {
                 responseResult.buildFail("用户名已经被占用！");
                 return responseResult;
             }
+            //给用户设置默认的访客角色
+            List<Role> roles = roleService.findRolesByName("ROLE_guest");
+            user.setRoles(roles);
             User user2 = userService.create(user);
             responseResult.setData(user2);
         } catch (Exception e) {

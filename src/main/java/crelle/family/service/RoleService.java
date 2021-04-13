@@ -13,7 +13,8 @@ import java.util.Optional;
  * @date:2021/3/23
  * @description:XX
  **/
-public interface RoleService extends BaseService<Role, RoleAO>{
+public interface RoleService extends BaseService<Role, RoleAO> {
 
+    List<Role> findRolesByName(String name);
 
 }
