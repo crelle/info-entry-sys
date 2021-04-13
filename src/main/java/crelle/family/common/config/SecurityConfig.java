@@ -23,6 +23,9 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import crelle.family.common.ResponseResult;
 import crelle.family.common.util.ResultUtils;
 import crelle.family.model.entity.User;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode",
-                "/user/**" , "/role/**" , "/menu/**" ,
+//                "/user/**", "/role/**", "/menu/**",
                 "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/**", "/api/**");
     }
 
@@ -166,7 +169,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //自定处理accessDeniedException异常
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+        //开启controller级别 @CrossOrigin注解,
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 
         http.addFilterAt(loginFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+
 }
