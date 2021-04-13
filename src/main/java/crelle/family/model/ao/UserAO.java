@@ -20,7 +20,7 @@ public class UserAO {
     private String password;
 
     @ApiModelProperty(value = "验证码")
-    private String verifyCode;
+    private String code;
 
     public String getUsername() {
         return username;
@@ -38,12 +38,12 @@ public class UserAO {
         this.password = password;
     }
 
-    public String getVerifyCode() {
-        return verifyCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setVerifyCode(String verifyCode) {
-        this.verifyCode = verifyCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class UserAO {
         return "UserAO{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", verifyCode='" + verifyCode + '\'' +
+                ", code='" + code + '\'' +
                 '}';
     }
 }

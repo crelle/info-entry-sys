@@ -62,6 +62,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     public void checkCode(HttpServletResponse resp, String code, String verifyCode) {
         if (code == null || verifyCode == null || "".equals(code) || !verifyCode.toLowerCase().equals(code.toLowerCase())) {
             //验证码不正确
+            System.out.println("##########################登录传过来的code="+code);
+            System.out.println("##########################Session中的verifyCode="+verifyCode);
             throw new AuthenticationServiceException("验证码不正确");
         }
     }
