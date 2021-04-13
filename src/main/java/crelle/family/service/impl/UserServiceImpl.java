@@ -65,7 +65,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long id) {
-        userDao.deleteById(id);
+        //先查询后删除，不然无法删除
+        Optional<User> user = userDao.findById(id);
+        userDao.deleteById(user.get().getId());
     }
 
     @Override
@@ -80,7 +82,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByUsernameAndPassword(UserAO userAO) {
-        User user = userDao.findUserByUsernameAndPassword(userAO.getUsername(),userAO.getPassword());
+        User user = userDao.findUserByUsernameAndPassword(userAO.getUsername(), userAO.getPassword());
         if (user == null) {
             throw new UsernameNotFoundException("用户不存在");
         }
