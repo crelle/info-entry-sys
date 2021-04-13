@@ -17,4 +17,5 @@ import java.util.List;
 public interface RoleDao extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Menu> {
 
     List<Role> findRolesByName(String name);
+
 }

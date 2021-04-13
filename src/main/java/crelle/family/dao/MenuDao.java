@@ -1,8 +1,11 @@
 package crelle.family.dao;
 
 import crelle.family.model.entity.Menu;
+import crelle.family.model.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+import java.util.List;
 
 /**
  * @author:crelle
@@ -12,5 +15,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * @description:XX
  **/
 public interface MenuDao extends JpaRepository<Menu,Long>, JpaSpecificationExecutor<Menu> {
+
+    List<Menu> findMenusByName(String name);
 
 }

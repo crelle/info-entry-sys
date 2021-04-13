@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -25,7 +26,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @ApiModelProperty(value = "角色标识")
+    @ApiModelProperty(value = "角色标识", hidden = true)
     private Long id;
 
     @Column(name = "name")
@@ -37,8 +38,9 @@ public class Role {
     private String nameZh;
 
     //角色为主表,菜单为从表
+    @ApiModelProperty(value = "菜单列表", hidden = true)
     @JsonIgnoreProperties(value = "roles")
-    @ManyToMany(targetEntity = Menu.class, fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(targetEntity = Menu.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "role_menu",
             //中间表role_menu中角色外键对应的字段名称
             joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
@@ -49,6 +51,7 @@ public class Role {
 
     //配置角色和用户多对多关系
     @JsonIgnore
+    @ApiModelProperty(value = "用户列表", hidden = true)
     @JsonIgnoreProperties(value = "roles")
     @ManyToMany(targetEntity = User.class, mappedBy = "roles", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private Set<User> users = new HashSet<>();
@@ -96,11 +99,15 @@ public class Role {
 
     @Override
     public String toString() {
-        for(User user: this.users){
-            user.getRoles().clear();
+        if (!CollectionUtils.isEmpty(this.users)) {
+            for (User user : this.users) {
+                user.getRoles().clear();
+            }
         }
-        for(Menu menu: this.menus){
-            menu.getRoles().clear();
+        if (!CollectionUtils.isEmpty(this.menus)) {
+            for (Menu menu : this.menus) {
+                menu.getRoles().clear();
+            }
         }
         return "Role{" +
                 "id=" + id +

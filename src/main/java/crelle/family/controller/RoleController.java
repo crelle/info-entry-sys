@@ -3,10 +3,12 @@ package crelle.family.controller;
 import crelle.family.model.PageBean;
 import crelle.family.model.ao.RoleAO;
 import crelle.family.model.entity.User;
+import crelle.family.service.MenuService;
 import crelle.family.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -30,12 +32,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/role")
 @CrossOrigin
-public class RoleController implements BaseController<Role, RoleAO>{
+public class RoleController implements BaseController<Role, RoleAO> {
 
     @Autowired
     private RoleService roleService;
 
-
+    @Autowired
+    private MenuService menuService;
 
 
     @ApiOperation(value = "创建角色")
@@ -46,8 +49,8 @@ public class RoleController implements BaseController<Role, RoleAO>{
         ResponseResult<Role> responseResult = new ResponseResult<>();
         try {
             List<Role> roles = roleService.findRolesByName(role.getName());
-            if(!CollectionUtils.isEmpty(roles)){
-                 responseResult.buildFail("新增的角色已经存在!");
+            if (!CollectionUtils.isEmpty(roles)) {
+                responseResult.buildFail("新增的角色已经存在!");
                 return responseResult;
             }
             Role newRole = roleService.create(role);
@@ -95,12 +98,18 @@ public class RoleController implements BaseController<Role, RoleAO>{
 
     @ApiOperation(value = "根据角色标识更新角色")
     @ApiParam(required = true, name = "id", value = "入参")
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.DELETE,
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> updateById(@PathVariable Long id,@RequestBody Role role) {
+    public ResponseResult<String> updateById(@PathVariable Long id, @RequestBody Role role) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
-            int result = roleService.update(id, role);
+            Role oldRole = roleService.queryById(id);
+            if (null == oldRole) {
+                responseResult.buildFail("要更新的角色不存在！");
+                return responseResult;
+            }
+            BeanUtils.copyProperties(role, oldRole, "id", "menus", "users");
+            int result = roleService.update(id, oldRole);
             if (0 == result) {
                 responseResult.buildFail("没有此角色，无法更新！");
             }
@@ -117,6 +126,7 @@ public class RoleController implements BaseController<Role, RoleAO>{
     public ResponseResult<String> deleteById(@RequestBody Long id) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
+            roleService.queryById(id);
             roleService.deleteById(id);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());

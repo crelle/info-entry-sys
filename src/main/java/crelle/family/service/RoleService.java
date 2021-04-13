@@ -17,4 +17,5 @@ public interface RoleService extends BaseService<Role, RoleAO> {
 
     List<Role> findRolesByName(String name);
 
+
 }
