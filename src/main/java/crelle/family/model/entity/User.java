@@ -72,7 +72,7 @@ public class User implements UserDetails {
     //用户表维护关系表(也就是中间表user_role)
     @ApiModelProperty(value = "角色列表", hidden = true)
     @JsonIgnoreProperties(value = "users")
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})

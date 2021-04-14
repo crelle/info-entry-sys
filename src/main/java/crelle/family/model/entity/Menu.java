@@ -70,13 +70,13 @@ public class Menu {
 
 
     @ApiModelProperty(value = "子菜单集合", hidden = true)
-    @OneToMany(targetEntity = Menu.class, mappedBy = "parentMenu", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(targetEntity = Menu.class, mappedBy = "parentMenu", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Menu> childrenMenus = new HashSet<>();
 
     //解决循环嵌套问题，忽略关联对象任意一方的结果输出
     @ApiModelProperty(value = "父亲菜单", hidden = true)
     @JsonIgnore
-    @ManyToOne(targetEntity = Menu.class, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(targetEntity = Menu.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Menu parentMenu;
 
