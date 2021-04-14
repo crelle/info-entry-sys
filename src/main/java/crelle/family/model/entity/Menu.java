@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.JoinColumnOrFormula;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import javax.websocket.ClientEndpoint;
@@ -28,7 +29,7 @@ public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @ApiModelProperty(value = "菜单标识",hidden = true)
+    @ApiModelProperty(value = "菜单标识", hidden = true)
     private Long id;
 
     @ApiModelProperty(value = "后台资源地址")
@@ -59,7 +60,7 @@ public class Menu {
     @Column(name = "require_auth")
     private boolean requireAuth;
 
-    @ApiModelProperty(value = "父菜单标识",hidden = true)
+    @ApiModelProperty(value = "父菜单标识", hidden = true)
     @Column(name = "parent_id", insertable = false, updatable = false)
     private Long parentId;
 
@@ -68,21 +69,22 @@ public class Menu {
     private boolean enabled;
 
 
-    @ApiModelProperty(value = "子菜单集合",hidden = true)
-    @OneToMany(targetEntity = Menu.class, mappedBy = "parentMenu", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ApiModelProperty(value = "子菜单集合", hidden = true)
+    @OneToMany(targetEntity = Menu.class, mappedBy = "parentMenu", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Menu> childrenMenus = new HashSet<>();
 
     //解决循环嵌套问题，忽略关联对象任意一方的结果输出
-    @ApiModelProperty(value = "父亲菜单" ,hidden = true)
+    @ApiModelProperty(value = "父亲菜单", hidden = true)
     @JsonIgnore
-    @ManyToOne(targetEntity = Menu.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(targetEntity = Menu.class, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Menu parentMenu;
 
 
-    @ApiModelProperty(value = "角色列表",hidden = true)
-    @JsonIgnoreProperties(value = "menus")
-    @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @ApiModelProperty(value = "角色列表", hidden = true)
+//    @JsonIgnoreProperties(value = "menus")
+    @JsonIgnore
+    @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private Set<Role> roles = new HashSet<>();
 
     public Long getId() {
@@ -191,9 +193,25 @@ public class Menu {
 
     @Override
     public String toString() {
-        for (Role role : this.getRoles()) {
-            role.getUsers().clear();
-            role.getMenus().clear();
+        //角色循环嵌套处理
+        if (!CollectionUtils.isEmpty(this.getRoles())) {
+//            for (Role role : this.getRoles()) {
+//                role.getUsers().clear();
+//                role.getMenus().clear();
+//            }
+            this.getRoles().clear();
+        }
+        //子菜单循环嵌套处理
+        if (!CollectionUtils.isEmpty(this.getChildrenMenus())) {
+            for (Menu menu : this.getChildrenMenus()) {
+                menu.getRoles().clear();
+                menu.getChildrenMenus().clear();
+            }
+        }
+        //父菜单循环嵌套处理
+        if (null != parentMenu) {
+            this.getParentMenu().getChildrenMenus().clear();
+            this.getRoles().clear();
         }
         return "Menu{" +
                 "id=" + id +

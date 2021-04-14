@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
@@ -19,6 +20,7 @@ import crelle.family.dao.RoleDao;
 import crelle.family.model.entity.Role;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -128,6 +130,10 @@ public class RoleController implements BaseController<Role, RoleAO> {
         try {
             roleService.queryById(id);
             roleService.deleteById(id);
+        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
+            responseResult.buildFail("有用户在使用此角色，无法删除！");
+        } catch (NoSuchElementException noSuchElementException) {
+            responseResult.buildFail("没有此角色！");
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }

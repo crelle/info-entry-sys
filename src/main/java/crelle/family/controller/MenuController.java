@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
@@ -17,6 +18,7 @@ import crelle.family.model.entity.Role;
 import crelle.family.service.MenuService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -131,6 +133,10 @@ public class MenuController implements BaseController<Menu, MenuAO> {
         try {
             menuService.queryById(id);
             menuService.deleteById(id);
+        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
+            responseResult.buildFail("有角色绑定此菜单，无法删除！");
+        } catch (NoSuchElementException noSuchElementException) {
+            responseResult.buildFail("没有此菜单！");
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }

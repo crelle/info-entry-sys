@@ -37,10 +37,14 @@ public class Role {
     @ApiModelProperty(value = "角色名称")
     private String nameZh;
 
-    //角色为主表,菜单为从表
+    //角色表为关系维护表,
+    // 1.没有添加CascadeType.REMOVE
+    //      删除角色，只会删除role和role_menu表中对应的数据
+    //2.添加了CascadeType.REMOVE
+    //      删除角色，会删除role,role_menu和menu表中对应的数据
     @ApiModelProperty(value = "菜单列表", hidden = true)
     @JsonIgnoreProperties(value = "roles")
-    @ManyToMany(targetEntity = Menu.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(targetEntity = Menu.class, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "role_menu",
             //中间表role_menu中角色外键对应的字段名称
             joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
@@ -49,11 +53,11 @@ public class Role {
     )
     private Set<Menu> menus = new HashSet<>();
 
-    //配置角色和用户多对多关系
+    // mappedBy指示了角色表放弃维护关系表，由用户表来维护
     @JsonIgnore
     @ApiModelProperty(value = "用户列表", hidden = true)
     @JsonIgnoreProperties(value = "roles")
-    @ManyToMany(targetEntity = User.class, mappedBy = "roles", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = User.class, mappedBy = "roles", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
 
     public Set<User> getUsers() {
@@ -99,10 +103,9 @@ public class Role {
 
     @Override
     public String toString() {
+        //查询角色的时候不需要用用户信息
         if (!CollectionUtils.isEmpty(this.users)) {
-            for (User user : this.users) {
-                user.getRoles().clear();
-            }
+                this.users.clear();
         }
         if (!CollectionUtils.isEmpty(this.menus)) {
             for (Menu menu : this.menus) {
