@@ -1,10 +1,10 @@
 package crelle.family.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.annotations.JoinColumnOrFormula;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -51,6 +51,10 @@ public class Menu {
     @ApiModelProperty(value = "菜单图标")
     @Column(name = "icon_ls")
     private String iconCls;
+
+    @ApiModelProperty(value = "菜单类型")
+    @Column(name = "menu_type")
+    private String menuType;
 
     @ApiModelProperty(value = "是否存活")
     @Column(name = "keep_alive")
@@ -191,6 +195,14 @@ public class Menu {
         this.roles = roles;
     }
 
+    public String getMenuType() {
+        return menuType;
+    }
+
+    public void setMenuType(String menuType) {
+        this.menuType = menuType;
+    }
+
     @Override
     public String toString() {
         //角色循环嵌套处理
@@ -220,6 +232,7 @@ public class Menu {
                 ", component='" + component + '\'' +
                 ", name='" + name + '\'' +
                 ", iconCls='" + iconCls + '\'' +
+                ", menuType='" + menuType + '\'' +
                 ", keepAlive=" + keepAlive +
                 ", requireAuth=" + requireAuth +
                 ", parentId=" + parentId +
