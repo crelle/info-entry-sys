@@ -84,7 +84,7 @@ public class Menu {
     @ApiModelProperty(value = "角色列表", hidden = true)
 //    @JsonIgnoreProperties(value = "menus")
     @JsonIgnore
-    @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
     public Long getId() {
