@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author:crelle
@@ -63,7 +64,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> findRolesByName(String name) {
+    public Set<Role> findRolesByName(String name) {
         return roleDao.findRolesByName(name);
     }
 

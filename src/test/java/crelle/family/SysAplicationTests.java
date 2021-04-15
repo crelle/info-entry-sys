@@ -41,7 +41,7 @@ class SysAplicationTests {
         u1.setAccountNonLocked(true);
         u1.setCredentialsNonExpired(true);
         u1.setEnabled(true);
-        List<Role> rs1 = new ArrayList<>();
+        Set<Role> rs1 = new HashSet<>();
         Role r1 = new Role();
         r1.setName("ROLE_admin");
         r1.setNameZh("管理员");
@@ -60,7 +60,7 @@ class SysAplicationTests {
         u2.setAccountNonLocked(true);
         u2.setCredentialsNonExpired(true);
         u2.setEnabled(true);
-        List<Role> rs2 = new ArrayList<>();
+        Set<Role> rs2 = new HashSet<>();
         Role r2 = new Role();
         r2.setName("ROLE_user");
         r2.setNameZh("普通用户");
@@ -79,7 +79,7 @@ class SysAplicationTests {
         u3.setAccountNonLocked(true);
         u3.setCredentialsNonExpired(true);
         u3.setEnabled(true);
-        List<Role> rs3 = new ArrayList<>();
+        Set<Role> rs3 = new HashSet<>();
         Role r3 = new Role();
         r3.setName("ROLE_guest");
         r3.setNameZh("访客");

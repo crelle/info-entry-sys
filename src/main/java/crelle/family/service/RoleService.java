@@ -5,6 +5,7 @@ import crelle.family.model.entity.Role;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author:crelle
@@ -15,7 +16,7 @@ import java.util.Optional;
  **/
 public interface RoleService extends BaseService<Role, RoleAO> {
 
-    List<Role> findRolesByName(String name);
+    Set<Role> findRolesByName(String name);
 
 
 }

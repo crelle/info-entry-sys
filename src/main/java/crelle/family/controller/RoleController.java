@@ -22,6 +22,7 @@ import crelle.family.model.entity.Role;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author:crelle
@@ -50,7 +51,7 @@ public class RoleController implements BaseController<Role, RoleAO> {
     public ResponseResult<Role> create(@RequestBody Role role) {
         ResponseResult<Role> responseResult = new ResponseResult<>();
         try {
-            List<Role> roles = roleService.findRolesByName(role.getName());
+            Set<Role> roles = roleService.findRolesByName(role.getName());
             if (!CollectionUtils.isEmpty(roles)) {
                 responseResult.buildFail("新增的角色已经存在!");
                 return responseResult;

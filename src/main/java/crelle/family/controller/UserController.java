@@ -20,6 +20,7 @@ import crelle.family.service.impl.UserServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author:crelle
@@ -66,7 +67,7 @@ public class UserController implements BaseController<User, UserAO> {
                 return responseResult;
             }
             //给用户设置默认的访客角色
-            List<Role> roles = roleService.findRolesByName("ROLE_guest");
+            Set<Role> roles = roleService.findRolesByName("ROLE_guest");
             user.setRoles(roles);
             User user2 = userService.create(user);
             responseResult.setData(user2);

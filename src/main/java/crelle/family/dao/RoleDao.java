@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author:crelle
@@ -16,6 +17,6 @@ import java.util.List;
  **/
 public interface RoleDao extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Menu> {
 
-    List<Role> findRolesByName(String name);
+    Set<Role> findRolesByName(String name);
 
 }
