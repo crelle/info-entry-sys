@@ -44,7 +44,7 @@ public class Role {
     //      删除角色，会删除role,role_menu和menu表中对应的数据
     @ApiModelProperty(value = "菜单列表", hidden = true)
     @JsonIgnoreProperties(value = "roles")
-    @ManyToMany(targetEntity = Menu.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(targetEntity = Menu.class, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "role_menu",
             //中间表role_menu中角色外键对应的字段名称
             joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
@@ -57,7 +57,7 @@ public class Role {
     @JsonIgnore
     @ApiModelProperty(value = "用户列表", hidden = true)
     @JsonIgnoreProperties(value = "roles")
-    @ManyToMany(targetEntity = User.class, mappedBy = "roles", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = User.class, mappedBy = "roles", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
 
     public Set<User> getUsers() {

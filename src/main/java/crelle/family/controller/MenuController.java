@@ -134,7 +134,7 @@ public class MenuController implements BaseController<Menu, MenuAO> {
             menuService.queryById(id);
             menuService.deleteById(id);
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
-            responseResult.buildFail("有角色绑定此菜单，无法删除！");
+            responseResult.buildFail("有角色绑定此菜单或者有子菜单，无法删除！");
         } catch (NoSuchElementException noSuchElementException) {
             responseResult.buildFail("没有此菜单！");
         } catch (Exception e) {

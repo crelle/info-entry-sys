@@ -148,6 +148,7 @@ public class UserController implements BaseController<User, UserAO> {
     public ResponseResult<String> deleteById(@PathVariable Long id) {
         ResponseResult<String> responseResult = new ResponseResult<String>();
         try {
+            userService.queryById(id);
             userService.deleteById(id);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
