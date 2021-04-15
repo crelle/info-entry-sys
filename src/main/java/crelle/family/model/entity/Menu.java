@@ -1,6 +1,7 @@
 package crelle.family.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.ColumnDefault;
@@ -79,15 +80,15 @@ public class Menu {
 
     //解决循环嵌套问题，忽略关联对象任意一方的结果输出
     @ApiModelProperty(value = "父亲菜单", hidden = true)
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne(targetEntity = Menu.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Menu parentMenu;
 
 
     @ApiModelProperty(value = "角色列表", hidden = true)
-//    @JsonIgnoreProperties(value = "menus")
-    @JsonIgnore
+    @JsonIgnoreProperties(value = "menus")
+//    @JsonIgnore
     @ManyToMany(targetEntity = Role.class, mappedBy = "menus", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
@@ -207,11 +208,11 @@ public class Menu {
     public String toString() {
         //角色循环嵌套处理
         if (!CollectionUtils.isEmpty(this.getRoles())) {
-//            for (Role role : this.getRoles()) {
-//                role.getUsers().clear();
-//                role.getMenus().clear();
-//            }
-            this.getRoles().clear();
+            for (Role role : this.getRoles()) {
+                role.getUsers().clear();
+                role.getMenus().clear();
+            }
+//            this.getRoles().clear();
         }
         //子菜单循环嵌套处理
         if (!CollectionUtils.isEmpty(this.getChildrenMenus())) {
@@ -223,7 +224,7 @@ public class Menu {
         //父菜单循环嵌套处理
         if (null != parentMenu) {
             this.getParentMenu().getChildrenMenus().clear();
-            this.getRoles().clear();
+//            this.getRoles().clear();
         }
         return "Menu{" +
                 "id=" + id +
