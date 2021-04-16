@@ -58,19 +58,19 @@ public class RoleServiceImpl implements RoleService {
         Specification<Role> specification = new Specification<Role>() {
             @Override
             public Predicate toPredicate(Root<Role> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+
+                Predicate predicate = criteriaBuilder.conjunction();
                 //条件1
-                Predicate predicate1 = null;
                 if (StringUtils.isNotBlank(pageBean.getCondition().getName())) {
-                    predicate1 = criteriaBuilder.equal(root.get("name"), pageBean.getCondition().getName());
-                    criteriaQuery.where(predicate1);
+                    Predicate predicate1 = criteriaBuilder.equal(root.get("name"), pageBean.getCondition().getName());
+                    predicate.getExpressions().add(predicate1);
                 }
                 //条件2
-                Predicate predicate2 = null;
                 if (StringUtils.isNotBlank(pageBean.getCondition().getNameZh())) {
-                    predicate2 = criteriaBuilder.equal(root.get("nameZh"), pageBean.getCondition().getNameZh());
-                    criteriaQuery.where(predicate2);
+                    Predicate predicate2 = criteriaBuilder.equal(root.get("nameZh"), pageBean.getCondition().getNameZh());
+                    predicate.getExpressions().add(predicate2);
                 }
-                return null;
+                return predicate;
             }
         };
         Pageable pageable = PageRequest.of(pageBean.getPageNo(), pageBean.getPageSize(), Sort.by(Sort.Direction.ASC, "id"));
