@@ -46,8 +46,7 @@ public class RoleController implements BaseController<Role, RoleAO> {
 
     @ApiOperation(value = "创建角色")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/create", method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<Role> create(@RequestBody Role role) {
         ResponseResult<Role> responseResult = new ResponseResult<>();
         try {
@@ -66,8 +65,7 @@ public class RoleController implements BaseController<Role, RoleAO> {
 
     @ApiOperation(value = "根据角色标识查询角色")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<Role> queryById(@PathVariable Long id) {
         ResponseResult<Role> responseResult = new ResponseResult<>();
         try {
@@ -79,15 +77,24 @@ public class RoleController implements BaseController<Role, RoleAO> {
         return responseResult;
     }
 
+    @ApiOperation(value = "分页查询角色")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/page", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Role>> pageByCondition(PageBean<RoleAO> pageBean) {
-        return null;
+        ResponseResult<Page<Role>> responseResult = new ResponseResult<>();
+        try {
+            Page<Role> page = roleService.pageByCondition(pageBean);
+            responseResult.setData(page);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
     }
 
     @ApiOperation(value = "查询所有角色")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/all", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<List<Role>> queryAll() {
         ResponseResult<List<Role>> responseResult = new ResponseResult<>();
         try {
@@ -101,8 +108,7 @@ public class RoleController implements BaseController<Role, RoleAO> {
 
     @ApiOperation(value = "根据角色标识更新角色")
     @ApiParam(required = true, name = "id", value = "入参")
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<String> updateById(@PathVariable Long id, @RequestBody Role role) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
@@ -124,8 +130,7 @@ public class RoleController implements BaseController<Role, RoleAO> {
 
     @ApiOperation(value = "根据角色标识删除角色")
     @ApiParam(required = true, name = "id", value = "入参")
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<String> deleteById(@RequestBody Long id) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {

@@ -20,10 +20,10 @@ public class MenuAO implements Serializable {
     @ApiModelProperty(value = "菜单名称")
     private String name;
 
-    @ApiModelProperty(value = "是否需要鉴权")
+    @ApiModelProperty(value = "是否需要鉴权",required = true)
     private boolean requireAuth;
 
-    @ApiModelProperty(value = "是否可用")
+    @ApiModelProperty(value = "是否可用",required = true)
     private boolean enabled;
 
     public String getName() {

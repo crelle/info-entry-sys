@@ -15,7 +15,7 @@ import java.util.Set;
  * @date:2021/3/23
  * @description:XX
  **/
-public interface RoleDao extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Menu> {
+public interface RoleDao extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Role> {
 
     Set<Role> findRolesByName(String name);
 

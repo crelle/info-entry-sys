@@ -1,6 +1,5 @@
 package crelle.family.dao;
 
-import crelle.family.model.entity.Menu;
 import crelle.family.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -17,7 +16,7 @@ import java.util.List;
  * @return:
  * @throw:
  */
-public interface UserDao extends JpaRepository<User, Long>, JpaSpecificationExecutor<Menu> {
+public interface UserDao extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
     User findUserByUsername(String username);
 

@@ -3,13 +3,23 @@ package crelle.family.service.impl;
 import crelle.family.dao.RoleDao;
 import crelle.family.model.PageBean;
 import crelle.family.model.ao.RoleAO;
+import crelle.family.model.entity.Menu;
 import crelle.family.model.entity.Role;
 import crelle.family.service.BaseService;
 import crelle.family.service.RoleService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -38,7 +48,6 @@ public class RoleServiceImpl implements RoleService {
     }
 
 
-
     @Override
     public List<Role> queryAll() {
         return roleDao.findAll();
@@ -46,15 +55,36 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Page<Role> pageByCondition(PageBean<RoleAO> pageBean) {
-        return null;
+        Specification<Role> specification = new Specification<Role>() {
+            @Override
+            public Predicate toPredicate(Root<Role> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                //条件1
+                Predicate predicate1 = null;
+                if (StringUtils.isNotBlank(pageBean.getCondition().getName())) {
+                    predicate1 = criteriaBuilder.equal(root.get("name"), pageBean.getCondition().getName());
+                    criteriaQuery.where(predicate1);
+                }
+                //条件2
+                Predicate predicate2 = null;
+                if (StringUtils.isNotBlank(pageBean.getCondition().getNameZh())) {
+                    predicate2 = criteriaBuilder.equal(root.get("nameZh"), pageBean.getCondition().getNameZh());
+                    criteriaQuery.where(predicate2);
+                }
+                return null;
+            }
+        };
+        Pageable pageable = PageRequest.of(pageBean.getPageNo(), pageBean.getPageSize(), Sort.by(Sort.Direction.ASC, "id"));
+        Page<Role> page = roleDao.findAll(specification, pageable);
+        return page;
     }
 
     @Override
     public int update(Long id, Role role) {
-        if (null == roleDao.findById(id)) {
+        try {
+            roleDao.save(role);
+        } catch (Exception e) {
             return 0;
         }
-        roleDao.save(role);
         return 1;
     }
 

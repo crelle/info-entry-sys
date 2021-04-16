@@ -56,17 +56,21 @@ public class MenuServiceImpl implements MenuService {
         Specification<Menu> specification = new Specification<Menu>() {
             @Override
             public Predicate toPredicate(Root<Menu> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+
+                Predicate predicate = criteriaBuilder.conjunction();
                 //条件1
-                Predicate predicate1 = null;
                 if (StringUtils.isNotBlank(pageBean.getCondition().getName())) {
-                    predicate1 = criteriaBuilder.equal(root.get("name"), pageBean.getCondition().getName());
+                    Predicate predicate1 = criteriaBuilder.equal(root.get("name"), pageBean.getCondition().getName());
+                    predicate.getExpressions().add(predicate1);
                 }
-                //条件3
+                //条件2
                 Predicate predicate2 = criteriaBuilder.equal(root.get("requireAuth"), pageBean.getCondition().isRequireAuth());
-                //条件4
+                predicate.getExpressions().add(predicate2);
+                //条件3
                 Predicate predicate3 = criteriaBuilder.equal(root.get("enabled"), pageBean.getCondition().isEnabled());
-                criteriaQuery.where(predicate1, predicate2, predicate3);
-                return null;
+                predicate.getExpressions().add(predicate3);
+
+                return predicate;
             }
         };
         Pageable pageable = PageRequest.of(pageBean.getPageNo(), pageBean.getPageSize(), Sort.by(Sort.Direction.ASC, "id"));
@@ -76,12 +80,12 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public int update(Long id, Menu menu) {
-            Optional<Menu> menuOpt = menuDao.findById(id);
+        Optional<Menu> menuOpt = menuDao.findById(id);
         if (!menuOpt.isPresent()) {
             return 0;
         }
         Menu oldMenu = menuOpt.get();
-        BeanUtils.copyProperties(menu,oldMenu,"id","parentId","childrenMenus","parentMenu","roles");
+        BeanUtils.copyProperties(menu, oldMenu, "id", "parentId", "childrenMenus", "parentMenu", "roles");
         menuDao.save(oldMenu);
         return 1;
     }
