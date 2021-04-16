@@ -107,9 +107,19 @@ public class UserController implements BaseController<User, UserAO> {
         return responseResult;
     }
 
+    @ApiOperation(value = "分页查询用户")
+    @ApiParam(required = true, name = "pageBean", value = "入参")
+    @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<User>> pageByCondition(PageBean<UserAO> pageBean) {
-        return null;
+        ResponseResult<Page<User>> responseResult = new ResponseResult<>();
+        try {
+            Page<User> page = userService.pageByCondition(pageBean);
+            responseResult.setData(page);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
     }
 
     @ApiOperation(value = "查询所有用户")
