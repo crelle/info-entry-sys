@@ -54,6 +54,10 @@ public class User implements UserDetails {
     @Column(name = "user_email")
     private String userEmail;
 
+    @ApiModelProperty(value = "用户头像")
+    @Column(name = "user_avatar")
+    private String userAvatar;
+
     @ApiModelProperty(value = "账号是否过期")
     @Column(name = "account_non_expired")
     private boolean accountNonExpired;
