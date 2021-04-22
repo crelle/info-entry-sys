@@ -73,6 +73,10 @@ public class Menu {
     @Column(name = "enabled")
     private boolean enabled;
 
+    @ApiModelProperty(value = "菜单顺序", hidden = true)
+    @Column(name = "menu_sort")
+    private Long sort;
+
 
     @ApiModelProperty(value = "子菜单集合", hidden = true)
     @JsonIgnoreProperties(value = "parentMenu")
@@ -204,8 +208,17 @@ public class Menu {
         this.menuType = menuType;
     }
 
+    public Long getSort() {
+        return sort;
+    }
+
+    public void setSort(Long sort) {
+        this.sort = sort;
+    }
+
     @Override
     public String toString() {
+
         //角色循环嵌套处理
         if (!CollectionUtils.isEmpty(this.getRoles())) {
             for (Role role : this.getRoles()) {
@@ -226,6 +239,7 @@ public class Menu {
             this.getParentMenu().getChildrenMenus().clear();
 //            this.getRoles().clear();
         }
+
         return "Menu{" +
                 "id=" + id +
                 ", url='" + url + '\'' +
@@ -238,6 +252,7 @@ public class Menu {
                 ", requireAuth=" + requireAuth +
                 ", parentId=" + parentId +
                 ", enabled=" + enabled +
+                ", sort=" + sort +
                 ", childrenMenus=" + childrenMenus +
                 ", parentMenu=" + parentMenu +
                 ", roles=" + roles +
