@@ -39,7 +39,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
         String requestUrl = ((FilterInvocation) object).getRequestUrl();
         List<Menu> menus = menuService.queryAll();
         for (Menu menu : menus) {
-            if (antPathMatcher.match(menu.getUrl(), requestUrl)) {
+            if (null!=menu.getUrl() && antPathMatcher.match(menu.getUrl(), requestUrl)) {
                 Set<Role> roles = null;
                 if (null != menu.getParentMenu()) {
                     roles = menu.getParentMenu().getRoles();
