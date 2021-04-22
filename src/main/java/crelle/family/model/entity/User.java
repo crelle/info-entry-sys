@@ -54,6 +54,10 @@ public class User implements UserDetails {
     @Column(name = "user_email")
     private String userEmail;
 
+    @ApiModelProperty(value = "用户头像")
+    @Column(name = "user_avatar")
+    private String userAvatar;
+
     @ApiModelProperty(value = "账号是否过期")
     @Column(name = "account_non_expired")
     private boolean accountNonExpired;
@@ -183,8 +187,17 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+
     @Override
     public String toString() {
+
         if (!CollectionUtils.isEmpty(this.roles)) {
             for (Role r : this.roles) {
                 r.getUsers().clear();
@@ -201,6 +214,7 @@ public class User implements UserDetails {
                 ", userNickName='" + userNickName + '\'' +
                 ", userPhone='" + userPhone + '\'' +
                 ", userEmail='" + userEmail + '\'' +
+                ", userAvatar='" + userAvatar + '\'' +
                 ", accountNonExpired=" + accountNonExpired +
                 ", accountNonLocked=" + accountNonLocked +
                 ", credentialsNonExpired=" + credentialsNonExpired +

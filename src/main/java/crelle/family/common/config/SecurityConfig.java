@@ -1,6 +1,7 @@
 package crelle.family.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import crelle.family.model.entity.Menu;
 import crelle.family.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -32,6 +35,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 /**
  * @author:crelle
@@ -51,16 +59,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CustomUrlDecisionManager customUrlDecisionManager;
 
     //密文
-//    @Bean
-//    PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     //明文
-    @Bean
-    NoOpPasswordEncoder passwordEncoder() {
-        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-    }
+//    @Bean
+//    NoOpPasswordEncoder passwordEncoder() {
+//        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+//    }
 
     @Bean
     RestAccessDeniedHandler accessDeniedHandler() {
@@ -89,6 +97,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 response.setContentType("application/json;charset=utf-8");
                 PrintWriter out = response.getWriter();
                 User user = (User) authentication.getPrincipal();
+                user.getRoles().forEach(role -> {
+                    role.getMenus().forEach(menu -> {
+                        TreeSet<Menu> childrenMenuTreeSet = new TreeSet<>(((o1, o2) -> Long.compare(o1.getSort(), o2.getSort())));
+                        childrenMenuTreeSet.addAll(menu.getChildrenMenus());
+                        menu.setChildrenMenus(childrenMenuTreeSet);
+                    });
+                    TreeSet<Menu> menuTreeSet = new TreeSet<>(((o1, o2) -> Long.compare(o1.getSort(), o2.getSort())));
+                    menuTreeSet.addAll(role.getMenus());
+                    role.setMenus(menuTreeSet);
+                });
                 user.setPassword(null);
                 ResponseResult responseResult = ResultUtils.success("登录成功!", user);
                 String s = new ObjectMapper().writeValueAsString(responseResult);
