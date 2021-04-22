@@ -73,7 +73,7 @@ public class Menu {
     @Column(name = "enabled")
     private boolean enabled;
 
-    @ApiModelProperty(value = "菜单顺序", hidden = true)
+    @ApiModelProperty(value = "菜单顺序")
     @Column(name = "menu_sort")
     private Long sort;
 
