@@ -187,8 +187,17 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+
     @Override
     public String toString() {
+
         if (!CollectionUtils.isEmpty(this.roles)) {
             for (Role r : this.roles) {
                 r.getUsers().clear();
@@ -205,6 +214,7 @@ public class User implements UserDetails {
                 ", userNickName='" + userNickName + '\'' +
                 ", userPhone='" + userPhone + '\'' +
                 ", userEmail='" + userEmail + '\'' +
+                ", userAvatar='" + userAvatar + '\'' +
                 ", accountNonExpired=" + accountNonExpired +
                 ", accountNonLocked=" + accountNonLocked +
                 ", credentialsNonExpired=" + credentialsNonExpired +

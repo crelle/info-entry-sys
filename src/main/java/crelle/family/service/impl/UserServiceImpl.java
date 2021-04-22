@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import crelle.family.dao.UserDao;
 import crelle.family.model.entity.User;
@@ -46,8 +47,12 @@ public class UserServiceImpl implements UserService {
     @Autowired(required = false)
     UserMapper userMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public User create(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userDao.save(user);
     }
 
