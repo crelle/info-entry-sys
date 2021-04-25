@@ -2,11 +2,9 @@ package crelle.family.service.impl;
 
 import crelle.family.model.PageBean;
 import crelle.family.model.ao.MenuAO;
-import crelle.family.service.BaseService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +14,7 @@ import org.springframework.stereotype.Service;
 import crelle.family.dao.MenuDao;
 import crelle.family.model.entity.Menu;
 import crelle.family.service.MenuService;
-
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
