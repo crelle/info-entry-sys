@@ -3,7 +3,9 @@ package crelle.family.common.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import crelle.family.model.entity.Menu;
 import crelle.family.service.impl.UserServiceImpl;
+import crelle.ftp.client.MyFtpClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
@@ -15,7 +17,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
@@ -27,19 +28,13 @@ import crelle.family.common.ResponseResult;
 import crelle.family.common.util.ResultUtils;
 import crelle.family.model.entity.User;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 /**
  * @author:crelle
@@ -50,6 +45,19 @@ import java.util.stream.Collectors;
  **/
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Value("ftp.ip")
+    public String ftpIp;
+
+    @Value("ftp.port")
+    public String ftpPort;
+
+    @Value("ftp.username")
+    public String ftpUsername;
+
+    @Value("ftp.password")
+    public String ftpPassword;
+
     @Autowired
     UserServiceImpl userService;
 
@@ -62,6 +70,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    MyFtpClient ftpClient() {
+        return new MyFtpClient("192.168.74.4" ,21, "ftpadmin", "123456");
     }
 
     //明文
@@ -84,6 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode",
                 "/user/create",
+"/media/upload",
 //                "/role/**", "/menu/**",
                 "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/**", "/api/**");
     }

@@ -1,5 +1,8 @@
 package crelle.family.model.ao;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @author:crelle
  * @className:MediaResourcesAO
@@ -7,14 +10,19 @@ package crelle.family.model.ao;
  * @date:2021/4/25
  * @description:XX
  **/
+@ApiModel(value = "MediaResourcesAO",description = "媒体资源AO")
 public class MediaResourcesAO {
 
+    @ApiModelProperty(value = "plantId",name = "植物标识")
     private Long plantId;
 
+    @ApiModelProperty(value = "plantId",name = "人物标识")
     private Long personId;
 
+    @ApiModelProperty(value = "poetryId",name = "诗词标识")
     private Long poetryId;
 
+    @ApiModelProperty(value = "userId",name = "用户标识")
     private Long userId;
 
     public Long getPlantId() {

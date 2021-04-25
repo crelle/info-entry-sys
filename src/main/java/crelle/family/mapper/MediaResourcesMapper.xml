@@ -18,7 +18,7 @@
 
     <insert id="insertMediaResources" parameterType="crelle.family.model.entity.MediaResources" useGeneratedKeys="true"
             keyProperty="id">
-        insert into employee
+        insert into media_resources
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -87,7 +87,7 @@
    </delete>
 
     <delete id="deleteById" parameterType="crelle.family.model.ao.MediaResourcesAO">
-        delete from employee
+        delete from media_resources
         <where>
             <if test="mr!=null">
                 <if test="mr.plantId !=null">
@@ -106,8 +106,8 @@
         </where>
     </delete>
 
-    <update id="updateMediaResourcesById" parameterType="crelle.family.model.ao.MediaResourcesAO">
-        update employee
+    <update id="updateMediaResourcesById" parameterType="crelle.family.model.entity.MediaResources">
+        update media_resources
         <set>
         <if test="id != null">
             id,
@@ -137,22 +137,7 @@
             media_default,
         </if>
         </set>
-        <where>
-            <if test="mr!=null">
-                <if test="mr.plantId !=null">
-                    and plant_id =#{mr.plantId}
-                </if>
-                <if test="mr.personId !=null">
-                    and person_id =#{mr.personId}
-                </if>
-                <if test="mr.poetryId !=null">
-                    and poetry_id =#{mr.poetryId}
-                </if>
-                <if test="mr.userId !=null">
-                    and user_id =#{mr.userId}
-                </if>
-            </if>
-        </where>
+        where id = #{id,jdbcType=INTEGER}
     </update>
 
 

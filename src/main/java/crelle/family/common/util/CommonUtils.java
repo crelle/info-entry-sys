@@ -23,7 +23,7 @@ public abstract class CommonUtils {
      *@return:java.lang.String
      *@throw:
      */
-    public String generateMediaName(String prefix, String mediaType) {
+    public static String generateMediaName(String prefix, String mediaType) {
         StringBuffer stringBuffer = new StringBuffer();
         int year = Calendar.getInstance().get(Calendar.YEAR);
         int month = Calendar.getInstance().get(Calendar.MONTH) + 1;

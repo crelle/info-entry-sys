@@ -1,5 +1,8 @@
 package crelle.family.model.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @author:crelle
  * @className:MediaResources
@@ -7,26 +10,37 @@ package crelle.family.model.entity;
  * @date:2021/4/25
  * @description:XX
  **/
+@ApiModel(value = "MediaResources",description = "媒体资源")
 public class MediaResources {
 
+    @ApiModelProperty(value = "id",name = "媒体资源标识")
     private Long id;
 
+    @ApiModelProperty(value = "plantId",name = "植物标识")
     private Long plantId;
 
+    @ApiModelProperty(value = "plantId",name = "人物标识")
     private Long personId;
 
+    @ApiModelProperty(value = "poetryId",name = "诗词标识")
     private Long poetryId;
 
+    @ApiModelProperty(value = "userId",name = "用户标识")
     private Long userId;
 
+    @ApiModelProperty(value = "mediaUrl",name = "媒体资源地址")
     private String mediaUrl;
 
+    @ApiModelProperty(value = "mediaType",name = "媒体资源类型")
     private String mediaType;
 
+    @ApiModelProperty(value = "mediaSecType",name = "媒体资源第二类型")
     private String mediaSecType;
 
+    @ApiModelProperty(value = "mediaDesc",name = "媒体资源描述")
     private String mediaDesc;
 
+    @ApiModelProperty(value = "mediaDefault",name = "是否默认的媒体资源")
     private boolean mediaDefault;
 
     public Long getId() {

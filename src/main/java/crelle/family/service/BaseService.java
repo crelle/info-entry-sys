@@ -16,7 +16,7 @@ import java.util.Optional;
  **/
 public interface BaseService<T,A> {
 
-    T create(T role);
+    T create(T object);
 
     T queryById(Long id);
 
@@ -24,7 +24,7 @@ public interface BaseService<T,A> {
 
     Page<T> pageByCondition(PageBean<A> pageBean);
 
-    int update(Long id,T obj);
+    int update(Long id,T object);
 
     void deleteById(Long id);
 }
