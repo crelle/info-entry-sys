@@ -1,5 +1,6 @@
 package crelle.family.service.impl;
 
+import crelle.family.common.FesConstants;
 import crelle.family.common.config.ConfigProperties;
 import crelle.family.common.util.CommonUtils;
 import crelle.family.service.FtpService;
@@ -31,13 +32,13 @@ public class FtpServiceImpl implements FtpService {
         myFtpClient.open();
         String secDir = configProperties.getConfigValue("nginx.location.sec.dir");
         String thriPicDir = null;
-        if ("0".equals(fileType)) {
+        if (FesConstants.MEDIA_RES_TYPE.PICTURE.equals(fileType)) {
             thriPicDir = configProperties.getConfigValue("nginx.location.thri.picture.dir");
-        } else if ("1".equals(fileType)) {
+        } else if (FesConstants.MEDIA_RES_TYPE.VIDEO.equals(fileType)) {
             thriPicDir = configProperties.getConfigValue("nginx.location.thri.video.dir");
-        } else if ("2".equals(fileType)) {
+        } else if (FesConstants.MEDIA_RES_TYPE.AUDIO.equals(fileType)) {
             thriPicDir = configProperties.getConfigValue("nginx.location.thri.audio.dir");
-        } else if ("3".equals(fileType)) {
+        } else if (FesConstants.MEDIA_RES_TYPE.OTHER.equals(fileType)) {
             thriPicDir = configProperties.getConfigValue("nginx.location.thri.other.dir");
         }
         //相对资源地址

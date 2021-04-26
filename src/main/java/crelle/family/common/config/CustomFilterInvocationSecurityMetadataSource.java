@@ -1,5 +1,6 @@
 package crelle.family.common.config;
 
+import crelle.family.mapper.MediaResourcesMapper;
 import crelle.family.model.entity.Menu;
 import crelle.family.model.entity.Role;
 import crelle.family.service.MenuService;
@@ -33,6 +34,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
     MenuService menuService;
 
     AntPathMatcher antPathMatcher = new AntPathMatcher();
+
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
