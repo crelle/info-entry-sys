@@ -45,7 +45,8 @@ public class UploadController {
                 return responseResult;
             }
             myFtpClient.open();
-            String filePath = CommonUtils.generateMediaName(uploadRootDir, "txt");
+            String fileType = CommonUtils.getFileTypeFromMultipartFile(multipartFile);
+            String filePath = CommonUtils.generateMediaName(uploadRootDir, fileType);
             myFtpClient.putFileToPath(multipartFile.getInputStream(), filePath);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());

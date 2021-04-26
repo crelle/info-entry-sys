@@ -46,23 +46,15 @@ import java.util.TreeSet;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("ftp.ip")
-    public String ftpIp;
-
-    @Value("ftp.port")
-    public String ftpPort;
-
-    @Value("ftp.username")
-    public String ftpUsername;
-
-    @Value("ftp.password")
-    public String ftpPassword;
+    @Autowired
+    private ConfigProperties configProperties;
 
     @Autowired
     UserServiceImpl userService;
 
     @Autowired
     CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource;
+
     @Autowired
     CustomUrlDecisionManager customUrlDecisionManager;
 
@@ -74,7 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     MyFtpClient ftpClient() {
-        return new MyFtpClient("192.168.74.4" ,21, "ftpadmin", "123456");
+        return new MyFtpClient(configProperties.getConfigValue("ftp.ip"),
+                Integer.valueOf(configProperties.getConfigValue("ftp.port")),
+                configProperties.getConfigValue("ftp.username"),
+                configProperties.getConfigValue("ftp.password"));
     }
 
     //明文
@@ -97,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode",
                 "/user/create",
-"/media/upload",
+                "/media/upload",
 //                "/role/**", "/menu/**",
                 "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/**", "/api/**");
     }
@@ -191,6 +186,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         resp.setStatus(401);
                         PrintWriter out = resp.getWriter();
                         ResponseResult responseResult = ResultUtils.fail("访问失败!");
+                        responseResult.setCode("CMA0200");
                         if (authException instanceof InsufficientAuthenticationException) {
                             responseResult.setMessage("没有登录认证，请先登录!");
                         }
