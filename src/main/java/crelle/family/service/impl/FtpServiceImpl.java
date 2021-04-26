@@ -33,12 +33,28 @@ public class FtpServiceImpl implements FtpService {
         String secDir = configProperties.getConfigValue("nginx.location.sec.dir");
         String thriPicDir = null;
         if (FesConstants.MEDIA_RES_TYPE.PICTURE.equals(fileType)) {
+            String allowFileSuffix = configProperties.getConfigValue("upload.media.resource.picture");
+            if (!allowFileSuffix.contains(fileSuffix)) {
+                throw new Exception("文件类型后缀必须为:" + allowFileSuffix);
+            }
             thriPicDir = configProperties.getConfigValue("nginx.location.thri.picture.dir");
         } else if (FesConstants.MEDIA_RES_TYPE.VIDEO.equals(fileType)) {
+            String allowFileSuffix = configProperties.getConfigValue("upload.media.resource.video");
+            if (!allowFileSuffix.contains(fileSuffix)) {
+                throw new Exception("文件类型后缀必须为:" + allowFileSuffix);
+            }
             thriPicDir = configProperties.getConfigValue("nginx.location.thri.video.dir");
         } else if (FesConstants.MEDIA_RES_TYPE.AUDIO.equals(fileType)) {
+            String allowFileSuffix = configProperties.getConfigValue("upload.media.resource.audio");
+            if (!allowFileSuffix.contains(fileSuffix)) {
+                throw new Exception("文件类型后缀必须为:" + allowFileSuffix);
+            }
             thriPicDir = configProperties.getConfigValue("nginx.location.thri.audio.dir");
         } else if (FesConstants.MEDIA_RES_TYPE.OTHER.equals(fileType)) {
+            String allowFileSuffix = configProperties.getConfigValue("upload.media.resource.other");
+            if (!allowFileSuffix.contains(fileSuffix)) {
+                throw new Exception("文件类型后缀必须为:" + allowFileSuffix);
+            }
             thriPicDir = configProperties.getConfigValue("nginx.location.thri.other.dir");
         }
         //相对资源地址
