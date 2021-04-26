@@ -73,7 +73,7 @@ public class RoleServiceImpl implements RoleService {
                 return predicate;
             }
         };
-        Pageable pageable = PageRequest.of(pageBean.getPageNo(), pageBean.getPageSize(), Sort.by(Sort.Direction.ASC, "id"));
+        Pageable pageable = PageRequest.of(pageBean.getPageNo()-1, pageBean.getPageSize(), Sort.by(Sort.Direction.ASC, "id"));
         Page<Role> page = roleDao.findAll(specification, pageable);
         return page;
     }

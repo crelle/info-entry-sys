@@ -69,7 +69,7 @@ public class MenuServiceImpl implements MenuService {
                 return predicate;
             }
         };
-        Pageable pageable = PageRequest.of(pageBean.getPageNo(), pageBean.getPageSize(), Sort.by(Sort.Direction.ASC, "id"));
+        Pageable pageable = PageRequest.of(pageBean.getPageNo()-1, pageBean.getPageSize(), Sort.by(Sort.Direction.ASC, "id"));
         Page<Menu> page = menuDao.findAll(specification, pageable);
         return page;
     }
