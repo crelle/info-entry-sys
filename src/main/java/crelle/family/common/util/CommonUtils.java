@@ -21,22 +21,22 @@ public abstract class CommonUtils {
      * @author:crelle
      * @date:2021/4/25
      * @title:generateMediaName
-     * @description:生成媒体资源的名字
+     * @description:生成相对媒体资源名字   prefix/YEAR-MONTH-DAY_OF_MONTH-randomUUID.suffix
      * @params:[preFix, mediaType]
      * @return:java.lang.String
      * @throw:
      */
-    public static String generateMediaName(String prefix, String mediaType) {
+    public static String generateRelativeMediaResourcesUri(String prefix, String suffix) {
         StringBuffer stringBuffer = new StringBuffer();
         int year = Calendar.getInstance().get(Calendar.YEAR);
         int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
         int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-        stringBuffer.append(prefix).append(year + "-").append(month + "-").append(day + "-").append(UUID.randomUUID()).append("." + mediaType);
+        stringBuffer.append(prefix).append(year + "-").append(month + "-").append(day + "-").append(UUID.randomUUID()).append("." + suffix);
         System.out.println(stringBuffer.toString());
         return stringBuffer.toString();
     }
 
-    public static String getFileTypeFromMultipartFile(MultipartFile multipartFile) throws Exception {
+    public static String getFileSuffixFromMultipartFile(MultipartFile multipartFile) throws Exception {
 
         String originalFilename = multipartFile.getOriginalFilename();
         if (StringUtils.isBlank(originalFilename)) {
