@@ -4,6 +4,7 @@ import crelle.family.common.ResponseResult;
 import crelle.family.common.config.ConfigProperties;
 import crelle.family.common.util.CommonUtils;
 import crelle.family.model.ao.FileTypeAO;
+import crelle.family.service.FtpService;
 import crelle.ftp.client.MyFtpClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 
 
 /**
@@ -31,11 +33,9 @@ import javax.annotation.PostConstruct;
 @CrossOrigin
 public class UploadController {
 
-    @Autowired
-    private ConfigProperties configProperties;
 
     @Autowired
-    private MyFtpClient myFtpClient;
+    private FtpService ftpService;
 
 
     @ApiOperation(value = "上传媒体资源文件")
@@ -48,31 +48,8 @@ public class UploadController {
                 responseResult.buildFail("请选择文件！");
                 return responseResult;
             }
-            myFtpClient.open();
-            String fileSuffix = CommonUtils.getFileSuffixFromMultipartFile(multipartFile);
-            String secDir = configProperties.getConfigValue("nginx.location.sec.dir");
-            String thriPicDir = null;
-            if ("0".equals(fileType)) {
-                thriPicDir = configProperties.getConfigValue("nginx.location.thri.picture.dir");
-            } else if ("1".equals(fileType)) {
-                thriPicDir = configProperties.getConfigValue("nginx.location.thri.video.dir");
-            } else if ("2".equals(fileType)) {
-                thriPicDir = configProperties.getConfigValue("nginx.location.thri.audio.dir");
-            } else if ("3".equals(fileType)) {
-                thriPicDir = configProperties.getConfigValue("nginx.location.thri.other.dir");
-            } else {
-                responseResult.buildFail("请传入文件类型！");
-                return responseResult;
-            }
-            //相对资源地址
-            String relativeUri = CommonUtils.generateRelativeMediaResourcesUri(secDir + thriPicDir, fileSuffix);
-            myFtpClient.putFileToPath(multipartFile.getInputStream(), relativeUri);
-            String nginxIp = configProperties.getConfigValue("nginx.ip");
-            String nginxPort = configProperties.getConfigValue("nginx.port");
-            //绝对资源地址
-            StringBuffer absolutelyUri = new StringBuffer();
-            absolutelyUri.append(nginxIp).append(":").append(nginxPort).append("/").append(relativeUri);
-            responseResult.setData(absolutelyUri.toString());
+            String absolutelyUri = ftpService.uploadFromMultipartFile(multipartFile, fileType);
+            responseResult.setData(absolutelyUri);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
@@ -83,15 +60,14 @@ public class UploadController {
     @ApiOperation(value = "删除媒体资源文件")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> upload(String fileName) {
+    public ResponseResult<String> delete(String absoluteUri) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
-            if (StringUtils.isBlank(fileName)) {
-                responseResult.buildFail("请传入要删除的文件名！");
+            if (StringUtils.isBlank(absoluteUri)) {
+                responseResult.buildFail("请传入要删除的资源路径！");
                 return responseResult;
             }
-            myFtpClient.open();
-            if (!myFtpClient.deleteFile(fileName)) {
+            if (ftpService.deleteByAbsoluteUri(absoluteUri)) {
                 responseResult.buildFail("删除失败！");
                 return responseResult;
             }
@@ -100,4 +76,6 @@ public class UploadController {
         }
         return responseResult;
     }
+
+
 }

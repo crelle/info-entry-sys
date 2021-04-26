@@ -92,8 +92,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode",
                 "/user/create",
-                "/media/upload",
-                "/media/delete",
+                "/user/uploadAvatar",
+                "/user/deleteAvatar",
 //                "/role/**", "/menu/**",
                 "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/**", "/api/**");
     }

@@ -4,6 +4,7 @@ import crelle.family.common.util.ResultUtils;
 import crelle.family.model.PageBean;
 import crelle.family.model.ao.UserAO;
 import crelle.family.model.entity.Role;
+import crelle.family.service.FtpService;
 import crelle.family.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import crelle.family.common.ResponseResult;
 import crelle.family.model.entity.User;
 import crelle.family.service.impl.UserServiceImpl;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +42,9 @@ public class UserController implements BaseController<User, UserAO> {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private FtpService ftpService;
 
     @ApiOperation(value = "新增用户")
     @ApiParam(required = true, name = "user", value = "入参")
@@ -160,6 +165,46 @@ public class UserController implements BaseController<User, UserAO> {
         try {
             userService.queryById(id);
             userService.deleteById(id);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
+    }
+
+
+    @ApiOperation(value = "上传用户头像")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/uploadAvatar", method = RequestMethod.POST)
+    public ResponseResult<String> uploadAvatar(@RequestPart("file") MultipartFile multipartFile, @RequestParam("fileType") String fileType) {
+        ResponseResult<String> responseResult = new ResponseResult<>();
+        try {
+            if (multipartFile.isEmpty()) {
+                responseResult.buildFail("请选择文件！");
+                return responseResult;
+            }
+            String absolutelyUri = ftpService.uploadFromMultipartFile(multipartFile, fileType);
+            responseResult.setData(absolutelyUri);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
+    }
+
+
+    @ApiOperation(value = "删除用户头像")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/deleteAvatar", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> deleteAvatar(String absoluteUri) {
+        ResponseResult<String> responseResult = new ResponseResult<>();
+        try {
+            if (StringUtils.isBlank(absoluteUri)) {
+                responseResult.buildFail("请传入要删除的资源路径！");
+                return responseResult;
+            }
+            if (!ftpService.deleteByAbsoluteUri(absoluteUri)) {
+                responseResult.buildFail("删除失败！");
+                return responseResult;
+            }
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
