@@ -71,9 +71,13 @@ public class UserController implements BaseController<User, UserAO> {
                 responseResult.buildFail("用户名已经被占用！");
                 return responseResult;
             }
-            //给用户设置默认的访客角色
+            //给用户设置默认的访客角色和默认状态
             Set<Role> roles = roleService.findRolesByName("ROLE_guest");
             user.setRoles(roles);
+            user.setAccountNonExpired(true);
+            user.setAccountNonLocked(true);
+            user.setCredentialsNonExpired(true);
+            user.setEnabled(true);
             User user2 = userService.create(user);
             responseResult.setData(user2);
         } catch (Exception e) {
