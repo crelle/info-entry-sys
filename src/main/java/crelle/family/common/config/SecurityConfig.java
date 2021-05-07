@@ -69,7 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new MyFtpClient(configProperties.getConfigValue("ftp.ip"),
                 Integer.valueOf(configProperties.getConfigValue("ftp.port")),
                 configProperties.getConfigValue("ftp.username"),
-                configProperties.getConfigValue("ftp.password"));
+                configProperties.getConfigValue("ftp.password"),
+                Integer.valueOf(configProperties.getConfigValue("ftp.active.min.port")),
+                Integer.valueOf(configProperties.getConfigValue("ftp.active.max.port")));
     }
 
     //明文

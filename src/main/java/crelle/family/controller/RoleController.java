@@ -79,9 +79,9 @@ public class RoleController implements BaseController<Role, RoleAO> {
 
     @ApiOperation(value = "分页查询角色")
     @ApiParam(required = true, name = "xx", value = "入参")
-    @RequestMapping(value = "/page", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Role>> pageByCondition(PageBean<RoleAO> pageBean) {
+    public ResponseResult<Page<Role>> pageByCondition(@RequestBody PageBean<RoleAO> pageBean) {
         ResponseResult<Page<Role>> responseResult = new ResponseResult<>();
         try {
             Page<Role> page = roleService.pageByCondition(pageBean);

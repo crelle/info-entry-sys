@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.tomcat.util.http.ResponseUtil;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ import java.util.List;
 @Api(tags = "权限服务")
 public class AuthorityController implements BaseController<Role, RoleAO> {
 
+    @Autowired
     private RoleService roleService;
 
 
