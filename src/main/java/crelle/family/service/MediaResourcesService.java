@@ -1,8 +1,10 @@
 package crelle.family.service;
 
+import crelle.family.model.PageBean;
 import crelle.family.model.ao.MediaResourcesAO;
 import crelle.family.model.entity.MediaResources;
 import crelle.family.service.BaseService;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -15,9 +17,8 @@ import java.util.List;
  **/
 public interface MediaResourcesService extends BaseService<MediaResources, MediaResourcesAO> {
 
-    List<MediaResources> queryListById(MediaResourcesAO mediaResourcesAO);
-
     int deleteMediaResourcesById(Long id);
 
     int deleteByPrimaryKey(Long id);
+
 }

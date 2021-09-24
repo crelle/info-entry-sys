@@ -39,10 +39,7 @@ public class MediaResourcesServiceImpl implements MediaResourcesService {
         return null;
     }
 
-    @Override
-    public List<MediaResources> queryListById(MediaResourcesAO mediaResourcesAO) {
-        return mediaResourcesMapper.queryMediaResourcesById(mediaResourcesAO);
-    }
+
 
 
     @Override
@@ -52,7 +49,7 @@ public class MediaResourcesServiceImpl implements MediaResourcesService {
 
     @Override
     public Page<MediaResources> pageByCondition(PageBean<MediaResourcesAO> pageBean) {
-        return null;
+        return mediaResourcesMapper.pageByCondition(pageBean);
     }
 
     @Override

@@ -101,8 +101,16 @@ public class MediaResourcesController implements BaseController<MediaResources, 
         return null;
     }
 
+    @ApiOperation(value = "创建媒体资源")
+    @ApiParam(required = true, name = "MediaResources", value = "入参")
+    @RequestMapping(value = "/all", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<List<MediaResources>> queryAll() {
+        try{
+            mediaResourcesService.queryAll();
+        }catch (Exception e){
+
+        }
         return null;
     }
 }

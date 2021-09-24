@@ -1,9 +1,12 @@
 package crelle.family.mapper;
 
+import crelle.family.model.PageBean;
 import crelle.family.model.ao.MediaResourcesAO;
 import crelle.family.model.entity.MediaResources;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Page;
 
+import javax.print.attribute.standard.Media;
 import java.util.List;
 
 /**
@@ -23,6 +26,6 @@ public interface MediaResourcesMapper {
 
     int updateMediaResourcesById(MediaResources mediaResources);
 
-    List<MediaResources> queryMediaResourcesById(@Param("mr") MediaResourcesAO mediaResourcesAO);
+    Page<MediaResources> pageByCondition(@Param("pageBean")PageBean pageBean);
 
 }

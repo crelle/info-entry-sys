@@ -141,7 +141,7 @@
     </update>
 
 
-    <select id="queryMediaResourcesById" resultMap="BaseResultMap">
+    <select id="pageByCondition" resultMap="BaseResultMap">
         SELECT
         mr.id 'id',
         mr.media_default 'mediaDefault',
@@ -169,6 +169,7 @@
                 <if test="mr.userId !=null">
                     and mr.user_id =#{mr.userId}
                 </if>
+
             </if>
         </where>
     </select>

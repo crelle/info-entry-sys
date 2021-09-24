@@ -61,10 +61,10 @@ public class FtpServiceImpl implements FtpService {
         String relativeUri = CommonUtils.generateRelativeMediaResourcesUri(secDir + thriPicDir, fileSuffix);
         myFtpClient.putFileToPath(multipartFile.getInputStream(), relativeUri);
         String nginxIp = configProperties.getConfigValue("nginx.ip");
-        String nginxPort = configProperties.getConfigValue("nginx.port");
-        //绝对资源地址
+        String nginxFtpPort = configProperties.getConfigValue("nginx.ftp.port");
+        //绝对资源地址l
         StringBuffer absolutelyUri = new StringBuffer();
-        absolutelyUri.append(nginxIp).append(":").append(nginxPort).append("/").append(relativeUri);
+        absolutelyUri.append(nginxIp).append(":").append(nginxFtpPort).append("/").append(relativeUri);
         return absolutelyUri.toString();
     }
 
