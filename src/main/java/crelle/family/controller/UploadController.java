@@ -5,7 +5,6 @@ import crelle.family.common.config.ConfigProperties;
 import crelle.family.common.util.CommonUtils;
 import crelle.family.model.ao.FileTypeAO;
 import crelle.family.service.FtpService;
-import crelle.ftp.client.MyFtpClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,8 +33,8 @@ import java.io.IOException;
 public class UploadController {
 
 
-    @Autowired
-    private FtpService ftpService;
+//    @Autowired
+//    private FtpService ftpService;
 
 
     @ApiOperation(value = "上传媒体资源文件")
@@ -48,8 +47,8 @@ public class UploadController {
                 responseResult.buildFail("请选择文件！");
                 return responseResult;
             }
-            String absolutelyUri = ftpService.uploadFromMultipartFile(multipartFile, fileType);
-            responseResult.setData(absolutelyUri);
+//            String absolutelyUri = ftpService.uploadFromMultipartFile(multipartFile, fileType);
+//            responseResult.setData(absolutelyUri);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
@@ -67,10 +66,10 @@ public class UploadController {
                 responseResult.buildFail("请传入要删除的资源路径！");
                 return responseResult;
             }
-            if (ftpService.deleteByAbsoluteUri(absoluteUri)) {
-                responseResult.buildFail("删除失败！");
-                return responseResult;
-            }
+//            if (ftpService.deleteByAbsoluteUri(absoluteUri)) {
+//                responseResult.buildFail("删除失败！");
+//                return responseResult;
+//            }
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }

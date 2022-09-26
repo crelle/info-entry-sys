@@ -3,9 +3,7 @@ package crelle.family.common.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import crelle.family.model.entity.Menu;
 import crelle.family.service.impl.UserServiceImpl;
-import crelle.ftp.client.MyFtpClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
@@ -64,15 +62,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    MyFtpClient ftpClient() {
-        return new MyFtpClient(configProperties.getConfigValue("ftp.ip"),
-                Integer.valueOf(configProperties.getConfigValue("ftp.port")),
-                configProperties.getConfigValue("ftp.username"),
-                configProperties.getConfigValue("ftp.password"),
-                Integer.valueOf(configProperties.getConfigValue("ftp.active.min.port")),
-                Integer.valueOf(configProperties.getConfigValue("ftp.active.max.port")));
-    }
+//    @Bean
+//    MyFtpClient ftpClient() {
+//        return new MyFtpClient(configProperties.getConfigValue("ftp.ip"),
+//                Integer.valueOf(configProperties.getConfigValue("ftp.port")),
+//                configProperties.getConfigValue("ftp.username"),
+//                configProperties.getConfigValue("ftp.password"),
+//                Integer.valueOf(configProperties.getConfigValue("ftp.active.min.port")),
+//                Integer.valueOf(configProperties.getConfigValue("ftp.active.max.port")));
+//    }
 
     //明文
 //    @Bean

@@ -43,8 +43,8 @@ public class UserController implements BaseController<User, UserAO> {
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    private FtpService ftpService;
+//    @Autowired
+//    private FtpService ftpService;
 
     @ApiOperation(value = "新增用户")
     @ApiParam(required = true, name = "user", value = "入参")
@@ -186,8 +186,8 @@ public class UserController implements BaseController<User, UserAO> {
                 responseResult.buildFail("请选择文件！");
                 return responseResult;
             }
-            String absolutelyUri = ftpService.uploadFromMultipartFile(multipartFile, fileType);
-            responseResult.setData(absolutelyUri);
+//            String absolutelyUri = ftpService.uploadFromMultipartFile(multipartFile, fileType);
+//            responseResult.setData(absolutelyUri);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
@@ -205,10 +205,10 @@ public class UserController implements BaseController<User, UserAO> {
                 responseResult.buildFail("请传入要删除的资源路径！");
                 return responseResult;
             }
-            if (!ftpService.deleteByAbsoluteUri(absoluteUri)) {
-                responseResult.buildFail("删除失败！");
-                return responseResult;
-            }
+//            if (!ftpService.deleteByAbsoluteUri(absoluteUri)) {
+//                responseResult.buildFail("删除失败！");
+//                return responseResult;
+//            }
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
