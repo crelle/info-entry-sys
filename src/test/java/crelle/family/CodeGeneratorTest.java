@@ -25,9 +25,9 @@ public class CodeGeneratorTest {
     //文件作者
     private final String author = "crelle";
     //数据库url
-    private final String url = "jdbc:mysql://127.0.0.1:3306/archermind-system-db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
+    private final String url = "jdbc:mysql://192.168.74.4:3306/info-entry-sys-db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
     //数据库用户名
-    private final String username = "root";
+    private final String username = "crelle";
     //数据库密码
     private final String password = "123456";
 
