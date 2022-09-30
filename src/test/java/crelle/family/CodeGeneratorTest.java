@@ -15,8 +15,9 @@ import java.util.Date;
  */
 public class CodeGeneratorTest {
 
-    private String date;
-    private final String basePath = "D://coding//info-entry-sys//src//main";
+    private String date = "2022-09-30";
+    private final String basePath = "D://coding//info-entry-sys//src//main//java";
+    private final String parentModuleName = "sys";
     private final String url = "jdbc:mysql://127.0.0.1:3306/archermind-system-db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
     private final String username = "root";
     private final String password = "123456";
@@ -40,9 +41,15 @@ public class CodeGeneratorTest {
                             .outputDir(basePath); // 指定输出目录
                 })
                 .packageConfig(builder -> {
-                    builder.parent("//java//crelle.family") // 设置父包名
-                            .moduleName("sys") // 设置父包模块名
-                            .pathInfo(Collections.singletonMap(OutputFile.xml, basePath + "//resources/mapper")); // 设置mapperXml生成路径
+                    builder.parent("crelle.family") // 设置父包名
+                            .moduleName(parentModuleName) // 设置父包模块名
+                            .entity("model.entity")//实体名
+                            .controller("controller")//controller名
+                            .service("service")//服务名
+                            .serviceImpl("service.impl")//服务实现类名
+                            .mapper("mapper")//dao名
+                            .xml("mapper.xml")//dao实现类名
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, basePath  +"//crelle//family//"+ parentModuleName+"//mapper")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
                     builder.addInclude("test") // 设置需要生成的表名
