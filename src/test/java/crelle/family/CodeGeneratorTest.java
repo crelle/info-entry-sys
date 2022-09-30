@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.baomidou.mybatisplus.generator.fill.Column;
+import crelle.family.controller.BaseController;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -78,6 +79,7 @@ public class CodeGeneratorTest {
 
                             //4.4、Controller策略配置
                             .controllerBuilder()
+                            .superClass(BaseController.class)//基础controller
                             .formatFileName("%sController") //格式化 Controller 类文件名称，%s进行匹配表名，如 UserController
                             .enableRestStyle() //开启生成 @RestController 控制器
 
