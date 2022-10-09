@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author crelle
@@ -55,6 +57,12 @@ public class Menu {
     @TableField("menu_sort")
     private Long menuSort;
 
+    private Set<Menu> childrenMenus = new HashSet<>();
+
+    private Menu parentMenu;
+
+    private Set<Role> roles = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -62,6 +70,7 @@ public class Menu {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getComponent() {
         return component;
     }
@@ -69,6 +78,7 @@ public class Menu {
     public void setComponent(String component) {
         this.component = component;
     }
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -76,6 +86,7 @@ public class Menu {
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
+
     public String getIconLs() {
         return iconLs;
     }
@@ -83,6 +94,7 @@ public class Menu {
     public void setIconLs(String iconLs) {
         this.iconLs = iconLs;
     }
+
     public Boolean getKeepAlive() {
         return keepAlive;
     }
@@ -90,6 +102,7 @@ public class Menu {
     public void setKeepAlive(Boolean keepAlive) {
         this.keepAlive = keepAlive;
     }
+
     public String getName() {
         return name;
     }
@@ -97,6 +110,7 @@ public class Menu {
     public void setName(String name) {
         this.name = name;
     }
+
     public Long getParentId() {
         return parentId;
     }
@@ -104,6 +118,7 @@ public class Menu {
     public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
+
     public String getPath() {
         return path;
     }
@@ -111,6 +126,7 @@ public class Menu {
     public void setPath(String path) {
         this.path = path;
     }
+
     public Boolean getRequireAuth() {
         return requireAuth;
     }
@@ -118,6 +134,7 @@ public class Menu {
     public void setRequireAuth(Boolean requireAuth) {
         this.requireAuth = requireAuth;
     }
+
     public String getUrl() {
         return url;
     }
@@ -125,6 +142,7 @@ public class Menu {
     public void setUrl(String url) {
         this.url = url;
     }
+
     public String getMenuType() {
         return menuType;
     }
@@ -132,6 +150,7 @@ public class Menu {
     public void setMenuType(String menuType) {
         this.menuType = menuType;
     }
+
     public Long getMenuSort() {
         return menuSort;
     }
@@ -140,21 +159,48 @@ public class Menu {
         this.menuSort = menuSort;
     }
 
+    public Set<Menu> getChildrenMenus() {
+        return childrenMenus;
+    }
+
+    public void setChildrenMenus(Set<Menu> childrenMenus) {
+        this.childrenMenus = childrenMenus;
+    }
+
+    public Menu getParentMenu() {
+        return parentMenu;
+    }
+
+    public void setParentMenu(Menu parentMenu) {
+        this.parentMenu = parentMenu;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "Menu{" +
-            "id=" + id +
-            ", component=" + component +
-            ", enabled=" + enabled +
-            ", iconLs=" + iconLs +
-            ", keepAlive=" + keepAlive +
-            ", name=" + name +
-            ", parentId=" + parentId +
-            ", path=" + path +
-            ", requireAuth=" + requireAuth +
-            ", url=" + url +
-            ", menuType=" + menuType +
-            ", menuSort=" + menuSort +
-        "}";
+                "id=" + id +
+                ", component='" + component + '\'' +
+                ", enabled=" + enabled +
+                ", iconLs='" + iconLs + '\'' +
+                ", keepAlive=" + keepAlive +
+                ", name='" + name + '\'' +
+                ", parentId=" + parentId +
+                ", path='" + path + '\'' +
+                ", requireAuth=" + requireAuth +
+                ", url='" + url + '\'' +
+                ", menuType='" + menuType + '\'' +
+                ", menuSort=" + menuSort +
+                ", childrenMenus=" + childrenMenus +
+                ", parentMenu=" + parentMenu +
+                ", roles=" + roles +
+                '}';
     }
 }

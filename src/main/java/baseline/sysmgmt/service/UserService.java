@@ -2,6 +2,7 @@ package baseline.sysmgmt.service;
 
 import baseline.sysmgmt.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * <p>
@@ -11,6 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author crelle
  * @since 2022-10-01 12:06:26
  */
-public interface UserService extends IService<User> {
+public interface UserService extends UserDetailsService,IService<User> {
 
 }

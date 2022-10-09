@@ -5,11 +5,12 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Set;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author crelle
@@ -28,6 +29,8 @@ public class Role {
     @TableField("name_zh")
     private String nameZh;
 
+    private Set<Menu> menus;
+
     public Long getId() {
         return id;
     }
@@ -35,6 +38,7 @@ public class Role {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
@@ -42,6 +46,7 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getNameZh() {
         return nameZh;
     }
@@ -50,12 +55,21 @@ public class Role {
         this.nameZh = nameZh;
     }
 
+    public Set<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(Set<Menu> menus) {
+        this.menus = menus;
+    }
+
     @Override
     public String toString() {
         return "Role{" +
-            "id=" + id +
-            ", name=" + name +
-            ", nameZh=" + nameZh +
-        "}";
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", nameZh='" + nameZh + '\'' +
+                ", menus=" + menus +
+                '}';
     }
 }

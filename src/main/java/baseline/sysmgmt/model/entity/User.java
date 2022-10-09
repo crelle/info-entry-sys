@@ -5,7 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Set;
 
 /**
  * <p>
@@ -51,6 +52,8 @@ public class User {
 
     @TableField("user_avatar")
     private String userAvatar;
+
+    private Set<Role> roles;
 
     public Long getId() {
         return id;
@@ -130,20 +133,29 @@ public class User {
         this.userAvatar = userAvatar;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-            "id=" + id +
-            ", accountNonExpired=" + accountNonExpired +
-            ", accountNonLocked=" + accountNonLocked +
-            ", credentailsNonExpired=" + credentailsNonExpired +
-            ", enabled=" + enabled +
-            ", password=" + password +
-            ", userEmail=" + userEmail +
-            ", userNickName=" + userNickName +
-            ", userPhone=" + userPhone +
-            ", username=" + username +
-            ", userAvatar=" + userAvatar +
-        "}";
+                "id=" + id +
+                ", accountNonExpired=" + accountNonExpired +
+                ", accountNonLocked=" + accountNonLocked +
+                ", credentailsNonExpired=" + credentailsNonExpired +
+                ", enabled=" + enabled +
+                ", password='" + password + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", userNickName='" + userNickName + '\'' +
+                ", userPhone='" + userPhone + '\'' +
+                ", username='" + username + '\'' +
+                ", userAvatar='" + userAvatar + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

@@ -52,7 +52,7 @@ public class CodeGeneratorTest {
                             .moduleName(parentModuleName)   //设置模块包名
                             .entity("model.entity")   //pojo 实体类包名
                             .service("service") //Service 包名
-                            .serviceImpl("serviceImpl") // ***ServiceImpl 包名
+                            .serviceImpl("service.impl") // ***ServiceImpl 包名
                             .mapper("mapper")   //Mapper 包名
                             .xml("mapper")  //Mapper XML 包名
                             .controller("controller") //Controller 包名
