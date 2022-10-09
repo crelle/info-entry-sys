@@ -23,28 +23,28 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Override
-    public User create(User object) {
-        return null;
+    public  create(User object) {
+        return save(object);
     }
 
     @Override
     public User queryById(Long id) {
-        return null;
+        return getById(id);
     }
 
     @Override
     public List<User> queryAll() {
-        return null;
+        return queryAll();
     }
 
     @Override
     public int update(Long id, User object) {
-        return 0;
+        return update(id,object);
     }
 
     @Override
     public void deleteById(Long id) {
-
+            removeById(id);
     }
 
     @Override
