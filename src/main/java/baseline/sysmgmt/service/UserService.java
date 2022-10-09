@@ -12,6 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @author crelle
  * @since 2022-10-01 12:06:26
  */
-public interface UserService extends UserDetailsService,IService<User> {
+public interface UserService extends UserDetailsService,IService<User>,BaseService<User> {
 
 }

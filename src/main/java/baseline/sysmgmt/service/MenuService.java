@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author crelle
  * @since 2022-10-01 12:06:26
  */
-public interface MenuService extends IService<Menu> {
+public interface MenuService extends IService<Menu>,BaseService<Menu> {
 
 }
