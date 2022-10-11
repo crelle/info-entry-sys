@@ -1,8 +1,8 @@
 package baseline.sysmgmt.controller;
 
-import crelle.family.common.ResponseResult;
-import crelle.family.model.PageBean;
-import org.springframework.data.domain.Page;
+
+import baseline.sysmgmt.common.ResponseResult;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * @date:2021/4/3
  * @description:XX
  **/
-public interface BaseController<T,A> {
+public interface BaseController<T> {
 
 
     ResponseResult<T> create(@RequestBody T obj);
@@ -24,7 +24,7 @@ public interface BaseController<T,A> {
     public ResponseResult<T> queryById(@PathVariable Long id);
 
 
-    public ResponseResult<Page<T>> pageByCondition(@RequestBody PageBean<A> pageBean);
+    public ResponseResult<IPage<T>> pageByCondition(@RequestBody IPage<T> pageBean);
 
 
     public ResponseResult<List<T>> queryAll();

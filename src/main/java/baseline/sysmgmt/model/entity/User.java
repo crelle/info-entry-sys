@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
@@ -59,7 +58,7 @@ public class User implements UserDetails {
     @TableField("user_avatar")
     private String userAvatar;
 
-    private Set<Role> roles;
+    private List<Role> roles;
 
     /**
      * 用户权限设置
@@ -172,11 +171,11 @@ public class User implements UserDetails {
         this.userAvatar = userAvatar;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 

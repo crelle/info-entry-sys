@@ -1,5 +1,8 @@
 package baseline.sysmgmt.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import java.util.List;
 
 /**
@@ -11,13 +14,17 @@ import java.util.List;
  **/
 public interface BaseService<T> {
 
-    T create(T object);
+    boolean create(T object);
 
     T queryById(Long id);
 
     List<T> queryAll();
 
-    int update(Long id, T object);
+    boolean update(T object);
 
     void deleteById(Long id);
+
+    IPage<T> pageByCondition(IPage<T> page);
+
+    IPage<T> pageByCondition(IPage<T> page, Wrapper<T> queryWrapper);
 }

@@ -3,6 +3,8 @@ package baseline.sysmgmt.service.impl;
 import baseline.sysmgmt.model.entity.RoleMenu;
 import baseline.sysmgmt.mapper.RoleMenuMapper;
 import baseline.sysmgmt.service.RoleMenuService;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author crelle
@@ -19,27 +21,37 @@ import java.util.List;
 @Service
 public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> implements RoleMenuService {
     @Override
-    public RoleMenu create(RoleMenu object) {
-        return null;
+    public boolean create(RoleMenu object) {
+        return save(object);
     }
 
     @Override
     public RoleMenu queryById(Long id) {
-        return null;
+        return getById(id);
     }
 
     @Override
     public List<RoleMenu> queryAll() {
-        return null;
+        return list();
     }
 
     @Override
-    public int update(Long id, RoleMenu object) {
-        return 0;
+    public boolean update(RoleMenu object) {
+        return updateById(object);
     }
 
     @Override
     public void deleteById(Long id) {
+        removeById(id);
+    }
 
+    @Override
+    public IPage<RoleMenu> pageByCondition(IPage<RoleMenu> page) {
+        return page(page);
+    }
+
+    @Override
+    public IPage<RoleMenu> pageByCondition(IPage<RoleMenu> page, Wrapper<RoleMenu> queryWrapper) {
+        return page(page, queryWrapper);
     }
 }

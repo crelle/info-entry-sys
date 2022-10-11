@@ -3,7 +3,9 @@ package baseline.sysmgmt.service.impl;
 import baseline.sysmgmt.mapper.UserMapper;
 import baseline.sysmgmt.model.entity.User;
 import baseline.sysmgmt.service.UserService;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,7 +25,7 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Override
-    public  create(User object) {
+    public boolean create(User object) {
         return save(object);
     }
 
@@ -34,17 +36,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public List<User> queryAll() {
-        return queryAll();
+        return list();
     }
 
     @Override
-    public int update(Long id, User object) {
-        return update(id,object);
+    public boolean update(User object) {
+        return updateById(object);
     }
 
     @Override
     public void deleteById(Long id) {
-            removeById(id);
+        removeById(id);
+    }
+
+    @Override
+    public IPage<User> pageByCondition(IPage<User> page) {
+        return page(page);
+    }
+
+    @Override
+    public IPage<User> pageByCondition(IPage<User> page, Wrapper<User> queryWrapper) {
+        return page(page, queryWrapper);
     }
 
     @Override
