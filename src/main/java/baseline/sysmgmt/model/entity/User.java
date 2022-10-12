@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author crelle
@@ -62,6 +62,7 @@ public class User implements UserDetails {
 
     /**
      * 用户权限设置
+     *
      * @return
      */
     @Override
@@ -100,34 +101,23 @@ public class User implements UserDetails {
     public void setId(Long id) {
         this.id = id;
     }
-    public Boolean getAccountNonExpired() {
-        return accountNonExpired;
-    }
 
     public void setAccountNonExpired(Boolean accountNonExpired) {
         this.accountNonExpired = accountNonExpired;
-    }
-    public Boolean getAccountNonLocked() {
-        return accountNonLocked;
     }
 
     public void setAccountNonLocked(Boolean accountNonLocked) {
         this.accountNonLocked = accountNonLocked;
     }
-    public Boolean getCredentailsNonExpired() {
-        return credentailsNonExpired;
-    }
 
     public void setCredentailsNonExpired(Boolean credentailsNonExpired) {
         this.credentailsNonExpired = credentailsNonExpired;
-    }
-    public Boolean getEnabled() {
-        return enabled;
     }
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
+
     public String getPassword() {
         return password;
     }
@@ -135,6 +125,7 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getUserEmail() {
         return userEmail;
     }
@@ -142,6 +133,7 @@ public class User implements UserDetails {
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+
     public String getUserNickName() {
         return userNickName;
     }
@@ -149,6 +141,7 @@ public class User implements UserDetails {
     public void setUserNickName(String userNickName) {
         this.userNickName = userNickName;
     }
+
     public String getUserPhone() {
         return userPhone;
     }
@@ -156,6 +149,7 @@ public class User implements UserDetails {
     public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
     }
+
     public String getUsername() {
         return username;
     }
@@ -163,6 +157,7 @@ public class User implements UserDetails {
     public void setUsername(String username) {
         this.username = username;
     }
+
     public String getUserAvatar() {
         return userAvatar;
     }
