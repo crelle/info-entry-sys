@@ -10,6 +10,7 @@ import baseline.sysmgmt.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +30,7 @@ import java.util.List;
  * @author crelle
  * @since 2022-10-01 12:06:26
  */
+@Api(tags = "用户服务")
 @RestController
 @RequestMapping("/sysmgmt/user")
 public class UserController implements BaseController<User> {
