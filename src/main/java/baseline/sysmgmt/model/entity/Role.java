@@ -20,7 +20,7 @@ import java.util.Set;
 @ApiModel(value = "Role对象", description = "")
 public class Role {
 
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private Long id;
 
     @TableField("name")

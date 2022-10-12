@@ -61,7 +61,7 @@ public class CodeGeneratorTest {
                 })
                 //4、策略配置
                 .strategyConfig(builder -> {
-                    builder.addInclude("user", "role", "menu", "role_menu", "user_role") // 设置需要生成的数据表名
+                    builder.addInclude("role_menu", "user_role") // 设置需要生成的数据表名
                             .addTablePrefix("t_", "c_") // 设置过滤表前缀
 
                             //4.1、Mapper策略配置

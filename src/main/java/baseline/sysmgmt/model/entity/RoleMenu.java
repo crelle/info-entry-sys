@@ -1,14 +1,14 @@
 package baseline.sysmgmt.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author crelle
@@ -18,11 +18,22 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "RoleMenu对象", description = "")
 public class RoleMenu {
 
-    @TableId(value = "role_id", type = IdType.ASSIGN_UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private Long id;
+
+    @TableField("role_id")
     private Long roleId;
 
-    @TableId(value = "menu_id", type = IdType.ASSIGN_UUID)
+    @TableField("menu_id")
     private Long menuId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getRoleId() {
         return roleId;
@@ -31,6 +42,7 @@ public class RoleMenu {
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
+
     public Long getMenuId() {
         return menuId;
     }
@@ -42,8 +54,9 @@ public class RoleMenu {
     @Override
     public String toString() {
         return "RoleMenu{" +
-            "roleId=" + roleId +
-            ", menuId=" + menuId +
-        "}";
+                "id=" + id +
+                ", roleId=" + roleId +
+                ", menuId=" + menuId +
+                '}';
     }
 }

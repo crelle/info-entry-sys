@@ -25,7 +25,7 @@ import java.util.List;
 @ApiModel(value = "User对象", description = "")
 public class User implements UserDetails {
 
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private Long id;
 
     @TableField("account_non_expired")

@@ -21,7 +21,7 @@ import java.util.Set;
 @ApiModel(value = "Menu对象", description = "")
 public class Menu {
 
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private Long id;
 
     @TableField("component")

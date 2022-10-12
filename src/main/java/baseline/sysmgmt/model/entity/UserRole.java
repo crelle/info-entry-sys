@@ -1,13 +1,14 @@
 package baseline.sysmgmt.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author crelle
@@ -17,11 +18,22 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "UserRole对象", description = "")
 public class UserRole {
 
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private Long id;
+
     @TableField("user_id")
     private Long userId;
 
     @TableField("role_id")
     private Long roleId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getUserId() {
         return userId;
@@ -30,6 +42,7 @@ public class UserRole {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
     public Long getRoleId() {
         return roleId;
     }
@@ -41,8 +54,9 @@ public class UserRole {
     @Override
     public String toString() {
         return "UserRole{" +
-            "userId=" + userId +
-            ", roleId=" + roleId +
-        "}";
+                "id=" + id +
+                ", userId=" + userId +
+                ", roleId=" + roleId +
+                '}';
     }
 }
