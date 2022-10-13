@@ -57,10 +57,13 @@ public class Menu {
     @TableField("menu_sort")
     private Long menuSort;
 
+    @TableField(exist = false)
     private Set<Menu> childrenMenus = new HashSet<>();
 
+    @TableField(exist = false)
     private Menu parentMenu;
 
+    @TableField(exist = false)
     private Set<Role> roles = new HashSet<>();
 
     public Long getId() {
