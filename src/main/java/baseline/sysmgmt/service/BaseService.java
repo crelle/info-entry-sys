@@ -16,13 +16,13 @@ public interface BaseService<T> {
 
     boolean create(T object);
 
-    T queryById(Long id);
+    T queryById(String id);
 
     List<T> queryAll();
 
     boolean update(T object);
 
-    void deleteById(Long id);
+    void deleteById(String id);
 
     IPage<T> pageByCondition(IPage<T> page);
 

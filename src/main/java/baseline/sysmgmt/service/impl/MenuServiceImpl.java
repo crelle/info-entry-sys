@@ -26,7 +26,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public Menu queryById(Long id) {
+    public Menu queryById(String id) {
         return getById(id);
     }
 
@@ -41,7 +41,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         removeById(id);
     }
 

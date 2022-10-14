@@ -29,7 +29,7 @@ import java.util.List;
  * 前端控制器
  * </p>
  *
- * @author crelle
+ * @author crelleupdateById
  * @since 2022-10-01 12:06:26
  */
 @Api(tags = "用户服务")
@@ -85,7 +85,7 @@ public class UserController implements BaseController<User> {
 
             //给用户设置默认的访客角色和默认状态
             QueryWrapper<Role> queryWrapperRole = new QueryWrapper<>();
-            queryWrapperRole.select().eq("name", "ROLE_gues");
+            queryWrapperRole.select().eq("name", "ROLE_guest");
             Role guest = roleService.getOne(queryWrapperRole);
 
             UserRole userRole = new UserRole();
@@ -121,7 +121,7 @@ public class UserController implements BaseController<User> {
     @ApiOperation(value = "根据用户标识查询用户")
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<User> queryById(@PathVariable Long id) {
+    public ResponseResult<User> queryById(@PathVariable String id) {
         ResponseResult<User> responseResult = new ResponseResult<>();
         try {
             User user = userService.queryById(id);
@@ -164,7 +164,7 @@ public class UserController implements BaseController<User> {
     @ApiOperation(value = "更新用户")
     @ApiParam(required = true, name = "user", value = "入参")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> updateById(@PathVariable Long id, @RequestBody User user) {
+    public ResponseResult<String> updateById(@PathVariable String id, @RequestBody User user) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
             boolean result = userService.update(user);
@@ -180,7 +180,7 @@ public class UserController implements BaseController<User> {
     @ApiOperation(value = "根据用户标识删除用户")
     @ApiParam(required = true, name = "user", value = "入参")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> deleteById(@PathVariable Long id) {
+    public ResponseResult<String> deleteById(@PathVariable String id) {
         ResponseResult<String> responseResult = new ResponseResult<String>();
         try {
             userService.queryById(id);

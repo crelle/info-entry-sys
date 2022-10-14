@@ -26,7 +26,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public Role queryById(Long id) {
+    public Role queryById(String id) {
         return getById(id);
     }
 
@@ -41,7 +41,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         removeById(id);
     }
 

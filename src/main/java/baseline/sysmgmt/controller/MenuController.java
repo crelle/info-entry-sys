@@ -32,7 +32,7 @@ public class MenuController implements BaseController<Menu> {
     }
 
     @Override
-    public ResponseResult<Menu> queryById(Long id) {
+    public ResponseResult<Menu> queryById(String id) {
         return null;
     }
 
@@ -47,12 +47,12 @@ public class MenuController implements BaseController<Menu> {
     }
 
     @Override
-    public ResponseResult<String> updateById(Long id, Menu obj) {
+    public ResponseResult<String> updateById(String id, Menu obj) {
         return null;
     }
 
     @Override
-    public ResponseResult<String> deleteById(Long id) {
+    public ResponseResult<String> deleteById(String id) {
         return null;
     }
 }

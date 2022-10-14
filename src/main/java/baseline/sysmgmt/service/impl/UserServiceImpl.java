@@ -47,7 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public User queryById(Long id) {
+    public User queryById(String id) {
         return getById(id);
     }
 
@@ -62,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         removeById(id);
     }
 

@@ -21,7 +21,7 @@ public interface BaseController<T> {
     ResponseResult<T> create(@RequestBody T obj);
 
 
-    public ResponseResult<T> queryById(@PathVariable Long id);
+    public ResponseResult<T> queryById(@PathVariable String id);
 
 
     public ResponseResult<IPage<T>> pageByCondition(@RequestBody IPage<T> pageBean);
@@ -30,7 +30,7 @@ public interface BaseController<T> {
     public ResponseResult<List<T>> queryAll();
 
 
-    public ResponseResult<String> updateById(@PathVariable Long id, @RequestBody T obj);
+    public ResponseResult<String> updateById(@PathVariable String id, @RequestBody T obj);
 
-    public ResponseResult<String> deleteById(@PathVariable Long id);
+    public ResponseResult<String> deleteById(@PathVariable String id);
 }

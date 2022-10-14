@@ -27,7 +27,7 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
     }
 
     @Override
-    public UserRole queryById(Long id) {
+    public UserRole queryById(String id) {
         return getById(id);
     }
 
@@ -42,7 +42,7 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         removeById(id);
     }
 

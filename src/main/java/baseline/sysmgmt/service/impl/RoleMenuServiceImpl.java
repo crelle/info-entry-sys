@@ -26,7 +26,7 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
     }
 
     @Override
-    public RoleMenu queryById(Long id) {
+    public RoleMenu queryById(String id) {
         return getById(id);
     }
 
@@ -41,7 +41,7 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         removeById(id);
     }
 
