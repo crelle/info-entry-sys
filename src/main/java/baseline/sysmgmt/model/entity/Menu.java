@@ -22,7 +22,7 @@ import java.util.Set;
 public class Menu {
 
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    private Long id;
+    private String id;
 
     @TableField("component")
     private String component;
@@ -66,11 +66,11 @@ public class Menu {
     @TableField(exist = false)
     private Set<Role> roles = new HashSet<>();
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

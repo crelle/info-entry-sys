@@ -27,7 +27,7 @@ import java.util.List;
 public class User implements UserDetails {
 
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    private Long id;
+    private String id;
 
     @TableField("account_non_expired")
     private Boolean accountNonExpired;
@@ -98,11 +98,11 @@ public class User implements UserDetails {
         return enabled;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

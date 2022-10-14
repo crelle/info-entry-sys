@@ -19,44 +19,44 @@ import io.swagger.annotations.ApiModel;
 public class RoleMenu {
 
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    private Long id;
+    private String id;
 
     @TableField("role_id")
-    private Long roleId;
+    private String roleId;
 
     @TableField("menu_id")
-    private Long menuId;
+    private String menuId;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
 
-    public Long getMenuId() {
+    public String getMenuId() {
         return menuId;
     }
 
-    public void setMenuId(Long menuId) {
+    public void setMenuId(String menuId) {
         this.menuId = menuId;
     }
 
     @Override
     public String toString() {
         return "RoleMenu{" +
-                "id=" + id +
-                ", roleId=" + roleId +
-                ", menuId=" + menuId +
+                "id='" + id + '\'' +
+                ", roleId='" + roleId + '\'' +
+                ", menuId='" + menuId + '\'' +
                 '}';
     }
 }

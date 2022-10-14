@@ -84,7 +84,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //查询用户角色
         QueryWrapper<UserRole> queryWrapper1 = new QueryWrapper<>();
         queryWrapper1.select("role_id").eq("user_id", result.getId());
-        List<Long> roleIds = userRoleService.list(queryWrapper1).stream().map(UserRole::getRoleId).collect(Collectors.toList());
+        List<String> roleIds = userRoleService.list(queryWrapper1).stream().map(UserRole::getRoleId).collect(Collectors.toList());
         //查询角色
         QueryWrapper<Role> queryWrapper2 = Wrappers.<Role>query().in("id", roleIds);
         List<Role> rolelist = roleService.list(queryWrapper2);

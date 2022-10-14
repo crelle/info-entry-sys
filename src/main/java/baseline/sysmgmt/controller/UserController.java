@@ -5,7 +5,9 @@ import baseline.sysmgmt.common.ResponseResult;
 import baseline.sysmgmt.common.util.ResultUtils;
 import baseline.sysmgmt.model.entity.Role;
 import baseline.sysmgmt.model.entity.User;
+import baseline.sysmgmt.model.entity.UserRole;
 import baseline.sysmgmt.service.RoleService;
+import baseline.sysmgmt.service.UserRoleService;
 import baseline.sysmgmt.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -41,6 +43,9 @@ public class UserController implements BaseController<User> {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private UserRoleService userRoleService;
+
     @ApiOperation(value = "新增用户")
     @ApiParam(required = true, name = "user", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -61,26 +66,34 @@ public class UserController implements BaseController<User> {
                 responseResult.buildFail("密码为空！");
                 return responseResult;
             }
-            Wrapper<User> queryWrapper = new QueryWrapper<>();
-            User user1 = new User();
-            user1.setUsername(user.getUsername());
+            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+            queryWrapper.select().eq("username", user.getUsername());
             List<User> users = userService.list(queryWrapper);
             if (!CollectionUtils.isEmpty(users)) {
                 responseResult.buildFail("用户名已经被占用！");
                 return responseResult;
             }
-            //给用户设置默认的访客角色和默认状态
-            Wrapper<Role> queryWrapperRole = new QueryWrapper<>();
-            Role role = new Role();
-            role.setName("ROLE_guest");
-            ((QueryWrapper<Role>) queryWrapperRole).setEntity(role);
-            List<Role> roles = roleService.list(queryWrapperRole);
-            user.setRoles(roles);
             user.setAccountNonExpired(true);
             user.setAccountNonLocked(true);
             user.setCredentailsNonExpired(true);
             user.setEnabled(true);
             userService.create(user);
+
+            QueryWrapper<User> queryWrapper1 = new QueryWrapper<>();
+            queryWrapper1.select().eq("username", user.getUsername());
+            User user1 = userService.getOne(queryWrapper1);
+
+            //给用户设置默认的访客角色和默认状态
+            QueryWrapper<Role> queryWrapperRole = new QueryWrapper<>();
+            queryWrapperRole.select().eq("name", "ROLE_gues");
+            Role guest = roleService.getOne(queryWrapperRole);
+
+            UserRole userRole = new UserRole();
+            userRole.setRoleId(guest.getId());
+            userRole.setUserId(user1.getId());
+            userRoleService.create(userRole);
+
+
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
