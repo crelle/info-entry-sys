@@ -13,7 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -94,6 +96,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             List<RoleMenu> roleMenus = roleMenuService.list(queryWrapper3);
             //查询菜单表
             List<Menu> menus = menuService.listByIds(roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList()));
+            //组装子菜单
+            menus.forEach(menu -> {
+                QueryWrapper<Menu> queryWrapper4 = new QueryWrapper<>();
+                queryWrapper4.select().eq("parent_id", menu.getId());
+                List<Menu> menus1 = menuService.list(queryWrapper4);
+                Set<Menu> menus2 = new HashSet<>(menus1);
+                menu.setChildrenMenus(menus2);
+
+            });
             role.setMenus(menus);
         });
 
