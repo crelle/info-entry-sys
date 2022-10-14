@@ -32,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeSet;
 
 /**
@@ -116,7 +118,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     });
                     TreeSet<Menu> menuTreeSet = new TreeSet<>(((o1, o2) -> Long.compare(o1.getMenuSort(), o2.getMenuSort())));
                     menuTreeSet.addAll(role.getMenus());
-                    role.setMenus(menuTreeSet);
+                    List<Menu> menus = new ArrayList<>();
+                    menus.addAll(menuTreeSet);
+                    role.setMenus(menus);
                 });
                 user.setPassword(null);
                 ResponseResult responseResult = ResultUtils.success("登录成功!", user);

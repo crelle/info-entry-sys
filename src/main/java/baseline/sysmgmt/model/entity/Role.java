@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * <p>
@@ -29,7 +29,8 @@ public class Role {
     @TableField("name_zh")
     private String nameZh;
 
-    private Set<Menu> menus;
+    @TableField(exist = false)
+    private List<Menu> menus;
 
     public Long getId() {
         return id;
@@ -55,11 +56,11 @@ public class Role {
         this.nameZh = nameZh;
     }
 
-    public Set<Menu> getMenus() {
+    public List<Menu> getMenus() {
         return menus;
     }
 
-    public void setMenus(Set<Menu> menus) {
+    public void setMenus(List<Menu> menus) {
         this.menus = menus;
     }
 
