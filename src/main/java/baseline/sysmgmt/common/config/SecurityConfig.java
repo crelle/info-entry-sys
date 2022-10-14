@@ -96,8 +96,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/sysmgmt/user/create",
                 "/sysmgmt/user/uploadAvatar",
                 "/sysmgmt/user/deleteAvatar",
-                "/sysmgmt/user/**",
-                "/sysmgmt/role/**", "/sysmgmt/menu/**",
+//                "/sysmgmt/user/**",
+//                "/sysmgmt/role/**", "/sysmgmt/menu/**",
                 "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/**", "/api/**");
     }
 
