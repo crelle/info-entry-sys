@@ -6,6 +6,7 @@ import baseline.sysmgmt.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -61,11 +62,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = new User();
-        user.setUsername(userName);
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>(user);
+        QueryWrapper<User> queryWrapper = Wrappers.<User>query().eq("username", userName);
         User result = getOne(queryWrapper);
-        if (user == null) {
+        if (result == null) {
             throw new UsernameNotFoundException("用户不存在");
         }
         return result;

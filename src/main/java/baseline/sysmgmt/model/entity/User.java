@@ -58,6 +58,7 @@ public class User implements UserDetails {
     @TableField("user_avatar")
     private String userAvatar;
 
+    @TableField(exist = false)
     private List<Role> roles;
 
     /**
