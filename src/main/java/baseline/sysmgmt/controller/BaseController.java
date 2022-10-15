@@ -3,6 +3,7 @@ package baseline.sysmgmt.controller;
 
 import baseline.sysmgmt.common.ResponseResult;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -24,7 +25,7 @@ public interface BaseController<T> {
     public ResponseResult<T> queryById(@PathVariable String id);
 
 
-    public ResponseResult<IPage<T>> pageByCondition(@RequestBody IPage<T> pageBean);
+    public ResponseResult<Page<T>> pageByCondition(@RequestBody Page<T> pageBean);
 
 
     public ResponseResult<List<T>> queryAll();

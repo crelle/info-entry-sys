@@ -5,6 +5,7 @@ import baseline.sysmgmt.common.ResponseResult;
 import baseline.sysmgmt.model.entity.Menu;
 import baseline.sysmgmt.service.MenuService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +38,7 @@ public class MenuController implements BaseController<Menu> {
     }
 
     @Override
-    public ResponseResult<IPage<Menu>> pageByCondition(IPage<Menu> pageBean) {
+    public ResponseResult<Page<Menu>> pageByCondition(Page<Menu> pageBean) {
         return null;
     }
 

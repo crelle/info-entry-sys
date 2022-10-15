@@ -2,6 +2,7 @@ package baseline.sysmgmt.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
 
@@ -24,7 +25,5 @@ public interface BaseService<T> {
 
     void deleteById(String id);
 
-    IPage<T> pageByCondition(IPage<T> page);
-
-    IPage<T> pageByCondition(IPage<T> page, Wrapper<T> queryWrapper);
+    Page<T> pageByCondition(Page<T> page);
 }

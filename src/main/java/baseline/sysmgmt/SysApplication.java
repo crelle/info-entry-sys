@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 
 @SpringBootApplication(scanBasePackages = "baseline.*")
-@MapperScan(basePackages = "baseline.sysmgmt.mapper")
 @EntityScan("baseline.sysmgmt.model.entity")
 public class SysApplication {
 

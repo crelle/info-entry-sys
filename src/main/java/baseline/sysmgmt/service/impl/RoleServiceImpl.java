@@ -5,6 +5,7 @@ import baseline.sysmgmt.mapper.RoleMapper;
 import baseline.sysmgmt.service.RoleService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -46,12 +47,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public IPage<Role> pageByCondition(IPage<Role> page) {
+    public Page<Role> pageByCondition(Page<Role> page) {
         return page(page);
-    }
-
-    @Override
-    public IPage<Role> pageByCondition(IPage<Role> page, Wrapper<Role> queryWrapper) {
-        return page(page, queryWrapper);
     }
 }

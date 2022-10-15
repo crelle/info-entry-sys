@@ -5,6 +5,7 @@ import baseline.sysmgmt.mapper.MenuMapper;
 import baseline.sysmgmt.service.MenuService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -46,12 +47,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public IPage<Menu> pageByCondition(IPage<Menu> page) {
+    public Page<Menu> pageByCondition(Page<Menu> page) {
         return page(page);
-    }
-
-    @Override
-    public IPage<Menu> pageByCondition(IPage<Menu> page, Wrapper<Menu> queryWrapper) {
-        return page(page, queryWrapper);
     }
 }

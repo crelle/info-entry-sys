@@ -12,6 +12,7 @@ import baseline.sysmgmt.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -136,10 +137,10 @@ public class UserController implements BaseController<User> {
     @ApiParam(required = true, name = "pageBean", value = "入参")
     @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<IPage<User>> pageByCondition(IPage<User> pageBean) {
-        ResponseResult<IPage<User>> responseResult = new ResponseResult<>();
+    public ResponseResult<Page<User>> pageByCondition(Page<User> pageBean) {
+        ResponseResult<Page<User>> responseResult = new ResponseResult<>();
         try {
-            IPage<User> page = userService.pageByCondition(pageBean);
+            Page<User> page = userService.pageByCondition(pageBean);
             responseResult.setData(page);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());

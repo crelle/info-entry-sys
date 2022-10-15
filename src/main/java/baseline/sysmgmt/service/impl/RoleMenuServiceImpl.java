@@ -5,6 +5,7 @@ import baseline.sysmgmt.mapper.RoleMenuMapper;
 import baseline.sysmgmt.service.RoleMenuService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -46,12 +47,7 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
     }
 
     @Override
-    public IPage<RoleMenu> pageByCondition(IPage<RoleMenu> page) {
+    public Page<RoleMenu> pageByCondition(Page<RoleMenu> page) {
         return page(page);
-    }
-
-    @Override
-    public IPage<RoleMenu> pageByCondition(IPage<RoleMenu> page, Wrapper<RoleMenu> queryWrapper) {
-        return page(page, queryWrapper);
     }
 }
