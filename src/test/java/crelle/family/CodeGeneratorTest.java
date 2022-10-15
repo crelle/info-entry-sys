@@ -42,7 +42,7 @@ public class CodeGeneratorTest {
                             .outputDir(basePath + "/src/main/java")   //设置输出路径
                             .commentDate("yyyy-MM-dd hh:mm:ss")   //注释日期
                             .dateType(DateType.ONLY_DATE)   //定义生成的实体类中日期的类型 TIME_PACK=LocalDateTime;ONLY_DATE=Date;
-                            .fileOverride()   //覆盖之前的文件
+//                            .fileOverride()   //覆盖之前的文件
                             .enableSwagger()   //开启 swagger 模式
                             .disableOpenDir();   //禁止打开输出目录，默认打开
                 })
