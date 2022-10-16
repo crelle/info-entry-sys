@@ -4,6 +4,7 @@ import baseline.sysmgmt.model.entity.Role;
 import baseline.sysmgmt.mapper.RoleMapper;
 import baseline.sysmgmt.service.RoleService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -49,5 +50,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public Page<Role> pageByCondition(Page<Role> page) {
         return page(page);
+    }
+
+    @Override
+    public Role queryByName(String roleName) {
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select().eq("name", roleName);
+        return getOne(queryWrapper);
     }
 }
