@@ -7,7 +7,6 @@ import baseline.sysmgmt.common.util.VerificationCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +27,6 @@ import java.io.IOException;
  */
 @RestController
 @Api(tags = "登录服务")
-@CrossOrigin
 public class LoginController {
 
     @ApiOperation(value = "登录")

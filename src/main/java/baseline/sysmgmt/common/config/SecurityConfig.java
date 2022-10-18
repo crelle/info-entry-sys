@@ -25,7 +25,6 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.web.cors.CorsConfiguration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -204,8 +203,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //自定处理accessDeniedException异常
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
-        //开启controller级别 @CrossOrigin注解,
-        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+        //开启controller级别 @CrossOrigin注解(和CorsConfig冲突,需要关闭)
+        //http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 
         http.addFilterAt(loginFilter(), UsernamePasswordAuthenticationFilter.class);
     }

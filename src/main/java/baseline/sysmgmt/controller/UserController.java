@@ -11,7 +11,6 @@ import baseline.sysmgmt.service.UserRoleService;
 import baseline.sysmgmt.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -184,7 +183,6 @@ public class UserController implements BaseController<User> {
     public ResponseResult<String> deleteById(@PathVariable String id) {
         ResponseResult<String> responseResult = new ResponseResult<String>();
         try {
-            userService.queryById(id);
             userService.deleteById(id);
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());

@@ -3,9 +3,8 @@ package baseline.sysmgmt.service.impl;
 import baseline.sysmgmt.mapper.UserMapper;
 import baseline.sysmgmt.model.entity.*;
 import baseline.sysmgmt.service.*;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -69,7 +68,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Page<User> pageByCondition(Page<User> page) {
-        return page(page);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        if (CollectionUtils.isNotEmpty(page.getRecords())) {
+            User request = page.getRecords().get(0);
+            queryWrapper.select().eq("account_non_expired", request.isAccountNonExpired())
+                    .eq("account_non_locked", request.isAccountNonLocked())
+                    .eq("enabled", request.isEnabled())
+                    .like("user_phone", request.getUserPhone())
+                    .like("username", request.getUsername());
+        }
+        return page(page, queryWrapper);
     }
 
     @Override
