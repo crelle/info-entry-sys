@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -77,6 +78,7 @@ public class UserController implements BaseController<User> {
             user.setAccountNonLocked(true);
             user.setCredentailsNonExpired(true);
             user.setEnabled(true);
+            user.setPassword();
             userService.create(user);
 
             QueryWrapper<User> queryWrapper1 = new QueryWrapper<>();
