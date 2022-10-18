@@ -82,7 +82,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                     .like("user_phone", request.getUserPhone())
                     .like("username", request.getUsername());
         }
-        return page(page, queryWrapper);
+        Page<User> userPage = page(page, queryWrapper);
+        userPage.getRecords().forEach(user -> {
+            //查询用户角色
+            QueryWrapper<UserRole> queryWrapper1 = new QueryWrapper<>();
+            queryWrapper1.select("role_id").eq("user_id", user.getId());
+            List<String> roleIds = userRoleService.list(queryWrapper1).stream().map(UserRole::getRoleId).collect(Collectors.toList());
+            //查询角色
+            QueryWrapper<Role> queryWrapper2 = Wrappers.<Role>query().in("id", roleIds);
+            List<Role> rolelist = roleService.list(queryWrapper2);
+            user.setRoles(rolelist);
+        });
+        return userPage;
     }
 
     @Override
@@ -90,6 +101,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //查询用户
         QueryWrapper<User> queryWrapper = Wrappers.<User>query().eq("username", userName);
         User result = getOne(queryWrapper);
+        if (result == null) {
+            throw new UsernameNotFoundException("用户不存在");
+        }
         //查询用户角色
         QueryWrapper<UserRole> queryWrapper1 = new QueryWrapper<>();
         queryWrapper1.select("role_id").eq("user_id", result.getId());
@@ -118,9 +132,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         });
 
 
-        if (result == null) {
-            throw new UsernameNotFoundException("用户不存在");
-        }
         result.setRoles(rolelist);
         return result;
     }
