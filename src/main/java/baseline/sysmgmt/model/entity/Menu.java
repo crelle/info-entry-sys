@@ -1,9 +1,6 @@
 package baseline.sysmgmt.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 
 import java.util.HashSet;
@@ -39,8 +36,8 @@ public class Menu {
     @TableField("name")
     private String name;
 
-    @TableField("parent_id")
-    private Long parentId;
+    @TableField(value = "parent_id")
+    private String parentId;
 
     @TableField("path")
     private String path;
@@ -114,11 +111,11 @@ public class Menu {
         this.name = name;
     }
 
-    public Long getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 
