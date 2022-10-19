@@ -3,14 +3,20 @@ package baseline.sysmgmt.controller;
 
 import baseline.sysmgmt.common.ResponseResult;
 import baseline.sysmgmt.model.entity.Menu;
+import baseline.sysmgmt.model.entity.Role;
 import baseline.sysmgmt.service.MenuService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -20,6 +26,7 @@ import java.util.List;
  * @author crelle
  * @since 2022-10-01 12:06:26
  */
+@Api(tags = "菜单管理")
 @RestController
 @RequestMapping("/sysmgmt/menu")
 public class MenuController implements BaseController<Menu> {
@@ -27,33 +34,106 @@ public class MenuController implements BaseController<Menu> {
     @Autowired
     private MenuService menuService;
 
-    @Override
-    public ResponseResult<Menu> create(Menu obj) {
-        return null;
+    @ApiOperation(value = "创建菜单")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<Menu> create(@RequestBody Menu menu) {
+        ResponseResult<Menu> responseResult = new ResponseResult<>();
+        try {
+            Menu menus = menuService.queryByName(menu.getName());
+            if (null != menus) {
+                responseResult.buildFail("新增的菜单已经存在!");
+                return responseResult;
+            }
+            menuService.create(menu);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
     }
 
-    @Override
-    public ResponseResult<Menu> queryById(String id) {
-        return null;
-    }
-
-    @Override
-    public ResponseResult<Page<Menu>> pageByCondition(Page<Menu> pageBean) {
-        return null;
-    }
-
-    @Override
+    @ApiOperation(value = "查询所有菜单")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<List<Menu>> queryAll() {
-        return null;
+        return menuService.queryAllMenus();
     }
 
-    @Override
-    public ResponseResult<String> updateById(String id, Menu obj) {
-        return null;
+
+    @ApiOperation(value = "根据菜单标识查询菜单")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<Menu> queryById(@PathVariable String id) {
+        ResponseResult<Menu> responseResult = new ResponseResult<>();
+        try {
+            Menu menu = menuService.queryById(id);
+            responseResult.setData(menu);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
     }
 
+
+    @ApiOperation(value = "分页查询角色")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> deleteById(String id) {
-        return null;
+    public ResponseResult<Page<Menu>> pageByCondition(@RequestBody Page<Menu> pageBean) {
+        ResponseResult<Page<Menu>> responseResult = new ResponseResult<>();
+        try {
+            Page<Menu> page = menuService.pageByCondition(pageBean);
+            responseResult.setData(page);
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
+    }
+
+
+    @ApiOperation(value = "根据菜单标识更新菜单")
+    @ApiParam(required = true, name = "id", value = "入参")
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> updateById(@PathVariable String id, @RequestBody Menu menu) {
+        ResponseResult<String> responseResult = new ResponseResult<>();
+        try {
+            Menu oldMenu = menuService.queryById(id);
+            if (null == oldMenu) {
+                responseResult.buildFail("要更新的菜单不存在！");
+                return responseResult;
+            }
+            BeanUtils.copyProperties(menu, oldMenu, "id", "menus", "users");
+            boolean isSuccess = menuService.update(oldMenu);
+            if (!isSuccess) {
+                responseResult.buildFail("更新菜单失败！");
+            }
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
+    }
+
+    @ApiOperation(value = "根据菜单标识删除菜单")
+    @ApiParam(required = true, name = "id", value = "入参")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> deleteById(@RequestBody String id) {
+        ResponseResult<String> responseResult = new ResponseResult<>();
+        try {
+            menuService.deleteById(id);
+        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
+            responseResult.buildFail("有用户在使用此菜单，无法删除！");
+        } catch (NoSuchElementException noSuchElementException) {
+            responseResult.buildFail("没有此菜单！");
+        } catch (Exception e) {
+            responseResult.buildFail(e.getMessage());
+        }
+        return responseResult;
+    }
+
+    @ApiOperation(value = "修改菜单目录")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/updateMenu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> updateMenu(@RequestBody List<Menu> menus) {
+        return menuService.updateParentMenu(menus);
     }
 }
