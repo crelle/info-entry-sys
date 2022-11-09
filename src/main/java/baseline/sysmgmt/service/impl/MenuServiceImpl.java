@@ -1,13 +1,10 @@
 package baseline.sysmgmt.service.impl;
 
-import baseline.sysmgmt.common.ResponseResult;
+import baseline.common.ResponseResult;
 import baseline.sysmgmt.model.entity.Menu;
 import baseline.sysmgmt.mapper.MenuMapper;
 import baseline.sysmgmt.service.MenuService;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

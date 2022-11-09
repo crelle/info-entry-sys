@@ -1,6 +1,6 @@
 package baseline.sysmgmt.service.impl;
 
-import baseline.sysmgmt.common.ResponseResult;
+import baseline.common.ResponseResult;
 import baseline.sysmgmt.model.entity.Menu;
 import baseline.sysmgmt.model.entity.Role;
 import baseline.sysmgmt.model.entity.RoleMenu;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * <p>

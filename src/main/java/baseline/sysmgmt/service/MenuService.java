@@ -1,12 +1,10 @@
 package baseline.sysmgmt.service;
 
-import baseline.sysmgmt.common.ResponseResult;
+import baseline.common.ResponseResult;
 import baseline.sysmgmt.model.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

@@ -1,9 +1,9 @@
 package baseline.sysmgmt.controller;
 
 
-import baseline.sysmgmt.common.ResponseResult;
-import baseline.sysmgmt.common.util.ResultUtils;
-import baseline.sysmgmt.common.util.VerificationCode;
+import baseline.common.ResponseResult;
+import baseline.common.util.ResultUtils;
+import baseline.common.util.VerificationCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

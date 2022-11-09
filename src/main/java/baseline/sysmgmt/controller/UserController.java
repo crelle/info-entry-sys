@@ -1,8 +1,8 @@
 package baseline.sysmgmt.controller;
 
 
-import baseline.sysmgmt.common.ResponseResult;
-import baseline.sysmgmt.common.util.ResultUtils;
+import baseline.common.ResponseResult;
+import baseline.common.util.ResultUtils;
 import baseline.sysmgmt.model.entity.Role;
 import baseline.sysmgmt.model.entity.User;
 import baseline.sysmgmt.model.entity.UserRole;

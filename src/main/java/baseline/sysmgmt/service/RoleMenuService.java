@@ -1,6 +1,6 @@
 package baseline.sysmgmt.service;
 
-import baseline.sysmgmt.common.ResponseResult;
+import baseline.common.ResponseResult;
 import baseline.sysmgmt.model.entity.Role;
 import baseline.sysmgmt.model.entity.RoleMenu;
 import com.baomidou.mybatisplus.extension.service.IService;

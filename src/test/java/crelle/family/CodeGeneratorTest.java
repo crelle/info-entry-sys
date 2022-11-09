@@ -21,15 +21,15 @@ public class CodeGeneratorTest {
     //项目目录
     private final String basePath = System.getProperty("user.dir");
     //模块名
-    private final String parentModuleName = "sysmgmt";
+    private final String parentModuleName = "app";
     //文件作者
     private final String author = "crelle";
     //数据库url
-    private final String url = "jdbc:mysql://192.168.74.4:3306/info-entry-sys-db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
+    private final String url = "jdbc:mysql://139.196.125.106:3306/archermind-system-db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
     //数据库用户名
     private final String username = "crelle";
     //数据库密码
-    private final String password = "123456";
+    private final String password = "crelle@123";
 
 
     @Test
@@ -61,7 +61,7 @@ public class CodeGeneratorTest {
                 })
                 //4、策略配置
                 .strategyConfig(builder -> {
-                    builder.addInclude("role_menu", "user_role") // 设置需要生成的数据表名
+                    builder.addInclude("t_region", "t_project","t_post","t_department","t_customer","t_region") // 设置需要生成的数据表名
                             .addTablePrefix("t_", "c_") // 设置过滤表前缀
 
                             //4.1、Mapper策略配置
