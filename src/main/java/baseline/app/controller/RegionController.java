@@ -37,7 +37,9 @@ public class RegionController implements BaseController<Region> {
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Region> create(Region object) {
-        return null;
+        ResponseResult<Region> regionResponseResult = new ResponseResult<>();
+        regionService.create(object);
+        return regionResponseResult;
     }
 
     @ApiOperation(value = "批量创建")
@@ -74,9 +76,11 @@ public class RegionController implements BaseController<Region> {
 
     @ApiOperation(value = "分页查询")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/pageByCondition", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Region>> pageByCondition(Page<Region> pageBean) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        result.setData(regionService.pageByCondition(pageBean));
+        return result;
     }
 }
