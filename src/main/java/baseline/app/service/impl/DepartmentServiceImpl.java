@@ -2,9 +2,12 @@ package baseline.app.service.impl;
 
 import baseline.app.pojo.entity.Department;
 import baseline.app.mapper.DepartmentMapper;
+import baseline.app.pojo.entity.Project;
 import baseline.app.service.DepartmentService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +49,14 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
 
     @Override
     public Page<Department> pageByCondition(Page<Department> page) {
-        return page(page);
+        Department department = page.getRecords().get(0);
+        QueryWrapper<Department> queryWrapper = new QueryWrapper<>(department);
+        if (StringUtils.isNotBlank(department.getDepartment())) {
+            queryWrapper.select().like("department", department.getDepartment());
+            return page(page, queryWrapper);
+        } else {
+            return page(page);
+        }
     }
 
     @Override

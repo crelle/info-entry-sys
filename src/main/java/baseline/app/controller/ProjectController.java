@@ -4,6 +4,7 @@ package baseline.app.controller;
 import baseline.app.pojo.entity.Project;
 import baseline.app.service.ProjectService;
 import baseline.common.ResponseResult;
+import baseline.common.util.ResultUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +38,12 @@ public class ProjectController implements BaseController<Project> {
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Project> create(Project object) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        boolean isSuccess = projectService.create(object);
+        if (!isSuccess) {
+            result.buildFail("创建失败！");
+        }
+        return result;
     }
 
     @ApiOperation(value = "批量创建")
@@ -45,7 +51,12 @@ public class ProjectController implements BaseController<Project> {
     @RequestMapping(value = "/creates", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Project> creates(List<Project> objects) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        boolean isSuccess = projectService.create(objects);
+        if (!isSuccess) {
+            result.buildFail("批量创建失败！");
+        }
+        return result;
     }
 
     @ApiOperation(value = "根据ID删除")
@@ -53,7 +64,9 @@ public class ProjectController implements BaseController<Project> {
     @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> deleteById(String id) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        projectService.deleteById(id);
+        return result;
     }
 
     @ApiOperation(value = "根据ID批量删除")
@@ -61,7 +74,9 @@ public class ProjectController implements BaseController<Project> {
     @RequestMapping(value = "/deleteByIds", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> deleteByIds(List<String> ids) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        projectService.deleteByIds(ids);
+        return result;
     }
 
     @ApiOperation(value = "根据ID更新")
@@ -69,7 +84,12 @@ public class ProjectController implements BaseController<Project> {
     @RequestMapping(value = "/updateById", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> updateById(Project object) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        boolean isSuccess = projectService.update(object);
+        if (!isSuccess) {
+            result.buildFail("更新失败！");
+        }
+        return result;
     }
 
     @ApiOperation(value = "分页查询")
@@ -77,6 +97,8 @@ public class ProjectController implements BaseController<Project> {
     @RequestMapping(value = "/pageByCondition", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Project>> pageByCondition(Page<Project> pageBean) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        projectService.pageByCondition(pageBean);
+        return result;
     }
 }

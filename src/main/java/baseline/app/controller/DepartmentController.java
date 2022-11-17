@@ -38,7 +38,12 @@ public class DepartmentController implements BaseController<Department> {
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Department> create(Department object) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        boolean isSuccess = departmentService.create(object);
+        if (!isSuccess) {
+            result.buildFail("创建失败！");
+        }
+        return result;
     }
 
     @ApiOperation(value = "批量创建")
@@ -46,7 +51,12 @@ public class DepartmentController implements BaseController<Department> {
     @RequestMapping(value = "/creates", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Department> creates(List<Department> objects) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        boolean isSuccess = departmentService.create(objects);
+        if (!isSuccess) {
+            result.buildFail("批量创建失败！");
+        }
+        return result;
     }
 
     @ApiOperation(value = "根据ID删除")
@@ -54,7 +64,9 @@ public class DepartmentController implements BaseController<Department> {
     @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> deleteById(String id) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        departmentService.deleteById(id);
+        return result;
     }
 
     @ApiOperation(value = "根据ID批量删除")
@@ -62,7 +74,9 @@ public class DepartmentController implements BaseController<Department> {
     @RequestMapping(value = "/deleteByIds", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> deleteByIds(List<String> ids) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        departmentService.deleteByIds(ids);
+        return result;
     }
 
     @ApiOperation(value = "根据ID更新")
@@ -70,7 +84,12 @@ public class DepartmentController implements BaseController<Department> {
     @RequestMapping(value = "/updateById", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> updateById(Department object) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        boolean isSuccess = departmentService.update(object);
+        if (!isSuccess) {
+            result.buildFail("更新失败！");
+        }
+        return result;
     }
 
     @ApiOperation(value = "分页查询")
@@ -78,6 +97,8 @@ public class DepartmentController implements BaseController<Department> {
     @RequestMapping(value = "/pageByCondition", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Department>> pageByCondition(Page<Department> pageBean) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        result.setData(departmentService.pageByCondition(pageBean));
+        return result;
     }
 }
