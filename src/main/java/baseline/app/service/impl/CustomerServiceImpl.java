@@ -1,6 +1,6 @@
 package baseline.app.service.impl;
 
-import baseline.app.model.entity.Customer;
+import baseline.app.pojo.entity.Customer;
 import baseline.app.mapper.CustomerMapper;
 import baseline.app.service.CustomerService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

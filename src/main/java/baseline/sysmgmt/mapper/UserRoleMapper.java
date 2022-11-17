@@ -1,6 +1,6 @@
 package baseline.sysmgmt.mapper;
 
-import baseline.sysmgmt.model.entity.UserRole;
+import baseline.sysmgmt.pojo.entity.UserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,10 +1,8 @@
 package baseline.sysmgmt.service.impl;
 
-import baseline.sysmgmt.model.entity.UserRole;
+import baseline.sysmgmt.pojo.entity.UserRole;
 import baseline.sysmgmt.mapper.UserRoleMapper;
 import baseline.sysmgmt.service.UserRoleService;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

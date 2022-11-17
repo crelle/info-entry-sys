@@ -1,6 +1,6 @@
 package baseline.sysmgmt.service;
 
-import baseline.sysmgmt.model.entity.User;
+import baseline.sysmgmt.pojo.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 

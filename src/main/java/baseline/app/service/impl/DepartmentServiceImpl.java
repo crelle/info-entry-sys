@@ -1,6 +1,6 @@
 package baseline.app.service.impl;
 
-import baseline.app.model.entity.Department;
+import baseline.app.pojo.entity.Department;
 import baseline.app.mapper.DepartmentMapper;
 import baseline.app.service.DepartmentService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

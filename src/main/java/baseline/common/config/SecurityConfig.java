@@ -2,8 +2,8 @@ package baseline.common.config;
 
 import baseline.common.ResponseResult;
 import baseline.common.util.ResultUtils;
-import baseline.sysmgmt.model.entity.Menu;
-import baseline.sysmgmt.model.entity.User;
+import baseline.sysmgmt.pojo.entity.Menu;
+import baseline.sysmgmt.pojo.entity.User;
 import baseline.sysmgmt.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

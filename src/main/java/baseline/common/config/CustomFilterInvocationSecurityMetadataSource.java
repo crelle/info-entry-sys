@@ -1,8 +1,8 @@
 package baseline.common.config;
 
 
-import baseline.sysmgmt.model.entity.Menu;
-import baseline.sysmgmt.model.entity.Role;
+import baseline.sysmgmt.pojo.entity.Menu;
+import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;

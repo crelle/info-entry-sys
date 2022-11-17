@@ -2,7 +2,7 @@ package baseline.sysmgmt.controller;
 
 
 import baseline.common.ResponseResult;
-import baseline.sysmgmt.model.entity.Role;
+import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.service.RoleMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

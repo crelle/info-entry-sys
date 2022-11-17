@@ -3,9 +3,9 @@ package baseline.sysmgmt.controller;
 
 import baseline.common.ResponseResult;
 import baseline.common.util.ResultUtils;
-import baseline.sysmgmt.model.entity.Role;
-import baseline.sysmgmt.model.entity.User;
-import baseline.sysmgmt.model.entity.UserRole;
+import baseline.sysmgmt.pojo.entity.Role;
+import baseline.sysmgmt.pojo.entity.User;
+import baseline.sysmgmt.pojo.entity.UserRole;
 import baseline.sysmgmt.service.RoleService;
 import baseline.sysmgmt.service.UserRoleService;
 import baseline.sysmgmt.service.UserService;

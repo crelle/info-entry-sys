@@ -1,4 +1,4 @@
-package baseline.sysmgmt.model.entity;
+package baseline.sysmgmt.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;

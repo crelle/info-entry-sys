@@ -1,8 +1,8 @@
 package baseline.sysmgmt.service;
 
 import baseline.common.ResponseResult;
-import baseline.sysmgmt.model.entity.Role;
-import baseline.sysmgmt.model.entity.RoleMenu;
+import baseline.sysmgmt.pojo.entity.Role;
+import baseline.sysmgmt.pojo.entity.RoleMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package baseline.sysmgmt.controller;
 
 
 import baseline.common.ResponseResult;
-import baseline.sysmgmt.model.entity.Menu;
+import baseline.sysmgmt.pojo.entity.Menu;
 import baseline.sysmgmt.service.MenuService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;

@@ -1,4 +1,4 @@
-package baseline.app.model.entity;
+package baseline.app.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author crelle
- * @since 2022-11-17 05:41:15
+ * @since 2022-11-09 10:06:28
  */
 @TableName("t_region")
 @ApiModel(value = "Region对象", description = "")
