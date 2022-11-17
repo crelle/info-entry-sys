@@ -1,7 +1,7 @@
 package baseline.app.controller;
 
 
-import baseline.app.model.entity.Customer;
+import baseline.app.pojo.entity.Customer;
 import baseline.app.service.CustomerService;
 import baseline.common.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

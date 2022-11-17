@@ -1,6 +1,6 @@
 package baseline.sysmgmt.service;
 
-import baseline.sysmgmt.model.entity.UserRole;
+import baseline.sysmgmt.pojo.entity.UserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

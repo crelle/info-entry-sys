@@ -1,6 +1,6 @@
 package baseline.app.mapper;
 
-import baseline.app.model.entity.Post;
+import baseline.app.pojo.entity.Post;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

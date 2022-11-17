@@ -1,7 +1,7 @@
 package baseline.sysmgmt.service.impl;
 
 import baseline.common.ResponseResult;
-import baseline.sysmgmt.model.entity.Menu;
+import baseline.sysmgmt.pojo.entity.Menu;
 import baseline.sysmgmt.mapper.MenuMapper;
 import baseline.sysmgmt.service.MenuService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

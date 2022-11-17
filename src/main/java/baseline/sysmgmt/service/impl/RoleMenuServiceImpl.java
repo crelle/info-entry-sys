@@ -1,9 +1,9 @@
 package baseline.sysmgmt.service.impl;
 
 import baseline.common.ResponseResult;
-import baseline.sysmgmt.model.entity.Menu;
-import baseline.sysmgmt.model.entity.Role;
-import baseline.sysmgmt.model.entity.RoleMenu;
+import baseline.sysmgmt.pojo.entity.Menu;
+import baseline.sysmgmt.pojo.entity.Role;
+import baseline.sysmgmt.pojo.entity.RoleMenu;
 import baseline.sysmgmt.mapper.RoleMenuMapper;
 import baseline.sysmgmt.service.RoleMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

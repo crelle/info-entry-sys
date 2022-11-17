@@ -1,7 +1,7 @@
 package baseline.app.controller;
 
 
-import baseline.app.model.entity.Region;
+import baseline.app.pojo.entity.Region;
 import baseline.app.service.RegionService;
 import baseline.common.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,7 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
