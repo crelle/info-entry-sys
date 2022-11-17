@@ -96,10 +96,9 @@ public class RegionController implements BaseController<Region> {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Region>> pageByCondition(Region region) {
+    public ResponseResult<Page<Region>> pageByCondition(Page<Region> region) {
         ResponseResult result = new ResponseResult();
-        Page<Region> page = new Page<>();
-        result.setData(regionService.pageByCondition(page,region));
+        result.setData(regionService.pageByCondition(region));
         return result;
     }
 }
