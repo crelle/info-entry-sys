@@ -50,7 +50,7 @@ public class CodeGeneratorTest {
                 .packageConfig(builder -> {
                     builder.parent("baseline") // 设置父包名
                             .moduleName(parentModuleName)   //设置模块包名
-                            .entity("model.entity")   //pojo 实体类包名
+                            .entity("pojo.entity")   //pojo 实体类包名
                             .service("service") //Service 包名
                             .serviceImpl("service.impl") // ***ServiceImpl 包名
                             .mapper("mapper")   //Mapper 包名
