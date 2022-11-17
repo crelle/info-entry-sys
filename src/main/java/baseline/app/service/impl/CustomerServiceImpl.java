@@ -2,9 +2,12 @@ package baseline.app.service.impl;
 
 import baseline.app.pojo.entity.Customer;
 import baseline.app.mapper.CustomerMapper;
+import baseline.app.pojo.entity.Department;
 import baseline.app.service.CustomerService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +49,14 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
     @Override
     public Page<Customer> pageByCondition(Page<Customer> page) {
-        return page(page);
+        Customer customer = page.getRecords().get(0);
+        QueryWrapper<Customer> queryWrapper = new QueryWrapper<>(customer);
+        if (StringUtils.isNotBlank(customer.getCustomerName())) {
+            queryWrapper.select().like("customer_name", customer.getCustomerName());
+            return page(page, queryWrapper);
+        } else {
+            return page(page);
+        }
     }
 
     @Override

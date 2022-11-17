@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.print.DocFlavor;
 import java.util.List;
 
 /**
@@ -49,7 +50,12 @@ public class CustomerController implements BaseController<Customer> {
     @RequestMapping(value = "/creates", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Customer> creates(List<Customer> objects) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        boolean isSuccess = customerService.create(objects);
+        if (!isSuccess) {
+            result.buildFail("批量创建失败！");
+        }
+        return result;
     }
 
     @ApiOperation(value = "根据ID删除")

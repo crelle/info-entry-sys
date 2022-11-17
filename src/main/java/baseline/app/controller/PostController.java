@@ -37,7 +37,12 @@ public class PostController implements BaseController<Post> {
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Post> create(Post object) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        boolean isSuccess = postService.create(object);
+        if (!isSuccess) {
+            result.buildFail("创建失败！");
+        }
+        return result;
     }
 
     @ApiOperation(value = "批量创建")
@@ -45,7 +50,12 @@ public class PostController implements BaseController<Post> {
     @RequestMapping(value = "/creates", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Post> creates(List<Post> objects) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        boolean isSuccess = postService.create(objects);
+        if (!isSuccess) {
+            result.buildFail("批量创建失败！");
+        }
+        return result;
     }
 
     @ApiOperation(value = "根据ID删除")
@@ -53,7 +63,9 @@ public class PostController implements BaseController<Post> {
     @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> deleteById(String id) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        postService.deleteById(id);
+        return result;
     }
 
     @ApiOperation(value = "根据ID批量删除")
@@ -61,7 +73,9 @@ public class PostController implements BaseController<Post> {
     @RequestMapping(value = "/deleteByIds", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> deleteByIds(List<String> ids) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        postService.deleteByIds(ids);
+        return result;
     }
 
     @ApiOperation(value = "根据ID更新")
@@ -69,7 +83,12 @@ public class PostController implements BaseController<Post> {
     @RequestMapping(value = "/updateById", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> updateById(Post object) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        boolean isSuccess = postService.update(object);
+        if (!isSuccess) {
+            result.buildFail("更新失败！");
+        }
+        return result;
     }
 
     @ApiOperation(value = "分页查询")
@@ -77,6 +96,8 @@ public class PostController implements BaseController<Post> {
     @RequestMapping(value = "/pageByCondition", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Post>> pageByCondition(Page<Post> pageBean) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        result.setData(postService.pageByCondition(pageBean));
+        return result;
     }
 }
