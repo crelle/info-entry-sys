@@ -94,7 +94,7 @@ public class DepartmentController implements BaseController<Department> {
 
     @ApiOperation(value = "分页查询")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/pageByCondition", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Department>> pageByCondition(Page<Department> pageBean) {
         ResponseResult result = new ResponseResult();

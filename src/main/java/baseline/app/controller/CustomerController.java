@@ -88,7 +88,7 @@ public class CustomerController implements BaseController<Customer> {
 
     @ApiOperation(value = "分页查询")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/pageByCondition", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Customer>> pageByCondition(@RequestBody Page<Customer> pageBean) {
         ResponseResult result = new ResponseResult();
