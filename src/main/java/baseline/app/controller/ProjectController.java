@@ -98,7 +98,7 @@ public class ProjectController implements BaseController<Project> {
     @Override
     public ResponseResult<Page<Project>> pageByCondition(Page<Project> pageBean) {
         ResponseResult result = new ResponseResult();
-        projectService.pageByCondition(pageBean);
+        result.setData(projectService.pageByCondition(pageBean));
         return result;
     }
 }

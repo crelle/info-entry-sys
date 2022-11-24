@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author crelle
@@ -51,6 +51,10 @@ public class Department {
     @TableField("introduce")
     private String introduce;
 
+    @ApiModelProperty("上级部门")
+    @TableField("department_up")
+    private String departmentUp;
+
     public String getDepartmentId() {
         return departmentId;
     }
@@ -58,6 +62,7 @@ public class Department {
     public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
     }
+
     public String getDepartment() {
         return department;
     }
@@ -65,6 +70,7 @@ public class Department {
     public void setDepartment(String department) {
         this.department = department;
     }
+
     public String getUserId() {
         return userId;
     }
@@ -72,6 +78,7 @@ public class Department {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
     public String getJobNo() {
         return jobNo;
     }
@@ -79,6 +86,7 @@ public class Department {
     public void setJobNo(String jobNo) {
         this.jobNo = jobNo;
     }
+
     public String getCellPhone() {
         return cellPhone;
     }
@@ -86,6 +94,7 @@ public class Department {
     public void setCellPhone(String cellPhone) {
         this.cellPhone = cellPhone;
     }
+
     public String getEmail() {
         return email;
     }
@@ -93,6 +102,7 @@ public class Department {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getAddress() {
         return address;
     }
@@ -100,6 +110,7 @@ public class Department {
     public void setAddress(String address) {
         this.address = address;
     }
+
     public String getIntroduce() {
         return introduce;
     }
@@ -108,17 +119,26 @@ public class Department {
         this.introduce = introduce;
     }
 
+    public String getDepartmentUp() {
+        return departmentUp;
+    }
+
+    public void setDepartmentUp(String departmentUp) {
+        this.departmentUp = departmentUp;
+    }
+
     @Override
     public String toString() {
         return "Department{" +
-            "departmentId=" + departmentId +
-            ", department=" + department +
-            ", userId=" + userId +
-            ", jobNo=" + jobNo +
-            ", cellPhone=" + cellPhone +
-            ", email=" + email +
-            ", address=" + address +
-            ", introduce=" + introduce +
-        "}";
+                "departmentId='" + departmentId + '\'' +
+                ", department='" + department + '\'' +
+                ", userId='" + userId + '\'' +
+                ", jobNo='" + jobNo + '\'' +
+                ", cellPhone='" + cellPhone + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", introduce='" + introduce + '\'' +
+                ", departmentUp='" + departmentUp + '\'' +
+                '}';
     }
 }
