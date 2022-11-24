@@ -66,7 +66,6 @@ public class CodeGeneratorTest {
                 .strategyConfig(builder -> {
                     builder.addInclude("t_department") // 设置需要生成的数据表名
                             .addTablePrefix("t_", "c_") // 设置过滤表前缀
-
                             //4.1、Mapper策略配置
                             .mapperBuilder()
                             .superClass(BaseMapper.class)   //设置父类
