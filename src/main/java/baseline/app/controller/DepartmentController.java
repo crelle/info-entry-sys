@@ -2,6 +2,7 @@ package baseline.app.controller;
 
 
 import baseline.app.pojo.entity.Department;
+import baseline.app.pojo.entity.Project;
 import baseline.app.service.DepartmentService;
 import baseline.common.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -94,11 +95,19 @@ public class DepartmentController implements BaseController<Department> {
 
     @ApiOperation(value = "分页查询")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/pageByCondition", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Department>> pageByCondition(Page<Department> pageBean) {
         ResponseResult result = new ResponseResult();
         result.setData(departmentService.pageByCondition(pageBean));
         return result;
     }
+    @ApiOperation(value = "查询上级部门")
+    @RequestMapping(value = "/queryDepartmentUp", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<Project> queryDepartmentUp() {
+        ResponseResult result = new ResponseResult();
+        result.setData(departmentService.queryDepartmentUp());
+        return result;
+    }
+
 }

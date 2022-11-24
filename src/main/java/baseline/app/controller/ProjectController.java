@@ -94,11 +94,11 @@ public class ProjectController implements BaseController<Project> {
 
     @ApiOperation(value = "分页查询")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/pageByCondition", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Project>> pageByCondition(Page<Project> pageBean) {
         ResponseResult result = new ResponseResult();
-        projectService.pageByCondition(pageBean);
+        result.setData(projectService.pageByCondition(pageBean));
         return result;
     }
 }

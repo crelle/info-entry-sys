@@ -68,4 +68,11 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     public List<Department> queryByIds(List<String> ids) {
         return null;
     }
+
+    @Override
+    public List<Department> queryDepartmentUp() {
+        QueryWrapper<Department> queryWrapper = new QueryWrapper();
+        queryWrapper.select().isNull("department_up");
+        return list(queryWrapper);
+    }
 }
