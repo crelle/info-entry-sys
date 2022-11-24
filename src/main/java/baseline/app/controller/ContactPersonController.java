@@ -1,7 +1,7 @@
 package baseline.app.controller;
 
 
-import baseline.app.model.entity.ContactPerson;
+import baseline.app.pojo.entity.ContactPerson;
 import baseline.app.service.ContactPersonService;
 import baseline.common.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -30,6 +30,8 @@ import java.util.List;
 public class ContactPersonController implements BaseController<ContactPerson> {
     @Autowired
     private ContactPersonService contactPersonService;
+
+
 
     @ApiOperation("创建")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -84,4 +86,6 @@ public class ContactPersonController implements BaseController<ContactPerson> {
         contactPersonService.pageByCondition(pageBean);
         return result;
     }
+
+
 }

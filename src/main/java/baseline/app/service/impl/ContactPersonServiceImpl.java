@@ -1,7 +1,7 @@
 package baseline.app.service.impl;
 
-import baseline.app.model.entity.ContactPerson;
 import baseline.app.mapper.ContactPersonMapper;
+import baseline.app.pojo.entity.ContactPerson;
 import baseline.app.service.ContactPersonService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
