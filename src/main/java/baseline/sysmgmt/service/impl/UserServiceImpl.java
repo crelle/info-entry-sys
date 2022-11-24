@@ -1,7 +1,7 @@
 package baseline.sysmgmt.service.impl;
 
 import baseline.sysmgmt.mapper.UserMapper;
-import baseline.sysmgmt.model.entity.*;
+import baseline.sysmgmt.pojo.entity.*;
 import baseline.sysmgmt.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;

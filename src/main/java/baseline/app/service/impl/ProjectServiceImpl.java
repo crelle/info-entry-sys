@@ -1,10 +1,13 @@
 package baseline.app.service.impl;
 
-import baseline.app.model.entity.Project;
+import baseline.app.pojo.entity.Project;
 import baseline.app.mapper.ProjectMapper;
+import baseline.app.pojo.entity.Region;
 import baseline.app.service.ProjectService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +49,14 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     @Override
     public Page<Project> pageByCondition(Page<Project> page) {
-        return page(page);
+        Project project = page.getRecords().get(0);
+        QueryWrapper<Project> queryWrapper = new QueryWrapper<>(project);
+        if (StringUtils.isNotBlank(project.getProject())) {
+            queryWrapper.select().like("project", project.getProject());
+            return page(page, queryWrapper);
+        } else {
+            return page(page);
+        }
     }
 
     @Override

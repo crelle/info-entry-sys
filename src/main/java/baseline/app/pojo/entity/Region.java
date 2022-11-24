@@ -1,4 +1,4 @@
-package baseline.app.model.entity;
+package baseline.app.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

@@ -1,4 +1,4 @@
-package baseline.sysmgmt.model.ao;
+package baseline.sysmgmt.pojo.ao;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

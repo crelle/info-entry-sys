@@ -1,10 +1,13 @@
 package baseline.app.service.impl;
 
-import baseline.app.model.entity.Post;
+import baseline.app.pojo.entity.Post;
 import baseline.app.mapper.PostMapper;
+import baseline.app.pojo.entity.Project;
 import baseline.app.service.PostService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +49,14 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
 
     @Override
     public Page<Post> pageByCondition(Page<Post> page) {
-        return page(page);
+        Post post = page.getRecords().get(0);
+        QueryWrapper<Post> queryWrapper = new QueryWrapper<>(post);
+        if (StringUtils.isNotBlank(post.getPostName())) {
+            queryWrapper.select().like("post_name", post.getPostName());
+            return page(page, queryWrapper);
+        } else {
+            return page(page);
+        }
     }
 
     @Override

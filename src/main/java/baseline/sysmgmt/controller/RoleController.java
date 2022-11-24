@@ -2,7 +2,7 @@ package baseline.sysmgmt.controller;
 
 
 import baseline.common.ResponseResult;
-import baseline.sysmgmt.model.entity.Role;
+import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.service.RoleService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;

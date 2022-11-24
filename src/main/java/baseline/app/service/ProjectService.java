@@ -1,6 +1,6 @@
 package baseline.app.service;
 
-import baseline.app.model.entity.Project;
+import baseline.app.pojo.entity.Project;
 import baseline.app.service.impl.BaseService;
 import com.baomidou.mybatisplus.extension.service.IService;
 

@@ -1,10 +1,12 @@
 package baseline.app.service.impl;
 
-import baseline.app.model.entity.Region;
+import baseline.app.pojo.entity.Region;
 import baseline.app.mapper.RegionMapper;
 import baseline.app.service.RegionService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +48,15 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
 
     @Override
     public Page<Region> pageByCondition(Page<Region> page) {
-        return page(page);
+        Region region = page.getRecords().get(0);
+        QueryWrapper<Region> queryWrapper = new QueryWrapper<>(region);
+        if (StringUtils.isNotBlank(region.getRegionName())) {
+            queryWrapper.select().like("region_name", region.getRegionName());
+            return page(page, queryWrapper);
+        } else {
+            return page(page);
+        }
+
     }
 
     @Override

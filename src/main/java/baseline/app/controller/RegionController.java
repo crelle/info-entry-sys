@@ -1,7 +1,7 @@
 package baseline.app.controller;
 
 
-import baseline.app.model.entity.Region;
+import baseline.app.pojo.entity.Region;
 import baseline.app.service.RegionService;
 import baseline.common.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -37,7 +37,12 @@ public class RegionController implements BaseController<Region> {
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Region> create(Region object) {
-        return null;
+        ResponseResult<Region> regionResponseResult = new ResponseResult<>();
+        boolean isSuccess = regionService.create(object);
+        if (!isSuccess) {
+            regionResponseResult.buildFail("更新失败！");
+        }
+        return regionResponseResult;
     }
 
     @ApiOperation(value = "批量创建")
@@ -45,7 +50,12 @@ public class RegionController implements BaseController<Region> {
     @RequestMapping(value = "/creates", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Region> creates(List<Region> objects) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        boolean isSuccess = regionService.create(objects);
+        if (!isSuccess) {
+            result.buildFail("更新失败");
+        }
+        return result;
     }
 
     @ApiOperation(value = "根据ID删除")
@@ -53,7 +63,9 @@ public class RegionController implements BaseController<Region> {
     @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> deleteById(String id) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        regionService.deleteById(id);
+        return result;
     }
 
     @ApiOperation(value = "根据ID批量删除")
@@ -61,7 +73,9 @@ public class RegionController implements BaseController<Region> {
     @RequestMapping(value = "/deleteByIds", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> deleteByIds(List<String> ids) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        regionService.deleteByIds(ids);
+        return result;
     }
 
     @ApiOperation(value = "根据ID更新")
@@ -69,14 +83,21 @@ public class RegionController implements BaseController<Region> {
     @RequestMapping(value = "/updateById", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> updateById(Region object) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        boolean isSuccess = regionService.update(object);
+        if (!isSuccess) {
+            result.buildFail("更新失败");
+        }
+        return result;
     }
 
     @ApiOperation(value = "分页查询")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/pageByCondition", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Region>> pageByCondition(Page<Region> pageBean) {
-        return null;
+    public ResponseResult<Page<Region>> pageByCondition(Page<Region> region) {
+        ResponseResult result = new ResponseResult();
+        result.setData(regionService.pageByCondition(region));
+        return result;
     }
 }
