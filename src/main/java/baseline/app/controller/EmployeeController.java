@@ -5,6 +5,7 @@ import baseline.app.pojo.entity.Employee;
 import baseline.app.service.EmployeeService;
 import baseline.common.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,6 +24,7 @@ import java.util.List;
  * @author crelle
  * @since 2022-11-24 10:45:04
  */
+@Api(tags = "员工服务")
 @RestController
 @RequestMapping("/app/employee")
 public class EmployeeController implements BaseController<Employee> {

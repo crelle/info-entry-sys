@@ -24,7 +24,7 @@ import java.util.List;
  * @author crelle
  * @since 2022-11-24 10:45:04
  */
-@Api("接口人服务")
+@Api(tags = "接口人服务")
 @RestController
 @RequestMapping("/app/contact-person")
 public class ContactPersonController implements BaseController<ContactPerson> {
