@@ -21,6 +21,7 @@ public class CodeGeneratorTest {
     //项目目录
     private final String basePath = System.getProperty("user.dir");
     //模块名
+    //TODO
     private final String parentModuleName = "app";
     //文件作者
     private final String author = "crelle";
@@ -64,6 +65,7 @@ public class CodeGeneratorTest {
                 })
                 //4、策略配置
                 .strategyConfig(builder -> {
+                    //TODO
                     builder.addInclude("t_department") // 设置需要生成的数据表名
                             .addTablePrefix("t_", "c_") // 设置过滤表前缀
                             //4.1、Mapper策略配置
