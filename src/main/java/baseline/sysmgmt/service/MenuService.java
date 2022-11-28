@@ -5,6 +5,7 @@ import baseline.sysmgmt.pojo.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -19,7 +20,7 @@ public interface MenuService extends IService<Menu>, BaseService<Menu> {
     Menu queryByName(String menuName);
 
     //修改菜单目录
-    ResponseResult<String> updateParentMenu(List<Menu> menus);
+    ResponseResult<String> updateParentMenu(Set<Menu> menus);
 
     //查询所有菜单 分级
     ResponseResult<List<Menu>> queryAllMenus();
