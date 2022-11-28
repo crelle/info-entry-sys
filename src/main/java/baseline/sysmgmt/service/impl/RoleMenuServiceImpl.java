@@ -87,23 +87,24 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
                 .collect(Collectors.toList());
     }
 
-    public void updateRoleMenu(List<Role> roles) {
-        if (roles.isEmpty()) {
+    public void updateRoleMenu(Role role) {
+        if (null == role) {
             return;
         }
 
         //删除关联表
-        for (Role role : roles) {
-            QueryWrapper<RoleMenu> wrapper = new QueryWrapper<>();
-            wrapper.select().eq("role_id", role.getId());
-            remove(wrapper);
-        }
+        QueryWrapper<RoleMenu> wrapper = new QueryWrapper<>();
+        wrapper.select().eq("role_id", role.getId());
+        remove(wrapper);
 
+        if (role.getMenus().isEmpty()) {
+            return;
+        }
         //插入新增关联表
-        roles.forEach(role -> role.getMenus()
+        role.getMenus()
                 .stream()
                 .filter(Objects::nonNull)
-                .forEach(menu -> saveMenu(role.getId(), menu.getId())));
+                .forEach(menu -> saveMenu(role.getId(), menu.getId()));
     }
 
     private void saveMenu(String roleId, String menuId) {

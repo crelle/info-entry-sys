@@ -42,7 +42,7 @@ public class RoleMenuController {
     @ApiOperation(value = "编辑角色对应的菜单")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/updateMenu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> updateRoleMenu(@RequestBody List<Role> roles) {
+    public ResponseResult<String> updateRoleMenu(@RequestBody Role roles) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
             roleMenuService.updateRoleMenu(roles);

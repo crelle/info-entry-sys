@@ -18,6 +18,6 @@ import java.util.List;
 public interface RoleMenuService extends IService<RoleMenu>, BaseService<RoleMenu> {
     ResponseResult<Role> queryMenu(Role role);
 
-    void updateRoleMenu(List<Role> roles);
+    void updateRoleMenu(Role roles);
 
 }
