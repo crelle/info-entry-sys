@@ -60,6 +60,15 @@ public class Post {
     @TableField("address")
     private String address;
 
+    @ApiModelProperty("最后到岗时间")
+    @TableField("latest_arrival_time")
+    private String latestArrivalTime;
+
+
+    @ApiModelProperty("详细地址")
+    @TableField("detail_address")
+    private String detailAddress;
+
     public String getPostId() {
         return postId;
     }
@@ -67,6 +76,7 @@ public class Post {
     public void setPostId(String postId) {
         this.postId = postId;
     }
+
     public String getPostName() {
         return postName;
     }
@@ -74,6 +84,7 @@ public class Post {
     public void setPostName(String postName) {
         this.postName = postName;
     }
+
     public String getPosition() {
         return position;
     }
@@ -81,6 +92,7 @@ public class Post {
     public void setPosition(String position) {
         this.position = position;
     }
+
     public String getRequirements() {
         return requirements;
     }
@@ -88,6 +100,7 @@ public class Post {
     public void setRequirements(String requirements) {
         this.requirements = requirements;
     }
+
     public String getSkill() {
         return skill;
     }
@@ -95,6 +108,7 @@ public class Post {
     public void setSkill(String skill) {
         this.skill = skill;
     }
+
     public String getProjectId() {
         return projectId;
     }
@@ -102,6 +116,7 @@ public class Post {
     public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
+
     public String getCustomer() {
         return customer;
     }
@@ -109,6 +124,7 @@ public class Post {
     public void setCustomer(String customer) {
         this.customer = customer;
     }
+
     public String getNumber() {
         return number;
     }
@@ -116,6 +132,7 @@ public class Post {
     public void setNumber(String number) {
         this.number = number;
     }
+
     public Date getDate() {
         return date;
     }
@@ -123,6 +140,7 @@ public class Post {
     public void setDate(Date date) {
         this.date = date;
     }
+
     public String getAddress() {
         return address;
     }
@@ -131,19 +149,37 @@ public class Post {
         this.address = address;
     }
 
+    public String getLatestArrivalTime() {
+        return latestArrivalTime;
+    }
+
+    public void setLatestArrivalTime(String latestArrivalTime) {
+        this.latestArrivalTime = latestArrivalTime;
+    }
+
+    public String getDetailAddress() {
+        return detailAddress;
+    }
+
+    public void setDetailAddress(String detailAddress) {
+        this.detailAddress = detailAddress;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
-            "postId=" + postId +
-            ", postName=" + postName +
-            ", position=" + position +
-            ", requirements=" + requirements +
-            ", skill=" + skill +
-            ", projectId=" + projectId +
-            ", customer=" + customer +
-            ", number=" + number +
-            ", date=" + date +
-            ", address=" + address +
-        "}";
+                "postId='" + postId + '\'' +
+                ", postName='" + postName + '\'' +
+                ", position='" + position + '\'' +
+                ", requirements='" + requirements + '\'' +
+                ", skill='" + skill + '\'' +
+                ", projectId='" + projectId + '\'' +
+                ", customer='" + customer + '\'' +
+                ", number='" + number + '\'' +
+                ", date=" + date +
+                ", address='" + address + '\'' +
+                ", latestArrivalTime='" + latestArrivalTime + '\'' +
+                ", detailAddress='" + detailAddress + '\'' +
+                '}';
     }
 }
