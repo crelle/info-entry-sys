@@ -82,7 +82,7 @@ public class EmployeeController implements BaseController<Employee> {
     @Override
     public ResponseResult<Page<Employee>> pageByCondition(Page<Employee> pageBean) {
         ResponseResult result = new ResponseResult();
-        employeeService.pageByCondition(pageBean);
+        result.setData(employeeService.pageByCondition(pageBean));
         return result;
     }
 }
