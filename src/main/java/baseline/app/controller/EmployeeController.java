@@ -78,7 +78,7 @@ public class EmployeeController implements BaseController<Employee> {
     }
 
     @ApiOperation("分页查询")
-    @RequestMapping(value = "/pageByCondition", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Employee>> pageByCondition(Page<Employee> pageBean) {
         ResponseResult result = new ResponseResult();

@@ -131,7 +131,7 @@ public class MenuController implements BaseController<Menu> {
     @ApiOperation(value = "修改菜单目录")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/updateMenu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> updateMenu(@RequestBody List<Menu> menus) {
+    public ResponseResult<String> updateMenu(@RequestBody Set<Menu> menus) {
         return menuService.updateParentMenu(menus);
     }
 }

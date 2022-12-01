@@ -109,12 +109,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 response.setContentType("application/json;charset=utf-8");
                 PrintWriter out = response.getWriter();
                 User user = (User) authentication.getPrincipal();
+                //子菜单排序
                 user.getRoles().forEach(role -> {
                     role.getMenus().forEach(menu -> {
                         TreeSet<Menu> childrenMenuTreeSet = new TreeSet<>(((o1, o2) -> Long.compare(o1.getMenuSort(), o2.getMenuSort())));
                         childrenMenuTreeSet.addAll(menu.getChildrenMenus());
                         menu.setChildrenMenus(childrenMenuTreeSet);
                     });
+                    //父菜单排序
                     TreeSet<Menu> menuTreeSet = new TreeSet<>(((o1, o2) -> Long.compare(o1.getMenuSort(), o2.getMenuSort())));
                     menuTreeSet.addAll(role.getMenus());
                     List<Menu> menus = new ArrayList<>();

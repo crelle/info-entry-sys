@@ -60,12 +60,19 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public ResponseResult<String> updateParentMenu(List<Menu> menus) {
+    public ResponseResult<String> updateParentMenu(Set<Menu> menus) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         if (menus.isEmpty()) {
             return responseResult;
         }
         try {
+            Set<Menu> childMenus = new HashSet<>();
+            menus.forEach(menu ->
+                    menu.getChildrenMenus().forEach(childMenu -> {
+                        childMenu.setParentId(menu.getId());
+                        childMenus.add(childMenu);
+                    }));
+            menus.addAll(childMenus);
             for (Menu menu : menus) {
                 Menu oldMenu = queryById(menu.getId());
                 if (null == oldMenu) {

@@ -4,6 +4,7 @@ import baseline.app.pojo.entity.Post;
 import baseline.app.mapper.PostMapper;
 import baseline.app.pojo.entity.Project;
 import baseline.app.service.PostService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -50,13 +51,11 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     @Override
     public Page<Post> pageByCondition(Page<Post> page) {
         Post post = page.getRecords().get(0);
-        QueryWrapper<Post> queryWrapper = new QueryWrapper<>(post);
-        if (StringUtils.isNotBlank(post.getPostName())) {
-            queryWrapper.select().like("post_name", post.getPostName());
-            return page(page, queryWrapper);
-        } else {
-            return page(page);
-        }
+        LambdaQueryWrapper<Post> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtils.isNotBlank(post.getPostName()), Post::getPostName, post.getPostName())
+                .like(StringUtils.isNotBlank(post.getAddress()), Post::getAddress, post.getAddress())
+                .like(StringUtils.isNotBlank(post.getSkill()), Post::getSkill, post.getSkill());
+        return page(page, queryWrapper);
     }
 
     @Override
