@@ -59,8 +59,12 @@ public class User implements UserDetails {
     @TableField("user_avatar")
     private String userAvatar;
 
+    @TableField("job_no")
+    private String jobNo;
+
     @TableField(exist = false)
     private List<Role> roles;
+
 
     /**
      * 用户权限设置
@@ -178,10 +182,18 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public String getJobNo() {
+        return jobNo;
+    }
+
+    public void setJobNo(String jobNo) {
+        this.jobNo = jobNo;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", accountNonExpired=" + accountNonExpired +
                 ", accountNonLocked=" + accountNonLocked +
                 ", credentailsNonExpired=" + credentailsNonExpired +
@@ -192,6 +204,7 @@ public class User implements UserDetails {
                 ", userPhone='" + userPhone + '\'' +
                 ", username='" + username + '\'' +
                 ", userAvatar='" + userAvatar + '\'' +
+                ", jobNo='" + jobNo + '\'' +
                 ", roles=" + roles +
                 '}';
     }

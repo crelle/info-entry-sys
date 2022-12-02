@@ -230,4 +230,13 @@ public class UserController implements BaseController<User> {
         return responseResult;
     }
 
+    @ApiOperation(value = "修改用户密码")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/{{id}}/password/{{password}}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> deleteAvatar(@PathVariable("id") String id, @PathVariable("password") String password) {
+        ResponseResult<String> responseResult = new ResponseResult<>();
+        userService.updatePasswordById(password, id);
+        return responseResult;
+    }
+
 }

@@ -45,6 +45,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     public boolean create(User object) {
         object.setPassword(passwordEncoder.encode(object.getPassword()));
@@ -134,5 +137,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         result.setRoles(rolelist);
         return result;
+    }
+
+    @Override
+    public int updatePasswordById(String password, String id) {
+        return userMapper.updatePasswordById((passwordEncoder.encode(password)), id);
     }
 }
