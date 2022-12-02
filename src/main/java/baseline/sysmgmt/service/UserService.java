@@ -14,5 +14,5 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @since 2022-10-01 12:06:26
  */
 public interface UserService extends UserDetailsService, IService<User>, BaseService<User> {
-    int updatePasswordById(String password, String id);
+    int updatePasswordById(String password,User user);
 }

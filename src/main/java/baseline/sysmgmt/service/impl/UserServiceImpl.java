@@ -5,6 +5,7 @@ import baseline.sysmgmt.pojo.entity.*;
 import baseline.sysmgmt.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -140,7 +141,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public int updatePasswordById(String password, String id) {
-        return userMapper.updatePasswordById((passwordEncoder.encode(password)), id);
+    public int updatePasswordById(String password, User user) {
+        String userId = user.getId();
+        User user1 = queryById(userId);
+        String oldPassword = user1.getPassword();
+        if (!passwordEncoder.matches(user.getPassword(), oldPassword)) {
+            return 0;
+        }
+        return userMapper.updatePasswordById((passwordEncoder.encode(password)), user.getId());
     }
 }
