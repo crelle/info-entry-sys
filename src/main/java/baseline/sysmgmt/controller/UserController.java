@@ -232,10 +232,13 @@ public class UserController implements BaseController<User> {
 
     @ApiOperation(value = "修改用户密码")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/{{id}}/password/{{password}}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> deleteAvatar(@PathVariable("id") String id, @PathVariable("password") String password) {
+    @RequestMapping(value = "/password/{password}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> deleteAvatar(@PathVariable("password") String password,@RequestBody User user) {
         ResponseResult<String> responseResult = new ResponseResult<>();
-        userService.updatePasswordById(password, id);
+        int result = userService.updatePasswordById(password,user);
+        if(result == 0){
+            responseResult.buildFail("旧密码错误");
+        }
         return responseResult;
     }
 
