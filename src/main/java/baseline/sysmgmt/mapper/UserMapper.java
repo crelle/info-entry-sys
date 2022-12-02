@@ -1,4 +1,5 @@
 package baseline.sysmgmt.mapper;
+import org.apache.ibatis.annotations.Param;
 
 import baseline.sysmgmt.pojo.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -14,4 +15,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
+    int updatePasswordById(@Param("password") String password, @Param("id") String id);
 }

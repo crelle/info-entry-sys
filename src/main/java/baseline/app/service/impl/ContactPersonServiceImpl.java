@@ -2,9 +2,12 @@ package baseline.app.service.impl;
 
 import baseline.app.mapper.ContactPersonMapper;
 import baseline.app.pojo.entity.ContactPerson;
+import baseline.app.pojo.entity.Employee;
 import baseline.app.service.ContactPersonService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +49,10 @@ public class ContactPersonServiceImpl extends ServiceImpl<ContactPersonMapper, C
 
     @Override
     public Page<ContactPerson> pageByCondition(Page<ContactPerson> page) {
-        return page(page);
+        ContactPerson contactPerson = page.getRecords().get(0);
+        LambdaQueryWrapper<ContactPerson> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.like(StringUtils.isNotBlank(contactPerson.getInterfaceName()), ContactPerson::getInterfaceName, contactPerson.getInterfaceName());
+        return page(page, lambdaQueryWrapper);
     }
 
     @Override

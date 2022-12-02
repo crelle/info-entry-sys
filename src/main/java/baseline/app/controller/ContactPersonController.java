@@ -32,7 +32,6 @@ public class ContactPersonController implements BaseController<ContactPerson> {
     private ContactPersonService contactPersonService;
 
 
-
     @ApiOperation("创建")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
@@ -79,11 +78,11 @@ public class ContactPersonController implements BaseController<ContactPerson> {
     }
 
     @ApiOperation("分页查询")
-    @RequestMapping(value = "/pageByCondition", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<ContactPerson>> pageByCondition(Page<ContactPerson> pageBean) {
         ResponseResult result = new ResponseResult();
-        contactPersonService.pageByCondition(pageBean);
+        result.setData(contactPersonService.pageByCondition(pageBean));
         return result;
     }
 

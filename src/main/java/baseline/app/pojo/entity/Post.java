@@ -4,13 +4,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author crelle
@@ -62,7 +64,7 @@ public class Post {
 
     @ApiModelProperty("最后到岗时间")
     @TableField("latest_arrival_time")
-    private String latestArrivalTime;
+    private Date latestArrivalTime;
 
 
     @ApiModelProperty("详细地址")
@@ -149,11 +151,11 @@ public class Post {
         this.address = address;
     }
 
-    public String getLatestArrivalTime() {
+    public Date getLatestArrivalTime() {
         return latestArrivalTime;
     }
 
-    public void setLatestArrivalTime(String latestArrivalTime) {
+    public void setLatestArrivalTime(Date latestArrivalTime) {
         this.latestArrivalTime = latestArrivalTime;
     }
 
@@ -178,7 +180,7 @@ public class Post {
                 ", number='" + number + '\'' +
                 ", date=" + date +
                 ", address='" + address + '\'' +
-                ", latestArrivalTime='" + latestArrivalTime + '\'' +
+                ", latestArrivalTime=" + latestArrivalTime +
                 ", detailAddress='" + detailAddress + '\'' +
                 '}';
     }

@@ -48,10 +48,13 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     @Override
     public Page<Employee> pageByCondition(Page<Employee> page) {
-
-
+        Employee employee = page.getRecords().get(0);
+        LambdaQueryWrapper<Employee> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.like(StringUtils.isNotBlank(employee.getName()), Employee::getName, employee.getName())
+                .like(StringUtils.isNotBlank(employee.getSkill()), Employee::getSkill, employee.getSkill());
+        return page(page, lambdaQueryWrapper);
     }
-    
+
     @Override
     public Employee queryById(String id) {
         return getById(id);
