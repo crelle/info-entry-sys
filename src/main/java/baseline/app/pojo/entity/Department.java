@@ -1,27 +1,40 @@
 package baseline.app.pojo.entity;
 
+import baseline.common.pojo.BaseDo;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>
- *
+ * 部门表
  * </p>
  *
  * @author crelle
- * @since 2022-11-09 10:06:28
+ * @since 2022-12-06 05:57:05
  */
+@Getter
+@Setter
 @TableName("t_department")
-@ApiModel(value = "Department对象", description = "")
-public class Department {
+@ApiModel(value = "Department对象", description = "部门表")
+public class Department extends BaseDo {
 
     @ApiModelProperty("部门编号")
     @TableId(value = "department_id", type = IdType.ASSIGN_UUID)
     private String departmentId;
+
+    @ApiModelProperty("用户id")
+    @TableField("id")
+    private String id;
 
     @ApiModelProperty("部门名称")
     @TableField("department")
@@ -51,94 +64,28 @@ public class Department {
     @TableField("introduce")
     private String introduce;
 
-    @ApiModelProperty("上级部门")
     @TableField("department_up")
     private String departmentUp;
 
-    public String getDepartmentId() {
-        return departmentId;
-    }
+    @ApiModelProperty("创建时间")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
-    }
+    @ApiModelProperty("创建人")
+    @TableField("create_by")
+    private String createBy;
 
-    public String getDepartment() {
-        return department;
-    }
+    @ApiModelProperty("修改时间")
+    @TableField("update_time")
+    private Date updateTime;
 
-    public void setDepartment(String department) {
-        this.department = department;
-    }
+    @ApiModelProperty("修改人")
+    @TableField("update_by")
+    private String updateBy;
 
-    public String getUserId() {
-        return userId;
-    }
+    @ApiModelProperty("账号是否可用，1可以，0不可用，默认1")
+    @TableField("enabled")
+    private Boolean enabled;
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
-    public String getJobNo() {
-        return jobNo;
-    }
-
-    public void setJobNo(String jobNo) {
-        this.jobNo = jobNo;
-    }
-
-    public String getCellPhone() {
-        return cellPhone;
-    }
-
-    public void setCellPhone(String cellPhone) {
-        this.cellPhone = cellPhone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getIntroduce() {
-        return introduce;
-    }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
-    }
-
-    public String getDepartmentUp() {
-        return departmentUp;
-    }
-
-    public void setDepartmentUp(String departmentUp) {
-        this.departmentUp = departmentUp;
-    }
-
-    @Override
-    public String toString() {
-        return "Department{" +
-                "departmentId='" + departmentId + '\'' +
-                ", department='" + department + '\'' +
-                ", userId='" + userId + '\'' +
-                ", jobNo='" + jobNo + '\'' +
-                ", cellPhone='" + cellPhone + '\'' +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                ", introduce='" + introduce + '\'' +
-                ", departmentUp='" + departmentUp + '\'' +
-                '}';
-    }
 }

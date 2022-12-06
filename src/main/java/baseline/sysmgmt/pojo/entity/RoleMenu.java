@@ -1,62 +1,39 @@
 package baseline.sysmgmt.pojo.entity;
 
+import baseline.common.pojo.BaseDo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>
- *
+ * 用户菜单关系表
  * </p>
  *
  * @author crelle
- * @since 2022-10-01 12:06:26
+ * @since 2022-12-06 05:31:13
  */
-@TableName("role_menu")
-@ApiModel(value = "RoleMenu对象", description = "")
-public class RoleMenu {
+@Getter
+@Setter
+@TableName("t_role_menu")
+@ApiModel(value = "RoleMenu对象", description = "用户菜单关系表")
+public class RoleMenu extends BaseDo {
 
+    @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;
 
-    @TableField("role_id")
+    @ApiModelProperty("角色id")
+    @TableField(value = "role_id")
     private String roleId;
 
-    @TableField("menu_id")
+    @ApiModelProperty("菜单id")
+    @TableField(value = "menu_id")
     private String menuId;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(String menuId) {
-        this.menuId = menuId;
-    }
-
-    @Override
-    public String toString() {
-        return "RoleMenu{" +
-                "id='" + id + '\'' +
-                ", roleId='" + roleId + '\'' +
-                ", menuId='" + menuId + '\'' +
-                '}';
-    }
 }

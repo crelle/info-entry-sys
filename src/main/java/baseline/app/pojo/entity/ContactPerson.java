@@ -1,27 +1,40 @@
 package baseline.app.pojo.entity;
 
+import baseline.common.pojo.BaseDo;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>
- * 
+ * 接口人表
  * </p>
  *
  * @author crelle
- * @since 2022-11-24 10:45:04
+ * @since 2022-12-06 05:57:05
  */
+@Getter
+@Setter
 @TableName("t_contact_person")
-@ApiModel(value = "ContactPerson对象", description = "")
-public class ContactPerson {
+@ApiModel(value = "ContactPerson对象", description = "接口人表")
+public class ContactPerson extends BaseDo {
 
     @ApiModelProperty("接口人编号")
     @TableId(value = "Interface_id", type = IdType.ASSIGN_UUID)
     private String interfaceId;
+
+    @ApiModelProperty("客户编号")
+    @TableField("t_c_customer_id")
+    private String tCCustomerId;
 
     @ApiModelProperty("接口人姓名")
     @TableField("Interface_name")
@@ -51,74 +64,25 @@ public class ContactPerson {
     @TableField("customer_id")
     private String customerId;
 
-    public String getInterfaceId() {
-        return interfaceId;
-    }
+    @ApiModelProperty("创建时间")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
 
-    public void setInterfaceId(String interfaceId) {
-        this.interfaceId = interfaceId;
-    }
-    public String getInterfaceName() {
-        return interfaceName;
-    }
+    @ApiModelProperty("创建人")
+    @TableField("create_by")
+    private String createBy;
 
-    public void setInterfaceName(String interfaceName) {
-        this.interfaceName = interfaceName;
-    }
-    public String getGender() {
-        return gender;
-    }
+    @ApiModelProperty("修改时间")
+    @TableField("update_time")
+    private Date updateTime;
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-    public String getCellPhone() {
-        return cellPhone;
-    }
+    @ApiModelProperty("修改人")
+    @TableField("update_by")
+    private String updateBy;
 
-    public void setCellPhone(String cellPhone) {
-        this.cellPhone = cellPhone;
-    }
-    public String getEmail() {
-        return email;
-    }
+    @ApiModelProperty("账号是否可用，1可以，0不可用，默认1")
+    @TableField("enabled")
+    private Boolean enabled;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getAddress() {
-        return address;
-    }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    public String getIntroduce() {
-        return introduce;
-    }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
-    }
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    @Override
-    public String toString() {
-        return "ContactPerson{" +
-            "interfaceId=" + interfaceId +
-            ", interfaceName=" + interfaceName +
-            ", gender=" + gender +
-            ", cellPhone=" + cellPhone +
-            ", email=" + email +
-            ", address=" + address +
-            ", introduce=" + introduce +
-            ", customerId=" + customerId +
-        "}";
-    }
 }

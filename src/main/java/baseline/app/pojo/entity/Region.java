@@ -4,19 +4,25 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>
- * 
+ * 区域表
  * </p>
  *
  * @author crelle
- * @since 2022-11-09 10:06:28
+ * @since 2022-12-06 05:57:05
  */
+@Getter
+@Setter
 @TableName("t_region")
-@ApiModel(value = "Region对象", description = "")
+@ApiModel(value = "Region对象", description = "区域表")
 public class Region {
 
     @ApiModelProperty("地域编号")
@@ -27,26 +33,5 @@ public class Region {
     @TableField("region_name")
     private String regionName;
 
-    public String getRegionId() {
-        return regionId;
-    }
 
-    public void setRegionId(String regionId) {
-        this.regionId = regionId;
-    }
-    public String getRegionName() {
-        return regionName;
-    }
-
-    public void setRegionName(String regionName) {
-        this.regionName = regionName;
-    }
-
-    @Override
-    public String toString() {
-        return "Region{" +
-            "regionId=" + regionId +
-            ", regionName=" + regionName +
-        "}";
-    }
 }

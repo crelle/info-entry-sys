@@ -1,27 +1,44 @@
 package baseline.app.pojo.entity;
 
+import baseline.common.pojo.BaseDo;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>
- * 
+ * 客户表
  * </p>
  *
  * @author crelle
- * @since 2022-11-09 10:06:28
+ * @since 2022-12-06 05:57:05
  */
+@Getter
+@Setter
 @TableName("t_customer")
-@ApiModel(value = "Customer对象", description = "")
-public class Customer {
+@ApiModel(value = "Customer对象", description = "客户表")
+public class Customer extends BaseDo {
 
     @ApiModelProperty("客户编号")
     @TableId(value = "customer_id", type = IdType.ASSIGN_UUID)
     private String customerId;
+
+    @ApiModelProperty("用户id")
+    @TableField("id")
+    private String id;
+
+    @ApiModelProperty("地域编号")
+    @TableField("t_r_region_id")
+    private String tRRegionId;
 
     @ApiModelProperty("客户名称")
     @TableField("customer_name")
@@ -51,74 +68,25 @@ public class Customer {
     @TableField("introduce")
     private String introduce;
 
-    public String getCustomerId() {
-        return customerId;
-    }
+    @ApiModelProperty("创建时间")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-    public String getCustomerName() {
-        return customerName;
-    }
+    @ApiModelProperty("创建人")
+    @TableField("create_by")
+    private String createBy;
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-    public String getRegionId() {
-        return regionId;
-    }
+    @ApiModelProperty("修改时间")
+    @TableField("update_time")
+    private Date updateTime;
 
-    public void setRegionId(String regionId) {
-        this.regionId = regionId;
-    }
-    public String getAddress() {
-        return address;
-    }
+    @ApiModelProperty("修改人")
+    @TableField("update_by")
+    private String updateBy;
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    public String getUserId() {
-        return userId;
-    }
+    @ApiModelProperty("账号是否可用，1可以，0不可用，默认1")
+    @TableField("enabled")
+    private Boolean enabled;
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-    public String getCellPhone() {
-        return cellPhone;
-    }
 
-    public void setCellPhone(String cellPhone) {
-        this.cellPhone = cellPhone;
-    }
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getIntroduce() {
-        return introduce;
-    }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-            "customerId=" + customerId +
-            ", customerName=" + customerName +
-            ", regionId=" + regionId +
-            ", address=" + address +
-            ", userId=" + userId +
-            ", cellPhone=" + cellPhone +
-            ", email=" + email +
-            ", introduce=" + introduce +
-        "}";
-    }
 }

@@ -1,62 +1,64 @@
 package baseline.sysmgmt.pojo.entity;
 
+import baseline.common.pojo.BaseDo;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>
- *
+ * 用户角色关系表
  * </p>
  *
  * @author crelle
- * @since 2022-10-01 12:06:26
+ * @since 2022-12-06 05:31:13
  */
-@TableName("user_role")
-@ApiModel(value = "UserRole对象", description = "")
-public class UserRole {
+@Getter
+@Setter
+@TableName("t_user_role")
+@ApiModel(value = "UserRole对象", description = "用户角色关系表")
+public class UserRole extends BaseDo {
 
+    @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;
 
-    @TableField("user_id")
+    @ApiModelProperty("用户id")
+    @TableField(value = "user_id")
     private String userId;
 
-    @TableField("role_id")
+    @ApiModelProperty("角色id")
+    @TableField(value = "role_id")
     private String roleId;
 
-    public String getId() {
-        return id;
-    }
+    @ApiModelProperty("创建时间")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    @ApiModelProperty("创建人")
+    @TableField("create_by")
+    private String createBy;
 
-    public String getUserId() {
-        return userId;
-    }
+    @ApiModelProperty("修改时间")
+    @TableField("update_time")
+    private Date updateTime;
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+    @ApiModelProperty("修改人")
+    @TableField("update_by")
+    private String updateBy;
 
-    public String getRoleId() {
-        return roleId;
-    }
+    @ApiModelProperty("账号是否可用，1可以，0不可用，默认1")
+    @TableField("enabled")
+    private Boolean enabled;
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
 
-    @Override
-    public String toString() {
-        return "UserRole{" +
-                "id='" + id + '\'' +
-                ", userId='" + userId + '\'' +
-                ", roleId='" + roleId + '\'' +
-                '}';
-    }
 }

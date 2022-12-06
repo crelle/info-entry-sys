@@ -1,5 +1,5 @@
 package baseline.app.pojo.entity;
-
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,22 +9,30 @@ import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>
- *
+ * 岗位表
  * </p>
  *
  * @author crelle
- * @since 2022-11-09 10:06:28
+ * @since 2022-12-06 05:57:05
  */
+@Getter
+@Setter
 @TableName("t_post")
-@ApiModel(value = "Post对象", description = "")
+@ApiModel(value = "Post对象", description = "岗位表")
 public class Post {
 
     @ApiModelProperty("岗位编号")
     @TableId(value = "post_id", type = IdType.ASSIGN_UUID)
     private String postId;
+
+    @ApiModelProperty("项目编号")
+    @TableField("t_p_project_id")
+    private String tPProjectId;
 
     @ApiModelProperty("岗位名称")
     @TableField("post_name")
@@ -62,126 +70,32 @@ public class Post {
     @TableField("address")
     private String address;
 
-    @ApiModelProperty("最后到岗时间")
+    @ApiModelProperty("到岗最晚时间")
     @TableField("latest_arrival_time")
     private Date latestArrivalTime;
 
-
-    @ApiModelProperty("详细地址")
     @TableField("detail_address")
     private String detailAddress;
 
-    public String getPostId() {
-        return postId;
-    }
+    @ApiModelProperty("创建时间")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
 
-    public void setPostId(String postId) {
-        this.postId = postId;
-    }
+    @ApiModelProperty("创建人")
+    @TableField("create_by")
+    private String createBy;
 
-    public String getPostName() {
-        return postName;
-    }
+    @ApiModelProperty("修改时间")
+    @TableField("update_time")
+    private Date updateTime;
 
-    public void setPostName(String postName) {
-        this.postName = postName;
-    }
+    @ApiModelProperty("修改人")
+    @TableField("update_by")
+    private String updateBy;
 
-    public String getPosition() {
-        return position;
-    }
+    @ApiModelProperty("账号是否可用，1可以，0不可用，默认1")
+    @TableField("enabled")
+    private Boolean enabled;
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
 
-    public String getRequirements() {
-        return requirements;
-    }
-
-    public void setRequirements(String requirements) {
-        this.requirements = requirements;
-    }
-
-    public String getSkill() {
-        return skill;
-    }
-
-    public void setSkill(String skill) {
-        this.skill = skill;
-    }
-
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Date getLatestArrivalTime() {
-        return latestArrivalTime;
-    }
-
-    public void setLatestArrivalTime(Date latestArrivalTime) {
-        this.latestArrivalTime = latestArrivalTime;
-    }
-
-    public String getDetailAddress() {
-        return detailAddress;
-    }
-
-    public void setDetailAddress(String detailAddress) {
-        this.detailAddress = detailAddress;
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "postId='" + postId + '\'' +
-                ", postName='" + postName + '\'' +
-                ", position='" + position + '\'' +
-                ", requirements='" + requirements + '\'' +
-                ", skill='" + skill + '\'' +
-                ", projectId='" + projectId + '\'' +
-                ", customer='" + customer + '\'' +
-                ", number='" + number + '\'' +
-                ", date=" + date +
-                ", address='" + address + '\'' +
-                ", latestArrivalTime=" + latestArrivalTime +
-                ", detailAddress='" + detailAddress + '\'' +
-                '}';
-    }
 }

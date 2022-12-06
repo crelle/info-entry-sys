@@ -3,7 +3,7 @@
 <mapper namespace="baseline.sysmgmt.mapper.UserMapper">
 
     <update id="updatePasswordById">
-        update user
+        update t_user
         set password = #{password,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
     </update>

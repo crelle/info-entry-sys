@@ -1,10 +1,8 @@
 package baseline.sysmgmt.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ import java.util.List;
  * @author crelle
  * @since 2022-10-01 12:06:26
  */
-@TableName("user")
+@TableName("t_user")
 @ApiModel(value = "User对象", description = "")
 public class User implements UserDetails {
 
@@ -62,8 +61,22 @@ public class User implements UserDetails {
     @TableField("job_no")
     private String jobNo;
 
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
+
+    @TableField("create_by")
+    private String createBy;
+
+    @TableField("update_time")
+    private Date updateTime;
+
+    @TableField("update_by")
+    private String updateBy;
+
     @TableField(exist = false)
     private List<Role> roles;
+
+
 
 
     /**
@@ -190,6 +203,38 @@ public class User implements UserDetails {
         this.jobNo = jobNo;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -205,6 +250,10 @@ public class User implements UserDetails {
                 ", username='" + username + '\'' +
                 ", userAvatar='" + userAvatar + '\'' +
                 ", jobNo='" + jobNo + '\'' +
+                ", createTime=" + createTime +
+                ", createBy='" + createBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateBy='" + updateBy + '\'' +
                 ", roles=" + roles +
                 '}';
     }
