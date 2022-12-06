@@ -1,7 +1,7 @@
 package baseline.sysmgmt.controller;
 
 
-import baseline.common.ResponseResult;
+import baseline.common.pojo.vo.ResponseResult;
 import baseline.common.util.ResultUtils;
 import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.pojo.entity.User;

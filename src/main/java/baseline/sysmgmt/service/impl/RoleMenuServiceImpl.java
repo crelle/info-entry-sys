@@ -1,6 +1,6 @@
 package baseline.sysmgmt.service.impl;
 
-import baseline.common.ResponseResult;
+import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Menu;
 import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.pojo.entity.RoleMenu;

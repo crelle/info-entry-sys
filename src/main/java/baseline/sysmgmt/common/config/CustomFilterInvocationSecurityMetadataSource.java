@@ -1,4 +1,4 @@
-package baseline.common.config;
+package baseline.sysmgmt.common.config;
 
 
 import baseline.sysmgmt.pojo.entity.Menu;

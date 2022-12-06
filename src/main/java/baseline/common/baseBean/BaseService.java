@@ -1,4 +1,4 @@
-package baseline.app.service.impl;
+package baseline.common.baseBean;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
@@ -54,7 +54,7 @@ public interface BaseService<T> {
     Page<T> pageByCondition(Page<T> page);
 
     /**
-     * 根据id查询
+     * 查询详情
      *
      * @param id
      * @return

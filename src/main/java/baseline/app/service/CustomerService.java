@@ -1,7 +1,7 @@
 package baseline.app.service;
 
 import baseline.app.pojo.entity.Customer;
-import baseline.app.service.impl.BaseService;
+import baseline.common.baseBean.BaseService;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

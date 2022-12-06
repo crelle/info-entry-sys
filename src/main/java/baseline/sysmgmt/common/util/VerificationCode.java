@@ -1,4 +1,4 @@
-package baseline.common.util;
+package baseline.sysmgmt.common.util;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

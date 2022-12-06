@@ -1,5 +1,6 @@
 package baseline.sysmgmt.service;
 
+import baseline.sysmgmt.service.impl.BaseService;
 import baseline.sysmgmt.pojo.entity.UserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -11,6 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author crelle
  * @since 2022-10-01 12:06:26
  */
-public interface UserRoleService extends IService<UserRole>,BaseService<UserRole> {
+public interface UserRoleService extends IService<UserRole>, BaseService<UserRole> {
 
 }

@@ -1,6 +1,6 @@
-package baseline.common.config;
+package baseline.sysmgmt.common.config;
 
-import baseline.common.ResponseResult;
+import baseline.common.pojo.vo.ResponseResult;
 import baseline.common.util.ResultUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.access.AccessDeniedException;

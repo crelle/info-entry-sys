@@ -1,6 +1,7 @@
-package baseline.common.config;
+package baseline.sysmgmt.common.config;
 
-import baseline.common.ResponseResult;
+import baseline.common.pojo.vo.ResponseResult;
+import baseline.common.config.ConfigProperties;
 import baseline.common.util.ResultUtils;
 import baseline.sysmgmt.pojo.entity.Menu;
 import baseline.sysmgmt.pojo.entity.User;

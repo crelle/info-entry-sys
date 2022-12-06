@@ -3,7 +3,8 @@ package baseline.app.controller;
 
 import baseline.app.pojo.entity.Customer;
 import baseline.app.service.CustomerService;
-import baseline.common.ResponseResult;
+import baseline.common.baseBean.BaseController;
+import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.print.DocFlavor;
 import java.util.List;
 
 /**

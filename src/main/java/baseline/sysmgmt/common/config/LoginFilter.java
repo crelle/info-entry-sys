@@ -1,4 +1,4 @@
-package baseline.common.config;
+package baseline.sysmgmt.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;

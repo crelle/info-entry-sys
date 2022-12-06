@@ -1,6 +1,6 @@
-package baseline.app.controller;
+package baseline.common.baseBean;
 
-import baseline.common.ResponseResult;
+import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +32,7 @@ public interface BaseController<T> {
      * @return
      */
 
-    public ResponseResult<String> deleteById(@PathVariable String id);
+    ResponseResult<String> deleteById(@PathVariable String id);
 
     /**
      * 根据ID批量删除
@@ -40,7 +40,7 @@ public interface BaseController<T> {
      * @param ids
      * @return
      */
-    public ResponseResult<String> deleteByIds(@RequestBody List<String> ids);
+    ResponseResult<String> deleteByIds(@RequestBody List<String> ids);
 
     /**
      * 根据ID修改
@@ -48,7 +48,7 @@ public interface BaseController<T> {
      * @param object
      * @return
      */
-    public ResponseResult<String> updateById(@RequestBody T object);
+    ResponseResult<String> updateById(@RequestBody T object);
 
     /**
      * 根据条件分页查询
@@ -56,7 +56,7 @@ public interface BaseController<T> {
      * @param pageBean
      * @return
      */
-    public ResponseResult<Page<T>> pageByCondition(@RequestBody Page<T> pageBean);
+    ResponseResult<Page<T>> pageByCondition(@RequestBody Page<T> pageBean);
 
 
 }

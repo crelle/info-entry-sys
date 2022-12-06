@@ -1,4 +1,4 @@
-package baseline.common;
+package baseline.common.constant;
 
 /**
  * @author:crelle

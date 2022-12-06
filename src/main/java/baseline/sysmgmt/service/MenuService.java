@@ -1,6 +1,7 @@
 package baseline.sysmgmt.service;
 
-import baseline.common.ResponseResult;
+import baseline.sysmgmt.service.impl.BaseService;
+import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
 

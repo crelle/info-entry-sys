@@ -1,4 +1,4 @@
-package baseline.common.config;
+package baseline.sysmgmt.common.config;
 
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;

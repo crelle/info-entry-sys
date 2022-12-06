@@ -1,4 +1,4 @@
-package baseline.sysmgmt.service;
+package baseline.sysmgmt.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

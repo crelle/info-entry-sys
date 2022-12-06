@@ -1,6 +1,6 @@
 package baseline.sysmgmt.pojo.entity;
 
-import baseline.common.pojo.BaseDo;
+import baseline.common.pojo.entity.BaseDo;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

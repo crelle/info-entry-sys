@@ -1,7 +1,7 @@
 package baseline.sysmgmt.controller;
 
 
-import baseline.common.ResponseResult;
+import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

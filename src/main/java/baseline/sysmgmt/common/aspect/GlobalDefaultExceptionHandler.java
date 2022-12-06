@@ -1,6 +1,6 @@
-package baseline.common.aspect;
+package baseline.sysmgmt.common.aspect;
 
-import baseline.common.ResponseResult;
+import baseline.common.pojo.vo.ResponseResult;
 import baseline.common.util.ResultUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;

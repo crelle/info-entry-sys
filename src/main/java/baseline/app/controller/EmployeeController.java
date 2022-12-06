@@ -3,7 +3,8 @@ package baseline.app.controller;
 
 import baseline.app.pojo.entity.Employee;
 import baseline.app.service.EmployeeService;
-import baseline.common.ResponseResult;
+import baseline.common.baseBean.BaseController;
+import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

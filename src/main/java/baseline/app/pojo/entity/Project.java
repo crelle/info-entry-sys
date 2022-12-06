@@ -1,7 +1,6 @@
 package baseline.app.pojo.entity;
 
-import baseline.common.pojo.BaseDo;
-import com.baomidou.mybatisplus.annotation.FieldFill;
+import baseline.common.pojo.entity.BaseDo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

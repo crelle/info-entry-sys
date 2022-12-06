@@ -1,6 +1,6 @@
 package baseline.common.util;
 
-import baseline.common.ResponseResult;
+import baseline.common.pojo.vo.ResponseResult;
 import baseline.common.enumeration.ResponseEnum;
 
 /**

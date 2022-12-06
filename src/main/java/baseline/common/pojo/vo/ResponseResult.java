@@ -1,4 +1,4 @@
-package baseline.common;
+package baseline.common.pojo.vo;
 
 import baseline.common.enumeration.ResponseEnum;
 import io.swagger.annotations.ApiModel;

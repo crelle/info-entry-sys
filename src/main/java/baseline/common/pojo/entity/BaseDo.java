@@ -1,4 +1,4 @@
-package baseline.common.pojo;
+package baseline.common.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

@@ -1,7 +1,7 @@
 package baseline.sysmgmt.controller;
 
 
-import baseline.common.ResponseResult;
+import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.service.RoleMenuService;
 import io.swagger.annotations.Api;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * <p>
