@@ -9,14 +9,20 @@ package baseline.common.enumeration;
  * @description:XX
  **/
 public enum ResponseEnum {
-    SUCCESS("00000", "成功"), FAIL("-1", "失败");
-
+    FAIL("-1", "失败"),
+    SUCCESS("00000", "成功"),
+    UNKNOWN("00001", "服务器发生未知异常，请联系管理员处理！"),
+    BAD_REQUEST("400", "请求数据格式非法。"),
+    FORBIDDEN("403", "没有访问权限!"),
+    NO_RESOURCE("404", "请求的资源找不到!"),
+    SERVER_ERROR("500", "服务器内部错误!"),
+    SERVICE_BUSY("503", "服务器正忙，请稍后再试!");
     private String code;
-    private String name;
+    private String message;
 
-    ResponseEnum(String code, String name) {
+    ResponseEnum(String code, String message) {
         this.code = code;
-        this.name = name;
+        this.message = message;
     }
 
     public String getCode() {
@@ -27,11 +33,10 @@ public enum ResponseEnum {
         this.code = code;
     }
 
-    public String getName() {
-        return name;
+    public String getMessage() {
+        return message;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-}
+    public void setMessage(String message) {
+        this.message = message;
+    }}

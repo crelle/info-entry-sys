@@ -1,6 +1,8 @@
 package baseline.sysmgmt.controller;
 
 
+import baseline.common.enumeration.ResponseEnum;
+import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Menu;
 import baseline.sysmgmt.service.MenuService;
@@ -36,18 +38,16 @@ public class MenuController implements BaseController<Menu> {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<Menu> create(@RequestBody Menu menu) {
-        ResponseResult<Menu> responseResult = new ResponseResult<>();
         try {
             Menu menus = menuService.queryByName(menu.getName());
             if (null != menus) {
-                responseResult.buildFail("新增的菜单已经存在!");
-                return responseResult;
+                return ResponseResult.fail("新增的菜单已经存在!");
             }
             menuService.create(menu);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
-        return responseResult;
+        return ResponseResult.ok();
     }
 
     @ApiOperation(value = "查询所有菜单")
@@ -62,12 +62,12 @@ public class MenuController implements BaseController<Menu> {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<Menu> queryById(@PathVariable String id) {
-        ResponseResult<Menu> responseResult = new ResponseResult<>();
+        ResponseResult responseResult = ResponseResult.ok();
         try {
             Menu menu = menuService.queryById(id);
             responseResult.setData(menu);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -78,12 +78,12 @@ public class MenuController implements BaseController<Menu> {
     @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Menu>> pageByCondition(@RequestBody Page<Menu> pageBean) {
-        ResponseResult<Page<Menu>> responseResult = new ResponseResult<>();
+        ResponseResult<Page<Menu>> responseResult = ResponseResult.ok();
         try {
             Page<Menu> page = menuService.pageByCondition(pageBean);
             responseResult.setData(page);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -93,7 +93,7 @@ public class MenuController implements BaseController<Menu> {
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<String> updateById(@PathVariable String id, @RequestBody Menu menu) {
-        ResponseResult<String> responseResult = new ResponseResult<>();
+        ResponseResult<String> responseResult = ResponseResult.ok();
         try {
             Menu oldMenu = menuService.queryById(id);
             if (null == oldMenu) {
@@ -106,7 +106,7 @@ public class MenuController implements BaseController<Menu> {
                 responseResult.buildFail("更新菜单失败！");
             }
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -123,7 +123,7 @@ public class MenuController implements BaseController<Menu> {
         } catch (NoSuchElementException noSuchElementException) {
             responseResult.buildFail("没有此菜单！");
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -132,6 +132,11 @@ public class MenuController implements BaseController<Menu> {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/updateMenu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<String> updateMenu(@RequestBody Set<Menu> menus) {
-        return menuService.updateParentMenu(menus);
+        try {
+            menuService.updateParentMenu(menus);
+        } catch (Exception e) {
+            throw new BusinessException(ResponseEnum.UNKNOWN);
+        }
+        return ResponseResult.ok();
     }
 }

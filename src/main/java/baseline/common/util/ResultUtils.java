@@ -21,7 +21,7 @@ public class ResultUtils {
     }
 
     public static <T> ResponseResult<T> success() {
-        return new ResponseResult(ResponseEnum.SUCCESS.getCode(), ResponseEnum.SUCCESS.getName(), null);
+        return new ResponseResult(ResponseEnum.SUCCESS.getCode(), ResponseEnum.SUCCESS.getMessage(), null);
     }
 
     public static <T> ResponseResult<T> success(String message) {
@@ -33,7 +33,7 @@ public class ResultUtils {
     }
 
     public static <T> ResponseResult<T> fail() {
-        return new ResponseResult(ResponseEnum.FAIL.getCode(), ResponseEnum.FAIL.getName(), null);
+        return new ResponseResult(ResponseEnum.FAIL.getCode(), ResponseEnum.FAIL.getMessage(), null);
     }
 
     public static <T> ResponseResult fail(String message) {

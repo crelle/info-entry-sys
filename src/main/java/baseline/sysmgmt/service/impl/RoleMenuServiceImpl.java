@@ -1,5 +1,7 @@
 package baseline.sysmgmt.service.impl;
 
+import baseline.common.enumeration.ResponseEnum;
+import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Menu;
 import baseline.sysmgmt.pojo.entity.Role;
@@ -12,6 +14,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import java.util.Objects;
@@ -63,15 +66,18 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
 
     @Override
     public ResponseResult<Role> queryMenu(Role role) {
-        List<Menu> menus = getRoleMenu(role);
-
-        ResponseResult<Role> responseResult = new ResponseResult<>();
-        Role roleResp = new Role();
-        roleResp.setId(role.getId());
-        roleResp.setName(role.getName());
-        roleResp.setNameZh(role.getNameZh());
-        roleResp.setMenus(menus);
-        responseResult.setData(roleResp);
+        ResponseResult<Role> responseResult = ResponseResult.ok();
+        try {
+            List<Menu> menus = getRoleMenu(role);
+            Role roleResp = new Role();
+            roleResp.setId(role.getId());
+            roleResp.setName(role.getName());
+            roleResp.setNameZh(role.getNameZh());
+            roleResp.setMenus(menus);
+            responseResult.setData(roleResp);
+        } catch (Exception e) {
+            throw new BusinessException(ResponseEnum.UNKNOWN);
+        }
         return responseResult;
     }
 
@@ -87,24 +93,29 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
                 .collect(Collectors.toList());
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void updateRoleMenu(Role role) {
-        if (null == role) {
-            return;
+        try {
+            if (null == role) {
+                return;
+            }
+            //删除关联表
+            QueryWrapper<RoleMenu> wrapper = new QueryWrapper<>();
+            wrapper.select().eq("role_id", role.getId());
+            remove(wrapper);
+
+            if (role.getMenus().isEmpty()) {
+                return;
+            }
+            //插入新增关联表
+            role.getMenus()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .forEach(menu -> saveMenu(role.getId(), menu.getId()));
+        } catch (Exception e) {
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
 
-        //删除关联表
-        QueryWrapper<RoleMenu> wrapper = new QueryWrapper<>();
-        wrapper.select().eq("role_id", role.getId());
-        remove(wrapper);
-
-        if (role.getMenus().isEmpty()) {
-            return;
-        }
-        //插入新增关联表
-        role.getMenus()
-                .stream()
-                .filter(Objects::nonNull)
-                .forEach(menu -> saveMenu(role.getId(), menu.getId()));
     }
 
     private void saveMenu(String roleId, String menuId) {

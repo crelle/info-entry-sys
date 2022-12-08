@@ -30,7 +30,7 @@ public class ResponseResult<T> implements Serializable {
     private long total;
 
     public ResponseResult() {
-        this(ResponseEnum.SUCCESS.getCode(), ResponseEnum.SUCCESS.getName());
+        this(ResponseEnum.SUCCESS.getCode(), ResponseEnum.SUCCESS.getMessage());
     }
 
     public ResponseResult(String code, String message) {
@@ -44,14 +44,44 @@ public class ResponseResult<T> implements Serializable {
         this.data = data;
     }
 
-    public void buildFail() {
-        this.code = ResponseEnum.FAIL.getCode();
-        this.message = ResponseEnum.FAIL.getName();
+    public static ResponseResult ok() {
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setCode(ResponseEnum.SUCCESS.getCode());
+        responseResult.setMessage(ResponseEnum.SUCCESS.getMessage());
+        return responseResult;
+    }
+
+    public static ResponseResult ok(String message) {
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setCode(ResponseEnum.SUCCESS.getCode());
+        responseResult.setMessage(message);
+        return responseResult;
+    }
+
+    public static ResponseResult fail() {
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setCode(ResponseEnum.FAIL.getCode());
+        responseResult.setMessage(ResponseEnum.FAIL.getMessage());
+        return responseResult;
+    }
+
+    public static ResponseResult fail(String message) {
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setCode(ResponseEnum.FAIL.getCode());
+        responseResult.setMessage(message);
+        return responseResult;
+    }
+
+    public static ResponseResult fail(String code, String message) {
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setCode(code);
+        responseResult.setMessage(message);
+        return responseResult;
     }
 
     public void buildFail(String message) {
-        this.code = ResponseEnum.FAIL.getCode();
-        this.message = message;
+        this.setCode(ResponseEnum.FAIL.getCode());
+        this.setMessage(message);
     }
 
     public static long getSerialVersionUID() {

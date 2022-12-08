@@ -1,6 +1,8 @@
 package baseline.sysmgmt.controller;
 
 
+import baseline.common.enumeration.ResponseEnum;
+import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
 import baseline.common.util.ResultUtils;
 import baseline.sysmgmt.pojo.entity.Role;
@@ -18,6 +20,7 @@ import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +52,7 @@ public class UserController implements BaseController<User> {
     @ApiOperation(value = "新增用户")
     @ApiParam(required = true, name = "user", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @Transactional(rollbackFor = Exception.class)
     public ResponseResult<User> create(@RequestBody User user) {
         ResponseResult<User> responseResult = new ResponseResult<User>();
         try {
@@ -95,7 +99,7 @@ public class UserController implements BaseController<User> {
 
 
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -113,7 +117,7 @@ public class UserController implements BaseController<User> {
                 return ResultUtils.fail("用户或者密码不正确！");
             }
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -127,7 +131,7 @@ public class UserController implements BaseController<User> {
             User user = userService.queryById(id);
             responseResult.setData(user);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -142,7 +146,7 @@ public class UserController implements BaseController<User> {
             Page<User> page = userService.pageByCondition(pageBean);
             responseResult.setData(page);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -156,7 +160,7 @@ public class UserController implements BaseController<User> {
             List<User> userList = userService.queryAll();
             responseResult.setData(userList);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -172,7 +176,7 @@ public class UserController implements BaseController<User> {
                 responseResult.buildFail("没有此用户，无法更新！");
             }
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -185,7 +189,7 @@ public class UserController implements BaseController<User> {
         try {
             userService.deleteById(id);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -204,7 +208,7 @@ public class UserController implements BaseController<User> {
 //            String absolutelyUri = ftpService.uploadFromMultipartFile(multipartFile, fileType);
 //            responseResult.setData(absolutelyUri);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -225,7 +229,7 @@ public class UserController implements BaseController<User> {
 //                return responseResult;
 //            }
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }
@@ -233,10 +237,10 @@ public class UserController implements BaseController<User> {
     @ApiOperation(value = "修改用户密码")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/password/{password}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> deleteAvatar(@PathVariable("password") String password,@RequestBody User user) {
+    public ResponseResult<String> deleteAvatar(@PathVariable("password") String password, @RequestBody User user) {
         ResponseResult<String> responseResult = new ResponseResult<>();
-        int result = userService.updatePasswordById(password,user);
-        if(result == 0){
+        int result = userService.updatePasswordById(password, user);
+        if (result == 0) {
             responseResult.buildFail("旧密码错误");
         }
         return responseResult;

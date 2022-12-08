@@ -1,6 +1,8 @@
 package baseline.sysmgmt.controller;
 
 
+import baseline.common.enumeration.ResponseEnum;
+import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.service.RoleService;
@@ -47,7 +49,7 @@ public class RoleController implements BaseController<Role> {
             }
             roleService.create(role);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(e);
         }
         return responseResult;
     }
@@ -61,7 +63,7 @@ public class RoleController implements BaseController<Role> {
             Role role = roleService.queryById(id);
             responseResult.setData(role);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(e);
         }
         return responseResult;
     }
@@ -76,7 +78,7 @@ public class RoleController implements BaseController<Role> {
             Page<Role> page = roleService.pageByCondition(pageBean);
             responseResult.setData(page);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(e);
         }
         return responseResult;
     }
@@ -90,7 +92,7 @@ public class RoleController implements BaseController<Role> {
             List<Role> roles = roleService.queryAll();
             responseResult.setData(roles);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(e);
         }
         return responseResult;
     }
@@ -112,7 +114,7 @@ public class RoleController implements BaseController<Role> {
                 responseResult.buildFail("更新角色失败！");
             }
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(e);
         }
         return responseResult;
     }
@@ -129,7 +131,7 @@ public class RoleController implements BaseController<Role> {
         } catch (NoSuchElementException noSuchElementException) {
             responseResult.buildFail("没有此角色！");
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
     }

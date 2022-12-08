@@ -21,16 +21,16 @@ public interface BaseController<T> {
     ResponseResult<T> create(@RequestBody T obj);
 
 
-    public ResponseResult<T> queryById(@PathVariable String id);
+     ResponseResult<T> queryById(@PathVariable String id);
 
 
-    public ResponseResult<Page<T>> pageByCondition(@RequestBody Page<T> pageBean);
+     ResponseResult<Page<T>> pageByCondition(@RequestBody Page<T> pageBean);
 
 
-    public ResponseResult<List<T>> queryAll();
+     ResponseResult<List<T>> queryAll();
 
 
-    public ResponseResult<String> updateById(@PathVariable String id, @RequestBody T obj);
+     ResponseResult<String> updateById(@PathVariable String id, @RequestBody T obj);
 
-    public ResponseResult<String> deleteById(@PathVariable String id);
+     ResponseResult<String> deleteById(@PathVariable String id);
 }

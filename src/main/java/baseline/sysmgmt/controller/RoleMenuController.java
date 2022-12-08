@@ -1,6 +1,8 @@
 package baseline.sysmgmt.controller;
 
 
+import baseline.common.enumeration.ResponseEnum;
+import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.service.RoleMenuService;
@@ -41,13 +43,12 @@ public class RoleMenuController {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/updateMenu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<String> updateRoleMenu(@RequestBody Role roles) {
-        ResponseResult<String> responseResult = new ResponseResult<>();
         try {
             roleMenuService.updateRoleMenu(roles);
         } catch (Exception e) {
-            responseResult.buildFail(e.getMessage());
+            throw new BusinessException(ResponseEnum.UNKNOWN);
         }
-        return responseResult;
+        return ResponseResult.ok();
 
     }
 }
