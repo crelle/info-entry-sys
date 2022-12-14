@@ -51,9 +51,16 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public Role queryByNameAndNameZh(String roleName,String roleNameZh) {
+    public List<Role> queryByNameAndNameZh(String roleName, String roleNameZh) {
         QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select().eq("name", roleName).eq("name_zh",roleNameZh);
-        return getOne(queryWrapper);
+        queryWrapper.select().eq("name", roleName).eq("name_zh", roleNameZh);
+        return list(queryWrapper);
+    }
+
+    @Override
+    public List<Role> queryByName(String roleName) {
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select().eq("name", roleName);
+        return list(queryWrapper);
     }
 }

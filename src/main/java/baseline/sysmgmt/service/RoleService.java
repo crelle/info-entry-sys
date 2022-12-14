@@ -4,6 +4,8 @@ import baseline.sysmgmt.service.impl.BaseService;
 import baseline.sysmgmt.pojo.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 服务类
@@ -14,5 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface RoleService extends IService<Role>, BaseService<Role> {
 
-    Role queryByNameAndNameZh(String roleName,String roleNameZh);
+    List<Role> queryByNameAndNameZh(String roleName, String roleNameZh);
+
+    List<Role> queryByName(String roleName);
 }

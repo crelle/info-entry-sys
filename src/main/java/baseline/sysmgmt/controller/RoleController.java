@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,8 +43,13 @@ public class RoleController implements BaseController<Role> {
     public ResponseResult<Role> create(@RequestBody Role role) {
         ResponseResult<Role> responseResult = new ResponseResult<>();
         try {
-            Role role1 = roleService.queryByNameAndNameZh(role.getName(),role.getNameZh());
-            if (null != role1) {
+            List<Role> role1 = roleService.queryByName(role.getName());
+            if (!CollectionUtils.isEmpty(role1)) {
+                responseResult.buildFail("新增的角色名称已经存在!");
+                return responseResult;
+            }
+            List<Role> role2 = roleService.queryByNameAndNameZh(role.getName(), role.getNameZh());
+            if (!CollectionUtils.isEmpty(role2)) {
                 responseResult.buildFail("新增的角色和编码已经存在!");
                 return responseResult;
             }
