@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.List;
@@ -31,10 +32,12 @@ public class Role extends BaseDo {
     private String id;
 
     @ApiModelProperty("角色英文名称")
+    @NonNull
     @TableField("name")
     private String name;
 
     @ApiModelProperty("角色中文名称")
+    @NonNull
     @TableField("name_zh")
     private String nameZh;
 

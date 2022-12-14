@@ -14,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface RoleService extends IService<Role>, BaseService<Role> {
 
-    Role queryByName(String roleName);
+    Role queryByNameAndNameZh(String roleName,String roleNameZh);
 }

@@ -42,9 +42,9 @@ public class RoleController implements BaseController<Role> {
     public ResponseResult<Role> create(@RequestBody Role role) {
         ResponseResult<Role> responseResult = new ResponseResult<>();
         try {
-            Role role1 = roleService.queryByName(role.getName());
+            Role role1 = roleService.queryByNameAndNameZh(role.getName(),role.getNameZh());
             if (null != role1) {
-                responseResult.buildFail("新增的角色已经存在!");
+                responseResult.buildFail("新增的角色和编码已经存在!");
                 return responseResult;
             }
             roleService.create(role);
