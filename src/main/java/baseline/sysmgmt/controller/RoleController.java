@@ -53,6 +53,10 @@ public class RoleController implements BaseController<Role> {
                 responseResult.buildFail("新增的角色和编码已经存在!");
                 return responseResult;
             }
+            if(!role.getName().startsWith("ROLE_")){
+                responseResult.buildFail("角色编码必须以ROLE_开头!");
+                return responseResult;
+            }
             roleService.create(role);
         } catch (Exception e) {
             throw new BusinessException(e);
