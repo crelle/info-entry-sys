@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface RoleService extends IService<Role>, BaseService<Role> {
 
-    List<Role> queryByNameAndNameZh(String roleName, String roleNameZh);
+    List<Role> queryByNameZh(String roleNameZh);
 
     List<Role> queryByName(String roleName);
 }
