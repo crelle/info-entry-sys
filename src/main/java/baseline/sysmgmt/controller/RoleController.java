@@ -45,12 +45,12 @@ public class RoleController implements BaseController<Role> {
         try {
             List<Role> role1 = roleService.queryByName(role.getName());
             if (!CollectionUtils.isEmpty(role1)) {
-                responseResult.buildFail("新增的角色名称已经存在!");
+                responseResult.buildFail("新增的角色编码已经存在!");
                 return responseResult;
             }
             List<Role> role2 = roleService.queryByNameZh(role.getNameZh());
             if (!CollectionUtils.isEmpty(role2)) {
-                responseResult.buildFail("新增的角色编码已经存在!");
+                responseResult.buildFail("新增的角色名称已经存在!");
                 return responseResult;
             }
             if(!role.getName().startsWith("ROLE_")){
