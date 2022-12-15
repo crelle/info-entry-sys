@@ -1,13 +1,20 @@
 package baseline.sysmgmt.controller;
 
 
+import baseline.common.pojo.vo.ResponseResult;
+import baseline.sysmgmt.pojo.entity.UserRole;
+import baseline.sysmgmt.service.UserRoleService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author crelle
@@ -15,6 +22,37 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/sysmgmt/user-role")
-public class UserRoleController {
+public class UserRoleController implements BaseController<UserRole> {
 
+    @Autowired
+    private UserRoleService userRoleService;
+    @Override
+    public ResponseResult<UserRole> create(UserRole obj) {
+        return null;
+    }
+
+    @Override
+    public ResponseResult<UserRole> queryById(String id) {
+        return null;
+    }
+
+    @Override
+    public ResponseResult<Page<UserRole>> pageByCondition(Page<UserRole> pageBean) {
+        return null;
+    }
+
+    @Override
+    public ResponseResult<List<UserRole>> queryAll() {
+        return null;
+    }
+
+    @Override
+    public ResponseResult<String> updateById(String id, UserRole obj) {
+        return null;
+    }
+
+    @Override
+    public ResponseResult<String> deleteById(String id) {
+        return null;
+    }
 }
