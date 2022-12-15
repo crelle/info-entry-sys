@@ -1,12 +1,18 @@
 package baseline.sysmgmt.service.impl;
 
+import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.pojo.entity.UserRole;
 import baseline.sysmgmt.mapper.UserRoleMapper;
 import baseline.sysmgmt.service.UserRoleService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -19,6 +25,9 @@ import java.util.List;
  */
 @Service
 public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> implements UserRoleService {
+
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
     @Override
     public boolean create(UserRole object) {
@@ -48,5 +57,20 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
     @Override
     public Page<UserRole> pageByCondition(Page<UserRole> page) {
         return page(page);
+    }
+
+    @Override
+    public int deleteByUserId(String userId) {
+        return userRoleMapper.deleteByUserId(userId);
+    }
+
+    @Override
+    public boolean addSelective(List<UserRole> userRoles) {
+        if (!CollectionUtils.isEmpty(userRoles)) {
+            userRoles.forEach(userRole -> {
+                save(userRole);
+            });
+        }
+        return true;
     }
 }

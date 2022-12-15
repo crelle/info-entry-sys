@@ -14,7 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,8 +68,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public boolean update(User object) {
-        return updateById(object);
+    @Transactional(rollbackFor = Exception.class)
+    public boolean update(User object) throws Exception {
+        try {
+            //删除用户角色
+            userRoleService.deleteByUserId(object.getId());
+            List<Role> roles = object.getRoles();
+            List<UserRole> userRoles = new ArrayList<>();
+            //组装用户角色
+            if (CollectionUtils.isNotEmpty(roles)) {
+                roles.forEach(role -> {
+                    UserRole userRole = new UserRole();
+                    userRole.setUserId(object.getId());
+                    userRole.setRoleId(role.getId());
+                    userRoles.add(userRole);
+                });
+            }
+            //新增用户角色
+            userRoleService.addSelective(userRoles);
+            //更新用户信息
+            updateById(object);
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+        return true;
     }
 
     @Override

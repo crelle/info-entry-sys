@@ -21,7 +21,7 @@ public interface BaseService<T> {
 
     List<T> queryAll();
 
-    boolean update(T object);
+    boolean update(T object) throws Exception;
 
     void deleteById(String id);
 
