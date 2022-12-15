@@ -84,5 +84,9 @@ public class ContactPerson extends BaseDo {
     @TableField("enabled")
     private Boolean enabled;
 
+    @ApiModelProperty("详细地址")
+    @TableField("address_detail")
+    private String addressDetail;
+
 
 }
