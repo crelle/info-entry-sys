@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -26,6 +28,9 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -43,7 +49,7 @@ import java.util.TreeSet;
  * @date:2021/3/17
  * @description:XX
  **/
-@Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -83,6 +89,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     RestAccessDeniedHandler accessDeniedHandler() {
         return new RestAccessDeniedHandler();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:9000"));
+        configuration.addAllowedHeader(CorsConfiguration.ALL);
+        configuration.addAllowedMethod(CorsConfiguration.ALL);
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Override
@@ -162,7 +180,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests()
+        http
+                .authorizeRequests()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O object) {
@@ -170,8 +189,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         object.setSecurityMetadataSource(customFilterInvocationSecurityMetadataSource);
                         return object;
                     }
-                })
-                .and()
+                }).and()
                 .logout()
                 .logoutSuccessHandler(new LogoutSuccessHandler() {
                     @Override
@@ -202,14 +220,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         out.flush();
                         out.close();
                     }
-                })
+                }).and()
+                .cors(Customizer.withDefaults())
                 //自定处理accessDeniedException异常
-                .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler()).and()
+                .addFilterAt(loginFilter(), UsernamePasswordAuthenticationFilter.class);
         //开启controller级别 @CrossOrigin注解(和CorsConfig冲突,需要关闭)
         //http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 
-        http.addFilterAt(loginFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 }
