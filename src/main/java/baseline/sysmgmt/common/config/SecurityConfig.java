@@ -49,7 +49,7 @@ import java.util.TreeSet;
  * @date:2021/3/17
  * @description:XX
  **/
-@EnableWebSecurity
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -92,15 +92,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:9000"));
-        configuration.addAllowedHeader(CorsConfiguration.ALL);
-        configuration.addAllowedMethod(CorsConfiguration.ALL);
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+    CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration corsConfiguration=new CorsConfiguration();
+        corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+        corsConfiguration.setAllowedMethods(Arrays.asList("*"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://139.196.125.106:8083"));
+        corsConfiguration.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source=new UrlBasedCorsConfigurationSource();
+        //所有的请求都允许跨域
+        source.registerCorsConfiguration("/**",corsConfiguration);
+        return  source;
+
+
     }
 
     @Override
