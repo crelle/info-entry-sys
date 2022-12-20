@@ -92,16 +92,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource(){
-        CorsConfiguration corsConfiguration=new CorsConfiguration();
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
         corsConfiguration.setAllowedMethods(Arrays.asList("*"));
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://139.196.125.106:8083"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList(configProperties.getConfigValue("allowed.origin")));
         corsConfiguration.setMaxAge(3600L);
-        UrlBasedCorsConfigurationSource source=new UrlBasedCorsConfigurationSource();
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         //所有的请求都允许跨域
-        source.registerCorsConfiguration("/**",corsConfiguration);
-        return  source;
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
 
 
     }
@@ -114,11 +114,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode",
-                "/sysmgmt/user/create",
-                "/sysmgmt/user/uploadAvatar",
-                "/sysmgmt/user/deleteAvatar",
-                "/sysmgmt/user/page",
-//                "/sysmgmt/role/**", "/sysmgmt/menu/**",
                 "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/**", "/api/**");
     }
 
