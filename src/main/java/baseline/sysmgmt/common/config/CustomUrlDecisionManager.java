@@ -27,14 +27,16 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
         for (ConfigAttribute configAttribute : configAttributes) {
             //当前url对应的权限
             String needRole = configAttribute.getAttribute();
+            //如果是登录角色,那就抛异常,让用户去登录
             if ("ROLE_LOGIN".equals(needRole)) {
                 if (authentication instanceof AnonymousAuthenticationToken) {
                     throw new AccessDeniedException("尚未登录，请登录!");
                 }else {
+                    //
                     return;
                 }
             }
-            //去除当前的登录用户的权限
+            //获取当前用户的角色和url对应的角色做匹配，通过就返回，否则抛出异常，提示权限不足
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             for (GrantedAuthority authority : authorities) {
                 if (authority.getAuthority().equals(needRole)) {

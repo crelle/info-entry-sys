@@ -3,6 +3,7 @@ package baseline.sysmgmt.service.impl;
 import baseline.sysmgmt.mapper.UserMapper;
 import baseline.sysmgmt.pojo.entity.*;
 import baseline.sysmgmt.service.*;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -143,13 +144,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //为角色组装菜单
         rolelist.forEach(role -> {
             //根据角色id查询菜单集合
-            QueryWrapper queryWrapper3 = new QueryWrapper();
-            queryWrapper3.select().eq("role_id", role.getId());
-            List<RoleMenu> roleMenus = roleMenuService.list(queryWrapper3);
+            LambdaQueryWrapper<RoleMenu> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.select().eq(RoleMenu::getRoleId, role.getId());
+            List<RoleMenu> roleMenus = roleMenuService.list(lambdaQueryWrapper);
             //查询菜单表
             List<Menu> menus = menuService.listByIds(roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList()));
+            //过滤出父菜单
+            List<Menu> parentMenus =menus.stream().filter(menu -> {
+                return null == menu.getParentId();
+            }).collect(Collectors.toList());
             //组装子菜单
-            menus.forEach(menu -> {
+            parentMenus.forEach(menu -> {
                 QueryWrapper<Menu> queryWrapper4 = new QueryWrapper<>();
                 queryWrapper4.select().eq("parent_id", menu.getId());
                 List<Menu> menus1 = menuService.list(queryWrapper4);
@@ -157,7 +162,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 menu.setChildrenMenus(menus2);
 
             });
-            role.setMenus(menus);
+            role.setMenus(parentMenus);
         });
 
 

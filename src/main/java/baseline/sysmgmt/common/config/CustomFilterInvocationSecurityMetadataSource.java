@@ -56,9 +56,11 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
                 for (int i = 0; i < roles.size(); i++) {
                     str[i] = roleList.get(i).getName();
                 }
+                //告诉springSecurity Url所需要的角色
                 return SecurityConfig.createList(str);
             }
         }
+        //返回默认的登录角色,让用户登录
         return SecurityConfig.createList("ROLE_LOGIN");
     }
 
