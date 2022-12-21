@@ -91,21 +91,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new RestAccessDeniedHandler();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
-        corsConfiguration.setAllowedMethods(Arrays.asList("*"));
-        corsConfiguration.setAllowedOrigins(Arrays.asList(configProperties.getConfigValue("allowed.origin")));
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setMaxAge(3600L);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        //所有的请求都允许跨域
-        source.registerCorsConfiguration("/**", corsConfiguration);
-        return source;
-
-
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration corsConfiguration = new CorsConfiguration();
+//        corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+//        corsConfiguration.setAllowedMethods(Arrays.asList("*"));
+//        corsConfiguration.setAllowedOrigins(Arrays.asList(configProperties.getConfigValue("allowed.origin")));
+//        corsConfiguration.setAllowCredentials(true);
+//        corsConfiguration.setMaxAge(3600L);
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        //所有的请求都允许跨域
+//        source.registerCorsConfiguration("/**", corsConfiguration);
+//        return source;
+//
+//
+//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -114,7 +114,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode","/user/create",
+        web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode",
+                "/sysmgmt/user/create",
+                "/sysmgmt/user/uploadAvatar",
+                "/sysmgmt/user/deleteAvatar",
+                "/sysmgmt/user/page",
                 "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/**", "/api/**");
     }
 
