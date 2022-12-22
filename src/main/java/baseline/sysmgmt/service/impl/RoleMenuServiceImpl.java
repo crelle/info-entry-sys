@@ -65,16 +65,11 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
     }
 
     @Override
-    public ResponseResult<Role> queryMenu(Role role) {
-        ResponseResult<Role> responseResult = ResponseResult.ok();
+    public ResponseResult<List<Menu>> queryMenu(Role role) {
+        ResponseResult<List<Menu>> responseResult = ResponseResult.ok();
         try {
             List<Menu> menus = getRoleMenu(role);
-            Role roleResp = new Role();
-            roleResp.setId(role.getId());
-            roleResp.setName(role.getName());
-            roleResp.setNameZh(role.getNameZh());
-            roleResp.setMenus(menus);
-            responseResult.setData(roleResp);
+            responseResult.setData(menus);
         } catch (Exception e) {
             throw new BusinessException(ResponseEnum.UNKNOWN);
         }

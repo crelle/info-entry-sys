@@ -4,6 +4,7 @@ package baseline.sysmgmt.controller;
 import baseline.common.enumeration.ResponseEnum;
 import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
+import baseline.sysmgmt.pojo.entity.Menu;
 import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.service.RoleMenuService;
 import io.swagger.annotations.Api;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -35,7 +38,7 @@ public class RoleMenuController {
     @ApiOperation(value = "查询角色对应的菜单")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/queryMenu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<Role> queryMenu(@RequestBody Role role) {
+    public ResponseResult<List<Menu>> queryMenu(@RequestBody Role role) {
         return roleMenuService.queryMenu(role);
     }
 
