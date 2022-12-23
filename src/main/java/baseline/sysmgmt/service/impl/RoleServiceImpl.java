@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -53,7 +54,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public Page<Role> page(Page<Role> page) {
         LambdaQueryWrapper<Role> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         if (!CollectionUtils.isEmpty(page.getRecords())) {
-            lambdaQueryWrapper.like(Role::getNameZh, page.getRecords().get(0).getNameZh());
+            Role role = page.getRecords().get(0);
+            lambdaQueryWrapper.like(StringUtils.isNotBlank(role.getNameZh()), Role::getNameZh, role.getNameZh());
         }
         return super.page(page, lambdaQueryWrapper);
     }
