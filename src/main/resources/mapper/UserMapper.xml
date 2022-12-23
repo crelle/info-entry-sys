@@ -18,10 +18,10 @@
             user.id = userRole.user_id
             AND role.id = userRole.role_id
             <if test="username!=null and username!=''">
-                and user.username =#{username}
+                and user.username like #{username}
             </if>
             <if test="userPhone!=null and userPhone!=''">
-                and user.user_phone =#{userPhone}
+                and user.user_phone like #{userPhone}
             </if>
             <if test="enabled!=null and enabled!=''">
                 and user.enabled =#{enabled}

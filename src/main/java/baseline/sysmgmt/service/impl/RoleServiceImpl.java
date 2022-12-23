@@ -5,10 +5,12 @@ import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.mapper.RoleMapper;
 import baseline.sysmgmt.pojo.query.RoleQuery;
 import baseline.sysmgmt.service.RoleService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -49,7 +51,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public Page<Role> page(Page<Role> page) {
-        return super.page(page);
+        LambdaQueryWrapper<Role> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        if (!CollectionUtils.isEmpty(page.getRecords())) {
+            lambdaQueryWrapper.like(Role::getNameZh, page.getRecords().get(0).getNameZh());
+        }
+        return super.page(page, lambdaQueryWrapper);
     }
 
     @Override

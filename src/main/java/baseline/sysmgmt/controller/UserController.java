@@ -159,7 +159,14 @@ public class UserController implements BaseController<User,UserQuery> {
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<User>> manualPage(Page<UserQuery> pageBean) {
-        return null;
+        ResponseResult<Page<User>> responseResult = new ResponseResult<>();
+        try {
+            Page<User> page = userService.manualPage(pageBean);
+            responseResult.setData(page);
+        } catch (Exception e) {
+            throw new BusinessException(ResponseEnum.UNKNOWN);
+        }
+        return responseResult;
     }
 
     @ApiOperation(value = "查询所有用户")

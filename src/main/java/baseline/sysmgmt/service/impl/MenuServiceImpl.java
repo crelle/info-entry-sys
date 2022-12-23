@@ -5,10 +5,13 @@ import baseline.sysmgmt.pojo.entity.Menu;
 import baseline.sysmgmt.mapper.MenuMapper;
 import baseline.sysmgmt.pojo.query.MenuQuery;
 import baseline.sysmgmt.service.MenuService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -50,7 +53,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public Page<Menu> page(Page<Menu> page) {
-        return super.page(page);
+        LambdaQueryWrapper<Menu> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (!CollectionUtils.isEmpty(page.getRecords())) {
+            Menu menu = page.getRecords().get(0);
+            lambdaQueryWrapper.like(StringUtils.isNotBlank(menu.getName()), Menu::getName, menu.getName()).eq(null != menu.getRequireAuth(), Menu::getRequireAuth, menu.getRequireAuth())
+                    .eq(null != menu.getEnabled(), Menu::getEnabled, menu.getEnabled()).eq(StringUtils.isNotBlank(menu.getMenuType()), Menu::getMenuType, menu.getMenuType());
+        }
+        return super.page(page, lambdaQueryWrapper);
     }
 
     @Override

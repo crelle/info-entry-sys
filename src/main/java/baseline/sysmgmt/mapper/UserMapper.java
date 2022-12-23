@@ -23,5 +23,5 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
     int updatePasswordById(@Param("password") String password, @Param("id") String id);
 
-    List<User> manualPage(Page<User> page, UserQuery userQuery);
+    Page<User> manualPage(@Param("page") Page<User> page, UserQuery userQuery);
 }
