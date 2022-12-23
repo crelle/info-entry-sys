@@ -2,6 +2,7 @@ package baseline.app.controller;
 
 
 import baseline.app.pojo.entity.Employee;
+import baseline.app.pojo.query.EmployeeQuery;
 import baseline.app.service.EmployeeService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
@@ -28,7 +29,7 @@ import java.util.List;
 @Api(tags = "员工服务")
 @RestController
 @RequestMapping("/app/employee")
-public class EmployeeController implements BaseController<Employee> {
+public class EmployeeController implements BaseController<Employee, EmployeeQuery> {
 
     @Autowired
     private EmployeeService employeeService;
@@ -81,9 +82,14 @@ public class EmployeeController implements BaseController<Employee> {
     @ApiOperation("分页查询")
     @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Employee>> pageByCondition(Page<Employee> pageBean) {
+    public ResponseResult<Page<Employee>> page(Page<Employee> pageBean) {
         ResponseResult result = new ResponseResult();
         result.setData(employeeService.pageByCondition(pageBean));
         return result;
+    }
+
+    @Override
+    public ResponseResult<Page<Employee>> manualPage(Page<EmployeeQuery> pageBean) {
+        return null;
     }
 }

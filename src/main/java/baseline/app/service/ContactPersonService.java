@@ -1,6 +1,7 @@
 package baseline.app.service;
 
 import baseline.app.pojo.entity.ContactPerson;
+import baseline.app.pojo.query.ContactPersonQuery;
 import baseline.common.baseBean.BaseService;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,6 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author crelle
  * @since 2022-11-24 10:45:04
  */
-public interface ContactPersonService extends IService<ContactPerson>, BaseService<ContactPerson> {
+public interface ContactPersonService extends IService<ContactPerson>, BaseService<ContactPerson, ContactPersonQuery> {
 
 }

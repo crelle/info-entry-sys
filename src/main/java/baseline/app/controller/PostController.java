@@ -2,6 +2,7 @@ package baseline.app.controller;
 
 
 import baseline.app.pojo.entity.Post;
+import baseline.app.pojo.query.PostQuery;
 import baseline.app.service.PostService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
@@ -29,7 +30,7 @@ import java.util.List;
 @Api(tags = "岗位服务")
 @RestController
 @RequestMapping("/app/post")
-public class PostController implements BaseController<Post> {
+public class PostController implements BaseController<Post, PostQuery> {
     @Autowired
     private PostService postService;
 
@@ -96,9 +97,14 @@ public class PostController implements BaseController<Post> {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Post>> pageByCondition(Page<Post> pageBean) {
+    public ResponseResult<Page<Post>> page(Page<Post> pageBean) {
         ResponseResult result = new ResponseResult();
         result.setData(postService.pageByCondition(pageBean));
         return result;
+    }
+
+    @Override
+    public ResponseResult<Page<Post>> manualPage(Page<PostQuery> pageBean) {
+        return null;
     }
 }

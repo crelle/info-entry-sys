@@ -2,6 +2,7 @@ package baseline.app.controller;
 
 
 import baseline.app.pojo.entity.Region;
+import baseline.app.pojo.query.RegionQuery;
 import baseline.app.service.RegionService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
@@ -29,7 +30,7 @@ import java.util.List;
 @Api(tags = "区域服务")
 @RestController
 @RequestMapping("/app/region")
-public class RegionController implements BaseController<Region> {
+public class RegionController implements BaseController<Region, RegionQuery> {
     @Autowired
     private RegionService regionService;
 
@@ -96,9 +97,14 @@ public class RegionController implements BaseController<Region> {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Region>> pageByCondition(Page<Region> region) {
+    public ResponseResult<Page<Region>> page(Page<Region> region) {
         ResponseResult result = new ResponseResult();
         result.setData(regionService.pageByCondition(region));
         return result;
+    }
+
+    @Override
+    public ResponseResult<Page<Region>> manualPage(Page<RegionQuery> pageBean) {
+        return null;
     }
 }

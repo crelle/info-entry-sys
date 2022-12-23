@@ -2,6 +2,7 @@ package baseline.app.controller;
 
 
 import baseline.app.pojo.entity.Project;
+import baseline.app.pojo.query.ProjectQuery;
 import baseline.app.service.ProjectService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
@@ -29,7 +30,7 @@ import java.util.List;
 @Api(tags = "项目服务")
 @RestController
 @RequestMapping("/app/project")
-public class ProjectController implements BaseController<Project> {
+public class ProjectController implements BaseController<Project, ProjectQuery> {
     @Autowired
     private ProjectService projectService;
 
@@ -96,9 +97,14 @@ public class ProjectController implements BaseController<Project> {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Project>> pageByCondition(Page<Project> pageBean) {
+    public ResponseResult<Page<Project>> page(Page<Project> pageBean) {
         ResponseResult result = new ResponseResult();
         result.setData(projectService.pageByCondition(pageBean));
         return result;
+    }
+
+    @Override
+    public ResponseResult<Page<Project>> manualPage(Page<ProjectQuery> pageBean) {
+        return null;
     }
 }

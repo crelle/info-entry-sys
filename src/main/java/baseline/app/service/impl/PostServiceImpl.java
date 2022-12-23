@@ -3,6 +3,7 @@ package baseline.app.service.impl;
 import baseline.app.pojo.entity.Post;
 import baseline.app.mapper.PostMapper;
 import baseline.app.pojo.entity.Project;
+import baseline.app.pojo.query.PostQuery;
 import baseline.app.service.PostService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -56,6 +57,11 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
                 .like(StringUtils.isNotBlank(post.getAddress()), Post::getAddress, post.getAddress())
                 .like(StringUtils.isNotBlank(post.getSkill()), Post::getSkill, post.getSkill());
         return page(page, queryWrapper);
+    }
+
+    @Override
+    public Page<Post> manualPage(Page<PostQuery> pageBean) {
+        return null;
     }
 
     @Override

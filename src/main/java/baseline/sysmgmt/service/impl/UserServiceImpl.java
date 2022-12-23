@@ -1,7 +1,9 @@
 package baseline.sysmgmt.service.impl;
 
+import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.mapper.UserMapper;
 import baseline.sysmgmt.pojo.entity.*;
+import baseline.sysmgmt.pojo.query.UserQuery;
 import baseline.sysmgmt.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -101,8 +103,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         removeById(id);
     }
 
+
     @Override
-    public Page<User> pageByCondition(Page<User> page) {
+    public Page<User> page(Page<User> page) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         if (CollectionUtils.isNotEmpty(page.getRecords())) {
             User request = page.getRecords().get(0);
@@ -112,7 +115,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                     .like("user_phone", request.getUserPhone())
                     .like("username", request.getUsername());
         }
-        Page<User> userPage = page(page, queryWrapper);
+        Page<User> userPage = super.page(page, queryWrapper);
         userPage.getRecords().forEach(user -> {
             //查询用户角色
             QueryWrapper<UserRole> queryWrapper1 = new QueryWrapper<>();
@@ -124,6 +127,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             user.setRoles(rolelist);
         });
         return userPage;
+    }
+
+    @Override
+    public Page<User> manualPage(Page<UserQuery> pageBean) {
+        return null;
     }
 
     @Override

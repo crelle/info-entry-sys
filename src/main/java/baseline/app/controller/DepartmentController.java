@@ -3,6 +3,7 @@ package baseline.app.controller;
 
 import baseline.app.pojo.entity.Department;
 import baseline.app.pojo.entity.Project;
+import baseline.app.pojo.query.DepartmentQuery;
 import baseline.app.service.DepartmentService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
@@ -30,7 +31,7 @@ import java.util.List;
 @Api(tags = "部门服务")
 @RestController
 @RequestMapping("/app/department")
-public class DepartmentController implements BaseController<Department> {
+public class DepartmentController implements BaseController<Department, DepartmentQuery> {
 
     @Autowired
     private DepartmentService departmentService;
@@ -98,11 +99,12 @@ public class DepartmentController implements BaseController<Department> {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Department>> pageByCondition(Page<Department> pageBean) {
+    public ResponseResult<Page<Department>> page(Page<Department> pageBean) {
         ResponseResult result = new ResponseResult();
         result.setData(departmentService.pageByCondition(pageBean));
         return result;
     }
+
     @ApiOperation(value = "查询上级部门")
     @RequestMapping(value = "/queryDepartmentUp", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<Project> queryDepartmentUp() {
@@ -111,4 +113,9 @@ public class DepartmentController implements BaseController<Department> {
         return result;
     }
 
+
+    @Override
+    public ResponseResult<Page<Department>> manualPage(Page<DepartmentQuery> pageBean) {
+        return null;
+    }
 }

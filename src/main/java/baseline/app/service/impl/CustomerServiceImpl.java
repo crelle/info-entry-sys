@@ -3,6 +3,7 @@ package baseline.app.service.impl;
 import baseline.app.pojo.entity.Customer;
 import baseline.app.mapper.CustomerMapper;
 import baseline.app.pojo.entity.Department;
+import baseline.app.pojo.query.CustomerQuery;
 import baseline.app.service.CustomerService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -57,6 +58,11 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         } else {
             return page(page);
         }
+    }
+
+    @Override
+    public Page<Customer> manualPage(Page<CustomerQuery> pageBean) {
+        return null;
     }
 
     @Override

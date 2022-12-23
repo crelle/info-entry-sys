@@ -1,6 +1,7 @@
 package baseline.sysmgmt.service;
 
 import baseline.sysmgmt.pojo.entity.Role;
+import baseline.sysmgmt.pojo.query.UserRoleQuery;
 import baseline.sysmgmt.service.impl.BaseService;
 import baseline.sysmgmt.pojo.entity.UserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -17,7 +18,7 @@ import java.util.List;
  * @author crelle
  * @since 2022-10-01 12:06:26
  */
-public interface UserRoleService extends IService<UserRole>, BaseService<UserRole> {
+public interface UserRoleService extends IService<UserRole>, BaseService<UserRole, UserRoleQuery> {
 
     int deleteByUserId(@Param("userId") String userId);
 

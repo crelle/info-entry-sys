@@ -5,6 +5,7 @@ import baseline.common.enumeration.ResponseEnum;
 import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Role;
+import baseline.sysmgmt.pojo.query.RoleQuery;
 import baseline.sysmgmt.service.RoleService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -31,7 +32,7 @@ import java.util.NoSuchElementException;
 @Api(tags = "角色服务")
 @RestController
 @RequestMapping("/sysmgmt/role")
-public class RoleController implements BaseController<Role> {
+public class RoleController implements BaseController<Role, RoleQuery> {
 
     @Autowired
     private RoleService roleService;
@@ -82,15 +83,23 @@ public class RoleController implements BaseController<Role> {
     @ApiParam(required = true, name = "xx", value = "入参")
     @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Role>> pageByCondition(@RequestBody Page<Role> pageBean) {
-        ResponseResult<Page<Role>> responseResult = new ResponseResult<>();
+    public ResponseResult<Page<Role>> page(@RequestBody Page<Role> pageBean) {
+            ResponseResult<Page<Role>> responseResult = new ResponseResult<>();
         try {
-            Page<Role> page = roleService.pageByCondition(pageBean);
+            Page<Role> page = roleService.page(pageBean);
             responseResult.setData(page);
         } catch (Exception e) {
             throw new BusinessException(e);
         }
         return responseResult;
+    }
+
+    @ApiOperation(value = "手动分页查询角色")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @Override
+    public ResponseResult<Page<Role>> manualPage(Page<RoleQuery> pageBean) {
+        return null;
     }
 
     @ApiOperation(value = "查询所有角色")

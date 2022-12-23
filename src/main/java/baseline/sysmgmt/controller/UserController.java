@@ -8,6 +8,7 @@ import baseline.common.util.ResultUtils;
 import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.pojo.entity.User;
 import baseline.sysmgmt.pojo.entity.UserRole;
+import baseline.sysmgmt.pojo.query.UserQuery;
 import baseline.sysmgmt.service.RoleService;
 import baseline.sysmgmt.service.UserRoleService;
 import baseline.sysmgmt.service.UserService;
@@ -38,7 +39,7 @@ import java.util.List;
 @Api(tags = "用户服务")
 @RestController
 @RequestMapping("/sysmgmt/user")
-public class UserController implements BaseController<User> {
+public class UserController implements BaseController<User,UserQuery> {
 
     @Autowired
     private UserService userService;
@@ -136,19 +137,29 @@ public class UserController implements BaseController<User> {
         return responseResult;
     }
 
+
+
     @ApiOperation(value = "分页查询用户")
     @ApiParam(required = true, name = "pageBean", value = "入参")
     @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<User>> pageByCondition(Page<User> pageBean) {
+    public ResponseResult<Page<User>> page(Page<User> pageBean) {
         ResponseResult<Page<User>> responseResult = new ResponseResult<>();
         try {
-            Page<User> page = userService.pageByCondition(pageBean);
+            Page<User> page = userService.page(pageBean);
             responseResult.setData(page);
         } catch (Exception e) {
             throw new BusinessException(ResponseEnum.UNKNOWN);
         }
         return responseResult;
+    }
+
+    @ApiOperation(value = "手动分页查询用户")
+    @ApiParam(required = true, name = "pageBean", value = "入参")
+    @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @Override
+    public ResponseResult<Page<User>> manualPage(Page<UserQuery> pageBean) {
+        return null;
     }
 
     @ApiOperation(value = "查询所有用户")

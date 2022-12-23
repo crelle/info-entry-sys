@@ -3,6 +3,7 @@ package baseline.app.service.impl;
 import baseline.app.pojo.entity.Department;
 import baseline.app.mapper.DepartmentMapper;
 import baseline.app.pojo.entity.Project;
+import baseline.app.pojo.query.DepartmentQuery;
 import baseline.app.service.DepartmentService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -57,6 +58,11 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         } else {
             return page(page);
         }
+    }
+
+    @Override
+    public Page<Department> manualPage(Page<DepartmentQuery> pageBean) {
+        return null;
     }
 
     @Override

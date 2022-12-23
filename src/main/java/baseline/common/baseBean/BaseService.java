@@ -1,10 +1,12 @@
 package baseline.common.baseBean;
 
+import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-public interface BaseService<T> {
+public interface BaseService<T, Q> {
 
     /**
      * 增加一个
@@ -46,12 +48,20 @@ public interface BaseService<T> {
     boolean update(T object);
 
     /**
-     * 根据条件分页查询
+     * 奏定分页查询
      *
      * @param page
      * @return
      */
     Page<T> pageByCondition(Page<T> page);
+
+    /**
+     * 使用mybatis plus手动分页，自定义查询语句
+     *
+     * @param pageBean
+     * @return
+     */
+    Page<T> manualPage(@RequestBody Page<Q> pageBean);
 
     /**
      * 查询详情

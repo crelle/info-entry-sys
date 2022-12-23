@@ -15,22 +15,35 @@ import java.util.List;
  * @date:2021/4/3
  * @description:XX
  **/
-public interface BaseController<T> {
+public interface BaseController<T, Q> {
 
 
     ResponseResult<T> create(@RequestBody T obj);
 
 
-     ResponseResult<T> queryById(@PathVariable String id);
+    ResponseResult<T> queryById(@PathVariable String id);
+
+    /**
+     * 使用mybatis plus自动分页，支持单表查询
+     *
+     * @param pageBean
+     * @return
+     */
+    ResponseResult<Page<T>> page(@RequestBody Page<T> pageBean);
+
+    /**
+     * 使用mybatis plus手动分页，自定义查询语句
+     *
+     * @param pageBean
+     * @return
+     */
+    ResponseResult<Page<T>> manualPage(@RequestBody Page<Q> pageBean);
 
 
-     ResponseResult<Page<T>> pageByCondition(@RequestBody Page<T> pageBean);
+    ResponseResult<List<T>> queryAll();
 
 
-     ResponseResult<List<T>> queryAll();
+    ResponseResult<String> updateById(@PathVariable String id, @RequestBody T obj);
 
-
-     ResponseResult<String> updateById(@PathVariable String id, @RequestBody T obj);
-
-     ResponseResult<String> deleteById(@PathVariable String id);
+    ResponseResult<String> deleteById(@PathVariable String id);
 }

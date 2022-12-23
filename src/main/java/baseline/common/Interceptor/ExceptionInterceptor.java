@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLSyntaxErrorException;
+
 @RestControllerAdvice
 public class ExceptionInterceptor {
 
@@ -36,4 +38,13 @@ public class ExceptionInterceptor {
         return ResponseResult.fail(ResponseEnum.SERVER_ERROR.getCode(),
                 ResponseEnum.SERVER_ERROR.getMessage());
     }
+    /**
+     * sql语法异常
+     */
+    @ExceptionHandler(value = SQLSyntaxErrorException.class)
+    public ResponseResult exceptionHandler(SQLSyntaxErrorException e) {
+        return ResponseResult.fail(ResponseEnum.SERVER_ERROR.getCode(),
+                ResponseEnum.SERVER_ERROR.getMessage());
+    }
+
 }

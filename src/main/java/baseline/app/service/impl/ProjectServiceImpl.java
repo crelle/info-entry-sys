@@ -3,6 +3,7 @@ package baseline.app.service.impl;
 import baseline.app.pojo.entity.Project;
 import baseline.app.mapper.ProjectMapper;
 import baseline.app.pojo.entity.Region;
+import baseline.app.pojo.query.ProjectQuery;
 import baseline.app.service.ProjectService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -57,6 +58,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         } else {
             return page(page);
         }
+    }
+
+    @Override
+    public Page<Project> manualPage(Page<ProjectQuery> pageBean) {
+        return null;
     }
 
     @Override

@@ -5,6 +5,7 @@ import baseline.common.enumeration.ResponseEnum;
 import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Menu;
+import baseline.sysmgmt.pojo.query.MenuQuery;
 import baseline.sysmgmt.service.MenuService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -29,7 +30,7 @@ import java.util.*;
 @Api(tags = "菜单管理")
 @RestController
 @RequestMapping("/sysmgmt/menu")
-public class MenuController implements BaseController<Menu> {
+public class MenuController implements BaseController<Menu, MenuQuery> {
 
     @Autowired
     private MenuService menuService;
@@ -77,10 +78,10 @@ public class MenuController implements BaseController<Menu> {
     @ApiParam(required = true, name = "xx", value = "入参")
     @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Menu>> pageByCondition(@RequestBody Page<Menu> pageBean) {
+    public ResponseResult<Page<Menu>> page(@RequestBody Page<Menu> pageBean) {
         ResponseResult<Page<Menu>> responseResult = ResponseResult.ok();
         try {
-            Page<Menu> page = menuService.pageByCondition(pageBean);
+            Page<Menu> page = menuService.page(pageBean);
             responseResult.setData(page);
         } catch (Exception e) {
             throw new BusinessException(ResponseEnum.UNKNOWN);
@@ -88,6 +89,13 @@ public class MenuController implements BaseController<Menu> {
         return responseResult;
     }
 
+    @ApiOperation(value = "手动分页查询角色")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @Override
+    public ResponseResult<Page<Menu>> manualPage(Page<MenuQuery> pageBean) {
+        return null;
+    }
 
     @ApiOperation(value = "根据菜单标识更新菜单")
     @ApiParam(required = true, name = "id", value = "入参")

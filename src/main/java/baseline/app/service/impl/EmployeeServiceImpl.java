@@ -2,6 +2,7 @@ package baseline.app.service.impl;
 
 import baseline.app.pojo.entity.Employee;
 import baseline.app.mapper.EmployeeMapper;
+import baseline.app.pojo.query.EmployeeQuery;
 import baseline.app.service.EmployeeService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -53,6 +54,11 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         lambdaQueryWrapper.like(StringUtils.isNotBlank(employee.getName()), Employee::getName, employee.getName())
                 .like(StringUtils.isNotBlank(employee.getSkill()), Employee::getSkill, employee.getSkill());
         return page(page, lambdaQueryWrapper);
+    }
+
+    @Override
+    public Page<Employee> manualPage(Page<EmployeeQuery> pageBean) {
+        return null;
     }
 
     @Override

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-public interface BaseController<T> {
+public interface BaseController<T, Q> {
 
     /**
      * 创建一个
@@ -51,12 +51,20 @@ public interface BaseController<T> {
     ResponseResult<String> updateById(@RequestBody T object);
 
     /**
-     * 根据条件分页查询
+     * 自动分页查询
      *
      * @param pageBean
      * @return
      */
-    ResponseResult<Page<T>> pageByCondition(@RequestBody Page<T> pageBean);
+    ResponseResult<Page<T>> page(@RequestBody Page<T> pageBean);
+
+    /**
+     * 使用mybatis plus手动分页，自定义查询语句
+     *
+     * @param pageBean
+     * @return
+     */
+    ResponseResult<Page<T>> manualPage(@RequestBody Page<Q> pageBean);
 
 
 }

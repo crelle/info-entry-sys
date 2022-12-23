@@ -2,6 +2,7 @@ package baseline.app.controller;
 
 
 import baseline.app.pojo.entity.Customer;
+import baseline.app.pojo.query.CustomerQuery;
 import baseline.app.service.CustomerService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
@@ -29,7 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/app/customer")
 @Api(tags = "客户服务")
-public class CustomerController implements BaseController<Customer> {
+public class CustomerController implements BaseController<Customer, CustomerQuery> {
 
     @Autowired
     private CustomerService customerService;
@@ -90,10 +91,15 @@ public class CustomerController implements BaseController<Customer> {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Customer>> pageByCondition(@RequestBody Page<Customer> pageBean) {
+    public ResponseResult<Page<Customer>> page(@RequestBody Page<Customer> pageBean) {
         ResponseResult result = new ResponseResult();
         Page<Customer> page = customerService.pageByCondition(pageBean);
         result.setData(page);
         return result;
+    }
+
+    @Override
+    public ResponseResult<Page<Customer>> manualPage(Page<CustomerQuery> pageBean) {
+        return null;
     }
 }

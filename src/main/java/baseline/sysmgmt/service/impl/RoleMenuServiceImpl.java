@@ -7,6 +7,7 @@ import baseline.sysmgmt.pojo.entity.Menu;
 import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.pojo.entity.RoleMenu;
 import baseline.sysmgmt.mapper.RoleMenuMapper;
+import baseline.sysmgmt.pojo.query.RoleMenuQuery;
 import baseline.sysmgmt.service.RoleMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -60,8 +61,13 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
     }
 
     @Override
-    public Page<RoleMenu> pageByCondition(Page<RoleMenu> page) {
-        return page(page);
+    public Page<RoleMenu> page(Page<RoleMenu> page) {
+        return super.page(page);
+    }
+
+    @Override
+    public Page<RoleMenu> manualPage(Page<RoleMenuQuery> pageBean) {
+        return null;
     }
 
     @Override

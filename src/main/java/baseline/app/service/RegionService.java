@@ -1,6 +1,7 @@
 package baseline.app.service;
 
 import baseline.app.pojo.entity.Region;
+import baseline.app.pojo.query.RegionQuery;
 import baseline.common.baseBean.BaseService;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,6 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author crelle
  * @since 2022-11-09 10:06:28
  */
-public interface RegionService extends IService<Region> , BaseService<Region> {
+public interface RegionService extends IService<Region> , BaseService<Region, RegionQuery> {
 
 }
