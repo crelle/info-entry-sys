@@ -46,8 +46,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public void deleteById(String id) {
-        removeById(id);
+    public boolean deleteById(String id) {
+        return removeById(id);
     }
 
     @Override

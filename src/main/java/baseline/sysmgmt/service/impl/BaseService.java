@@ -23,9 +23,9 @@ public interface BaseService<T,Q> {
 
     List<T> queryAll();
 
-    boolean update(T object) throws Exception;
+    boolean update(T object);
 
-    void deleteById(String id);
+    boolean deleteById(String id);
 
     Page<T> page(Page<T> page);
 

@@ -54,7 +54,7 @@ public class RoleController implements BaseController<Role, RoleQuery> {
                 responseResult.buildFail("新增的角色名称已经存在!");
                 return responseResult;
             }
-            if(!role.getName().startsWith("ROLE_")){
+            if (!role.getName().startsWith("ROLE_")) {
                 responseResult.buildFail("角色编码必须以ROLE_开头!");
                 return responseResult;
             }
@@ -84,7 +84,7 @@ public class RoleController implements BaseController<Role, RoleQuery> {
     @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Role>> page(@RequestBody Page<Role> pageBean) {
-            ResponseResult<Page<Role>> responseResult = new ResponseResult<>();
+        ResponseResult<Page<Role>> responseResult = new ResponseResult<>();
         try {
             Page<Role> page = roleService.page(pageBean);
             responseResult.setData(page);
@@ -144,7 +144,9 @@ public class RoleController implements BaseController<Role, RoleQuery> {
     public ResponseResult<String> deleteById(@RequestBody String id) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
-            roleService.deleteById(id);
+            if (!roleService.deleteById(id)) {
+                responseResult.buildFail("删除失败！");
+            }
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             responseResult.buildFail("有用户在使用此角色，无法删除！");
         } catch (NoSuchElementException noSuchElementException) {

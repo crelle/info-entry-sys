@@ -47,8 +47,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public void deleteById(String id) {
-        removeById(id);
+    public boolean deleteById(String id) {
+        return removeById(id);
     }
 
     @Override

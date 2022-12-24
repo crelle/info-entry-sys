@@ -52,8 +52,8 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
     }
 
     @Override
-    public void deleteById(String id) {
-        removeById(id);
+    public boolean deleteById(String id) {
+        return removeById(id);
     }
 
     @Override

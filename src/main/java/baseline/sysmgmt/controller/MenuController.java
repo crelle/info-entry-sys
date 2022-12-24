@@ -125,7 +125,9 @@ public class MenuController implements BaseController<Menu, MenuQuery> {
     public ResponseResult<String> deleteById(@RequestBody String id) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
-            menuService.deleteById(id);
+            if (!menuService.deleteById(id)) {
+                responseResult.buildFail("删除失败!");
+            }
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             responseResult.buildFail("有用户在使用此菜单，无法删除！");
         } catch (NoSuchElementException noSuchElementException) {

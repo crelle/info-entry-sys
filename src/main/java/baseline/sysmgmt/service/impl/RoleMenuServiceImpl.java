@@ -56,8 +56,8 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
     }
 
     @Override
-    public void deleteById(String id) {
-        removeById(id);
+    public boolean deleteById(String id) {
+        return removeById(id);
     }
 
     @Override

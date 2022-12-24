@@ -205,7 +205,9 @@ public class UserController implements BaseController<User,UserQuery> {
     public ResponseResult<String> deleteById(@PathVariable String id) {
         ResponseResult<String> responseResult = new ResponseResult<String>();
         try {
-            userService.deleteById(id);
+           if(!userService.deleteById(id)){
+               responseResult.buildFail("删除失败！");
+           }
         } catch (Exception e) {
             throw new BusinessException(ResponseEnum.UNKNOWN);
         }

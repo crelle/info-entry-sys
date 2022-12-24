@@ -1,5 +1,7 @@
 package baseline.sysmgmt.service.impl;
 
+import baseline.common.enumeration.ResponseEnum;
+import baseline.common.exception.BusinessException;
 import baseline.sysmgmt.mapper.UserMapper;
 import baseline.sysmgmt.pojo.entity.*;
 import baseline.sysmgmt.pojo.query.UserQuery;
@@ -70,7 +72,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean update(User object) throws Exception {
+    public boolean update(User object) {
         try {
             //删除用户角色
             userRoleService.deleteByUserId(object.getId());
@@ -90,15 +92,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             //更新用户信息
             updateById(object);
         } catch (Exception e) {
-            throw new Exception(e);
+            throw new BusinessException(ResponseEnum.FAIL);
         }
 
         return true;
     }
 
     @Override
-    public void deleteById(String id) {
-        removeById(id);
+    public boolean deleteById(String id) {
+        return removeById(id);
     }
 
 

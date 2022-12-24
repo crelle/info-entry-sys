@@ -22,7 +22,7 @@ public class CodeGeneratorTest {
     private final String basePath = System.getProperty("user.dir");
     //模块名
     //TODO
-    private final String parentModuleName = "test";
+    private final String parentModuleName = "sysmgmt";
     //文件作者
     private final String author = "crelle";
     //数据库url
@@ -66,8 +66,7 @@ public class CodeGeneratorTest {
                 //4、策略配置
                 .strategyConfig(builder -> {
                     //TODO
-                    builder.addInclude("t_contact_person", "t_customer", "t_department", "t_employee",  "t_post", "t_project",
-                            "t_region") // 设置需要生成的数据表名
+                    builder.addInclude("t_dictionary") // 设置需要生成的数据表名
                             .addTablePrefix("t_", "c_") // 设置过滤表前缀
                             //4.1、Mapper策略配置
                             .mapperBuilder()
