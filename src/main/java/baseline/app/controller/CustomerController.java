@@ -98,8 +98,14 @@ public class CustomerController implements BaseController<Customer, CustomerQuer
         return result;
     }
 
+    @ApiOperation(value = "手动分页查询")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Customer>> manualPage(Page<CustomerQuery> pageBean) {
-        return null;
+        ResponseResult responseResult = new ResponseResult();
+        Page<Customer> page = customerService.manualPage(pageBean);
+        responseResult.setData(page);
+        return responseResult;
     }
 }

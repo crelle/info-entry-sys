@@ -5,4 +5,5 @@ import lombok.Data;
 
 @Data
 public class CustomerQuery extends Customer {
+    private String regionName;
 }
