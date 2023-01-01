@@ -2,4 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="baseline.app.mapper.ProjectMapper">
 
+    <select id="manualPage" resultType="baseline.app.pojo.entity.Project">
+        SELECT
+        a.*
+        FROM
+        t_project a
+        LEFT JOIN
+        t_region b ON a.region_id = b.region_id
+        LEFT JOIN
+        t_contact_person c ON a.t_c_Interface_id = c.Interface_id
+        <where>
+            <if test="project!=null and project!=''">
+                and a.project = #{project}
+            </if>
+            <if test="status!=null and status!=''">
+                and a.status = #{status}
+            </if>
+            <if test="regionName!=null and regionName!=''">
+                and b.region_name = #{regionName}
+            </if>
+            <if test="InterfaceName!=null and InterfaceName!=''">
+                and c.Interface_name = #{InterfaceName}
+            </if>
+        </where>
+
+
+    </select>
 </mapper>

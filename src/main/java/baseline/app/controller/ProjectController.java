@@ -103,8 +103,13 @@ public class ProjectController implements BaseController<Project, ProjectQuery> 
         return result;
     }
 
+    @ApiOperation(value = "手动分页查询")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Project>> manualPage(Page<ProjectQuery> pageBean) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        result.setData(projectService.manualPage(pageBean));
+        return result;
     }
 }

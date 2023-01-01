@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +24,9 @@ import java.util.List;
  */
 @Service
 public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> implements ProjectService {
+    @Autowired
+    private ProjectMapper projectMapper;
+
     @Override
     public boolean create(Project object) {
         return save(object);
@@ -62,7 +66,9 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     @Override
     public Page<Project> manualPage(Page<ProjectQuery> pageBean) {
-        return null;
+        ProjectQuery projectQuery = pageBean.getRecords().get(0);
+        Page<Project> projectPage = new Page<>();
+        return projectMapper.manualPage(projectPage, projectQuery);
     }
 
     @Override
