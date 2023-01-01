@@ -5,4 +5,5 @@ import lombok.Data;
 
 @Data
 public class ContactPersonQuery extends ContactPerson {
+    private String customerName;
 }

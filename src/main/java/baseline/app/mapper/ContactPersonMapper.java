@@ -1,15 +1,20 @@
 package baseline.app.mapper;
 
 import baseline.app.pojo.entity.ContactPerson;
+import baseline.app.pojo.entity.Customer;
+import baseline.app.pojo.query.ContactPersonQuery;
+import baseline.app.pojo.query.CustomerQuery;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author crelle
@@ -17,4 +22,7 @@ import java.util.List;
  */
 @Mapper
 public interface ContactPersonMapper extends BaseMapper<ContactPerson> {
+
+    Page<ContactPerson> manualPage(@Param("page") Page<ContactPerson> page, ContactPersonQuery contactPersonQuery);
+
 }

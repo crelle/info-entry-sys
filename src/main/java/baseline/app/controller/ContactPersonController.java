@@ -88,8 +88,12 @@ public class ContactPersonController implements BaseController<ContactPerson, Co
         return result;
     }
 
+    @ApiOperation("手动分页查询")
+    @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<ContactPerson>> manualPage(Page<ContactPersonQuery> pageBean) {
-        return null;
+        ResponseResult result = new ResponseResult();
+        result.setData(contactPersonService.manualPage(pageBean));
+        return result;
     }
 }
