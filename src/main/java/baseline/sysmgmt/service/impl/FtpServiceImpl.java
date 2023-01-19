@@ -66,7 +66,7 @@ public class FtpServiceImpl implements FtpService {
         String nginxFtpPort = configProperties.getConfigValue("nginx.ftp.port");
         //绝对资源地址l
         StringBuffer absolutelyUri = new StringBuffer();
-        absolutelyUri.append(nginxIp).append(":").append(nginxFtpPort).append("/").append(relativeUri);
+        absolutelyUri.append(nginxIp).append(":").append(nginxFtpPort).append(relativeUri);
         return absolutelyUri.toString();
     }
 
