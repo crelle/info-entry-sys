@@ -6,9 +6,14 @@ import baseline.sysmgmt.pojo.entity.Dictionary;
 import baseline.sysmgmt.pojo.query.DictionaryQuery;
 import baseline.sysmgmt.service.DictionaryService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,12 +26,16 @@ import java.util.List;
  * @author crelle
  * @since 2022-12-23 05:23:32
  */
+@Api(tags = "字典管理")
 @RestController
 @RequestMapping("/sysmgmt/dictionary")
 public class DictionaryController implements BaseController<Dictionary, DictionaryQuery> {
     @Autowired
     private DictionaryService dictionaryService;
 
+    @ApiOperation(value = "创建")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Dictionary> create(Dictionary obj) {
         try {
@@ -36,7 +45,9 @@ public class DictionaryController implements BaseController<Dictionary, Dictiona
         }
         return ResponseResult.ok();
     }
-
+    @ApiOperation(value = "根据菜单标识查询菜单")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Dictionary> queryById(String id) {
         ResponseResult responseResult = ResponseResult.ok();
@@ -48,6 +59,9 @@ public class DictionaryController implements BaseController<Dictionary, Dictiona
         return responseResult;
     }
 
+    @ApiOperation(value = "分页查询角色")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<Dictionary>> page(Page<Dictionary> pageBean) {
         try {

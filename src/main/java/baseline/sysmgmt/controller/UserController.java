@@ -9,12 +9,14 @@ import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.pojo.entity.User;
 import baseline.sysmgmt.pojo.entity.UserRole;
 import baseline.sysmgmt.pojo.query.UserQuery;
+import baseline.sysmgmt.service.FtpService;
 import baseline.sysmgmt.service.RoleService;
 import baseline.sysmgmt.service.UserRoleService;
 import baseline.sysmgmt.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import crelle.ftp.client.FtpClientService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -49,6 +51,9 @@ public class UserController implements BaseController<User,UserQuery> {
 
     @Autowired
     private UserRoleService userRoleService;
+
+    @Autowired
+    private FtpService ftpService;
 
     @ApiOperation(value = "新增用户")
     @ApiParam(required = true, name = "user", value = "入参")
@@ -225,8 +230,8 @@ public class UserController implements BaseController<User,UserQuery> {
                 responseResult.buildFail("请选择文件！");
                 return responseResult;
             }
-//            String absolutelyUri = ftpService.uploadFromMultipartFile(multipartFile, fileType);
-//            responseResult.setData(absolutelyUri);
+            String absolutelyUri = ftpService.uploadFromMultipartFile(multipartFile, fileType);
+            responseResult.setData(absolutelyUri);
         } catch (Exception e) {
             throw new BusinessException(ResponseEnum.UNKNOWN);
         }
@@ -244,10 +249,10 @@ public class UserController implements BaseController<User,UserQuery> {
                 responseResult.buildFail("请传入要删除的资源路径！");
                 return responseResult;
             }
-//            if (!ftpService.deleteByAbsoluteUri(absoluteUri)) {
-//                responseResult.buildFail("删除失败！");
-//                return responseResult;
-//            }
+            if (!ftpService.deleteByAbsoluteUri(absoluteUri)) {
+                responseResult.buildFail("删除失败！");
+                return responseResult;
+            }
         } catch (Exception e) {
             throw new BusinessException(ResponseEnum.UNKNOWN);
         }
