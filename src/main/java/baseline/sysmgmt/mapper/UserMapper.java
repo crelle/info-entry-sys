@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import baseline.sysmgmt.pojo.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ import java.util.List;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
     int updatePasswordById(@Param("password") String password, @Param("id") String id);
+
+    int resetPassword(@Param(value = "userId")String userId, @Param(value = "password")String passwrod);
 
     Page<User> manualPage(@Param("page") Page<User> page, UserQuery userQuery);
 }

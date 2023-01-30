@@ -55,6 +55,9 @@ public class User implements UserDetails {
     @TableField("username")
     private String username;
 
+    @TableField("fullname")
+    private String fullname;
+
     @TableField("user_avatar")
     private String userAvatar;
 
@@ -235,6 +238,14 @@ public class User implements UserDetails {
         this.updateBy = updateBy;
     }
 
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -248,6 +259,7 @@ public class User implements UserDetails {
                 ", userNickName='" + userNickName + '\'' +
                 ", userPhone='" + userPhone + '\'' +
                 ", username='" + username + '\'' +
+                ", fullname='" + fullname + '\'' +
                 ", userAvatar='" + userAvatar + '\'' +
                 ", jobNo='" + jobNo + '\'' +
                 ", createTime=" + createTime +

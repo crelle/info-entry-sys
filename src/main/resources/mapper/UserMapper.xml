@@ -7,6 +7,10 @@
         set password = #{password,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
     </update>
+    <update id="resetPassword">
+        update t_user set passwrod = #{password}
+        where id = #{userId}
+    </update>
     <select id="manualPage" resultType="baseline.sysmgmt.pojo.entity.User">
         SELECT
         user.*

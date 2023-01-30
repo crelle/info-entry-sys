@@ -202,4 +202,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         return userMapper.updatePasswordById((passwordEncoder.encode(password)), user.getId());
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int resetPassword(String userId, String password) {
+        if (null == userMapper.selectById(userId)) {
+            throw new BusinessException("用户不存在!");
+        }
+
+        return userMapper.resetPassword(userId, passwordEncoder.encode(password));
+    }
 }

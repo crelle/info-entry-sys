@@ -21,6 +21,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ import java.util.List;
 @Api(tags = "用户服务")
 @RestController
 @RequestMapping("/sysmgmt/user")
-public class UserController implements BaseController<User,UserQuery> {
+public class UserController implements BaseController<User, UserQuery> {
 
     @Autowired
     private UserService userService;
@@ -143,7 +144,6 @@ public class UserController implements BaseController<User,UserQuery> {
     }
 
 
-
     @ApiOperation(value = "分页查询用户")
     @ApiParam(required = true, name = "pageBean", value = "入参")
     @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -210,9 +210,9 @@ public class UserController implements BaseController<User,UserQuery> {
     public ResponseResult<String> deleteById(@PathVariable String id) {
         ResponseResult<String> responseResult = new ResponseResult<String>();
         try {
-           if(!userService.deleteById(id)){
-               responseResult.buildFail("删除失败！");
-           }
+            if (!userService.deleteById(id)) {
+                responseResult.buildFail("删除失败！");
+            }
         } catch (Exception e) {
             throw new BusinessException(ResponseEnum.UNKNOWN);
         }
@@ -267,6 +267,18 @@ public class UserController implements BaseController<User,UserQuery> {
         int result = userService.updatePasswordById(password, user);
         if (result == 0) {
             responseResult.buildFail("旧密码错误");
+        }
+        return responseResult;
+    }
+
+    @ApiOperation(value = "重置用户密码")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> resetPassword(@RequestParam("userId") String userId, @RequestParam("password") String passwrod) {
+        ResponseResult<String> responseResult = new ResponseResult<>();
+        int result = userService.resetPassword(userId, passwrod);
+        if (result == 0) {
+            responseResult.buildFail("重置密码失败!");
         }
         return responseResult;
     }
