@@ -4,7 +4,10 @@ import baseline.common.pojo.vo.ResponseResult;
 import baseline.common.config.ConfigProperties;
 import baseline.common.util.ResultUtils;
 import baseline.sysmgmt.pojo.entity.Menu;
+import baseline.sysmgmt.pojo.entity.RoleMenu;
 import baseline.sysmgmt.pojo.entity.User;
+import baseline.sysmgmt.service.MenuService;
+import baseline.sysmgmt.service.RoleMenuService;
 import baseline.sysmgmt.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +40,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author:crelle
@@ -63,6 +64,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     CustomUrlDecisionManager customUrlDecisionManager;
+
+    @Autowired
+    private RoleMenuService roleMenuService;
+
+    @Autowired
+    private MenuService menuService;
 
     //密文
     @Bean
@@ -134,8 +141,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //子菜单排序
                 user.getRoles().forEach(role -> {
                     role.getMenus().forEach(menu -> {
+                        // 子菜单赋值
+                        List<String> roleMenuList = roleMenuService
+                                .list()
+                                .stream()
+                                .filter(roleMenu -> roleMenu.getRoleId().equals(role.getId()))
+                                .map(RoleMenu::getMenuId)
+                                .collect(Collectors.toList());
+                        List<String> dbMenuList = menuService
+                                .queryAll()
+                                .stream()
+                                .filter(menu1 -> menu1.getParentId() != null && menu1.getParentId().equals(menu.getId()))
+                                .map(Menu::getId)
+                                .collect(Collectors.toList());
+                        List<String> childMenuList = roleMenuList.stream().filter(dbMenuList::contains).collect(Collectors.toList());
                         TreeSet<Menu> childrenMenuTreeSet = new TreeSet<>(((o1, o2) -> Long.compare(o1.getMenuSort(), o2.getMenuSort())));
-                        childrenMenuTreeSet.addAll(menu.getChildrenMenus());
+                        for (String childMenuId : childMenuList) {
+                            childrenMenuTreeSet.add(menuService.queryById(childMenuId));
+                        }
                         menu.setChildrenMenus(childrenMenuTreeSet);
                     });
                     //父菜单排序
