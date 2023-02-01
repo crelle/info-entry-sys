@@ -55,6 +55,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         LambdaQueryWrapper<Post> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(post.getPostName()), Post::getPostName, post.getPostName())
                 .like(StringUtils.isNotBlank(post.getAddress()), Post::getAddress, post.getAddress())
+                .like(StringUtils.isNotBlank(post.getProjectId()), Post::getProjectId, post.getProjectId())
                 .like(StringUtils.isNotBlank(post.getSkill()), Post::getSkill, post.getSkill());
         return page(page, queryWrapper);
     }

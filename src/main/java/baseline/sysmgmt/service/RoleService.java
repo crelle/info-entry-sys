@@ -20,4 +20,8 @@ public interface RoleService extends IService<Role>, BaseService<Role, RoleQuery
     List<Role> queryByNameZh(String roleNameZh);
 
     List<Role> queryByName(String roleName);
+
+    boolean create(Role role);
+
+    boolean deleteById(String id);
 }
