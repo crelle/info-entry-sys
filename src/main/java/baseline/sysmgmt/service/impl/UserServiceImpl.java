@@ -205,11 +205,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int resetPassword(String userId, String password) {
+    public int resetPassword(String userId) {
         if (null == userMapper.selectById(userId)) {
             throw new BusinessException("用户不存在!");
         }
 
-        return userMapper.resetPassword(userId, passwordEncoder.encode(password));
+        return userMapper.resetPassword(userId, passwordEncoder.encode("123456"));
     }
 }

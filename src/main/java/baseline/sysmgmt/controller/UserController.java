@@ -273,10 +273,10 @@ public class UserController implements BaseController<User, UserQuery> {
 
     @ApiOperation(value = "重置用户密码")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> resetPassword(@RequestParam("userId") String userId, @RequestParam("password") String passwrod) {
+    @RequestMapping(value = "/resetPassword/{userId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> resetPassword(@PathVariable("userId") String userId) {
         ResponseResult<String> responseResult = new ResponseResult<>();
-        int result = userService.resetPassword(userId, passwrod);
+        int result = userService.resetPassword(userId);
         if (result == 0) {
             responseResult.buildFail("重置密码失败!");
         }
