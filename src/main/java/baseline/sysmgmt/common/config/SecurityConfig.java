@@ -168,7 +168,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     menus.addAll(menuTreeSet);
                     role.setMenus(menus);
                 });
-                user.setPassword(null);
+                user.setPassword(user.getPassword());
                 ResponseResult responseResult = ResultUtils.success("登录成功!", user);
                 String s = new ObjectMapper().writeValueAsString(responseResult);
                 out.write(s);

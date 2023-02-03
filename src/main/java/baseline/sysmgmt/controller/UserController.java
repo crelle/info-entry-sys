@@ -67,7 +67,6 @@ public class UserController implements BaseController<User, UserQuery> {
                 responseResult.buildFail("用户标识使用jpa自动生成，不需要传入！");
                 return responseResult;
             }
-
             if (StringUtils.isBlank(String.valueOf(user.getUsername()))) {
                 responseResult.buildFail("用户名为空！");
                 return responseResult;
@@ -95,13 +94,17 @@ public class UserController implements BaseController<User, UserQuery> {
             User user1 = userService.getOne(queryWrapper1);
 
             //给用户设置默认的访客角色和默认状态
-            QueryWrapper<Role> queryWrapperRole = new QueryWrapper<>();
-            queryWrapperRole.select().eq("name", "ROLE_guest");
-            Role guest = roleService.getOne(queryWrapperRole);
-
             UserRole userRole = new UserRole();
-            userRole.setRoleId(guest.getId());
-            userRole.setUserId(user1.getId());
+            if (user.getRoles().isEmpty()){
+                QueryWrapper<Role> queryWrapperRole = new QueryWrapper<>();
+                queryWrapperRole.select().eq("name", "ROLE_guest");
+                Role guest = roleService.getOne(queryWrapperRole);
+                userRole.setRoleId(guest.getId());
+                userRole.setUserId(user1.getId());
+            }else {
+                userRole.setRoleId(user.getRoles().get(0).getId());
+                userRole.setUserId(user1.getId());
+            }
             userRoleService.create(userRole);
 
 
