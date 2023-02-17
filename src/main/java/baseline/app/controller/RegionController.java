@@ -1,8 +1,12 @@
 package baseline.app.controller;
 
 
+import baseline.app.pojo.entity.Customer;
+import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.entity.Region;
 import baseline.app.pojo.query.RegionQuery;
+import baseline.app.service.CustomerService;
+import baseline.app.service.ProjectService;
 import baseline.app.service.RegionService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -33,6 +39,12 @@ import java.util.List;
 public class RegionController implements BaseController<Region, RegionQuery> {
     @Autowired
     private RegionService regionService;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private ProjectService projectService;
 
     @ApiOperation(value = "创建")
     @ApiParam(required = true, name = "", value = "入参")
@@ -66,6 +78,28 @@ public class RegionController implements BaseController<Region, RegionQuery> {
     @Override
     public ResponseResult<String> deleteById(String id) {
         ResponseResult result = new ResponseResult();
+        //客户 项目  是否绑定地域
+        List<Customer> customerList = customerService
+                .list()
+                .stream()
+                .filter(Objects::nonNull)
+                .filter(customer -> customer.getRegionId().equals(id))
+                .collect(Collectors.toList());
+
+        if (!customerList.isEmpty()) {
+            result.buildFail("有客户在使用此地域，无法删除！");
+            return result;
+        }
+        List<Project> projectList = projectService
+                .list()
+                .stream()
+                .filter(project -> project.getRegionId().equals(id))
+                .collect(Collectors.toList());
+        if (!projectList.isEmpty()) {
+            result.buildFail("有项目在使用此地域，无法删除！");
+            return result;
+        }
+
         regionService.deleteById(id);
         return result;
     }

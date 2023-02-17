@@ -5,8 +5,10 @@ import baseline.common.enumeration.ResponseEnum;
 import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Role;
+import baseline.sysmgmt.pojo.entity.UserRole;
 import baseline.sysmgmt.pojo.query.RoleQuery;
 import baseline.sysmgmt.service.RoleService;
+import baseline.sysmgmt.service.UserRoleService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -36,6 +39,9 @@ public class RoleController implements BaseController<Role, RoleQuery> {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
 
     @ApiOperation(value = "创建角色")
@@ -143,16 +149,18 @@ public class RoleController implements BaseController<Role, RoleQuery> {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<String> deleteById(@RequestBody String id) {
         ResponseResult<String> responseResult = new ResponseResult<>();
-        try {
-            if (!roleService.deleteById(id)) {
-                responseResult.buildFail("删除失败！");
-            }
-        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
+        // 判断角色与用户之间的关系
+        List<UserRole> userRoleList = userRoleService
+                .list()
+                .stream()
+                .filter(userRole -> userRole.getRoleId().equals(id))
+                .collect(Collectors.toList());
+        if (!userRoleList.isEmpty()) {
             responseResult.buildFail("有用户在使用此角色，无法删除！");
-        } catch (NoSuchElementException noSuchElementException) {
-            responseResult.buildFail("没有此角色！");
-        } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            return responseResult;
+        }
+        if (!roleService.deleteById(id)) {
+            responseResult.buildFail("删除失败！");
         }
         return responseResult;
     }

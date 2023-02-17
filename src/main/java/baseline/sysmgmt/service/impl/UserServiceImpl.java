@@ -1,5 +1,6 @@
 package baseline.sysmgmt.service.impl;
 
+import baseline.app.service.DepartmentService;
 import baseline.common.enumeration.ResponseEnum;
 import baseline.common.exception.BusinessException;
 import baseline.sysmgmt.mapper.UserMapper;

@@ -5,6 +5,7 @@ import baseline.app.pojo.entity.Department;
 import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.query.DepartmentQuery;
 import baseline.app.service.DepartmentService;
+import baseline.app.service.ProjectService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -35,6 +37,9 @@ public class DepartmentController implements BaseController<Department, Departme
 
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private ProjectService projectService;
 
     @ApiOperation(value = "创建")
     @ApiParam(required = true, name = "", value = "入参")
@@ -68,6 +73,14 @@ public class DepartmentController implements BaseController<Department, Departme
     @Override
     public ResponseResult<String> deleteById(String id) {
         ResponseResult result = new ResponseResult();
+        List<Project> projectList = projectService
+                .list()
+                .stream().filter(project -> project.getDepartmentId().equals(id))
+                .collect(Collectors.toList());
+        if (!projectList.isEmpty()) {
+            result.buildFail("有项目在使用此部门，无法删除！");
+            return result;
+        }
         departmentService.deleteById(id);
         return result;
     }

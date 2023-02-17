@@ -56,7 +56,9 @@ public class ContactPersonServiceImpl extends ServiceImpl<ContactPersonMapper, C
     public Page<ContactPerson> pageByCondition(Page<ContactPerson> page) {
         ContactPerson contactPerson = page.getRecords().get(0);
         LambdaQueryWrapper<ContactPerson> lambdaQueryWrapper = new LambdaQueryWrapper();
-        lambdaQueryWrapper.like(StringUtils.isNotBlank(contactPerson.getInterfaceName()), ContactPerson::getInterfaceName, contactPerson.getInterfaceName());
+        lambdaQueryWrapper
+                .like(StringUtils.isNotBlank(contactPerson.getCustomerId()),ContactPerson::getCustomerId,contactPerson.getCustomerId())
+                .like(StringUtils.isNotBlank(contactPerson.getInterfaceName()), ContactPerson::getInterfaceName, contactPerson.getInterfaceName());
         return page(page, lambdaQueryWrapper);
     }
 

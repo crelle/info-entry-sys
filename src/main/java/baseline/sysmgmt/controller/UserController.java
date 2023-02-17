@@ -1,6 +1,10 @@
 package baseline.sysmgmt.controller;
 
 
+import baseline.app.pojo.entity.Customer;
+import baseline.app.pojo.entity.Department;
+import baseline.app.service.CustomerService;
+import baseline.app.service.DepartmentService;
 import baseline.common.enumeration.ResponseEnum;
 import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
@@ -30,6 +34,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -55,6 +60,13 @@ public class UserController implements BaseController<User, UserQuery> {
 
     @Autowired
     private FtpService ftpService;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private DepartmentService departmentService;
+
 
     @ApiOperation(value = "新增用户")
     @ApiParam(required = true, name = "user", value = "入参")
@@ -95,13 +107,13 @@ public class UserController implements BaseController<User, UserQuery> {
 
             //给用户设置默认的访客角色和默认状态
             UserRole userRole = new UserRole();
-            if (user.getRoles().isEmpty()){
+            if (user.getRoles().isEmpty()) {
                 QueryWrapper<Role> queryWrapperRole = new QueryWrapper<>();
                 queryWrapperRole.select().eq("name", "ROLE_guest");
                 Role guest = roleService.getOne(queryWrapperRole);
                 userRole.setRoleId(guest.getId());
                 userRole.setUserId(user1.getId());
-            }else {
+            } else {
                 userRole.setRoleId(user.getRoles().get(0).getId());
                 userRole.setUserId(user1.getId());
             }
@@ -212,12 +224,33 @@ public class UserController implements BaseController<User, UserQuery> {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<String> deleteById(@PathVariable String id) {
         ResponseResult<String> responseResult = new ResponseResult<String>();
-        try {
-            if (!userService.deleteById(id)) {
-                responseResult.buildFail("删除失败！");
-            }
-        } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+        User user = userService.queryById(id);
+        if (user == null) {
+            responseResult.buildFail("用户不存在！");
+            return responseResult;
+        }
+        //删除用户前 解除 用户和客户关系
+        List<Customer> customerList = customerService
+                .list()
+                .stream()
+                .filter(customer -> customer.getUserId().equals(user.getUsername()))
+                .collect(Collectors.toList());
+        if (!customerList.isEmpty()) {
+            responseResult.buildFail("有客户在使用此用户，无法删除！");
+            return responseResult;
+        }
+        List<Department> departmentList = departmentService
+                .list()
+                .stream()
+                .filter(department -> department.getUserId().equals(user.getUsername()))
+                .collect(Collectors.toList());
+        if (!departmentList.isEmpty()) {
+            responseResult.buildFail("有部门在使用此用户，无法删除！");
+            return responseResult;
+        }
+
+        if (!userService.deleteById(id)) {
+            responseResult.buildFail("删除失败！");
         }
         return responseResult;
     }

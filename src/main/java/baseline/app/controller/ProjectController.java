@@ -1,8 +1,12 @@
 package baseline.app.controller;
 
 
+import baseline.app.pojo.entity.Employee;
+import baseline.app.pojo.entity.Post;
 import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.query.ProjectQuery;
+import baseline.app.service.EmployeeService;
+import baseline.app.service.PostService;
 import baseline.app.service.ProjectService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -33,6 +38,12 @@ import java.util.List;
 public class ProjectController implements BaseController<Project, ProjectQuery> {
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private PostService postService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     @ApiOperation(value = "创建")
     @ApiParam(required = true, name = "", value = "入参")
@@ -66,6 +77,24 @@ public class ProjectController implements BaseController<Project, ProjectQuery> 
     @Override
     public ResponseResult<String> deleteById(String id) {
         ResponseResult result = new ResponseResult();
+        List<Post> postList = postService
+                .list()
+                .stream()
+                .filter(post -> post.getProjectId().equals(id))
+                .collect(Collectors.toList());
+        if (!postList.isEmpty()) {
+            result.buildFail("有岗位在使用此项目，无法删除！");
+            return result;
+        }
+        List<Employee> employeeList = employeeService
+                .list()
+                .stream()
+                .filter(employee -> employee.getProjectId().equals(id))
+                .collect(Collectors.toList());
+        if (!employeeList.isEmpty()) {
+            result.buildFail("有员工在使用此项目，无法删除！");
+            return result;
+        }
         projectService.deleteById(id);
         return result;
     }

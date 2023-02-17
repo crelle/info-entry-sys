@@ -9,8 +9,10 @@ import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,7 +41,10 @@ public class EmployeeController implements BaseController<Employee, EmployeeQuer
     @Override
     public ResponseResult<Employee> create(Employee object) {
         ResponseResult result = new ResponseResult();
-        employeeService.create(object);
+        boolean isSuccess = employeeService.create(object);
+        if (!isSuccess) {
+            result.buildFail("创建失败！");
+        }
         return result;
     }
 
@@ -75,14 +80,16 @@ public class EmployeeController implements BaseController<Employee, EmployeeQuer
     @Override
     public ResponseResult<String> updateById(Employee object) {
         ResponseResult result = new ResponseResult();
-        employeeService.updateById(object);
+        boolean isSuccess = employeeService.update(object);
+        if (!isSuccess) {
+            result.buildFail("更新失败！");
+        }
         return result;
     }
 
     @ApiOperation("分页查询")
     @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @Override
-    public ResponseResult<Page<Employee>> page(Page<Employee> pageBean) {
+    public ResponseResult<Page<Employee>> page(@RequestBody Page<Employee> pageBean) {
         ResponseResult result = new ResponseResult();
         result.setData(employeeService.pageByCondition(pageBean));
         return result;
@@ -91,5 +98,15 @@ public class EmployeeController implements BaseController<Employee, EmployeeQuer
     @Override
     public ResponseResult<Page<Employee>> manualPage(Page<EmployeeQuery> pageBean) {
         return null;
+    }
+
+
+    @ApiOperation(value = "手动分页查询")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<Page<EmployeeQuery>> queryByCondition(@RequestBody Page<EmployeeQuery> pageBean) {
+        ResponseResult result = new ResponseResult();
+        result.setData(employeeService.queryByCondition(pageBean));
+        return result;
     }
 }

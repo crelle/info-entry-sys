@@ -2,8 +2,10 @@ package baseline.app.controller;
 
 
 import baseline.app.pojo.entity.ContactPerson;
+import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.query.ContactPersonQuery;
 import baseline.app.service.ContactPersonService;
+import baseline.app.service.ProjectService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -32,6 +35,9 @@ import java.util.List;
 public class ContactPersonController implements BaseController<ContactPerson, ContactPersonQuery> {
     @Autowired
     private ContactPersonService contactPersonService;
+
+    @Autowired
+    private ProjectService projectService;
 
 
     @ApiOperation("创建")
@@ -57,6 +63,14 @@ public class ContactPersonController implements BaseController<ContactPerson, Co
     @Override
     public ResponseResult<String> deleteById(String id) {
         ResponseResult result = new ResponseResult();
+        List<Project> projectList = projectService
+                .list()
+                .stream().filter(project -> project.getInterfaceId().equals(id))
+                .collect(Collectors.toList());
+        if (!projectList.isEmpty()) {
+            result.buildFail("有项目在使用此接口，无法删除！");
+            return result;
+        }
         contactPersonService.deleteById(id);
         return result;
     }

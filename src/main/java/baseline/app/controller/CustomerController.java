@@ -1,8 +1,10 @@
 package baseline.app.controller;
 
 
+import baseline.app.pojo.entity.ContactPerson;
 import baseline.app.pojo.entity.Customer;
 import baseline.app.pojo.query.CustomerQuery;
+import baseline.app.service.ContactPersonService;
 import baseline.app.service.CustomerService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -34,6 +37,9 @@ public class CustomerController implements BaseController<Customer, CustomerQuer
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private ContactPersonService contactPersonService;
 
     @ApiOperation(value = "创建")
     @ApiParam(required = true, name = "", value = "入参")
@@ -65,6 +71,15 @@ public class CustomerController implements BaseController<Customer, CustomerQuer
     @Override
     public ResponseResult<String> deleteById(String id) {
         ResponseResult result = new ResponseResult();
+        List<ContactPerson> contactPersonList = contactPersonService
+                .list()
+                .stream()
+                .filter(contactPerson -> contactPerson.getCustomerId().equals(id))
+                .collect(Collectors.toList());
+        if (!contactPersonList.isEmpty()) {
+            result.buildFail("有接口人在使用此客户，无法删除！");
+            return result;
+        }
         customerService.deleteById(id);
         return result;
     }
