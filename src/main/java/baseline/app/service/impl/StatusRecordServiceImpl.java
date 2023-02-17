@@ -39,7 +39,7 @@ public class StatusRecordServiceImpl extends ServiceImpl<StatusRecordMapper, Sta
 
     @Override
     public void deleteById(String id) {
-
+        removeById(id);
     }
 
     @Override

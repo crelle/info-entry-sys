@@ -37,7 +37,7 @@ public class CommunicateServiceImpl extends ServiceImpl<CommunicateMapper, Commu
 
     @Override
     public void deleteById(String id) {
-
+        removeById(id);
     }
 
     @Override
