@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="baseline.app.mapper.EmployeeMapper">
+
+
+    <select id="queryByCondition" resultType="baseline.app.pojo.query.EmployeeQuery">
+        SELECT
+        *
+        FROM
+        (SELECT
+        e.*,
+        dep.department_id,
+        dep.department,
+        reg.region_id,
+        reg.region_name,
+        con.Interface_id,
+        con.Interface_name,
+        cus.customer_id,
+        cus.customer_name,
+        pro.project,
+        post.post_name,
+        sta.status ,
+        sta.create_time statusTime
+        FROM
+        t_employee e
+        LEFT JOIN t_status_record sta ON e.job_no = sta.job_no
+        LEFT JOIN t_project pro ON e.project_id = pro.project_id
+        left join t_post post on e.post_id = post.post_id
+        LEFT JOIN t_contact_person con ON pro.Interface_id = con.Interface_id
+        LEFT JOIN t_region reg ON pro.region_id = reg.region_id
+        LEFT JOIN t_department dep ON pro.department_id = dep.department_id
+        LEFT JOIN t_customer cus ON con.customer_id = cus.customer_id
+        ORDER BY statusTime DESC
+        LIMIT 10000) a
+        <where>
+            <if test="param.name!=null and param.name!=''">
+                and a.name like concat('%',concat(#{param.name},'%'))
+            </if>
+            <if test="param.departmentId!=null and param.departmentId!=''">
+                and a.department_id = #{param.departmentId}
+            </if>
+            <if test="param.department!=null and param.department!=''">
+                and a.department = #{param.department}
+            </if>
+            <if test="param.regionId!=null and param.regionId!=''">
+                and a.region_id = #{param.regionId}
+            </if>
+            <if test="param.regionName!=null and param.regionName!=''">
+                and a.region_name = #{param.regionName}
+            </if>
+            <if test="param.InterfaceId!=null and param.InterfaceId!=''">
+                and a.Interface_id = #{param.InterfaceId}
+            </if>
+            <if test="param.InterfaceName!=null and param.InterfaceName!=''">
+                and a.Interface_name = #{param.InterfaceName}
+            </if>
+            <if test="param.customerId!=null and param.customerId!=''">
+                and a.customer_id = #{param.customerId}
+            </if>
+            <if test="param.customerName!=null and param.customerName!=''">
+                and a.customer_name = #{param.customerName}
+            </if>
+            <if test="param.project!=null and param.project!=''">
+                and a.project = #{param.project}
+            </if>
+            <if test="param.status!=null and param.status!=''">
+                and a.status = #{param.status}
+            </if>
+            <if test="param.skill!=null and param.skill!=''">
+                and a.skill = #{param.skill}
+            </if>
+        </where>
+        GROUP BY name
+    </select>
+
+</mapper>

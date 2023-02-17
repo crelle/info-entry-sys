@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="baseline.app.mapper.ContactPersonMapper">
+
+    <select id="manualPage" resultType="baseline.app.pojo.entity.ContactPerson">
+        SELECT
+        a.*
+        FROM
+        t_contact_person a
+        LEFT JOIN
+        t_customer b ON a.customer_id = b.customer_id
+        <where>
+            <if test="interfaceName!=null and interfaceName!=''">
+                and a.Interface_name = #{interfaceName}
+            </if>
+            <if test="customerName!=null and customerName！=''">
+                AND b.customername = #{customerName}
+            </if>
+        </where>
+    </select>
+</mapper>
