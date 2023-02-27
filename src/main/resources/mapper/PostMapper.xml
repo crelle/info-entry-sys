@@ -2,4 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="baseline.app.mapper.PostMapper">
 
+    <select id="manualPage" resultType="baseline.app.pojo.vo.PostVo">
+        SELECT
+        post.post_id,
+        post.post_name,
+        post.skill,
+        post.project_id,
+        proj.project,
+        post.address,
+        cust.customer_name,
+        post.number,
+        post.date,
+        post.position,
+        post.requirements,
+        post.update_time
+        FROM
+        t_post post
+        LEFT JOIN t_project proj ON post.project_id = proj.project_id
+        left join t_customer cust on post.customer = cust.customer_id
+        <where>
+            <if test="param.postName!=null and param.postName!=''">
+                and post.post_name like concat('%',concat(#{param.postName},'%'))
+            </if>
+            <if test="param.project!=null and param.project!=''">
+                and proj.project = #{param.project}
+            </if>
+            <if test="param.address!=null and param.address!=''">
+                and post.address = #{param.address}
+            </if>
+            <if test="param.skill!=null and param.skill!=''">
+                and post.skill = #{param.skill}
+            </if>
+        </where>
+        order by post.update_time desc
+    </select>
+
 </mapper>

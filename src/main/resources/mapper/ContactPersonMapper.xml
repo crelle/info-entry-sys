@@ -2,20 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="baseline.app.mapper.ContactPersonMapper">
 
-    <select id="manualPage" resultType="baseline.app.pojo.entity.ContactPerson">
+    <select id="manualPage" resultType="baseline.app.pojo.vo.ContactPersonVo">
         SELECT
-        a.*
+        a.Interface_id,
+        a.Interface_name,
+        a.gender,
+        a.cell_phone,
+        a.email,
+        a.customer_id,
+        a.update_time,
+        b.customer_name
         FROM
         t_contact_person a
         LEFT JOIN
         t_customer b ON a.customer_id = b.customer_id
         <where>
-            <if test="interfaceName!=null and interfaceName!=''">
-                and a.Interface_name = #{interfaceName}
+            <if test="param.interfaceName!=null and param.interfaceName!=''">
+                and a.Interface_name like concat('%',concat(#{param.interfaceName},'%'))
             </if>
-            <if test="customerName!=null and customerName！=''">
-                AND b.customername = #{customerName}
+            <if test="param.customerName!=null and param.customerName!=''">
+                AND b.customer_name = #{param.customerName}
             </if>
         </where>
+        order by a.update_time desc
     </select>
 </mapper>

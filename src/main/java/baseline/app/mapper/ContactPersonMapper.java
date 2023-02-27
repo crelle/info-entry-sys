@@ -4,6 +4,7 @@ import baseline.app.pojo.entity.ContactPerson;
 import baseline.app.pojo.entity.Customer;
 import baseline.app.pojo.query.ContactPersonQuery;
 import baseline.app.pojo.query.CustomerQuery;
+import baseline.app.pojo.vo.ContactPersonVo;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -23,6 +24,6 @@ import java.util.List;
 @Mapper
 public interface ContactPersonMapper extends BaseMapper<ContactPerson> {
 
-    Page<ContactPerson> manualPage(@Param("page") Page<ContactPerson> page, ContactPersonQuery contactPersonQuery);
+    Page<ContactPersonVo> manualPage(@Param("page") Page<ContactPerson> page,@Param("param") ContactPersonQuery contactPersonQuery);
 
 }

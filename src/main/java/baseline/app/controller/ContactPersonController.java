@@ -4,6 +4,7 @@ package baseline.app.controller;
 import baseline.app.pojo.entity.ContactPerson;
 import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.query.ContactPersonQuery;
+import baseline.app.pojo.vo.ContactPersonVo;
 import baseline.app.service.ContactPersonService;
 import baseline.app.service.ProjectService;
 import baseline.common.baseBean.BaseController;
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
 @Api(tags = "接口人服务")
 @RestController
 @RequestMapping("/app/contact-person")
-public class ContactPersonController implements BaseController<ContactPerson, ContactPersonQuery> {
+public class ContactPersonController implements BaseController<ContactPersonVo,ContactPerson, ContactPersonQuery> {
     @Autowired
     private ContactPersonService contactPersonService;
 
@@ -105,7 +106,7 @@ public class ContactPersonController implements BaseController<ContactPerson, Co
     @ApiOperation("手动分页查询")
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<ContactPerson>> manualPage(Page<ContactPersonQuery> pageBean) {
+    public ResponseResult<Page<ContactPersonVo>> manualPage(Page<ContactPersonQuery> pageBean) {
         ResponseResult result = new ResponseResult();
         result.setData(contactPersonService.manualPage(pageBean));
         return result;

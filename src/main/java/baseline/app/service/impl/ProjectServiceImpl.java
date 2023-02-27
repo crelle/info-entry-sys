@@ -4,6 +4,7 @@ import baseline.app.pojo.entity.Project;
 import baseline.app.mapper.ProjectMapper;
 import baseline.app.pojo.entity.Region;
 import baseline.app.pojo.query.ProjectQuery;
+import baseline.app.pojo.vo.ProjectVo;
 import baseline.app.service.ProjectService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -67,10 +68,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     }
 
     @Override
-    public Page<Project> manualPage(Page<ProjectQuery> pageBean) {
+    public Page<ProjectVo> manualPage(Page<ProjectQuery> pageBean) {
         ProjectQuery projectQuery = pageBean.getRecords().get(0);
         Page<Project> projectPage = new Page<>();
-        return projectMapper.manualPage(projectPage, projectQuery);
+//        return projectMapper.manualPage(projectPage, projectQuery);
+        return null;
     }
 
     @Override

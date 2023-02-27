@@ -1,9 +1,14 @@
 package baseline.app.service.impl;
 
+import baseline.app.pojo.entity.Communicate;
 import baseline.app.pojo.entity.Employee;
 import baseline.app.mapper.EmployeeMapper;
+import baseline.app.pojo.entity.StatusRecord;
 import baseline.app.pojo.query.EmployeeQuery;
+import baseline.app.pojo.vo.EmployeeVo;
+import baseline.app.service.CommunicateService;
 import baseline.app.service.EmployeeService;
+import baseline.app.service.StatusRecordService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,9 +18,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -30,6 +38,12 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     @Autowired
     private EmployeeMapper employeeMapper;
 
+    @Autowired
+    private StatusRecordService statusRecordService;
+
+    @Autowired
+    private CommunicateService communicateService;
+
     @Override
     public boolean create(Employee object) {
         // 工号唯一
@@ -37,7 +51,15 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         if (!employees.isEmpty()) {
             return false;
         }
-        return save(object);
+        try {
+            return save(object);
+        } catch (Exception e) {
+            e.getMessage();
+            throw new RuntimeException(e);
+        } finally {
+            return true;
+        }
+
     }
 
     @Override
@@ -45,8 +67,34 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         return saveBatch(objects);
     }
 
+    @Transactional
     public void deleteById(String id) {
         removeById(id);
+        List<StatusRecord> statusRecordList = statusRecordService
+                .list()
+                .stream()
+                .filter(Objects::nonNull)
+                .filter(statusRecord -> statusRecord.getJobNo().equals(id))
+                .collect(Collectors.toList());
+
+        if (!statusRecordList.isEmpty()) {
+            for (StatusRecord statusRecord : statusRecordList) {
+                statusRecordService.deleteById(statusRecord.getId());
+            }
+        }
+
+        List<Communicate> communicateList = communicateService
+                .list()
+                .stream()
+                .filter(Objects::nonNull)
+                .filter(communicate -> communicate.getJobNo().equals(id))
+                .collect(Collectors.toList());
+
+        if (!communicateList.isEmpty()) {
+            for (Communicate communicate : communicateList) {
+                communicateService.deleteById(communicate.getId());
+            }
+        }
     }
 
     public void deleteByIds(List<String> ids) {
@@ -73,7 +121,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     }
 
     @Override
-    public Page<Employee> manualPage(Page<EmployeeQuery> pageBean) {
+    public Page<EmployeeVo> manualPage(Page<EmployeeQuery> pageBean) {
         return null;
     }
 

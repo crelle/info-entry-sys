@@ -2,21 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="baseline.app.mapper.CustomerMapper">
 
-    <select id="manualPage" resultType="baseline.app.pojo.entity.Customer">
+    <select id="manualPage" resultType="baseline.app.pojo.vo.CustomerVo">
         SELECT
-        a.*
+        a.*,b.region_name
         FROM
         t_customer a
         left join
         t_region b
         on a.region_id = b.region_id
         <where>
-            <if test="regionName!=null and regionName!=''">
+            <if test="param.customerName!=null and param.customerName!=''">
+                and a.customer_name like concat('%',concat(#{param.customerName},'%'))
+            </if>
+            <if test="param.regionName!=null and param.regionName!=''">
                 AND b.region_name =#{regionName}
             </if>
-            <if test="customerName!=null and customerName!=''">
-                AND a.customer_name = #{customerName}
+            <if test="param.userId!=null and param.userId!=''">
+                AND a.user_id = #{param.userId}
             </if>
         </where>
+        order by a.update_time
     </select>
 </mapper>

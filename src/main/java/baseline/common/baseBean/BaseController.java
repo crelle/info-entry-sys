@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-public interface BaseController<T, Q> {
+public interface BaseController<V, T, Q> {
 
     /**
      * 创建一个
@@ -64,7 +64,7 @@ public interface BaseController<T, Q> {
      * @param pageBean
      * @return
      */
-    ResponseResult<Page<T>> manualPage(@RequestBody Page<Q> pageBean);
+    ResponseResult<Page<V>> manualPage(@RequestBody Page<Q> pageBean);
 
 
 }

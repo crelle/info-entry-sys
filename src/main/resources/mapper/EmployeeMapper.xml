@@ -66,8 +66,8 @@
             <if test="param.status!=null and param.status!=''">
                 and a.status = #{param.status}
             </if>
-            <if test="param.skill!=null and param.skill!=''">
-                and a.skill = #{param.skill}
+            <if test="param.postName!=null and param.postName!=''">
+                and a.post_name = #{param.postName}
             </if>
         </where>
         GROUP BY name

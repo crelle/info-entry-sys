@@ -5,6 +5,7 @@ import baseline.app.pojo.entity.Employee;
 import baseline.app.pojo.entity.Post;
 import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.query.ProjectQuery;
+import baseline.app.pojo.vo.ProjectVo;
 import baseline.app.service.EmployeeService;
 import baseline.app.service.PostService;
 import baseline.app.service.ProjectService;
@@ -35,7 +36,7 @@ import java.util.stream.Collectors;
 @Api(tags = "项目服务")
 @RestController
 @RequestMapping("/app/project")
-public class ProjectController implements BaseController<Project, ProjectQuery> {
+public class ProjectController implements BaseController<ProjectVo,Project, ProjectQuery> {
     @Autowired
     private ProjectService projectService;
 
@@ -135,10 +136,9 @@ public class ProjectController implements BaseController<Project, ProjectQuery> 
     @ApiOperation(value = "手动分页查询")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @Override
-    public ResponseResult<Page<Project>> manualPage(Page<ProjectQuery> pageBean) {
+    public ResponseResult<Page<ProjectVo>> manualPage(Page<ProjectQuery> pageBean) {
         ResponseResult result = new ResponseResult();
-        result.setData(projectService.manualPage(pageBean));
+//        result.setData(projectService.manualPage(pageBean));
         return result;
     }
 }

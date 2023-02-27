@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-public interface BaseService<T, Q> {
+public interface BaseService<V, T, Q> {
 
     /**
      * 增加一个
@@ -61,7 +61,7 @@ public interface BaseService<T, Q> {
      * @param pageBean
      * @return
      */
-    Page<T> manualPage(@RequestBody Page<Q> pageBean);
+    Page<V> manualPage(@RequestBody Page<Q> pageBean);
 
     /**
      * 查询详情
