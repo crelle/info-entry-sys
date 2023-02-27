@@ -4,6 +4,7 @@ import baseline.app.mapper.ContactPersonMapper;
 import baseline.app.pojo.entity.ContactPerson;
 import baseline.app.pojo.entity.Employee;
 import baseline.app.pojo.query.ContactPersonQuery;
+import baseline.app.pojo.vo.ContactPersonVo;
 import baseline.app.service.ContactPersonService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -57,13 +58,13 @@ public class ContactPersonServiceImpl extends ServiceImpl<ContactPersonMapper, C
         ContactPerson contactPerson = page.getRecords().get(0);
         LambdaQueryWrapper<ContactPerson> lambdaQueryWrapper = new LambdaQueryWrapper();
         lambdaQueryWrapper
-                .like(StringUtils.isNotBlank(contactPerson.getCustomerId()),ContactPerson::getCustomerId,contactPerson.getCustomerId())
+                .like(StringUtils.isNotBlank(contactPerson.getCustomerId()), ContactPerson::getCustomerId, contactPerson.getCustomerId())
                 .like(StringUtils.isNotBlank(contactPerson.getInterfaceName()), ContactPerson::getInterfaceName, contactPerson.getInterfaceName());
         return page(page, lambdaQueryWrapper);
     }
 
     @Override
-    public Page<ContactPerson> manualPage(Page<ContactPersonQuery> pageBean) {
+    public Page<ContactPersonVo> manualPage(Page<ContactPersonQuery> pageBean) {
         ContactPersonQuery contactPersonQuery = pageBean.getRecords().get(0);
         Page<ContactPerson> personPage = new Page<>();
         return contactPersonMapper.manualPage(personPage, contactPersonQuery);

@@ -4,6 +4,7 @@ import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.entity.StatusRecord;
 import baseline.app.mapper.StatusRecordMapper;
 import baseline.app.pojo.query.StatusRecordQuery;
+import baseline.app.pojo.vo.StatusRecordVo;
 import baseline.app.service.StatusRecordService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -64,7 +65,7 @@ public class StatusRecordServiceImpl extends ServiceImpl<StatusRecordMapper, Sta
     }
 
     @Override
-    public Page<StatusRecord> manualPage(Page<StatusRecordQuery> pageBean) {
+    public Page<StatusRecordVo> manualPage(Page<StatusRecordQuery> pageBean) {
         return null;
     }
 

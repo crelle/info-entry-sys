@@ -2,4 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="baseline.app.mapper.DepartmentMapper">
 
+
+    <select id="manualPage" resultType="baseline.app.pojo.vo.DepartmentVo">
+        SELECT
+        department1.department_id,
+        department1.department,
+        department1.user_id,
+        department1.job_no,
+        department1.address,
+        department1.update_time,
+        department2.department department_up
+        FROM
+        t_department department1,
+        t_department department2
+        <where>
+            department1.department_id = department2.department_id
+            AND department1.department_up = department2.department_id
+            <if test="param.department!=null and param.department!=''">
+                AND department1.department =like concat('%',concat(#{param.department},'%'))
+            </if>
+        </where>
+        order by department1.update_time
+    </select>
+
 </mapper>

@@ -5,6 +5,7 @@ import baseline.app.pojo.entity.Customer;
 import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.entity.Region;
 import baseline.app.pojo.query.RegionQuery;
+import baseline.app.pojo.vo.RegionVo;
 import baseline.app.service.CustomerService;
 import baseline.app.service.ProjectService;
 import baseline.app.service.RegionService;
@@ -36,7 +37,7 @@ import java.util.stream.Collectors;
 @Api(tags = "区域服务")
 @RestController
 @RequestMapping("/app/region")
-public class RegionController implements BaseController<Region, RegionQuery> {
+public class RegionController implements BaseController<RegionVo,Region, RegionQuery> {
     @Autowired
     private RegionService regionService;
 
@@ -138,7 +139,7 @@ public class RegionController implements BaseController<Region, RegionQuery> {
     }
 
     @Override
-    public ResponseResult<Page<Region>> manualPage(Page<RegionQuery> pageBean) {
+    public ResponseResult<Page<RegionVo>> manualPage(Page<RegionQuery> pageBean) {
         return null;
     }
 }

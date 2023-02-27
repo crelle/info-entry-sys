@@ -4,11 +4,13 @@ import baseline.app.pojo.entity.Department;
 import baseline.app.mapper.DepartmentMapper;
 import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.query.DepartmentQuery;
+import baseline.app.pojo.vo.DepartmentVo;
 import baseline.app.service.DepartmentService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,9 @@ import java.util.List;
  */
 @Service
 public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Department> implements DepartmentService {
+    @Autowired
+    private DepartmentMapper departmentMapper;
+
     @Override
     public boolean create(Department object) {
         return save(object);
@@ -61,8 +66,10 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     }
 
     @Override
-    public Page<Department> manualPage(Page<DepartmentQuery> pageBean) {
-        return null;
+    public Page<DepartmentVo> manualPage(Page<DepartmentQuery> pageBean) {
+        DepartmentQuery departmentQuery = pageBean.getRecords().get(0);
+        Page<Department> page = new Page<>();
+        return departmentMapper.manualPage(page, departmentQuery);
     }
 
     @Override

@@ -4,6 +4,7 @@ import baseline.app.pojo.entity.Customer;
 import baseline.app.mapper.CustomerMapper;
 import baseline.app.pojo.entity.Department;
 import baseline.app.pojo.query.CustomerQuery;
+import baseline.app.pojo.vo.CustomerVo;
 import baseline.app.service.CustomerService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -67,7 +68,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     }
 
     @Override
-    public Page<Customer> manualPage(Page<CustomerQuery> pageBean) {
+    public Page<CustomerVo> manualPage(Page<CustomerQuery> pageBean) {
         CustomerQuery customerQuery = pageBean.getRecords().get(0);
         Page<Customer> page = new Page<>();
         return customerMapper.manualPage(page, customerQuery);

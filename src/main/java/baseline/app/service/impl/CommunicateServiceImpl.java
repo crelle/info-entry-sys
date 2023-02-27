@@ -3,6 +3,7 @@ package baseline.app.service.impl;
 import baseline.app.pojo.entity.Communicate;
 import baseline.app.mapper.CommunicateMapper;
 import baseline.app.pojo.query.CommunicateQuery;
+import baseline.app.pojo.vo.CommunicateVo;
 import baseline.app.service.CommunicateService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -61,7 +62,7 @@ public class CommunicateServiceImpl extends ServiceImpl<CommunicateMapper, Commu
     }
 
     @Override
-    public Page<Communicate> manualPage(Page<CommunicateQuery> pageBean) {
+    public Page<CommunicateVo> manualPage(Page<CommunicateQuery> pageBean) {
         return null;
     }
 

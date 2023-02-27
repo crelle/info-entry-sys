@@ -5,6 +5,7 @@ import baseline.app.pojo.entity.Employee;
 import baseline.app.mapper.EmployeeMapper;
 import baseline.app.pojo.entity.StatusRecord;
 import baseline.app.pojo.query.EmployeeQuery;
+import baseline.app.pojo.vo.EmployeeVo;
 import baseline.app.service.CommunicateService;
 import baseline.app.service.EmployeeService;
 import baseline.app.service.StatusRecordService;
@@ -120,7 +121,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     }
 
     @Override
-    public Page<Employee> manualPage(Page<EmployeeQuery> pageBean) {
+    public Page<EmployeeVo> manualPage(Page<EmployeeQuery> pageBean) {
         return null;
     }
 

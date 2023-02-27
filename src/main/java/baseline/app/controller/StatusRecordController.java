@@ -4,6 +4,7 @@ package baseline.app.controller;
 import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.entity.StatusRecord;
 import baseline.app.pojo.query.StatusRecordQuery;
+import baseline.app.pojo.vo.StatusRecordVo;
 import baseline.app.service.StatusRecordService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
@@ -29,7 +30,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/app/status-record")
-public class StatusRecordController implements BaseController<StatusRecord, StatusRecordQuery> {
+public class StatusRecordController implements BaseController<StatusRecordVo,StatusRecord, StatusRecordQuery> {
     @Autowired
     private StatusRecordService statusRecordService;
 
@@ -78,7 +79,7 @@ public class StatusRecordController implements BaseController<StatusRecord, Stat
     }
 
     @Override
-    public ResponseResult<Page<StatusRecord>> manualPage(Page<StatusRecordQuery> pageBean) {
+    public ResponseResult<Page<StatusRecordVo>> manualPage(Page<StatusRecordQuery> pageBean) {
         return null;
     }
 

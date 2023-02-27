@@ -2,6 +2,7 @@ package baseline.app.service;
 
 import baseline.app.pojo.entity.Employee;
 import baseline.app.pojo.query.EmployeeQuery;
+import baseline.app.pojo.vo.EmployeeVo;
 import baseline.common.baseBean.BaseService;
 import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,7 +20,7 @@ import java.util.List;
  * @author crelle
  * @since 2022-11-24 10:45:04
  */
-public interface EmployeeService extends IService<Employee>, BaseService<Employee, EmployeeQuery> {
+public interface EmployeeService extends IService<Employee>, BaseService<EmployeeVo,Employee, EmployeeQuery> {
 
     Page<EmployeeQuery> queryByCondition(Page<EmployeeQuery> pageBean);
 }

@@ -2,6 +2,7 @@ package baseline.app.service;
 
 import baseline.app.pojo.entity.Communicate;
 import baseline.app.pojo.query.CommunicateQuery;
+import baseline.app.pojo.vo.CommunicateVo;
 import baseline.common.baseBean.BaseService;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,6 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author crelle
  * @since 2023-02-03 02:50:00
  */
-public interface CommunicateService extends IService<Communicate>, BaseService<Communicate, CommunicateQuery> {
+public interface CommunicateService extends IService<Communicate>, BaseService<CommunicateVo,Communicate, CommunicateQuery> {
 
 }

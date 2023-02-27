@@ -3,6 +3,7 @@ package baseline.app.service.impl;
 import baseline.app.pojo.entity.Region;
 import baseline.app.mapper.RegionMapper;
 import baseline.app.pojo.query.RegionQuery;
+import baseline.app.pojo.vo.RegionVo;
 import baseline.app.service.RegionService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -61,7 +62,7 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
     }
 
     @Override
-    public Page<Region> manualPage(Page<RegionQuery> pageBean) {
+    public Page<RegionVo> manualPage(Page<RegionQuery> pageBean) {
         return null;
     }
 

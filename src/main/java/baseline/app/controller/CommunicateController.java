@@ -3,6 +3,7 @@ package baseline.app.controller;
 
 import baseline.app.pojo.entity.Communicate;
 import baseline.app.pojo.query.CommunicateQuery;
+import baseline.app.pojo.vo.CommunicateVo;
 import baseline.app.service.CommunicateService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
@@ -28,7 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/app/communicate")
-public class CommunicateController implements BaseController<Communicate, CommunicateQuery> {
+public class CommunicateController implements BaseController<CommunicateVo, Communicate, CommunicateQuery> {
     @Autowired
     private CommunicateService communicateService;
 
@@ -40,7 +41,7 @@ public class CommunicateController implements BaseController<Communicate, Commun
         ResponseResult result = new ResponseResult();
         boolean isSuccess = communicateService.create(object);
         if (!isSuccess) {
-            result.buildFail("创建失败！");
+            result.buildFail("创建沟通记录失败！");
         }
         return result;
     }
@@ -77,7 +78,7 @@ public class CommunicateController implements BaseController<Communicate, Commun
     }
 
     @Override
-    public ResponseResult<Page<Communicate>> manualPage(Page<CommunicateQuery> pageBean) {
+    public ResponseResult<Page<CommunicateVo>> manualPage(Page<CommunicateQuery> pageBean) {
         return null;
     }
 

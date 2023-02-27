@@ -2,6 +2,7 @@ package baseline.app.mapper;
 
 import baseline.app.pojo.entity.Customer;
 import baseline.app.pojo.query.CustomerQuery;
+import baseline.app.pojo.vo.CustomerVo;
 import baseline.sysmgmt.pojo.entity.User;
 import baseline.sysmgmt.pojo.query.UserQuery;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -20,6 +21,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface CustomerMapper extends BaseMapper<Customer> {
 
-    Page<Customer> manualPage(@Param("page") Page<Customer> page, CustomerQuery customerQuery);
+    Page<CustomerVo> manualPage(@Param("page") Page<Customer> page,@Param("param") CustomerQuery customerQuery);
 
 }

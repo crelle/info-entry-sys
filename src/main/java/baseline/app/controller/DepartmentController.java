@@ -4,6 +4,7 @@ package baseline.app.controller;
 import baseline.app.pojo.entity.Department;
 import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.query.DepartmentQuery;
+import baseline.app.pojo.vo.DepartmentVo;
 import baseline.app.service.DepartmentService;
 import baseline.app.service.ProjectService;
 import baseline.common.baseBean.BaseController;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
 @Api(tags = "部门服务")
 @RestController
 @RequestMapping("/app/department")
-public class DepartmentController implements BaseController<Department, DepartmentQuery> {
+public class DepartmentController implements BaseController<DepartmentVo,Department, DepartmentQuery> {
 
     @Autowired
     private DepartmentService departmentService;
@@ -126,9 +127,13 @@ public class DepartmentController implements BaseController<Department, Departme
         return result;
     }
 
-
+    @ApiOperation(value = "手动分页查询")
+    @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Department>> manualPage(Page<DepartmentQuery> pageBean) {
-        return null;
+    public ResponseResult<Page<DepartmentVo>> manualPage(Page<DepartmentQuery> pageBean) {
+        ResponseResult responseResult = new ResponseResult();
+        Page<DepartmentVo> page = departmentService.manualPage(pageBean);
+        responseResult.setData(page);
+        return responseResult;
     }
 }

@@ -3,6 +3,7 @@ package baseline.app.controller;
 
 import baseline.app.pojo.entity.Employee;
 import baseline.app.pojo.query.EmployeeQuery;
+import baseline.app.pojo.vo.EmployeeVo;
 import baseline.app.service.EmployeeService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
@@ -31,7 +32,7 @@ import java.util.List;
 @Api(tags = "员工服务")
 @RestController
 @RequestMapping("/app/employee")
-public class EmployeeController implements BaseController<Employee, EmployeeQuery> {
+public class EmployeeController implements BaseController<EmployeeVo,Employee, EmployeeQuery> {
 
     @Autowired
     private EmployeeService employeeService;
@@ -96,7 +97,7 @@ public class EmployeeController implements BaseController<Employee, EmployeeQuer
     }
 
     @Override
-    public ResponseResult<Page<Employee>> manualPage(Page<EmployeeQuery> pageBean) {
+    public ResponseResult<Page<EmployeeVo>> manualPage(Page<EmployeeQuery> pageBean) {
         return null;
     }
 
