@@ -6,19 +6,22 @@ import baseline.app.pojo.query.EmployeeQuery;
 import baseline.app.pojo.vo.EmployeeVo;
 import baseline.app.service.EmployeeService;
 import baseline.common.baseBean.BaseController;
+import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -32,7 +35,7 @@ import java.util.List;
 @Api(tags = "员工服务")
 @RestController
 @RequestMapping("/app/employee")
-public class EmployeeController implements BaseController<EmployeeVo,Employee, EmployeeQuery> {
+public class EmployeeController implements BaseController<EmployeeVo, Employee, EmployeeQuery> {
 
     @Autowired
     private EmployeeService employeeService;
@@ -101,7 +104,6 @@ public class EmployeeController implements BaseController<EmployeeVo,Employee, E
         return null;
     }
 
-
     @ApiOperation(value = "手动分页查询")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -110,4 +112,18 @@ public class EmployeeController implements BaseController<EmployeeVo,Employee, E
         result.setData(employeeService.queryByCondition(pageBean));
         return result;
     }
+
+    @ApiOperation(value = "导入员工信息")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/importExcel", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> importExcel(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+        ResponseResult result = new ResponseResult();
+        try {
+            result.setData(employeeService.importEmployee(file));
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage());
+        }
+        return result;
+    }
+
 }
