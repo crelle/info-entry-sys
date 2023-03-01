@@ -9,7 +9,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,4 +25,6 @@ import java.util.List;
 public interface EmployeeService extends IService<Employee>, BaseService<EmployeeVo,Employee, EmployeeQuery> {
 
     Page<EmployeeQuery> queryByCondition(Page<EmployeeQuery> pageBean);
+
+    boolean importEmployee(MultipartFile file) throws IOException;
 }

@@ -3,7 +3,10 @@ package baseline.common.util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -47,5 +50,16 @@ public abstract class CommonUtils {
         }
         return StringArr[StringArr.length - 1];
     }
+
+    public static Date transferString2Date(String s) {
+        Date date = new Date();
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(s);
+        } catch (ParseException e) {
+            //LOGGER.error("时间转换错误, string = {}", s, e);
+        }
+        return date;
+    }
+
 
 }
