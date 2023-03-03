@@ -30,48 +30,54 @@ public class ProjectVo extends BaseDo {
     @TableId(value = "project_id", type = IdType.ASSIGN_UUID)
     private String projectId;
 
-    @ApiModelProperty("地域编号")
-    @TableField("t_r_region_id")
-    private String tRRegionId;
-
-    @ApiModelProperty("部门编号")
-    @TableField("t_d_department_id")
-    private String tDDepartmentId;
-
-    @ApiModelProperty("接口人编号")
-    @TableField("t_c_Interface_id")
-    private String tCInterfaceId;
-
     @ApiModelProperty("项目名称")
     @TableField("project")
     private String project;
-
-    @ApiModelProperty("立项时间")
-    @TableField("time")
-    private Date time;
-
-    @ApiModelProperty("项目状态")
-    @TableField("status")
-    private String status;
 
     @ApiModelProperty("接口人ID")
     @TableField("Interface_id")
     private String interfaceId;
 
+    @ApiModelProperty("接口人")
+    @TableField("Interface_name")
+    private String InterfaceName;
+
+    @ApiModelProperty("手机号")
+    @TableField("cell_phone")
+    private String cellPhone;
+
+    @ApiModelProperty("邮箱")
+    @TableField("email")
+    private String email;
+
+    @ApiModelProperty("项目状态")
+    @TableField("status")
+    private String status;
+
+    @ApiModelProperty("客户")
+    @TableField("customer_id")
+    private String customer_id;
+
+    @ApiModelProperty("客户")
+    @TableField("customer_name")
+    private String customerName;
+
+
     @ApiModelProperty("部门")
     @TableField("department_id")
     private String departmentId;
 
-    @ApiModelProperty("合作模式")
-    @TableField("cooperation")
-    private String cooperation;
+    @ApiModelProperty("部门")
+    @TableField("department")
+    private String department;
 
-    @ApiModelProperty("项目简介")
-    @TableField("introduce")
-    private String introduce;
-
-    @ApiModelProperty("地域ID")
+    @ApiModelProperty("区域")
     @TableField("region_id")
     private String regionId;
+
+    @ApiModelProperty("区域")
+    @TableField("region_name")
+    private String regionName;
+
 
 }

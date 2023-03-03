@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @Api(tags = "项目服务")
 @RestController
 @RequestMapping("/app/project")
-public class ProjectController implements BaseController<ProjectVo,Project, ProjectQuery> {
+public class ProjectController implements BaseController<ProjectVo, Project, ProjectQuery> {
     @Autowired
     private ProjectService projectService;
 
@@ -138,7 +138,7 @@ public class ProjectController implements BaseController<ProjectVo,Project, Proj
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<Page<ProjectVo>> manualPage(Page<ProjectQuery> pageBean) {
         ResponseResult result = new ResponseResult();
-//        result.setData(projectService.manualPage(pageBean));
+        result.setData(projectService.manualPage(pageBean));
         return result;
     }
 }
