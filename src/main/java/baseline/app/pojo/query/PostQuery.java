@@ -23,8 +23,8 @@ public class PostQuery {
     @TableField("address")
     private String address;
 
-    @TableField("customer")
-    private String customer;
+    @TableField("customer_name")
+    private String customerName;
 
     @TableField("number")
     private String number;
