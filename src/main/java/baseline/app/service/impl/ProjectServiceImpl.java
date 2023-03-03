@@ -70,9 +70,8 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     @Override
     public Page<ProjectVo> manualPage(Page<ProjectQuery> pageBean) {
         ProjectQuery projectQuery = pageBean.getRecords().get(0);
-        Page<Project> projectPage = new Page<>();
-//        return projectMapper.manualPage(projectPage, projectQuery);
-        return null;
+        Page<ProjectQuery> projectPage = new Page<>();
+        return projectMapper.manualPage(projectPage, projectQuery);
     }
 
     @Override
