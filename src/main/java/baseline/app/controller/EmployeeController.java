@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -126,4 +127,27 @@ public class EmployeeController implements BaseController<EmployeeVo, Employee, 
         return result;
     }
 
+    @ApiOperation(value = "导出Excel")
+    @GetMapping("/downloadExcel")
+    public ResponseResult<String> downloadExcelExport(HttpServletRequest request, HttpServletResponse response, Employee param) throws Exception {
+        ResponseResult result = new ResponseResult();
+        try {
+            result.setData(employeeService.purchaseOrderSubExport(request, response, param));
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage());
+        }
+        return result;
+    }
+
+    @ApiOperation(value = "导出Excel模板")
+    @GetMapping("/downloadTemplate")
+    public ResponseResult<String> downloadTemplateExport(HttpServletRequest request, HttpServletResponse response, Employee param) throws Exception {
+        ResponseResult result = new ResponseResult();
+        try {
+            result.setData(employeeService.downloadTemplate(request, response, param));
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage());
+        }
+        return result;
+    }
 }

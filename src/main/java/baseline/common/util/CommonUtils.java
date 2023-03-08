@@ -22,7 +22,7 @@ public abstract class CommonUtils {
      * @author:crelle
      * @date:2021/4/25
      * @title:generateMediaName
-     * @description:生成相对媒体资源名字   prefix/YEAR-MONTH-DAY_OF_MONTH-randomUUID.suffix
+     * @description:生成相对媒体资源名字 prefix/YEAR-MONTH-DAY_OF_MONTH-randomUUID.suffix
      * @params:[preFix, mediaType]
      * @return:java.lang.String
      * @throw:
@@ -61,5 +61,10 @@ public abstract class CommonUtils {
         return date;
     }
 
+    public static String date2Str(Date date, String pattern) {
+        if (null == date) return "";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
+    }
 
 }

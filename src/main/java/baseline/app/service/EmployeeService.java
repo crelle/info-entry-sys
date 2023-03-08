@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,9 +24,20 @@ import java.util.List;
  * @author crelle
  * @since 2022-11-24 10:45:04
  */
-public interface EmployeeService extends IService<Employee>, BaseService<EmployeeVo,Employee, EmployeeQuery> {
+public interface EmployeeService extends IService<Employee>, BaseService<EmployeeVo, Employee, EmployeeQuery> {
 
     Page<EmployeeQuery> queryByCondition(Page<EmployeeQuery> pageBean);
 
-    boolean importEmployee(MultipartFile file) throws IOException;
+    String importEmployee(MultipartFile file) throws IOException;
+
+    /**
+     * 导出Excel
+     *
+     * @param request
+     * @param response
+     * @param param
+     */
+    String purchaseOrderSubExport(HttpServletRequest request, HttpServletResponse response, Employee param) throws Exception;
+
+    String downloadTemplate(HttpServletRequest request, HttpServletResponse response, Employee param) throws Exception;
 }
