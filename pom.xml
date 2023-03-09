@@ -87,12 +87,12 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.4</version>
         </dependency>
-        <dependency>
-            <groupId>crelle.ftp.client</groupId>
-            <artifactId>ftp-client-module</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>crelle.ftp.client</groupId>-->
+            <!--<artifactId>ftp-client-module</artifactId>-->
+            <!--<version>1.0.0</version>-->
+            <!--<scope>compile</scope>-->
+        <!--</dependency>-->
 
         <!--mybatis-plus-->
         <dependency>
@@ -153,7 +153,7 @@
     </profiles>
 
     <build>
-        <finalName>fes-menu</finalName>
+        <finalName>aems</finalName>
         <resources>
             <resource><!--此处的设置是打包的时候排除不相关的目录-->
                 <directory>src/main/resources/env</directory><!--此处设置为上面在resources目录下创建的文件夹-->

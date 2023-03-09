@@ -5,7 +5,6 @@ import baseline.common.config.ConfigProperties;
 import baseline.common.constant.FesConstants;
 import baseline.common.util.CommonUtils;
 import baseline.sysmgmt.service.FtpService;
-import crelle.ftp.client.MyFtpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,8 +20,8 @@ import java.io.IOException;
  **/
 @Service
 public class FtpServiceImpl implements FtpService {
-    @Autowired
-    private MyFtpClient myFtpClient;
+//    @Autowired
+//    private MyFtpClient myFtpClient;
 
     @Autowired
     private ConfigProperties configProperties;
@@ -30,7 +29,7 @@ public class FtpServiceImpl implements FtpService {
     @Override
     public String uploadFromMultipartFile(MultipartFile multipartFile, String fileType) throws Exception {
         String fileSuffix = CommonUtils.getFileSuffixFromMultipartFile(multipartFile);
-        myFtpClient.open();
+//        myFtpClient.open();
         String firDir = configProperties.getConfigValue("nginx.location.root");
         String secDir = configProperties.getConfigValue("nginx.location.sec.dir");
         String thriPicDir = null;
@@ -61,7 +60,7 @@ public class FtpServiceImpl implements FtpService {
         }
         //相对资源地址
         String relativeUri = CommonUtils.generateRelativeMediaResourcesUri(firDir + secDir + thriPicDir, fileSuffix);
-        myFtpClient.putFileToPath(multipartFile.getInputStream(), relativeUri);
+//        myFtpClient.putFileToPath(multipartFile.getInputStream(), relativeUri);
         String nginxIp = configProperties.getConfigValue("nginx.ip");
         String nginxFtpPort = configProperties.getConfigValue("nginx.ftp.port");
         //绝对资源地址l
@@ -72,9 +71,10 @@ public class FtpServiceImpl implements FtpService {
 
     @Override
     public boolean deleteByAbsoluteUri(String absoluteUri) throws IOException {
-        myFtpClient.open();
+//        myFtpClient.open();
         int index = absoluteUri.indexOf("/");
         String relativeUri = absoluteUri.substring(index + 1, absoluteUri.length());
-        return myFtpClient.deleteFile(relativeUri);
+//        return myFtpClient.deleteFile(relativeUri);
+        return true;
     }
 }
