@@ -3,7 +3,10 @@ package baseline.common.util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -19,7 +22,7 @@ public abstract class CommonUtils {
      * @author:crelle
      * @date:2021/4/25
      * @title:generateMediaName
-     * @description:生成相对媒体资源名字   prefix/YEAR-MONTH-DAY_OF_MONTH-randomUUID.suffix
+     * @description:生成相对媒体资源名字 prefix/YEAR-MONTH-DAY_OF_MONTH-randomUUID.suffix
      * @params:[preFix, mediaType]
      * @return:java.lang.String
      * @throw:
@@ -46,6 +49,22 @@ public abstract class CommonUtils {
             throw new Exception("文件后缀为空！");
         }
         return StringArr[StringArr.length - 1];
+    }
+
+    public static Date transferString2Date(String s) {
+        Date date = new Date();
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(s);
+        } catch (ParseException e) {
+            //LOGGER.error("时间转换错误, string = {}", s, e);
+        }
+        return date;
+    }
+
+    public static String date2Str(Date date, String pattern) {
+        if (null == date) return "";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
     }
 
 }
