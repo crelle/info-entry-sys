@@ -81,6 +81,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
             int postSize = employeeService
                     .list()
                     .stream()
+                    .filter(employee -> employee.getPostId() != null)
                     .filter(employee -> employee.getPostId().equals(record.getPostId()))
                     .collect(Collectors.toList())
                     .size();

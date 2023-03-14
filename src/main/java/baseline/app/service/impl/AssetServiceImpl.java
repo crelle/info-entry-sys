@@ -41,7 +41,7 @@ public class AssetServiceImpl extends ServiceImpl<AssetMapper, Asset> implements
 
     @Override
     public void deleteById(String id) {
-        deleteById(id);
+        removeById(id);
     }
 
     @Override

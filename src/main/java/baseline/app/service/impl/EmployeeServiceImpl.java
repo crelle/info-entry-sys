@@ -68,7 +68,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     //工号 纯数字 六位
     public static final String jobNoPattern = "^\\d{6}$";
     //姓名校验 6-10位字母、数字、下划线  不能以数字开头
-    public static final String namePattern = "^[^0-9][\\w_]{6,10}$";
+    public static final String namePattern = "^([\\u4E00-\\u9FA5])*$";
     //性别校验
     public static final String genderPattern = "^[男|女]$";
     //联系电话校验
@@ -76,7 +76,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     //电子邮箱校验
     public static final String emailPattern = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
     //最高学历校验
-    public static final String educationPattern = "^[专科|本科|硕士研究生|博士研究生]$";
+    public static final String educationPattern = "^[专|本|硕士|博士].+[研究生|科]{0,1}$";
     //毕业院校校验 中文、英文、数字包括下划线
     public static final String schoolPattern = "^[\\u4E00-\\u9FA5A-Za-z0-9_]+{0,255}$";
     //工作年限校验 [0-100]含0和100
@@ -88,7 +88,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     //模板名
     private static final String fileNameTemplate = "诚迈员工信息(模板)";
     //导出的excle地址
-    private static final String fileAddress = "D:\\360MoveData\\Users\\zhangjin98\\Desktop\\";
+    private static final String fileAddress = "C:\\Users\\Administrator\\Desktop\\";
 
     @Override
     public boolean create(Employee object) {
@@ -217,10 +217,10 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             //获取sheet页共有多少行
             int totalRos = sheet.getPhysicalNumberOfRows();
             //获取第一行
-            Row firstRow = sheet.getRow(0);
+            Row firstRow = sheet.getRow(2);
             //获取总列数
             int totalCell = firstRow.getLastCellNum();
-            for (int i = 1; i < totalRos; i++) {
+            for (int i = 2; i < totalRos; i++) {
                 //得到sheet的某一行
                 Row row = sheet.getRow(i);
                 Employee employee = new Employee();
@@ -251,8 +251,8 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             return null;
         }
         // 导出excel逻辑处理
-        buildExcel(purchaseOrderSubVOList,fileName);
-        return "导出成功! 文件存放在:"+fileAddress;
+        buildExcel(purchaseOrderSubVOList, fileName);
+        return "导出成功! 文件存放在:" + fileAddress;
     }
 
     @Override
@@ -263,8 +263,8 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
         employees.add(employee);
         // 导出excel逻辑处理
-        buildExcel(employees,fileNameTemplate);
-        return "导出成功! 文件存放在:"+fileAddress;
+        buildExcel(employees, fileNameTemplate);
+        return "导出成功! 文件存放在:" + fileAddress;
     }
 
     /**
@@ -272,7 +272,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
      *
      * @param employees response
      */
-    private void buildExcel( List<Employee> employees,String fileName) throws Exception {
+    private void buildExcel(List<Employee> employees, String fileName) throws Exception {
         List<String> headers = Arrays.asList("工号",
                 "员工姓名",
                 "性别",
@@ -315,15 +315,15 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     }
 
 
-
     private void setEmployInfo(int totalCell, Row row, Employee employee) {
         for (int j = 0; j < totalCell; j++) {
-            if (row.getCell(j) == null) {
+            Cell cell = row.getCell(j);
+            if (cell == null || cell.getCellType().equals(CellType.BLANK)) {
                 continue;
             }
             switch (j) {
                 case 0:
-                    employee.setJobNo(row.getCell(j).toString());
+                    employee.setJobNo(getIntNum(row.getCell(j).toString()));
                     break;
                 case 1:
                     employee.setName(row.getCell(j).toString());
@@ -390,6 +390,15 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         }
     }
 
+    private String getIntNum(String str) {
+        //字符串去掉小数点后取整数
+        if (str.contains(".")) {
+            int indexOf = str.indexOf(".");
+            str = str.substring(0, indexOf);
+        }
+        return String.valueOf(Integer.parseInt(str));
+    }
+
     private void valid(Integer i, Employee employee) {
         validJobNo(employee);
         if (StringUtils.isBlank(employee.getJobNo())) {
@@ -402,56 +411,55 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             throw new BusinessException("表中第" + (i - 1) + "员工姓名不存在!");
         }
         //工号校验
-        if (getMatcher(employee.getJobNo(), jobNoPattern)) {
+        if (!getMatcher(employee.getJobNo(), jobNoPattern)) {
             throw new BusinessException("表中第" + (i - 1) + "员工工号需为六位纯数字!");
         }
         //姓名校验
-        if (getMatcher(employee.getName(), namePattern)) {
-            throw new BusinessException("表中第" + (i - 1) + "员工工号需为六位纯数字!");
+        if (!getMatcher(employee.getName(), namePattern)) {
+            throw new BusinessException("表中第" + (i - 1) + "员工姓名需为中文!");
         }
         //性别校验
-        if (getMatcher(employee.getGender(), genderPattern)) {
+        if (employee.getGender() != null && !getMatcher(employee.getGender(), genderPattern)) {
             throw new BusinessException("表中第" + (i - 1) + "员工性别格式不正确!");
         }
         //出生年月
-        if (employee.getBirthday() == null || checkBirthday(employee.getBirthday())) {
+        if (employee.getBirthday() != null && !checkBirthday(employee.getBirthday())) {
             throw new BusinessException("表中第" + (i - 1) + "员工未成年!");
         }
         //年龄校验
-        if (employee.getAge() < 18) {
+        if (employee.getAge() != null && employee.getAge() < 18) {
             throw new BusinessException("表中第" + (i - 1) + "员工未成年!");
         }
         //联系电话校验
-        if (getMatcher(employee.getCellPhone(), cellPhonePattern)) {
+        if (!getMatcher(employee.getCellPhone(), cellPhonePattern)) {
             throw new BusinessException("表中第" + (i - 1) + "员工联系电话格式不正确!");
         }
         //电子邮箱校验
-        if (getMatcher(employee.getEmail(), emailPattern)) {
+        if (employee.getEmail() != null && !getMatcher(employee.getEmail(), emailPattern)) {
             throw new BusinessException("表中第" + (i - 1) + "员工电子邮箱格式不正确!");
         }
         //最高学历校验
-        if (getMatcher(employee.getEducation(), educationPattern)) {
+        if (employee.getEducation() != null && !getMatcher(employee.getEducation(), educationPattern)) {
             throw new BusinessException("表中第" + (i - 1) + "员工最高学历格式不正确!");
         }
         //毕业院校校验
-        if (getMatcher(employee.getSchool(), schoolPattern)) {
+        if (employee.getSchool() != null && !getMatcher(employee.getSchool(), schoolPattern)) {
             throw new BusinessException("表中第" + (i - 1) + "员工毕业院校格式不正确!");
         }
-        //毕业时间校验
-        if (employee.getSchoolTime() == null) {
-            throw new BusinessException("表中第" + (i - 1) + "员工毕业时间不正确!");
-        }
         //工作年限校验
-        if (getMatcher(employee.getWorkingHours().toString(), workingHoursPattern)) {
+        if (employee.getWorkingHours() != null && !getMatcher(employee.getWorkingHours().toString(), workingHoursPattern)) {
             throw new BusinessException("表中第" + (i - 1) + "员工工作年限格式不正确!");
         }
         //入职时间校验
-        if (employee.getTime() == null || employee.getTime().after(new Date())) {
+        if (employee.getTime() != null && employee.getTime().after(new Date())) {
             throw new BusinessException("表中第" + (i - 1) + "员工入职时间不正确!");
         }
     }
 
     private static boolean getMatcher(String employee, String patternStr) {
+        if (employee.isEmpty()) {
+            return true;
+        }
         //一个Pattern对象和一个正则表达式相关联
         Pattern pattern = Pattern.compile(patternStr);
         //一个Matcher对象和一个具体的字符串相关联，表示在指定模式下与这个字符串匹配
