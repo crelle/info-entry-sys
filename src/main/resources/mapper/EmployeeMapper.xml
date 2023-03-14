@@ -70,7 +70,7 @@
                 and a.post_name = #{param.postName}
             </if>
         </where>
-        GROUP BY name
+        GROUP BY job_no
     </select>
 
 </mapper>
