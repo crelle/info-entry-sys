@@ -2,30 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="baseline.app.mapper.ProjectMapper">
 
-    <select id="manualPage" resultType="baseline.app.pojo.entity.Project">
+    <select id="manualPage" resultType="baseline.app.pojo.vo.ProjectVo">
         SELECT
-        a.*
+        a.`project_id`,
+        a.`project`,
+        a.`Interface_id`,
+        c.`Interface_name`,
+        c.`cell_phone`,
+        c.`email`,
+        a.`status`,
+        d.`customer_id`,
+        d.`customer_name`,
+        e.`department_id`,
+        e.`department`,
+        b.`region_id`,
+        b.`region_name`
         FROM
         t_project a
-        LEFT JOIN
-        t_region b ON a.region_id = b.region_id
-        LEFT JOIN
-        t_contact_person c ON a.t_c_Interface_id = c.Interface_id
+        LEFT JOIN t_region b
+        ON a.region_id = b.region_id
+        LEFT JOIN t_contact_person c
+        ON a.Interface_id = c.Interface_id
+        LEFT JOIN t_customer d
+        ON c.customer_id = d.customer_id
+        LEFT JOIN t_department e
+        ON a.department_id = e.department_id
         <where>
-            <if test="project!=null and project!=''">
-                and a.project = #{project}
+            <if test="param.project!=null and param.project!=''">
+                and a.project = like concat('%',concat(#{param.project},'%'))
             </if>
-            <if test="status!=null and status!=''">
-                and a.status = #{status}
+            <if test="param.status!=null and param.status!=''">
+                and a.status = #{param.status}
             </if>
-            <if test="regionName!=null and regionName!=''">
-                and b.region_name = #{regionName}
+            <if test="param.regionName!=null and param.regionName!=''">
+                and b.region_name = #{param.regionName}
             </if>
-            <if test="InterfaceName!=null and InterfaceName!=''">
-                and c.Interface_name = #{InterfaceName}
+            <if test="param.department!=null and param.department!=''">
+                and e.department = #{param.department}
+            </if>
+            <if test="param.InterfaceName!=null and param.InterfaceName!=''">
+                and c.Interface_name = #{param.InterfaceName}
+            </if>
+            <if test="param.customerName!=null and param.customerName!=''">
+                and d.customer_name = #{param.customerName}
             </if>
         </where>
-
-
     </select>
 </mapper>
