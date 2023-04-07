@@ -98,8 +98,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                 newMenu.setId(menu.getId());
                 newMenu.setParentId(menu.getParentId());
                 if (!isParentMenuExist(newMenu)) {
-                    responseResult.buildFail("要更新的父菜单不存在！");
-                    return responseResult;
+                   continue;
                 }
                 if (newMenu.getParentId() != null && newMenu.getId().equals(newMenu.getParentId())) {
                     responseResult.buildFail("子目录和父目录不能相同！");
@@ -126,7 +125,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             List<Menu> menus = queryAll();
             List<Menu> resultMenus = menus
                     .stream()
-                    .filter(menu -> menu.getParentId() == null)
+                    .filter(menu -> StringUtils.isBlank(menu.getParentId()))
                     .sorted(Comparator.comparing(Menu::getMenuSort))
                     .collect(Collectors.toList());
 

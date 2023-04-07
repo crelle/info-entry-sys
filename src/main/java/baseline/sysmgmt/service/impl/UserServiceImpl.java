@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -174,7 +175,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             List<Menu> menus = menuService.listByIds(roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList()));
             //过滤出父菜单
             List<Menu> parentMenus = menus.stream().filter(menu -> {
-                return null == menu.getParentId();
+                return StringUtils.isBlank(menu.getParentId());
             }).collect(Collectors.toList());
             //组装子菜单
             parentMenus.forEach(menu -> {
