@@ -73,7 +73,7 @@ public class UserController implements BaseController<User, UserQuery> {
     public ResponseResult<User> create(@RequestBody User user) {
         ResponseResult<User> responseResult = new ResponseResult<User>();
         try {
-            if (!(null == user.getId())) {
+            if (StringUtils.isNoneBlank(user.getId())) {
                 responseResult.buildFail("用户标识使用jpa自动生成，不需要传入！");
                 return responseResult;
             }
