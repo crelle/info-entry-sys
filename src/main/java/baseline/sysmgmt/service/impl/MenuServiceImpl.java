@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -26,6 +27,10 @@ import java.util.stream.Collectors;
  */
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
+
+    @Autowired
+    private MenuMapper menuMapper;
+
     @Override
     public boolean create(Menu object) {
         return save(object);
@@ -98,7 +103,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                 newMenu.setId(menu.getId());
                 newMenu.setParentId(menu.getParentId());
                 if (!isParentMenuExist(newMenu)) {
-                   continue;
+                    continue;
                 }
                 if (newMenu.getParentId() != null && newMenu.getId().equals(newMenu.getParentId())) {
                     responseResult.buildFail("子目录和父目录不能相同！");
@@ -140,6 +145,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         } catch (Exception e) {
             responseResult.buildFail(e.getMessage());
         }
+        return responseResult;
+    }
+
+    @Override
+    public ResponseResult<Integer> getMenuSort() {
+        ResponseResult<Integer> responseResult = new ResponseResult<>();
+        responseResult.setData(menuMapper.queryMenuMaxMenuSort() + 1);
         return responseResult;
     }
 

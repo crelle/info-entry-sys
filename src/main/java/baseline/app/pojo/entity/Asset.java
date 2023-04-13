@@ -33,6 +33,11 @@ public class Asset {
     @TableField("employee_id")
     private String employeeId;
 
+
+    @ApiModelProperty("员工id")
+    @TableField("department_id")
+    private String departmentId;
+
     @ApiModelProperty("资产编号")
     @TableField("asset_no")
     private String assetNo;
@@ -44,6 +49,18 @@ public class Asset {
     @ApiModelProperty("资产名称")
     @TableField("asset_name")
     private String assetName;
+
+    @ApiModelProperty("资产状态")
+    @TableField("asset_status")
+    private String assetStatus;
+
+    @ApiModelProperty("资产价值")
+    @TableField("asset_value")
+    private String assetValue;
+
+    @ApiModelProperty("资产类型")
+    @TableField("asset_type")
+    private String assetType;
 
     @ApiModelProperty("创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)

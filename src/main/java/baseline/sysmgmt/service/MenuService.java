@@ -26,4 +26,10 @@ public interface MenuService extends IService<Menu>, BaseService<Menu, MenuQuery
 
     //查询所有菜单 分级
     ResponseResult<List<Menu>> queryAllMenus();
+
+    /**
+     * 获取菜单顺序
+     * @return
+     */
+    ResponseResult<Integer> getMenuSort();
 }

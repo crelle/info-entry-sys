@@ -73,6 +73,17 @@ public class MenuController implements BaseController<Menu, MenuQuery> {
         return responseResult;
     }
 
+    @ApiOperation(value = "获取菜单顺序")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/getMenuSort", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<Integer> getMenuSort() {
+        try {
+           return menuService.getMenuSort();
+        } catch (Exception e) {
+            throw new BusinessException(ResponseEnum.UNKNOWN);
+        }
+    }
+
 
     @ApiOperation(value = "分页查询角色")
     @ApiParam(required = true, name = "xx", value = "入参")
