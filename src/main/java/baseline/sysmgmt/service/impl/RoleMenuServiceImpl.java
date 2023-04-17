@@ -8,6 +8,7 @@ import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.pojo.entity.RoleMenu;
 import baseline.sysmgmt.mapper.RoleMenuMapper;
 import baseline.sysmgmt.pojo.query.RoleMenuQuery;
+import baseline.sysmgmt.pojo.vo.RoleMenuVo;
 import baseline.sysmgmt.service.RoleMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -15,7 +16,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import java.util.Objects;
@@ -66,7 +66,7 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
     }
 
     @Override
-    public Page<RoleMenu> manualPage(Page<RoleMenuQuery> pageBean) {
+    public Page<RoleMenuVo> manualPage(Page<RoleMenuQuery> pageBean) {
         return null;
     }
 

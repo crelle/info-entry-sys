@@ -6,6 +6,7 @@ import baseline.common.exception.BusinessException;
 import baseline.sysmgmt.mapper.UserMapper;
 import baseline.sysmgmt.pojo.entity.*;
 import baseline.sysmgmt.pojo.query.UserQuery;
+import baseline.sysmgmt.pojo.vo.UserVo;
 import baseline.sysmgmt.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -132,11 +133,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Page<User> manualPage(Page<UserQuery> userQueryPage) {
+    public Page<UserVo> manualPage(Page<UserQuery> userQueryPage) {
         UserQuery userQuery = userQueryPage.getRecords().get(0);
 
         Page<User> page = new Page<>();
-        Page<User> userPage = userMapper.manualPage(page, userQuery);
+        Page<UserVo> userPage = userMapper.manualPage(page, userQuery);
         userPage.getRecords().forEach(user -> {
             //查询用户角色
             QueryWrapper<UserRole> queryWrapper1 = new QueryWrapper<>();

@@ -7,6 +7,7 @@ import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.pojo.entity.UserRole;
 import baseline.sysmgmt.pojo.query.RoleQuery;
+import baseline.sysmgmt.pojo.vo.RoleVo;
 import baseline.sysmgmt.service.RoleService;
 import baseline.sysmgmt.service.UserRoleService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -35,7 +36,7 @@ import java.util.stream.Collectors;
 @Api(tags = "角色服务")
 @RestController
 @RequestMapping("/sysmgmt/role")
-public class RoleController implements BaseController<Role, RoleQuery> {
+public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
 
     @Autowired
     private RoleService roleService;
@@ -104,7 +105,7 @@ public class RoleController implements BaseController<Role, RoleQuery> {
     @ApiParam(required = true, name = "xx", value = "入参")
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Role>> manualPage(Page<RoleQuery> pageBean) {
+    public ResponseResult<Page<RoleVo>> manualPage(Page<RoleQuery> pageBean) {
         return null;
     }
 

@@ -31,7 +31,7 @@ public class Dictionary {
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;
 
-    @ApiModelProperty("名称")
+    @ApiModelProperty("父级名称")
     @TableField("name")
     private String name;
 

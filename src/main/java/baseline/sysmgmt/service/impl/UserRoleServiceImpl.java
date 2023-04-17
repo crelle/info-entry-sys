@@ -5,6 +5,7 @@ import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.pojo.entity.UserRole;
 import baseline.sysmgmt.mapper.UserRoleMapper;
 import baseline.sysmgmt.pojo.query.UserRoleQuery;
+import baseline.sysmgmt.pojo.vo.UserRoleVo;
 import baseline.sysmgmt.service.UserRoleService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -62,7 +63,7 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
     }
 
     @Override
-    public Page<UserRole> manualPage(Page<UserRoleQuery> pageBean) {
+    public Page<UserRoleVo> manualPage(Page<UserRoleQuery> pageBean) {
         return null;
     }
 

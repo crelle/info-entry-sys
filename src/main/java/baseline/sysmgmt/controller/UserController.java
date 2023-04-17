@@ -13,6 +13,7 @@ import baseline.sysmgmt.pojo.entity.Role;
 import baseline.sysmgmt.pojo.entity.User;
 import baseline.sysmgmt.pojo.entity.UserRole;
 import baseline.sysmgmt.pojo.query.UserQuery;
+import baseline.sysmgmt.pojo.vo.UserVo;
 import baseline.sysmgmt.service.FtpService;
 import baseline.sysmgmt.service.RoleService;
 import baseline.sysmgmt.service.UserRoleService;
@@ -45,7 +46,7 @@ import java.util.stream.Collectors;
 @Api(tags = "用户服务")
 @RestController
 @RequestMapping("/sysmgmt/user")
-public class UserController implements BaseController<User, UserQuery> {
+public class UserController implements BaseController<UserVo,User, UserQuery> {
 
     @Autowired
     private UserService userService;
@@ -176,10 +177,10 @@ public class UserController implements BaseController<User, UserQuery> {
     @ApiParam(required = true, name = "pageBean", value = "入参")
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<User>> manualPage(Page<UserQuery> pageBean) {
-        ResponseResult<Page<User>> responseResult = new ResponseResult<>();
+    public ResponseResult<Page<UserVo>> manualPage(Page<UserQuery> pageBean) {
+        ResponseResult<Page<UserVo>> responseResult = new ResponseResult<>();
         try {
-            Page<User> page = userService.manualPage(pageBean);
+            Page<UserVo> page = userService.manualPage(pageBean);
             responseResult.setData(page);
         } catch (Exception e) {
             throw new BusinessException(ResponseEnum.UNKNOWN);

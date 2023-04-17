@@ -4,6 +4,7 @@ import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Menu;
 import baseline.sysmgmt.mapper.MenuMapper;
 import baseline.sysmgmt.pojo.query.MenuQuery;
+import baseline.sysmgmt.pojo.vo.MenuVo;
 import baseline.sysmgmt.service.MenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -68,7 +69,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public Page<Menu> manualPage(Page<MenuQuery> pageBean) {
+    public Page<MenuVo> manualPage(Page<MenuQuery> pageBean) {
         return null;
     }
 

@@ -11,7 +11,7 @@
         update t_user set password = #{password}
         where id = #{userId}
     </update>
-    <select id="manualPage" resultType="baseline.sysmgmt.pojo.entity.User">
+    <select id="manualPage" resultType="baseline.sysmgmt.pojo.vo.UserVo">
         SELECT
         user.*
         FROM

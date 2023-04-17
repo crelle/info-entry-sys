@@ -2,6 +2,7 @@ package baseline.sysmgmt.service;
 
 import baseline.sysmgmt.pojo.entity.Menu;
 import baseline.sysmgmt.pojo.query.RoleMenuQuery;
+import baseline.sysmgmt.pojo.vo.RoleMenuVo;
 import baseline.sysmgmt.service.impl.BaseService;
 import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Role;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author crelle
  * @since 2022-10-01 12:06:26
  */
-public interface RoleMenuService extends IService<RoleMenu>, BaseService<RoleMenu, RoleMenuQuery> {
+public interface RoleMenuService extends IService<RoleMenu>, BaseService<RoleMenuVo,RoleMenu, RoleMenuQuery> {
     ResponseResult<List<Menu>> queryMenu(Role role);
 
     void updateRoleMenu(Role roles);

@@ -6,6 +6,7 @@ import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Menu;
 import baseline.sysmgmt.pojo.query.MenuQuery;
+import baseline.sysmgmt.pojo.vo.MenuVo;
 import baseline.sysmgmt.service.MenuService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -30,7 +31,7 @@ import java.util.*;
 @Api(tags = "菜单管理")
 @RestController
 @RequestMapping("/sysmgmt/menu")
-public class MenuController implements BaseController<Menu, MenuQuery> {
+public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
 
     @Autowired
     private MenuService menuService;
@@ -104,7 +105,7 @@ public class MenuController implements BaseController<Menu, MenuQuery> {
     @ApiParam(required = true, name = "xx", value = "入参")
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Page<Menu>> manualPage(Page<MenuQuery> pageBean) {
+    public ResponseResult<Page<MenuVo>> manualPage(Page<MenuQuery> pageBean) {
         return null;
     }
 

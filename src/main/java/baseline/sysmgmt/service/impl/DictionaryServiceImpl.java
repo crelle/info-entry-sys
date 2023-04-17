@@ -3,11 +3,13 @@ package baseline.sysmgmt.service.impl;
 import baseline.sysmgmt.pojo.entity.Dictionary;
 import baseline.sysmgmt.mapper.DictionaryMapper;
 import baseline.sysmgmt.pojo.query.DictionaryQuery;
+import baseline.sysmgmt.pojo.vo.DictionaryVo;
 import baseline.sysmgmt.service.DictionaryService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -23,6 +25,9 @@ import java.util.List;
  */
 @Service
 public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Dictionary> implements DictionaryService {
+    @Autowired
+    private DictionaryMapper dictionaryMapper;
+
     @Override
     public boolean create(Dictionary object) {
         return save(object);
@@ -50,17 +55,13 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
 
     @Override
     public Page<Dictionary> page(Page<Dictionary> page) {
-        LambdaQueryWrapper<Dictionary> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if (!CollectionUtils.isEmpty(page.getRecords())) {
-            Dictionary dictionary = page.getRecords().get(0);
-            lambdaQueryWrapper.like(StringUtils.isNotBlank(dictionary.getName()), Dictionary::getName, dictionary.getName())
-                    .isNotNull(Dictionary::getParentId);
-        }
-        return super.page(page, lambdaQueryWrapper);
+        return null;
     }
 
     @Override
-    public Page<Dictionary> manualPage(Page<DictionaryQuery> pageBean) {
-        return null;
+    public Page<DictionaryVo> manualPage(Page<DictionaryQuery> pageBean) {
+        DictionaryQuery dictionaryQuery = pageBean.getRecords().get(0);
+        Page<Dictionary> page = new Page<>();
+        return dictionaryMapper.queryFatherDicLimit(page, dictionaryQuery);
     }
 }

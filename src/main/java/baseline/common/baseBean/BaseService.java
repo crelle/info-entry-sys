@@ -1,6 +1,5 @@
 package baseline.common.baseBean;
 
-import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.RequestBody;
 

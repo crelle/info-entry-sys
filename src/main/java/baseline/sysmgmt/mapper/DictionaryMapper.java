@@ -1,8 +1,13 @@
 package baseline.sysmgmt.mapper;
 
 import baseline.sysmgmt.pojo.entity.Dictionary;
+import baseline.sysmgmt.pojo.query.DictionaryQuery;
+import baseline.sysmgmt.pojo.vo.DictionaryVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
 
 /**
  * <p>
@@ -15,4 +20,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface DictionaryMapper extends BaseMapper<Dictionary> {
 
+    Page<DictionaryVo> queryFatherDicLimit(@Param("page") Page<Dictionary> page, @Param("param") DictionaryQuery departmentQuery);
 }

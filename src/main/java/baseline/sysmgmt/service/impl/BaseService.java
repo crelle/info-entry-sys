@@ -1,8 +1,6 @@
 package baseline.sysmgmt.service.impl;
 
-import baseline.common.pojo.vo.ResponseResult;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -15,7 +13,7 @@ import java.util.List;
  * @date:2021/4/3
  * @description:XX
  **/
-public interface BaseService<T,Q> {
+public interface BaseService<V,T,Q> {
 
     boolean create(T object);
 
@@ -35,5 +33,5 @@ public interface BaseService<T,Q> {
      * @param pageBean
      * @return
      */
-    Page<T> manualPage(@RequestBody Page<Q> pageBean);
+    Page<V> manualPage(@RequestBody Page<Q> pageBean);
 }

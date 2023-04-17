@@ -1,6 +1,7 @@
 package baseline.sysmgmt.mapper;
 
 import baseline.sysmgmt.pojo.query.UserQuery;
+import baseline.sysmgmt.pojo.vo.UserVo;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
@@ -26,5 +27,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     int resetPassword(@Param(value = "userId")String userId, @Param(value = "password")String password);
 
-    Page<User> manualPage(@Param("page") Page<User> page, UserQuery userQuery);
+    Page<UserVo> manualPage(@Param("page") Page<User> page, UserQuery userQuery);
 }

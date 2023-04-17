@@ -15,7 +15,7 @@ import java.util.List;
  * @date:2021/4/3
  * @description:XX
  **/
-public interface BaseController<T, Q> {
+public interface BaseController<V,T, Q> {
 
 
     ResponseResult<T> create(@RequestBody T obj);
@@ -37,7 +37,7 @@ public interface BaseController<T, Q> {
      * @param pageBean
      * @return
      */
-    ResponseResult<Page<T>> manualPage(@RequestBody Page<Q> pageBean);
+    ResponseResult<Page<V>> manualPage(@RequestBody Page<Q> pageBean);
 
 
     ResponseResult<List<T>> queryAll();

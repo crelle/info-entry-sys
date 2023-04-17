@@ -1,6 +1,8 @@
 package baseline.sysmgmt.service;
 
 import baseline.sysmgmt.pojo.query.MenuQuery;
+import baseline.sysmgmt.pojo.vo.MenuVo;
+import baseline.sysmgmt.pojo.vo.UserRoleVo;
 import baseline.sysmgmt.service.impl.BaseService;
 import baseline.common.pojo.vo.ResponseResult;
 import baseline.sysmgmt.pojo.entity.Menu;
@@ -17,7 +19,7 @@ import java.util.Set;
  * @author crelle
  * @since 2022-10-01 12:06:26
  */
-public interface MenuService extends IService<Menu>, BaseService<Menu, MenuQuery> {
+public interface MenuService extends IService<Menu>, BaseService<MenuVo,Menu, MenuQuery> {
     //根据菜单名称查询菜单信息
     Menu queryByName(String menuName);
 
