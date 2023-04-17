@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 
 /**
  * <p>
@@ -20,5 +22,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface DictionaryMapper extends BaseMapper<Dictionary> {
 
-    Page<DictionaryVo> queryFatherDicLimit(@Param("page") Page<Dictionary> page, @Param("param") DictionaryQuery departmentQuery);
+    Page<DictionaryVo> manualPage(@Param("page") Page<Dictionary> page, @Param("param") DictionaryQuery departmentQuery);
+
+    List<DictionaryVo> queryByParentId(@Param("parentId") String parentId);
 }

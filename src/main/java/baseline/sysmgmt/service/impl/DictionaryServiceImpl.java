@@ -62,6 +62,11 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
     public Page<DictionaryVo> manualPage(Page<DictionaryQuery> pageBean) {
         DictionaryQuery dictionaryQuery = pageBean.getRecords().get(0);
         Page<Dictionary> page = new Page<>();
-        return dictionaryMapper.queryFatherDicLimit(page, dictionaryQuery);
+        return dictionaryMapper.manualPage(page, dictionaryQuery);
+    }
+
+    @Override
+    public List<DictionaryVo> queryByParentId(String parentId) {
+        return dictionaryMapper.queryByParentId(parentId);
     }
 }

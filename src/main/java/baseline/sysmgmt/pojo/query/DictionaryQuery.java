@@ -1,12 +1,16 @@
 package baseline.sysmgmt.pojo.query;
 
 import baseline.sysmgmt.pojo.entity.Dictionary;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ApiModel(value = "DictionaryQuery对象", description = "字典表")
 public class DictionaryQuery extends Dictionary {
 
     @ApiModelProperty("子级名称")

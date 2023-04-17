@@ -32,7 +32,7 @@ import java.util.List;
 @Api(tags = "字典管理")
 @RestController
 @RequestMapping("/sysmgmt/dictionary")
-public class DictionaryController implements BaseController<DictionaryVo,Dictionary, DictionaryQuery> {
+public class DictionaryController implements BaseController<DictionaryVo, Dictionary, DictionaryQuery> {
     @Autowired
     private DictionaryService dictionaryService;
 
@@ -76,6 +76,9 @@ public class DictionaryController implements BaseController<DictionaryVo,Diction
         return ResponseResult.ok();
     }
 
+    @ApiOperation(value = "手动分页查询")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<Page<DictionaryVo>> manualPage(Page<DictionaryQuery> pageBean) {
         ResponseResult responseResult = ResponseResult.ok();
@@ -84,7 +87,7 @@ public class DictionaryController implements BaseController<DictionaryVo,Diction
         } catch (Exception e) {
             return ResponseResult.fail();
         }
-        return ResponseResult.ok();
+        return responseResult;
     }
 
     @Override
@@ -122,5 +125,19 @@ public class DictionaryController implements BaseController<DictionaryVo,Diction
             return ResponseResult.fail();
         }
         return ResponseResult.ok();
+    }
+
+    @ApiOperation(value = "查询子级菜单")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/queryByParentId/{parentId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<DictionaryVo> queryByParentId(@PathVariable(value = "parentId") String parentId) {
+        ResponseResult responseResult = ResponseResult.ok();
+        try {
+            responseResult.setData(dictionaryService.queryByParentId(parentId));
+        } catch (Exception e) {
+
+            return ResponseResult.fail();
+        }
+        return responseResult;
     }
 }

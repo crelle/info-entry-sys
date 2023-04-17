@@ -2,7 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="baseline.sysmgmt.mapper.DictionaryMapper">
 
-    <select id="queryFatherDicLimit" resultType="baseline.sysmgmt.pojo.vo.DictionaryVo">
+    <resultMap id="dictionaryVo" type="baseline.sysmgmt.pojo.vo.DictionaryVo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="enabled" property="enabled"/>
+        <collection property="children" ofType="baseline.sysmgmt.pojo.vo.DictionaryVo" column="id"
+                    javaType="java.util.ArrayList" select="queryByParentId"/>
+    </resultMap>
 
+    <select id="manualPage" resultMap="dictionaryVo">
+        SELECT distinct
+        parent.id,
+        parent.name,
+        parent.code,
+        parent.parent_id,
+        parent.create_time,
+        parent.create_by,
+        parent.update_time,
+        parent.update_by,
+        parent.enabled
+        FROM
+        t_dictionary parent left join
+        t_dictionary children
+        on children.parent_id = parent.id
+        <where>
+            and parent.parent_id is null
+            <if test="param.childrenName !=null and param.childrenName!=''">
+                and children.name LIKE concat('%',#{param.childrenName},'%')
+            </if>
+            <if test="param.name !=null and param.name!=''">
+                and parent.name LIKE concat('%',#{param.name},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByParentId" resultType="baseline.sysmgmt.pojo.vo.DictionaryVo">
+        SELECT
+        *
+        FROM
+        t_dictionary
+        <where>
+            <if test="parentId!=null and parentId!=''">
+                and parent_id = #{parentId}
+            </if>
+        </where>
     </select>
 </mapper>

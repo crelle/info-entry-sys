@@ -24,7 +24,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("t_dictionary")
-@ApiModel(value = "Dictionary对象", description = "字典表")
 public class Dictionary {
 
     @ApiModelProperty("主键")
