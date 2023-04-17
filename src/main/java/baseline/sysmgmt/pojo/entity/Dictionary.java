@@ -7,9 +7,11 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
+import java.util.List;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -61,6 +63,10 @@ public class Dictionary {
     @ApiModelProperty("账号是否可用，1可以，0不可用，默认1")
     @TableField("enabled")
     private Boolean enabled;
+
+    @ApiModelProperty("子集字典")
+    @TableField(exist = false)
+    private List<Dictionary> children;
 
 
 }

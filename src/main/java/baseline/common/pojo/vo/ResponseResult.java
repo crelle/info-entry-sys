@@ -26,7 +26,7 @@ public class ResponseResult<T> implements Serializable {
     @ApiModelProperty(value = "返回实体")
     private T data;
 
-    @ApiModelProperty(value = "总条数")
+    @ApiModelProperty(value = "总条数",hidden = true)
     private long total;
 
     public ResponseResult() {

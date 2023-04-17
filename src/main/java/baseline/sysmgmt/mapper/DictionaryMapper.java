@@ -25,4 +25,6 @@ public interface DictionaryMapper extends BaseMapper<Dictionary> {
     Page<DictionaryVo> manualPage(@Param("page") Page<Dictionary> page, @Param("param") DictionaryQuery departmentQuery);
 
     List<DictionaryVo> queryByParentId(@Param("parentId") String parentId);
+
+    List<DictionaryVo> queryByParentName(@Param("parentName") String parentName);
 }

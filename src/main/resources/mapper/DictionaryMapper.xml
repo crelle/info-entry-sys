@@ -53,4 +53,17 @@
             </if>
         </where>
     </select>
+
+    <select id="queryByParentName" resultMap="dictionaryVo">
+        SELECT
+        *
+        FROM
+        t_dictionary
+        <where>
+            and parent_id is null
+            <if test="parentName!=null and parentName!=''">
+                and name = #{parentName}
+            </if>
+        </where>
+    </select>
 </mapper>

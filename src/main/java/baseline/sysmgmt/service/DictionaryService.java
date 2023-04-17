@@ -18,5 +18,8 @@ import java.util.List;
  * @since 2022-12-23 05:23:32
  */
 public interface DictionaryService extends IService<Dictionary> , BaseService<DictionaryVo,Dictionary, DictionaryQuery> {
+
     List<DictionaryVo> queryByParentId(String parentId);
+
+    List<DictionaryVo> queryByParentName(String parentName);
 }

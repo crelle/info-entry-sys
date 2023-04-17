@@ -42,6 +42,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
     @Override
     public ResponseResult<Dictionary> create(Dictionary obj) {
         try {
+
             dictionaryService.create(obj);
         } catch (Exception e) {
             return ResponseResult.fail();
@@ -63,7 +64,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         return responseResult;
     }
 
-    @ApiOperation(value = "分页查询角色")
+    @ApiOperation(value = "分页查询", hidden = true)
     @ApiParam(required = true, name = "xx", value = "入参")
     @RequestMapping(value = "/page", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
@@ -127,7 +128,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         return ResponseResult.ok();
     }
 
-    @ApiOperation(value = "查询子级菜单")
+    @ApiOperation(value = "根据父级ID查询子级菜单")
     @ApiParam(required = true, name = "xx", value = "入参")
     @RequestMapping(value = "/queryByParentId/{parentId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<DictionaryVo> queryByParentId(@PathVariable(value = "parentId") String parentId) {
@@ -136,6 +137,19 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
             responseResult.setData(dictionaryService.queryByParentId(parentId));
         } catch (Exception e) {
 
+            return ResponseResult.fail();
+        }
+        return responseResult;
+    }
+
+    @ApiOperation(value = "根据父级名称精确查询菜单")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/queryByParentName/{parentName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<DictionaryVo> queryByParentName(@PathVariable(value = "parentName") String parentName) {
+        ResponseResult responseResult = ResponseResult.ok();
+        try {
+            responseResult.setData(dictionaryService.queryByParentName(parentName));
+        } catch (Exception e) {
             return ResponseResult.fail();
         }
         return responseResult;
