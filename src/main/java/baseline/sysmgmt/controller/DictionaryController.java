@@ -45,7 +45,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
 
             dictionaryService.create(obj);
         } catch (Exception e) {
-            return ResponseResult.fail();
+            throw  e;
         }
         return ResponseResult.ok();
     }
@@ -59,7 +59,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         try {
             responseResult.setData(dictionaryService.queryById(id));
         } catch (Exception e) {
-            return ResponseResult.fail();
+            throw  e;
         }
         return responseResult;
     }
@@ -72,7 +72,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         ResponseResult responseResult = ResponseResult.ok();
         try {
         } catch (Exception e) {
-            return ResponseResult.fail();
+            throw  e;
         }
         return ResponseResult.ok();
     }
@@ -86,7 +86,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         try {
             responseResult.setData(dictionaryService.manualPage(pageBean));
         } catch (Exception e) {
-            return ResponseResult.fail();
+            throw  e;
         }
         return responseResult;
     }
@@ -97,7 +97,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         try {
 
         } catch (Exception e) {
-            return ResponseResult.fail();
+            throw  e;
         }
         return ResponseResult.ok();
     }
@@ -110,7 +110,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         try {
             dictionaryService.updateById(obj);
         } catch (Exception e) {
-            return ResponseResult.fail();
+            throw  e;
         }
         return ResponseResult.ok();
     }
@@ -123,7 +123,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         try {
             dictionaryService.deleteById(id);
         } catch (Exception e) {
-            return ResponseResult.fail();
+            throw  e;
         }
         return ResponseResult.ok();
     }
@@ -137,7 +137,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
             responseResult.setData(dictionaryService.queryByParentId(parentId));
         } catch (Exception e) {
 
-            return ResponseResult.fail();
+            throw  e;
         }
         return responseResult;
     }
@@ -150,7 +150,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         try {
             responseResult.setData(dictionaryService.queryByParentName(parentName));
         } catch (Exception e) {
-            return ResponseResult.fail();
+            throw  e;
         }
         return responseResult;
     }

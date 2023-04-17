@@ -49,7 +49,7 @@ public class RoleMenuController {
         try {
             roleMenuService.updateRoleMenu(roles);
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
         return ResponseResult.ok();
 

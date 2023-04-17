@@ -120,7 +120,7 @@ public class UserController implements BaseController<UserVo,User, UserQuery> {
 
 
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
         return responseResult;
     }
@@ -138,7 +138,7 @@ public class UserController implements BaseController<UserVo,User, UserQuery> {
                 return ResultUtils.fail("用户或者密码不正确！");
             }
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
         return responseResult;
     }
@@ -152,7 +152,7 @@ public class UserController implements BaseController<UserVo,User, UserQuery> {
             User user = userService.queryById(id);
             responseResult.setData(user);
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
         return responseResult;
     }
@@ -183,7 +183,7 @@ public class UserController implements BaseController<UserVo,User, UserQuery> {
             Page<UserVo> page = userService.manualPage(pageBean);
             responseResult.setData(page);
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
         return responseResult;
     }
@@ -213,7 +213,7 @@ public class UserController implements BaseController<UserVo,User, UserQuery> {
                 responseResult.buildFail("没有此用户，无法更新！");
             }
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
         return responseResult;
     }

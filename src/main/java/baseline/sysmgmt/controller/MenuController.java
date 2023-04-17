@@ -47,7 +47,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
             }
             menuService.create(menu);
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
         return ResponseResult.ok();
     }
@@ -69,7 +69,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
             Menu menu = menuService.queryById(id);
             responseResult.setData(menu);
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
         return responseResult;
     }
@@ -81,7 +81,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
         try {
            return menuService.getMenuSort();
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
     }
 
@@ -96,7 +96,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
             Page<Menu> page = menuService.page(pageBean);
             responseResult.setData(page);
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
         return responseResult;
     }
@@ -126,7 +126,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
                 responseResult.buildFail("更新菜单失败！");
             }
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
         return responseResult;
     }
@@ -145,7 +145,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
         } catch (NoSuchElementException noSuchElementException) {
             responseResult.buildFail("没有此菜单！");
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
         return responseResult;
     }
@@ -157,7 +157,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
         try {
             menuService.updateParentMenu(menus);
         } catch (Exception e) {
-            throw new BusinessException(ResponseEnum.UNKNOWN);
+            throw  e;
         }
         return ResponseResult.ok();
     }

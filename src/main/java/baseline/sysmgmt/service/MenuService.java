@@ -24,7 +24,7 @@ public interface MenuService extends IService<Menu>, BaseService<MenuVo,Menu, Me
     Menu queryByName(String menuName);
 
     //修改菜单目录
-    ResponseResult<String> updateParentMenu(Set<Menu> menus);
+    ResponseResult<String>  updateParentMenu(Set<Menu> menus);
 
     //查询所有菜单 分级
     ResponseResult<List<Menu>> queryAllMenus();

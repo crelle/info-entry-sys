@@ -67,7 +67,7 @@ public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
             }
             roleService.create(role);
         } catch (Exception e) {
-            throw new BusinessException(e);
+            throw  e;
         }
         return responseResult;
     }
@@ -81,7 +81,7 @@ public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
             Role role = roleService.queryById(id);
             responseResult.setData(role);
         } catch (Exception e) {
-            throw new BusinessException(e);
+            throw  e;
         }
         return responseResult;
     }
@@ -118,7 +118,7 @@ public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
             List<Role> roles = roleService.queryAll();
             responseResult.setData(roles);
         } catch (Exception e) {
-            throw new BusinessException(e);
+            throw  e;
         }
         return responseResult;
     }
@@ -140,7 +140,7 @@ public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
                 responseResult.buildFail("更新角色失败！");
             }
         } catch (Exception e) {
-            throw new BusinessException(e);
+            throw  e;
         }
         return responseResult;
     }
