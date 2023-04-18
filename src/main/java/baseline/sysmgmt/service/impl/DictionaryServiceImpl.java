@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -59,12 +61,22 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
 
     @Override
     public boolean update(Dictionary object) {
-        return updateById(object);
+        List<Dictionary> dictionaryList = new ArrayList<>();
+        dictionaryList.addAll(object.getChildren());
+        dictionaryList.add(object);
+        return updateBatchById(dictionaryList);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean deleteById(String id) {
-        return removeById(id);
+        List<DictionaryVo> dictionaryVoList = dictionaryMapper.queryByParentId(id);
+        if (CollectionUtils.isNotEmpty(dictionaryVoList)) {
+            List<String> ids = dictionaryVoList.stream().map(DictionaryVo::getId).collect(Collectors.toList());
+            removeByIds(ids);
+        }
+        removeById(id);
+        return true;
     }
 
     @Override

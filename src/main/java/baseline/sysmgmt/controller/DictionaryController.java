@@ -12,11 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.management.Query;
 import java.util.List;
@@ -102,13 +98,25 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         return ResponseResult.ok();
     }
 
-    @ApiOperation(value = "更新字典")
+    @ApiOperation(value = "根据id更新字典" , hidden = true)
     @ApiParam(required = true, name = "xx", value = "入参")
     @RequestMapping(value = "/updateById", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
     public ResponseResult<String> updateById(String id, Dictionary obj) {
         try {
             dictionaryService.updateById(obj);
+        } catch (Exception e) {
+            throw  e;
+        }
+        return ResponseResult.ok();
+    }
+
+    @ApiOperation(value = "更新字典")
+    @ApiParam(required = true, name = "xx", value = "入参")
+    @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseResult<String> update(@RequestBody Dictionary obj) {
+        try {
+            dictionaryService.update(obj);
         } catch (Exception e) {
             throw  e;
         }
