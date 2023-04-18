@@ -30,3 +30,14 @@ create table t_asset
 
 alter table t_asset comment '资产表';
 
+
+ALTER TABLE `t_employee`
+ADD COLUMN `longitude` VARCHAR(255) NULL COMMENT '经度' AFTER `native_address`,
+ADD COLUMN `latitude` VARCHAR(255) NULL COMMENT '纬度' AFTER `longitude`;
+
+
+ALTER TABLE  `t_employee`
+ADD COLUMN `id` VARCHAR(255) NOT NULL AFTER `enabled`,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`job_no`, `id`);
+

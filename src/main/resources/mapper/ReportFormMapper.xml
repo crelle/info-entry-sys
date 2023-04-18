@@ -2,6 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="baseline.app.mapper.ReportFormMapper">
 
+    <resultMap id="employeeMap" type="baseline.app.pojo.vo.reportform.EmployeeAnalysisVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
+        <result column="birthday" property="birthday"/>
+        <result column="cell_phone" property="cellPhone"/>
+        <result column="email" property="email"/>
+        <result column="registered_residence" property="registeredResidence"/>
+        <result column="residence" property="residence"/>
+        <result column="school" property="school"/>
+        <result column="school_time" property="schoolTime"/>
+        <result column="working_hours" property="workingHours"/>
+        <result column="marriage" property="marriage"/>
+        <result column="child" property="child"/>
+        <result column="skill" property="skill"/>
+        <result column="job_no" property="jobNo"/>
+        <result column="time" property="time"/>
+        <result column="project_id" property="projectId"/>
+        <result column="post_id" property="postId"/>
+        <result column="t_p_project_id" property="tPProjectId"/>
+        <result column="native_address" property="nativeAddress"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+    </resultMap>
 
     <select id="departmentAnalysis" resultType="baseline.app.pojo.vo.reportform.DepartmentAnalysisVO">
 
@@ -21,6 +46,16 @@
 
     <select id="skillAnalysis" resultType="baseline.app.pojo.vo.reportform.SkillAnalysisVO">
 
+    </select>
+
+    <select id="employeeAnalysis" resultMap="employeeMap">
+        select * from t_employee
+        <where>
+            <if test="employeeAnalysisQuery.name!=null and employeeAnalysisQuery.name!=''">
+                and name like concat('',#{employeeAnalysisQuery.name},'')
+            </if>
+
+        </where>
     </select>
 
 </mapper>

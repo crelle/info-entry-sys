@@ -3,6 +3,9 @@ package baseline.app.mapper;
 import baseline.app.pojo.query.reportform.*;
 import baseline.app.pojo.vo.reportform.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface ReportFormMapper {
@@ -17,4 +20,6 @@ public interface ReportFormMapper {
     RegionAnalysisVO regionAnalysis(RegionAnalysisQuery regionAnalysisQuery);
 
     SkillAnalysisVO skillAnalysis(SkillAnalysisQuery skillAnalysisQuery);
+
+    List<EmployeeAnalysisVO> employeeAnalysis(@Param("employeeAnalysisQuery") EmployeeAnalysisQuery employeeAnalysisQuery);
 }

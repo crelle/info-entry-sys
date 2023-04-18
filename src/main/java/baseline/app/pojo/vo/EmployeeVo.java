@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -25,6 +26,10 @@ import java.util.Date;
 @TableName("t_employee")
 @ApiModel(value = "Employee对象", description = "员工表")
 public class EmployeeVo extends BaseDo {
+
+    @ApiModelProperty("员工姓名")
+    @TableId(value = "id" ,type = IdType.ASSIGN_UUID)
+    private String id;
 
     @ApiModelProperty("员工姓名")
     @TableField("name")
@@ -124,6 +129,9 @@ public class EmployeeVo extends BaseDo {
     @ApiModelProperty("户籍地址")
     @TableField("native_address")
     private String nativeAddress;
+
+    @ApiModelProperty("经纬度")
+    private List<String> value;
 
 
 }
