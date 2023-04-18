@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -36,13 +37,13 @@ public class Dictionary extends Validation {
     private String id;
 
     @NotNull(groups = {POST.class, PUT.class})
-    @Length(min = 2, max = 32, groups = {POST.class, PUT.class})
+    @Length(min = 1, max = 32, groups = {POST.class, PUT.class})
     @ApiModelProperty("父级名称")
     @TableField("name")
     private String name;
 
     @NotNull(groups = {POST.class, PUT.class})
-    @Length(min = 2, max = 32, groups = {POST.class, PUT.class})
+    @Length(min = 1, max = 32, groups = {POST.class, PUT.class})
     @ApiModelProperty("编码")
     @TableField("code")
     private String code;
@@ -73,6 +74,7 @@ public class Dictionary extends Validation {
 
     @ApiModelProperty("子集字典")
     @TableField(exist = false)
+    @Valid
     private List<Dictionary> children;
 
 
