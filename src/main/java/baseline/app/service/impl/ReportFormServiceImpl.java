@@ -1,12 +1,16 @@
 package baseline.app.service.impl;
 
 import baseline.app.mapper.ReportFormMapper;
+import baseline.app.pojo.dto.reportform.EmployeeAnalysisDto;
 import baseline.app.pojo.query.reportform.*;
 import baseline.app.pojo.vo.reportform.*;
 import baseline.app.service.ReportFormService;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,5 +43,24 @@ public class ReportFormServiceImpl implements ReportFormService {
     @Override
     public List<SkillAnalysisVO> skillAnalysis(SkillAnalysisQuery skillAnalysisQuery) {
         return null;
+    }
+
+    @Override
+    public List<EmployeeAnalysisVO> employeeAnalysis(EmployeeAnalysisQuery employeeAnalysisQuery) {
+        List<EmployeeAnalysisDto> employeeAnalysisDtos = reportFormMapper.employeeAnalysis(employeeAnalysisQuery);
+        if (CollectionUtils.isEmpty(employeeAnalysisDtos)) {
+            return null;
+        }
+        List<EmployeeAnalysisVO> list = new ArrayList<>(employeeAnalysisDtos.size());
+        employeeAnalysisDtos.forEach(employeeAnalysisDto -> {
+            EmployeeAnalysisVO employeeAnalysisVO = new EmployeeAnalysisVO();
+            BeanUtils.copyProperties(employeeAnalysisDto, employeeAnalysisVO);
+            List<String> value = new ArrayList<>(2);
+            value.add(employeeAnalysisDto.getLongitude());
+            value.add(employeeAnalysisDto.getLatitude());
+            employeeAnalysisVO.setValue(value);
+            list.add(employeeAnalysisVO);
+        });
+        return list;
     }
 }

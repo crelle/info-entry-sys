@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="baseline.app.mapper.ReportFormMapper">
 
-    <resultMap id="employeeMap" type="baseline.app.pojo.vo.reportform.EmployeeAnalysisVO">
+    <resultMap id="employeeMap" type="baseline.app.pojo.dto.reportform.EmployeeAnalysisDto">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="gender" property="gender"/>

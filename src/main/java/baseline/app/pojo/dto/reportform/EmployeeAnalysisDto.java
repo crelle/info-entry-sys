@@ -24,7 +24,7 @@ import java.util.Date;
 @Setter
 @TableName("t_employee")
 @ApiModel(value = "Employee对象", description = "员工表")
-public class EmployeeDto extends BaseDo {
+public class EmployeeAnalysisDto extends BaseDo {
 
     @ApiModelProperty("员工姓名")
     @TableId(value = "id" ,type = IdType.ASSIGN_UUID)
@@ -129,5 +129,9 @@ public class EmployeeDto extends BaseDo {
     @TableField("native_address")
     private String nativeAddress;
 
+    @ApiModelProperty("经度")
+    private String longitude;
 
+    @ApiModelProperty("经度")
+    private String latitude;
 }

@@ -31,7 +31,7 @@ public class ExceptionInterceptor {
     @ExceptionHandler(value = Exception.class)
     public ResponseResult exceptionHandler(Exception e) {
         return ResponseResult.fail(ResponseEnum.UNKNOWN.getCode(),
-                ResponseEnum.UNKNOWN.getMessage());
+                e.getMessage());
     }
 
     /**

@@ -68,4 +68,13 @@ public class ReportFormController {
         responseResult.setData(reportFormService.skillAnalysis(skillAnalysisQuery));
         return responseResult;
     }
+
+    @ApiOperation(value = "员工分析")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/employeeAnalysis", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    ResponseResult<List<SkillAnalysisVO>> employeeAnalysis(@RequestBody EmployeeAnalysisQuery employeeAnalysisQuery) {
+        ResponseResult responseResult = new ResponseResult<>();
+        responseResult.setData(reportFormService.employeeAnalysis(employeeAnalysisQuery));
+        return responseResult;
+    }
 }
