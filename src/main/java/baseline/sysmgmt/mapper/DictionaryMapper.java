@@ -22,7 +22,7 @@ import java.util.List;
 @Mapper
 public interface DictionaryMapper extends BaseMapper<Dictionary> {
 
-    Page<DictionaryVo> manualPage(@Param("page") Page<Dictionary> page, @Param("param") DictionaryQuery departmentQuery);
+    List<DictionaryVo> manualPage(@Param("param") DictionaryQuery departmentQuery);
 
     List<DictionaryVo> queryByParentId(@Param("parentId") String parentId);
 

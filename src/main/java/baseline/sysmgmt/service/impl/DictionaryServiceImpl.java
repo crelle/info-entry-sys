@@ -9,6 +9,8 @@ import baseline.sysmgmt.service.DictionaryService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,8 +89,13 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
     @Override
     public Page<DictionaryVo> manualPage(Page<DictionaryQuery> pageBean) {
         DictionaryQuery dictionaryQuery = pageBean.getRecords().get(0);
-        Page<Dictionary> page = new Page<>();
-        return dictionaryMapper.manualPage(page, dictionaryQuery);
+        PageHelper.startPage((int) pageBean.getCurrent(), (int) pageBean.getSize());
+        List<DictionaryVo>  dictionaryVoList =  dictionaryMapper.manualPage(dictionaryQuery);
+        PageInfo<DictionaryVo> pageInfo = new PageInfo<>(dictionaryVoList);
+        Page<DictionaryVo> result = new Page<>();
+        result.setRecords(pageInfo.getList());
+        result.setTotal(pageInfo.getTotal());
+        return result;
     }
 
     @Override
