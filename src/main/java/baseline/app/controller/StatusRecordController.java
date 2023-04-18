@@ -9,6 +9,7 @@ import baseline.app.service.StatusRecordService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/app/status-record")
+@Api(tags = "状态服务")
 public class StatusRecordController implements BaseController<StatusRecordVo,StatusRecord, StatusRecordQuery> {
     @Autowired
     private StatusRecordService statusRecordService;

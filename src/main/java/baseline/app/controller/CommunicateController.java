@@ -8,6 +8,7 @@ import baseline.app.service.CommunicateService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/app/communicate")
+@Api(tags = "沟通记录服务")
 public class CommunicateController implements BaseController<CommunicateVo, Communicate, CommunicateQuery> {
     @Autowired
     private CommunicateService communicateService;

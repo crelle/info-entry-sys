@@ -11,6 +11,7 @@ import baseline.app.service.AssetService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/app/asset")
+@Api(tags = "资产管理")
 public class AssetController implements BaseController<AssetVo, Asset, AssetQuery> {
     @Autowired
     private AssetService assetService;
