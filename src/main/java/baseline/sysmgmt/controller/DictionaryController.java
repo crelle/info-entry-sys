@@ -12,9 +12,11 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.Query;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -36,12 +38,12 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Dictionary> create(Dictionary obj) {
+    public ResponseResult<Dictionary> create(@RequestBody @Validated(Dictionary.POST.class) Dictionary obj) {
         try {
 
             dictionaryService.create(obj);
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return ResponseResult.ok();
     }
@@ -55,7 +57,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         try {
             responseResult.setData(dictionaryService.queryById(id));
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return responseResult;
     }
@@ -68,7 +70,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         ResponseResult responseResult = ResponseResult.ok();
         try {
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return ResponseResult.ok();
     }
@@ -82,7 +84,7 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         try {
             responseResult.setData(dictionaryService.manualPage(pageBean));
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return responseResult;
     }
@@ -93,20 +95,20 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
         try {
 
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return ResponseResult.ok();
     }
 
-    @ApiOperation(value = "根据id更新字典" , hidden = true)
+    @ApiOperation(value = "根据id更新字典", hidden = true)
     @ApiParam(required = true, name = "xx", value = "入参")
     @RequestMapping(value = "/updateById", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> updateById(String id, Dictionary obj) {
+    public ResponseResult<String> updateById(String id, @Validated(Dictionary.PUT.class) Dictionary obj) {
         try {
             dictionaryService.updateById(obj);
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return ResponseResult.ok();
     }
@@ -114,11 +116,11 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
     @ApiOperation(value = "更新字典")
     @ApiParam(required = true, name = "xx", value = "入参")
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> update(@RequestBody Dictionary obj) {
+    public ResponseResult<String> update(@RequestBody @Validated(Dictionary.PUT.class) Dictionary obj) {
         try {
             dictionaryService.update(obj);
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return ResponseResult.ok();
     }
@@ -127,11 +129,11 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
     @ApiParam(required = true, name = "xx", value = "入参")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> deleteById(@PathVariable(value = "id") String id) {
+    public ResponseResult<String> deleteById(@PathVariable(value = "id") @NotNull String id) {
         try {
             dictionaryService.deleteById(id);
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return ResponseResult.ok();
     }
@@ -139,13 +141,13 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
     @ApiOperation(value = "根据父级ID查询子级菜单")
     @ApiParam(required = true, name = "xx", value = "入参")
     @RequestMapping(value = "/queryByParentId/{parentId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<DictionaryVo> queryByParentId(@PathVariable(value = "parentId") String parentId) {
+    public ResponseResult<DictionaryVo> queryByParentId(@PathVariable(value = "parentId") @NotNull String parentId) {
         ResponseResult responseResult = ResponseResult.ok();
         try {
             responseResult.setData(dictionaryService.queryByParentId(parentId));
         } catch (Exception e) {
 
-            throw  e;
+            throw e;
         }
         return responseResult;
     }
@@ -153,12 +155,12 @@ public class DictionaryController implements BaseController<DictionaryVo, Dictio
     @ApiOperation(value = "根据父级名称精确查询菜单")
     @ApiParam(required = true, name = "xx", value = "入参")
     @RequestMapping(value = "/queryByParentName/{parentName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<DictionaryVo> queryByParentName(@PathVariable(value = "parentName") String parentName) {
+    public ResponseResult<DictionaryVo> queryByParentName(@PathVariable(value = "parentName") @NotNull String parentName) {
         ResponseResult responseResult = ResponseResult.ok();
         try {
             responseResult.setData(dictionaryService.queryByParentName(parentName));
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return responseResult;
     }

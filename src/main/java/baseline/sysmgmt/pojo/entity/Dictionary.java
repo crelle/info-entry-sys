@@ -1,5 +1,6 @@
 package baseline.sysmgmt.pojo.entity;
 
+import baseline.common.pojo.validation.Validation;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -9,11 +10,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import java.util.List;
 
-import io.swagger.annotations.ApiModel;
+
 import io.swagger.annotations.ApiModelProperty;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -26,16 +29,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("t_dictionary")
-public class Dictionary {
-
+public class Dictionary extends Validation {
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @NotNull(groups = {DELETE.class, PUT.class})
     private String id;
 
+    @NotNull(groups = {POST.class, PUT.class})
+    @Length(min = 2, max = 32, groups = {POST.class, PUT.class})
     @ApiModelProperty("父级名称")
     @TableField("name")
     private String name;
 
+    @NotNull(groups = {POST.class, PUT.class})
+    @Length(min = 2, max = 32, groups = {POST.class, PUT.class})
     @ApiModelProperty("编码")
     @TableField("code")
     private String code;
