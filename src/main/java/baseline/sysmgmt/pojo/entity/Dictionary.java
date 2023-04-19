@@ -17,6 +17,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -33,16 +34,16 @@ import javax.validation.constraints.NotNull;
 public class Dictionary extends Validation {
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    @NotNull(groups = {DELETE.class, PUT.class})
+    @NotBlank(groups = {DELETE.class, PUT.class})
     private String id;
 
-    @NotNull(groups = {POST.class, PUT.class})
+    @NotBlank(groups = {POST.class, PUT.class})
     @Length(min = 1, max = 32, groups = {POST.class, PUT.class})
     @ApiModelProperty("父级名称")
     @TableField("name")
     private String name;
 
-    @NotNull(groups = {POST.class, PUT.class})
+    @NotBlank(groups = {POST.class, PUT.class})
     @Length(min = 1, max = 32, groups = {POST.class, PUT.class})
     @ApiModelProperty("编码")
     @TableField("code")

@@ -32,7 +32,6 @@ public class BaseDo {
     @TableField("enabled")
     private Boolean enabled;
 
-
     public interface POST {
     }
 
@@ -44,4 +43,6 @@ public class BaseDo {
 
     public interface GET {
     }
+
+
 }

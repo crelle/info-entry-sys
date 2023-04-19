@@ -116,7 +116,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                     .eq("account_non_locked", request.isAccountNonLocked())
                     .eq("enabled", request.isEnabled())
                     .like("user_phone", request.getUserPhone())
-                    .like("username", request.getUsername());
+                    .like("username", request.getUsername()).orderByDesc("update_time");
         }
         Page<User> userPage = super.page(page, queryWrapper);
         userPage.getRecords().forEach(user -> {

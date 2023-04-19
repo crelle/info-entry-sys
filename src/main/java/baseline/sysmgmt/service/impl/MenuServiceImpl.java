@@ -62,8 +62,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         LambdaQueryWrapper<Menu> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (!CollectionUtils.isEmpty(page.getRecords())) {
             Menu menu = page.getRecords().get(0);
-            lambdaQueryWrapper.like(StringUtils.isNotBlank(menu.getName()), Menu::getName, menu.getName()).eq(null != menu.getRequireAuth(), Menu::getRequireAuth, menu.getRequireAuth())
-                    .eq(null != menu.getEnabled(), Menu::getEnabled, menu.getEnabled()).eq(StringUtils.isNotBlank(menu.getMenuType()), Menu::getMenuType, menu.getMenuType());
+            lambdaQueryWrapper.like(StringUtils.isNotBlank(menu.getName()), Menu::getName, menu.getName())
+                    .eq(null != menu.getRequireAuth(), Menu::getRequireAuth, menu.getRequireAuth())
+                    .eq(null != menu.getEnabled(), Menu::getEnabled, menu.getEnabled())
+                    .eq(StringUtils.isNotBlank(menu.getMenuType()), Menu::getMenuType, menu.getMenuType())
+                    .orderByDesc(Menu::getUpdateTime);
         }
         return super.page(page, lambdaQueryWrapper);
     }

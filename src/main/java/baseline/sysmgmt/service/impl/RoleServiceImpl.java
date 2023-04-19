@@ -105,7 +105,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         LambdaQueryWrapper<Role> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         if (!CollectionUtils.isEmpty(page.getRecords())) {
             Role role = page.getRecords().get(0);
-            lambdaQueryWrapper.like(StringUtils.isNotBlank(role.getNameZh()), Role::getNameZh, role.getNameZh());
+            lambdaQueryWrapper.like(StringUtils.isNotBlank(role.getNameZh()), Role::getNameZh, role.getNameZh())
+                    .orderByDesc(Role::getUpdateTime);
         }
         return super.page(page, lambdaQueryWrapper);
     }
