@@ -233,8 +233,9 @@ public class UserController implements BaseController<UserVo, User, UserQuery> {
         //删除用户前 解除 用户和客户关系
         List<Customer> customerList = customerService
                 .list()
-                .stream()
-                .filter(customer -> customer.getUserId().equals(user.getUsername()))
+                .stream().filter(customer ->
+                        StringUtils.isNotBlank(customer.getUserId()))
+                .filter(customer -> customer.getUserId().equals(user.getId()))
                 .collect(Collectors.toList());
         if (!customerList.isEmpty()) {
             responseResult.buildFail("有客户在使用此用户，无法删除！");
@@ -242,8 +243,8 @@ public class UserController implements BaseController<UserVo, User, UserQuery> {
         }
         List<Department> departmentList = departmentService
                 .list()
-                .stream()
-                .filter(department -> department.getUserId().equals(user.getUsername()))
+                .stream().filter(department -> StringUtils.isNotBlank(department.getUserId()))
+                .filter(department -> department.getUserId().equals(user.getId()))
                 .collect(Collectors.toList());
         if (!departmentList.isEmpty()) {
             responseResult.buildFail("有部门在使用此用户，无法删除！");
