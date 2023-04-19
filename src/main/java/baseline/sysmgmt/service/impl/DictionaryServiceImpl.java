@@ -62,10 +62,20 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
         return list();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean update(Dictionary object) {
         List<Dictionary> dictionaryList = new ArrayList<>();
-        dictionaryList.addAll(object.getChildren());
+        if (CollectionUtils.isNotEmpty(object.getChildren())) {
+            object.getChildren().forEach(dictionary -> {
+                //没有主键id，执行新增操作
+                if (StringUtils.isBlank(dictionary.getId())) {
+                    dictionary.setParentId(object.getId());
+                    this.save(dictionary);
+                }
+            });
+            dictionaryList.addAll(object.getChildren());
+        }
         dictionaryList.add(object);
         return updateBatchById(dictionaryList);
     }
@@ -90,7 +100,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
     @Override
     public Page<DictionaryVo> manualPage(Page<DictionaryQuery> pageBean) {
         DictionaryQuery dictionaryQuery = pageBean.getRecords().get(0);
-        List<DictionaryVo>  dictionaryVoList =  dictionaryMapper.manualPage(dictionaryQuery);
+        List<DictionaryVo> dictionaryVoList = dictionaryMapper.manualPage(dictionaryQuery);
         PageInfo<DictionaryVo> pageInfo = new PageInfo<>(dictionaryVoList);
         Page<DictionaryVo> result = new Page<>();
         result.setRecords(pageInfo.getList());
