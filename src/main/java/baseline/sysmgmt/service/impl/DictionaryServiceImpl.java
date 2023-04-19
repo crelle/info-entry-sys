@@ -1,5 +1,6 @@
 package baseline.sysmgmt.service.impl;
 
+import baseline.common.annotation.EnablePagination;
 import baseline.common.exception.BusinessException;
 import baseline.sysmgmt.pojo.entity.Dictionary;
 import baseline.sysmgmt.mapper.DictionaryMapper;
@@ -89,7 +90,6 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
     @Override
     public Page<DictionaryVo> manualPage(Page<DictionaryQuery> pageBean) {
         DictionaryQuery dictionaryQuery = pageBean.getRecords().get(0);
-        PageHelper.startPage((int) pageBean.getCurrent(), (int) pageBean.getSize());
         List<DictionaryVo>  dictionaryVoList =  dictionaryMapper.manualPage(dictionaryQuery);
         PageInfo<DictionaryVo> pageInfo = new PageInfo<>(dictionaryVoList);
         Page<DictionaryVo> result = new Page<>();
