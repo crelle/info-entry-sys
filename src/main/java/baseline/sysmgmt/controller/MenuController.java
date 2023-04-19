@@ -16,8 +16,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 /**
@@ -31,7 +33,7 @@ import java.util.*;
 @Api(tags = "菜单管理")
 @RestController
 @RequestMapping("/sysmgmt/menu")
-public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
+public class MenuController implements BaseController<MenuVo, Menu, MenuQuery> {
 
     @Autowired
     private MenuService menuService;
@@ -39,7 +41,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
     @ApiOperation(value = "创建菜单")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<Menu> create(@RequestBody Menu menu) {
+    public ResponseResult<Menu> create(@RequestBody @Validated(Menu.POST.class) Menu menu) {
         try {
             Menu menus = menuService.queryByName(menu.getName());
             if (null != menus) {
@@ -47,7 +49,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
             }
             menuService.create(menu);
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return ResponseResult.ok();
     }
@@ -69,7 +71,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
             Menu menu = menuService.queryById(id);
             responseResult.setData(menu);
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return responseResult;
     }
@@ -79,9 +81,9 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
     @RequestMapping(value = "/getMenuSort", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<Integer> getMenuSort() {
         try {
-           return menuService.getMenuSort();
+            return menuService.getMenuSort();
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
     }
 
@@ -96,7 +98,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
             Page<Menu> page = menuService.page(pageBean);
             responseResult.setData(page);
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return responseResult;
     }
@@ -112,7 +114,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
     @ApiOperation(value = "根据菜单标识更新菜单")
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> updateById(@PathVariable String id, @RequestBody Menu menu) {
+    public ResponseResult<String> updateById(@PathVariable @NotNull String id, @RequestBody @Validated(Menu.PUT.class) Menu menu) {
         ResponseResult<String> responseResult = ResponseResult.ok();
         try {
             Menu oldMenu = menuService.queryById(id);
@@ -126,7 +128,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
                 responseResult.buildFail("更新菜单失败！");
             }
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return responseResult;
     }
@@ -134,7 +136,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
     @ApiOperation(value = "根据菜单标识删除菜单")
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> deleteById(@RequestBody String id) {
+    public ResponseResult<String> deleteById(@RequestBody @NotNull String id) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
             if (!menuService.deleteById(id)) {
@@ -145,7 +147,7 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
         } catch (NoSuchElementException noSuchElementException) {
             responseResult.buildFail("没有此菜单！");
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return responseResult;
     }
@@ -153,11 +155,11 @@ public class MenuController implements BaseController<MenuVo,Menu, MenuQuery> {
     @ApiOperation(value = "修改菜单目录")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/updateMenu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> updateMenu(@RequestBody Set<Menu> menus) {
+    public ResponseResult<String> updateMenu(@RequestBody @Validated(Menu.PUT.class) Set<Menu> menus) {
         try {
             menuService.updateParentMenu(menus);
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return ResponseResult.ok();
     }

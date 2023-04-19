@@ -19,8 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -36,7 +38,7 @@ import java.util.stream.Collectors;
 @Api(tags = "角色服务")
 @RestController
 @RequestMapping("/sysmgmt/role")
-public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
+public class RoleController implements BaseController<RoleVo, Role, RoleQuery> {
 
     @Autowired
     private RoleService roleService;
@@ -48,7 +50,7 @@ public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
     @ApiOperation(value = "创建角色")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<Role> create(@RequestBody Role role) {
+    public ResponseResult<Role> create(@RequestBody @Validated(Role.POST.class) Role role) {
         ResponseResult<Role> responseResult = new ResponseResult<>();
         try {
             List<Role> role1 = roleService.queryByName(role.getName());
@@ -67,7 +69,7 @@ public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
             }
             roleService.create(role);
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return responseResult;
     }
@@ -81,7 +83,7 @@ public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
             Role role = roleService.queryById(id);
             responseResult.setData(role);
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return responseResult;
     }
@@ -118,7 +120,7 @@ public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
             List<Role> roles = roleService.queryAll();
             responseResult.setData(roles);
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return responseResult;
     }
@@ -126,7 +128,7 @@ public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
     @ApiOperation(value = "根据角色标识更新角色")
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> updateById(@PathVariable String id, @RequestBody Role role) {
+    public ResponseResult<String> updateById(@PathVariable @NotNull String id, @RequestBody @Validated(Role.PUT.class) Role role) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         try {
             Role oldRole = roleService.queryById(id);
@@ -140,7 +142,7 @@ public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
                 responseResult.buildFail("更新角色失败！");
             }
         } catch (Exception e) {
-            throw  e;
+            throw e;
         }
         return responseResult;
     }
@@ -148,7 +150,7 @@ public class RoleController implements BaseController<RoleVo,Role, RoleQuery> {
     @ApiOperation(value = "根据角色标识删除角色")
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> deleteById(@RequestBody String id) {
+    public ResponseResult<String> deleteById(@RequestBody @NotNull String id) {
         ResponseResult<String> responseResult = new ResponseResult<>();
         // 判断角色与用户之间的关系
         List<UserRole> userRoleList = userRoleService

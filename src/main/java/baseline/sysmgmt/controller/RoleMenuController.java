@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -45,7 +46,7 @@ public class RoleMenuController {
     @ApiOperation(value = "编辑角色对应的菜单")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/updateMenu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<String> updateRoleMenu(@RequestBody Role roles) {
+    public ResponseResult<String> updateRoleMenu(@RequestBody @Validated(Role.PUT.class) Role roles) {
         try {
             roleMenuService.updateRoleMenu(roles);
         } catch (Exception e) {

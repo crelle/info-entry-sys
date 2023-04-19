@@ -31,4 +31,17 @@ public class BaseDo {
     @ApiModelProperty("是否可用，1可用，0不可用，默认1")
     @TableField("enabled")
     private Boolean enabled;
+
+
+    public interface POST {
+    }
+
+    public interface DELETE {
+    }
+
+    public interface PUT {
+    }
+
+    public interface GET {
+    }
 }
