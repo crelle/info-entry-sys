@@ -29,7 +29,11 @@ public class ReportFormController {
     @RequestMapping(value = "/departmentAnalysis", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseResult<List<DepartmentAnalysisVO>> departmentAnalysis(@RequestBody DepartmentAnalysisQuery departmentAnalysisQuery) {
         ResponseResult responseResult = new ResponseResult<>();
-        responseResult.setData(reportFormService.departmentAnalysis(departmentAnalysisQuery));
+        try {
+            responseResult.setData(reportFormService.departmentAnalysis(departmentAnalysisQuery));
+        } catch (Exception e) {
+            throw e;
+        }
         return responseResult;
     }
 
@@ -38,7 +42,11 @@ public class ReportFormController {
     @RequestMapping(value = "/projectGapAnalysis", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseResult<List<ProjectGapAnalysisVO>> projectGapAnalysis(@RequestBody ProjectGapAnalysisQuery projectGapAnalysisQuery) {
         ResponseResult responseResult = new ResponseResult<>();
-        responseResult.setData(reportFormService.projectGapAnalysis(projectGapAnalysisQuery));
+        try {
+            responseResult.setData(reportFormService.projectGapAnalysis(projectGapAnalysisQuery));
+        } catch (Exception e) {
+            throw e;
+        }
         return responseResult;
     }
 
@@ -74,7 +82,24 @@ public class ReportFormController {
     @RequestMapping(value = "/employeeAnalysis", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseResult<List<SkillAnalysisVO>> employeeAnalysis(@RequestBody EmployeeAnalysisQuery employeeAnalysisQuery) {
         ResponseResult responseResult = new ResponseResult<>();
-        responseResult.setData(reportFormService.employeeAnalysis(employeeAnalysisQuery));
+        try {
+            responseResult.setData(reportFormService.employeeAnalysis(employeeAnalysisQuery));
+        } catch (Exception e) {
+            throw e;
+        }
+        return responseResult;
+    }
+
+    @ApiOperation(value = "工龄分布")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/employeeSeniority", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    ResponseResult<List<EmployeeSeniorityVO>> employeeSeniority(@RequestBody EmployeeSeniorityQuery employeeSeniorityQuery) {
+        ResponseResult responseResult = new ResponseResult<>();
+        try {
+            responseResult.setData(reportFormService.employeeSeniority(employeeSeniorityQuery));
+        } catch (Exception e) {
+            throw e;
+        }
         return responseResult;
     }
 }

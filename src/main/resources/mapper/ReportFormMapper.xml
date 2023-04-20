@@ -58,4 +58,29 @@
         </where>
     </select>
 
+    <select id="employeeSeniority" resultType="baseline.app.pojo.dto.reportform.EmployeeSeniorityDto">
+        SELECT
+        working_hours AS seniority, COUNT(1) AS num
+        FROM
+        (SELECT
+        emp.*
+        FROM
+        t_employee emp
+        LEFT JOIN t_project pro ON emp.project_id = pro.project_id
+        LEFT JOIN t_region reg ON reg.region_id = pro.region_id
+        left join t_department dept on dept.department_id = pro.department_id
+        <where>
+            <if test="param.regionName!=null and param.regionName!=''">
+                and reg.region_name = #{param.regionName}
+            </if>
+            <if test="param.departmentName!=null and param.departmentName!=''">
+                and dept.department = #{param.departmentName}
+            </if>
+        </where>
+        ) temp
+        WHERE
+        temp.working_hours IS NOT NULL
+        GROUP BY temp.working_hours;
+    </select>
+
 </mapper>

@@ -2,6 +2,8 @@ package baseline.app.service;
 
 import baseline.app.pojo.query.reportform.*;
 import baseline.app.pojo.vo.reportform.*;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -20,4 +22,6 @@ public interface ReportFormService {
     List<SkillAnalysisVO> skillAnalysis(SkillAnalysisQuery skillAnalysisQuery);
 
     List<EmployeeAnalysisVO> employeeAnalysis(EmployeeAnalysisQuery employeeAnalysisQuery);
+
+    List<EmployeeSeniorityVO>  employeeSeniority(@Param("param") EmployeeSeniorityQuery employeeSeniorityQuery);
 }
