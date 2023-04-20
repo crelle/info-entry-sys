@@ -24,10 +24,10 @@ import java.util.List;
  */
 @TableName("t_user")
 @ApiModel(value = "User对象", description = "")
-public class User  extends Validation implements UserDetails  {
+public class User extends Validation implements UserDetails {
 
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    @NotBlank(groups = {DELETE.class,PUT.class})
+    @NotBlank(groups = {DELETE.class, PUT.class})
     private String id;
 
     @TableField("account_non_expired")
@@ -46,7 +46,6 @@ public class User  extends Validation implements UserDetails  {
     private String password;
 
     @TableField("user_email")
-    @NotBlank(groups = {POST.class})
     private String userEmail;
 
     @TableField("user_nick_name")
@@ -76,7 +75,7 @@ public class User  extends Validation implements UserDetails  {
     @TableField("create_by")
     private String createBy;
 
-    @TableField("update_time")
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     @TableField("update_by")
@@ -84,8 +83,6 @@ public class User  extends Validation implements UserDetails  {
 
     @TableField(exist = false)
     private List<Role> roles;
-
-
 
 
     /**

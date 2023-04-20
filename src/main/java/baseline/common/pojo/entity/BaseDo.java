@@ -21,7 +21,7 @@ public class BaseDo {
     private String createBy;
 
     @ApiModelProperty("修改时间")
-    @TableField("update_time")
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     @ApiModelProperty("修改人")
