@@ -96,7 +96,9 @@ public class ReportFormController {
     ResponseResult<List<EmployeeSeniorityVO>> employeeSeniority(@RequestBody EmployeeSeniorityQuery employeeSeniorityQuery) {
         ResponseResult responseResult = new ResponseResult<>();
         try {
-            responseResult.setData(reportFormService.employeeSeniority(employeeSeniorityQuery));
+            List<EmployeeSeniorityVO> employeeSeniorityVOS = reportFormService.employeeSeniority(employeeSeniorityQuery);
+            responseResult.setData(employeeSeniorityVOS);
+            responseResult.setTotal(employeeSeniorityVOS.stream().map(EmployeeSeniorityVO::getNum).count());
         } catch (Exception e) {
             throw e;
         }
