@@ -1,5 +1,6 @@
 package baseline.app.mapper;
 
+import baseline.app.pojo.dto.reportform.EmployeeAgeDto;
 import baseline.app.pojo.dto.reportform.EmployeeAnalysisDto;
 import baseline.app.pojo.dto.reportform.EmployeeSeniorityDto;
 import baseline.app.pojo.query.reportform.*;
@@ -25,7 +26,9 @@ public interface ReportFormMapper {
 
     List<EmployeeAnalysisDto> employeeAnalysis(@Param("employeeAnalysisQuery") EmployeeAnalysisQuery employeeAnalysisQuery);
 
-    List<EmployeeSeniorityDto>  employeeSeniority(@Param("param") EmployeeSeniorityQuery employeeSeniorityQuery);
+    List<EmployeeSeniorityDto> employeeSeniority(@Param("param") EmployeeSeniorityQuery employeeSeniorityQuery);
+
+    List<EmployeeAgeDto> employeeAge(@Param("param") EmployeeAgeQuery employeeAgeQuery);
 
 
 }

@@ -1,5 +1,6 @@
 package baseline.app.controller;
 
+import baseline.app.pojo.dto.reportform.EmployeeAgeDto;
 import baseline.app.pojo.query.reportform.*;
 import baseline.app.pojo.vo.reportform.*;
 import baseline.app.service.ReportFormService;
@@ -99,6 +100,21 @@ public class ReportFormController {
             List<EmployeeSeniorityVO> employeeSeniorityVOS = reportFormService.employeeSeniority(employeeSeniorityQuery);
             responseResult.setData(employeeSeniorityVOS);
             responseResult.setTotal(employeeSeniorityVOS.stream().map(EmployeeSeniorityVO::getNum).count());
+        } catch (Exception e) {
+            throw e;
+        }
+        return responseResult;
+    }
+
+    @ApiOperation(value = "年龄分布")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/employeeAge", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    ResponseResult<List<EmployeeAgeVO>> employeeAge(@RequestBody EmployeeAgeQuery employeeAgeQuery) {
+        ResponseResult responseResult = new ResponseResult<>();
+        try {
+            List<EmployeeAgeVO> employeeAgeVOS = reportFormService.employeeAge(employeeAgeQuery);
+            responseResult.setData(employeeAgeVOS);
+            responseResult.setTotal(employeeAgeVOS.stream().map(EmployeeAgeVO::getNum).count());
         } catch (Exception e) {
             throw e;
         }

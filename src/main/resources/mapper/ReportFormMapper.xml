@@ -83,4 +83,29 @@
         GROUP BY temp.working_hours;
     </select>
 
+    <select id="employeeAge" resultType="baseline.app.pojo.dto.reportform.EmployeeAgeDto">
+        SELECT
+        birthdayYear, COUNT(1) AS num
+        FROM
+        (SELECT
+        year(emp.birthday) as birthdayYear
+        FROM
+        t_employee emp
+        LEFT JOIN t_project pro ON emp.project_id = pro.project_id
+        LEFT JOIN t_region reg ON reg.region_id = pro.region_id
+        left join t_department dept on dept.department_id = pro.department_id
+        <where>
+            <if test="param.regionName!=null and param.regionName!=''">
+                and reg.region_name = #{param.regionName}
+            </if>
+            <if test="param.departmentName!=null and param.departmentName!=''">
+                and dept.department = #{param.departmentName}
+            </if>
+        </where>
+        ) temp
+        WHERE
+        temp.birthdayYear IS NOT NULL
+        GROUP BY temp.birthdayYear;
+    </select>
+
 </mapper>
