@@ -8,9 +8,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author crelle
@@ -18,5 +20,6 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface PostMapper extends BaseMapper<Post> {
-    Page<PostVo> manualPage(@Param("page") Page<PostQuery> page,@Param("param") PostQuery postQuery);
+
+    List<PostVo> manualPage(@Param("param") PostQuery postQuery);
 }

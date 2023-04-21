@@ -5,6 +5,7 @@ import baseline.app.pojo.entity.Post;
 import baseline.app.pojo.query.PostQuery;
 import baseline.app.pojo.vo.PostVo;
 import baseline.app.service.PostService;
+import baseline.common.annotation.EnablePagination;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -108,6 +109,7 @@ public class PostController implements BaseController<PostVo,Post, PostQuery> {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
+    @EnablePagination
     public ResponseResult<Page<PostVo>> manualPage(Page<PostQuery> pageBean) {
         ResponseResult result = new ResponseResult();
         result.setData(postService.manualPage(pageBean));

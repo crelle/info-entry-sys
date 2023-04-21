@@ -10,6 +10,7 @@ import baseline.app.service.PostService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,15 +74,18 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     @Override
     public Page<PostVo> manualPage(Page<PostQuery> pageBean) {
         PostQuery postQuery = pageBean.getRecords().get(0);
-        Page<PostQuery> postQueryPage = new Page<>();
-        Page<PostVo> postVoPage = postMapper.manualPage(postQueryPage, postQuery);
-        List<PostVo> records = postVoPage.getRecords();
+        List<PostVo> postVoList = postMapper.manualPage(postQuery);
+        //转化为PageInfo对象获取总条数
+        PageInfo<PostVo> postVoPageInfo = new PageInfo<>(postVoList);
+        Page<PostVo> result = new Page<>();
+        //设置总条数
+        result.setTotal(postVoPageInfo.getTotal());
         List<PostVo> postVos = new ArrayList<>();
-        for (PostVo record : records) {
+        for (PostVo record : postVoList) {
             int postSize = employeeService
                     .list()
                     .stream()
-                    .filter(employee -> employee.getPostId().equals(record.getPostId()))
+                    .filter(employee -> StringUtils.equals(employee.getPostId(),record.getPostId()))
                     .collect(Collectors.toList())
                     .size();
             int number = StringUtils.isBlank(record.getNumber()) ? 0 : Integer.valueOf(record.getNumber());
@@ -89,8 +93,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
             record.setNeedPeopleNum(String.valueOf(needPeople));
             postVos.add(record);
         }
-        postVoPage.setRecords(postVos);
-        return postVoPage;
+        //设置数据
+        result.setRecords(postVos);
+        return result;
     }
 
     @Override

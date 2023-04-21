@@ -60,7 +60,7 @@ public interface BaseService<V, T, Q> {
      * @param pageBean
      * @return
      */
-    Page<V> manualPage(@RequestBody Page<Q> pageBean);
+    Page<V> manualPage(Page<Q> pageBean);
 
     /**
      * 查询详情
