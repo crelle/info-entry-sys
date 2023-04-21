@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * Mapper 接口
@@ -20,5 +22,5 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface ProjectMapper extends BaseMapper<Project> {
-    Page<ProjectVo> manualPage(@Param("page") Page<ProjectQuery> page,@Param("param") ProjectQuery projectQuery);
+    List<ProjectVo> manualPage(@Param("param") ProjectQuery projectQuery);
 }

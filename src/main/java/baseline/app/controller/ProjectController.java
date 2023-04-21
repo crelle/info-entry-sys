@@ -9,6 +9,7 @@ import baseline.app.pojo.vo.ProjectVo;
 import baseline.app.service.EmployeeService;
 import baseline.app.service.PostService;
 import baseline.app.service.ProjectService;
+import baseline.common.annotation.EnablePagination;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -136,6 +138,7 @@ public class ProjectController implements BaseController<ProjectVo, Project, Pro
     @ApiOperation(value = "手动分页查询")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @EnablePagination
     public ResponseResult<Page<ProjectVo>> manualPage(Page<ProjectQuery> pageBean) {
         ResponseResult result = new ResponseResult();
         result.setData(projectService.manualPage(pageBean));

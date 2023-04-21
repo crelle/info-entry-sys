@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,8 +71,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     @Override
     public Page<ProjectVo> manualPage(Page<ProjectQuery> pageBean) {
         ProjectQuery projectQuery = pageBean.getRecords().get(0);
-        Page<ProjectQuery> projectPage = new Page<>();
-        return projectMapper.manualPage(projectPage, projectQuery);
+        Page<ProjectVo> page = new Page<>();
+        List<ProjectVo> list = projectMapper.manualPage(projectQuery);
+        PageInfo<ProjectVo> pageInfo = new PageInfo<>(list);
+        page.setTotal(pageInfo.getTotal());
+        page.setRecords(list);
+        return page;
     }
 
     @Override
