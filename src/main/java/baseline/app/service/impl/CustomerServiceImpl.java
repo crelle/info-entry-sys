@@ -9,6 +9,7 @@ import baseline.app.service.CustomerService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,8 +71,12 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     @Override
     public Page<CustomerVo> manualPage(Page<CustomerQuery> pageBean) {
         CustomerQuery customerQuery = pageBean.getRecords().get(0);
-        Page<Customer> page = new Page<>();
-        return customerMapper.manualPage(page, customerQuery);
+        Page<CustomerVo> page = new Page<>();
+        List<CustomerVo> list = customerMapper.manualPage(customerQuery);
+        PageInfo<CustomerVo> pageInfo = new PageInfo<>(list);
+        page.setTotal(pageInfo.getTotal());
+        page.setRecords(list);
+        return page;
     }
 
     @Override

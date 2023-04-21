@@ -7,6 +7,7 @@ import baseline.app.pojo.query.CustomerQuery;
 import baseline.app.pojo.vo.CustomerVo;
 import baseline.app.service.ContactPersonService;
 import baseline.app.service.CustomerService;
+import baseline.common.annotation.EnablePagination;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -117,6 +118,7 @@ public class CustomerController implements BaseController<CustomerVo,Customer, C
     @ApiOperation(value = "手动分页查询")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @EnablePagination
     @Override
     public ResponseResult<Page<CustomerVo>> manualPage(Page<CustomerQuery> pageBean) {
         ResponseResult responseResult = new ResponseResult();
