@@ -8,9 +8,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author crelle
@@ -19,7 +21,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface DepartmentMapper extends BaseMapper<Department> {
 
-    Page<DepartmentVo> manualPage(@Param("page") Page<Department> page, @Param("param") DepartmentQuery departmentQuery);
+    List<DepartmentVo> manualPage(@Param("param") DepartmentQuery departmentQuery);
 
 
 }

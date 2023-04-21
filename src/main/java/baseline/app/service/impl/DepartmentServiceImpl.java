@@ -9,6 +9,7 @@ import baseline.app.service.DepartmentService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,8 +69,12 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     @Override
     public Page<DepartmentVo> manualPage(Page<DepartmentQuery> pageBean) {
         DepartmentQuery departmentQuery = pageBean.getRecords().get(0);
-        Page<Department> page = new Page<>();
-        return departmentMapper.manualPage(page, departmentQuery);
+        Page<DepartmentVo> page = new Page<>();
+        List<DepartmentVo> list = departmentMapper.manualPage(departmentQuery);
+        PageInfo<DepartmentVo> pageInfo = new PageInfo<>(list);
+        page.setRecords(list);
+        page.setTotal(pageInfo.getTotal());
+        return page;
     }
 
     @Override

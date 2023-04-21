@@ -7,6 +7,7 @@ import baseline.app.pojo.query.DepartmentQuery;
 import baseline.app.pojo.vo.DepartmentVo;
 import baseline.app.service.DepartmentService;
 import baseline.app.service.ProjectService;
+import baseline.common.annotation.EnablePagination;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -129,6 +130,7 @@ public class DepartmentController implements BaseController<DepartmentVo,Departm
 
     @ApiOperation(value = "手动分页查询")
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @EnablePagination
     @Override
     public ResponseResult<Page<DepartmentVo>> manualPage(Page<DepartmentQuery> pageBean) {
         ResponseResult responseResult = new ResponseResult();
