@@ -1,7 +1,6 @@
 package baseline.common.baseBean;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 

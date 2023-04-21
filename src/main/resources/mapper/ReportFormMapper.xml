@@ -121,7 +121,7 @@
         t_employee emp
         LEFT JOIN t_project pro ON emp.project_id = pro.project_id
         LEFT JOIN t_region reg ON reg.region_id = pro.region_id
-        left join t_customer cust on cust.t_r_region_id = reg.region_id
+        left join t_customer cust on cust.region_id = reg.region_id
         <where>
             <if test="param.regionName!=null and param.regionName!=''">
                 and cust.customer_name = #{param.customerame}

@@ -9,6 +9,7 @@ import baseline.app.service.ContactPersonService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,8 +67,12 @@ public class ContactPersonServiceImpl extends ServiceImpl<ContactPersonMapper, C
     @Override
     public Page<ContactPersonVo> manualPage(Page<ContactPersonQuery> pageBean) {
         ContactPersonQuery contactPersonQuery = pageBean.getRecords().get(0);
-        Page<ContactPerson> personPage = new Page<>();
-        return contactPersonMapper.manualPage(personPage, contactPersonQuery);
+        List<ContactPersonVo> contactPersonVoList = contactPersonMapper.manualPage(contactPersonQuery);
+        PageInfo<ContactPersonVo> personVoPageInfo = new PageInfo<>(contactPersonVoList);
+        Page<ContactPersonVo> result = new Page<>();
+        pageBean.setTotal(personVoPageInfo.getTotal());
+        result.setRecords(contactPersonVoList);
+        return result;
     }
 
     @Override
