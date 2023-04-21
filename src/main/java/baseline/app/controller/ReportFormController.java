@@ -120,4 +120,19 @@ public class ReportFormController {
         }
         return responseResult;
     }
+
+    @ApiOperation(value = "客户分布")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/employeeCustomer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    ResponseResult<List<EmployeeCustomerVO>> employeeCustomer(@RequestBody EmployeeCustomerQuery employeeCustomerQuery) {
+        ResponseResult responseResult = new ResponseResult<>();
+        try {
+            List<EmployeeCustomerVO> employeeCustomerVOS = reportFormService.employeeCustomer(employeeCustomerQuery);
+            responseResult.setData(employeeCustomerVOS);
+            responseResult.setTotal(employeeCustomerVOS.stream().map(EmployeeCustomerVO::getEmployeeNum).count());
+        } catch (Exception e) {
+            throw e;
+        }
+        return responseResult;
+    }
 }

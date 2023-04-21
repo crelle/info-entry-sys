@@ -3,6 +3,7 @@ package baseline.app.service.impl;
 import baseline.app.mapper.ReportFormMapper;
 import baseline.app.pojo.dto.reportform.EmployeeAgeDto;
 import baseline.app.pojo.dto.reportform.EmployeeAnalysisDto;
+import baseline.app.pojo.dto.reportform.EmployeeCustomerDto;
 import baseline.app.pojo.dto.reportform.EmployeeSeniorityDto;
 import baseline.app.pojo.query.reportform.*;
 import baseline.app.pojo.vo.reportform.*;
@@ -95,5 +96,20 @@ public class ReportFormServiceImpl implements ReportFormService {
             employeeAgeVOS.add(employeeAgeVO);
         });
         return employeeAgeVOS;
+    }
+
+    @Override
+    public List<EmployeeCustomerVO> employeeCustomer(EmployeeCustomerQuery employeeCustomerQuery) {
+        List<EmployeeCustomerDto> employeeCustomerDtos = reportFormMapper.employeeCustomer(employeeCustomerQuery);
+        if (CollectionUtils.isEmpty(employeeCustomerDtos)) {
+            return null;
+        }
+        List<EmployeeCustomerVO> employeeCustomerVOS = new ArrayList<>(employeeCustomerDtos.size());
+        employeeCustomerDtos.forEach(employeeCustomerDto -> {
+            EmployeeCustomerVO employeeCustomerVO = new EmployeeCustomerVO();
+            BeanUtils.copyProperties(employeeCustomerDto, employeeCustomerVO);
+            employeeCustomerVOS.add(employeeCustomerVO);
+        });
+        return employeeCustomerVOS;
     }
 }

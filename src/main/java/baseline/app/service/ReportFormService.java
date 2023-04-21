@@ -1,7 +1,9 @@
 package baseline.app.service;
 
+import baseline.app.pojo.dto.reportform.EmployeeCustomerDto;
 import baseline.app.pojo.query.reportform.*;
 import baseline.app.pojo.vo.reportform.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -35,4 +37,11 @@ public interface ReportFormService {
      * @return
      */
     List<EmployeeAgeVO> employeeAge(EmployeeAgeQuery employeeAgeQuery);
+
+    /**
+     * 员工客户分布
+     * @param employeeCustomerQuery
+     * @return
+     */
+    List<EmployeeCustomerVO> employeeCustomer(EmployeeCustomerQuery employeeCustomerQuery);
 }

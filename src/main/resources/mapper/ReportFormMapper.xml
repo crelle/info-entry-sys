@@ -108,4 +108,32 @@
         GROUP BY temp.birthdayYear;
     </select>
 
+    <select id="employeeCustomer" resultType="baseline.app.pojo.dto.reportform.EmployeeCustomerDto">
+        SELECT
+        customer_name AS customerName, COUNT(1) AS employeeNum
+        FROM
+        (SELECT
+        cust.customer_id,
+        cust.customer_name,
+        emp.name,
+        emp.job_no
+        FROM
+        t_employee emp
+        LEFT JOIN t_project pro ON emp.project_id = pro.project_id
+        LEFT JOIN t_region reg ON reg.region_id = pro.region_id
+        left join t_customer cust on cust.t_r_region_id = reg.region_id
+        <where>
+            <if test="param.regionName!=null and param.regionName!=''">
+                and cust.customer_name = #{param.customerame}
+            </if>
+            <if test="param.regionName!=null and param.regionName!=''">
+                and reg.region_name = #{param.regionName}
+            </if>
+        </where>
+        ) temp
+        WHERE
+        temp.customer_name IS NOT NULL
+        GROUP BY temp.customer_name;
+    </select>
+
 </mapper>
