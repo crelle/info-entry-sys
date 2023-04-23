@@ -22,7 +22,6 @@
         <result column="time" property="time"/>
         <result column="project_id" property="projectId"/>
         <result column="post_id" property="postId"/>
-        <result column="t_p_project_id" property="tPProjectId"/>
         <result column="native_address" property="nativeAddress"/>
         <result column="longitude" property="longitude"/>
         <result column="latitude" property="latitude"/>
@@ -66,15 +65,15 @@
         emp.*
         FROM
         t_employee emp
-        LEFT JOIN t_project pro ON emp.project_id = pro.project_id
-        LEFT JOIN t_region reg ON reg.region_id = pro.region_id
-        left join t_department dept on dept.department_id = pro.department_id
+        LEFT JOIN t_project pro ON emp.project_id = pro.id
+        LEFT JOIN t_region reg ON reg.id = pro.region_id
+        left join t_department dept on dept.id = pro.department_id
         <where>
             <if test="param.regionName!=null and param.regionName!=''">
-                and reg.region_name = #{param.regionName}
+                and reg.name = #{param.regionName}
             </if>
             <if test="param.departmentName!=null and param.departmentName!=''">
-                and dept.department = #{param.departmentName}
+                and dept.name = #{param.departmentName}
             </if>
         </where>
         ) temp
@@ -91,15 +90,15 @@
         year(emp.birthday) as birthdayYear
         FROM
         t_employee emp
-        LEFT JOIN t_project pro ON emp.project_id = pro.project_id
-        LEFT JOIN t_region reg ON reg.region_id = pro.region_id
-        left join t_department dept on dept.department_id = pro.department_id
+        LEFT JOIN t_project pro ON emp.project_id = pro.id
+        LEFT JOIN t_region reg ON reg.id = pro.region_id
+        left join t_department dept on dept.id = pro.department_id
         <where>
             <if test="param.regionName!=null and param.regionName!=''">
-                and reg.region_name = #{param.regionName}
+                and reg.name = #{param.regionName}
             </if>
             <if test="param.departmentName!=null and param.departmentName!=''">
-                and dept.department = #{param.departmentName}
+                and dept.name = #{param.departmentName}
             </if>
         </where>
         ) temp
@@ -110,30 +109,30 @@
 
     <select id="employeeCustomer" resultType="baseline.app.pojo.dto.reportform.EmployeeCustomerDto">
         SELECT
-        customer_name AS customerName, COUNT(1) AS employeeNum
+        customerName, COUNT(1) AS employeeNum
         FROM
         (SELECT
-        cust.customer_id,
-        cust.customer_name,
+        cust.id as customerId,
+        cust.name as customerName,
         emp.name,
         emp.job_no
         FROM
         t_employee emp
-        LEFT JOIN t_project pro ON emp.project_id = pro.project_id
-        LEFT JOIN t_region reg ON reg.region_id = pro.region_id
-        left join t_customer cust on cust.region_id = reg.region_id
+        LEFT JOIN t_project pro ON emp.project_id = pro.id
+        LEFT JOIN t_region reg ON reg.id = pro.region_id
+        left join t_customer cust on cust.region_id = reg.id
         <where>
             <if test="param.regionName!=null and param.regionName!=''">
-                and cust.customer_name = #{param.customerame}
+                and cust.name = #{param.customerame}
             </if>
             <if test="param.regionName!=null and param.regionName!=''">
-                and reg.region_name = #{param.regionName}
+                and reg.name = #{param.regionName}
             </if>
         </where>
         ) temp
         WHERE
-        temp.customer_name IS NOT NULL
-        GROUP BY temp.customer_name;
+        temp.customerName IS NOT NULL
+        GROUP BY temp.customerName;
     </select>
 
 </mapper>
