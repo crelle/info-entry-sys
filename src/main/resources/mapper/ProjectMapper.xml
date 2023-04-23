@@ -4,47 +4,49 @@
 
     <select id="manualPage" resultType="baseline.app.pojo.vo.ProjectVo">
         SELECT
-        a.`project_id`,
-        a.`project`,
-        a.`Interface_id`,
-        c.`Interface_name`,
-        c.`cell_phone`,
+        a.`id`,
+        a.`name`,
+        c.`id` as interfaceId,
+        c.`name` as interfaceName,
+        c.`cell_phone` as cellPhone,
         c.`email`,
         a.`status`,
-        d.`customer_id`,
-        d.`customer_name`,
-        e.`department_id`,
-        e.`department`,
-        b.`region_id`,
-        b.`region_name`
+        d.`id` as customerId,
+        d.`name` as customerName,
+        e.`id` as departmentId,
+        e.`name` as departmentName,
+        b.`id` as regionId,
+        b.`name` as regionName
         FROM
         t_project a
         LEFT JOIN t_region b
-        ON a.region_id = b.region_id
-        LEFT JOIN t_contact_person c
-        ON a.Interface_id = c.Interface_id
+        ON a.region_id = b.id
+        LEFT JOIN t_contact_person_project tpp
+        ON tpp.project_id = a.id
+        left join t_contact_person c
+        on c.id = tpp.contact_person_id
         LEFT JOIN t_customer d
-        ON c.customer_id = d.customer_id
+        ON c.customer_id = d.id
         LEFT JOIN t_department e
-        ON a.department_id = e.department_id
+        ON a.department_id = e.id
         <where>
-            <if test="param.project!=null and param.project!=''">
-                and a.project = like concat('%',concat(#{param.project},'%'))
+            <if test="param.name!=null and param.name!=''">
+                and a.name like concat('%',concat(#{param.name},'%'))
             </if>
             <if test="param.status!=null and param.status!=''">
                 and a.status = #{param.status}
             </if>
             <if test="param.regionName!=null and param.regionName!=''">
-                and b.region_name = #{param.regionName}
+                and b.name = #{param.regionName}
             </if>
-            <if test="param.department!=null and param.department!=''">
-                and e.department = #{param.department}
+            <if test="param.departmentName!=null and param.departmentName!=''">
+                and e.name = #{param.departmentName}
             </if>
-            <if test="param.InterfaceName!=null and param.InterfaceName!=''">
-                and c.Interface_name = #{param.InterfaceName}
+            <if test="param.interfaceName!=null and param.interfaceName!=''">
+                and c.name = #{param.interfaceName}
             </if>
             <if test="param.customerName!=null and param.customerName!=''">
-                and d.customer_name = #{param.customerName}
+                and d.name = #{param.customerName}
             </if>
         </where>
     </select>

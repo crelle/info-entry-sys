@@ -27,12 +27,10 @@ import java.util.Date;
 public class ProjectVo extends BaseDo {
 
     @ApiModelProperty("项目编号")
-    @TableId(value = "project_id", type = IdType.ASSIGN_UUID)
-    private String projectId;
+    private String id;
 
     @ApiModelProperty("项目名称")
-    @TableField("project")
-    private String project;
+    private String name;
 
     @ApiModelProperty("接口人ID")
     @TableField("Interface_id")

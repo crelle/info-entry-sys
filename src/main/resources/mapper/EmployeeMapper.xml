@@ -52,7 +52,7 @@
             <if test="param.interfaceId!=null and param.interfaceId!=''">
                 and a.interfaceId = #{param.interfaceId}
             </if>
-            <if test="param.InterfaceName!=null and param.InterfaceName!=''">
+            <if test="param.interfaceName!=null and param.interfaceName!=''">
                 and a.interfaceName = #{param.interfaceName}
             </if>
             <if test="param.customerId!=null and param.customerId!=''">
