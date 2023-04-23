@@ -4,18 +4,18 @@
 
     <select id="manualPage" resultType="baseline.app.pojo.vo.CustomerVo">
         SELECT
-        a.*,b.region_name
+        a.*,b.name
         FROM
         t_customer a
         left join
         t_region b
-        on a.region_id = b.region_id
+        on a.region_id = b.id
         <where>
-            <if test="param.customerName!=null and param.customerName!=''">
-                and a.customer_name like concat('%',concat(#{param.customerName},'%'))
+            <if test="param.name!=null and param.name!=''">
+                and a.name like concat('%',concat(#{param.name},'%'))
             </if>
             <if test="param.regionName!=null and param.regionName!=''">
-                AND b.region_name =#{regionName}
+                AND b.name =#{regionName}
             </if>
             <if test="param.userId!=null and param.userId!=''">
                 AND a.user_id = #{param.userId}

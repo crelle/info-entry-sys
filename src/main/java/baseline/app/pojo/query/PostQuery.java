@@ -1,45 +1,50 @@
 package baseline.app.pojo.query;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
+@ApiModel("岗位服务查询请求体")
 public class PostQuery {
-    @TableField("post_id")
+
+    @ApiModelProperty("岗位id")
     private String postId;
 
-    @TableField("post_name")
+    @ApiModelProperty("岗位名称")
     private String postName;
 
-    @TableField("skill")
+    @ApiModelProperty("技能")
     private String skill;
 
-    @TableField("project_id")
+    @ApiModelProperty("项目id")
     private String projectId;
 
-    @TableField("project")
-    private String project;
+    @ApiModelProperty("项目名称")
+    private String projectName;
 
-    @TableField("address")
+    @ApiModelProperty("办公地点")
     private String address;
 
-    @TableField("customer_name")
+    @ApiModelProperty("客户Id")
+    private String customerId;
+
+    @ApiModelProperty("客户名称")
     private String customerName;
 
-    @TableField("number")
+    @ApiModelProperty("岗位数量")
     private String number;
 
-    @TableField("date")
+    @ApiModelProperty("计划满足日期")
     private String date;
 
-    @TableField("position")
+    @ApiModelProperty("岗位职责")
     private String position;
 
     @TableField("requirements")
     private String requirements;
 
-    @TableField("update_time")
-    private String updateTime;
-
+    @ApiModelProperty("岗位需求人数")
     private String needPeopleNum;
 }

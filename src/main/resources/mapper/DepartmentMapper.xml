@@ -5,21 +5,20 @@
 
     <select id="manualPage" resultType="baseline.app.pojo.vo.DepartmentVo">
         SELECT
-        department1.department_id,
-        department1.department,
-        department1.user_id,
-        department1.job_no,
+        department1.id,
+        department1.name,
+        department1.user_Id as userId,
         department1.address,
-        department1.update_time,
-        department2.department department_up
+        department1.update_time as updateTime,
+        department2.name as  department_up
         FROM
         t_department department1,
         t_department department2
         <where>
-            department1.department_id = department2.department_id
-            AND department1.department_up = department2.department_id
-            <if test="param.department!=null and param.department!=''">
-                AND department1.department =like concat('%',concat(#{param.department},'%'))
+            department1.id = department2.id
+            AND department1.department_up = department2.id
+            <if test="param.name!=null and param.name!=''">
+                AND department1.name like concat('%',concat(#{param.name},'%'))
             </if>
         </where>
         order by department1.update_time

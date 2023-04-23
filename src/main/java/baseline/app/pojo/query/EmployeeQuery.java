@@ -2,46 +2,48 @@ package baseline.app.pojo.query;
 
 import baseline.app.pojo.entity.Employee;
 import com.baomidou.mybatisplus.annotation.TableField;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
+@ApiModel("员工服务请求体")
 public class EmployeeQuery extends Employee {
-    @TableField("department_id")
-    private  String departmentId;
+    @ApiModelProperty("部门Id")
+    private String departmentId;
 
-    @TableField("department")
-    private  String department;
+    @ApiModelProperty("部门名称")
+    private String departmentName;
 
-    @TableField("region_id")
-    private  String regionId;
+    @ApiModelProperty("区域Id")
+    private String regionId;
 
-    @TableField("region_name")
-    private  String regionName;
+    @ApiModelProperty("区域名称")
+    private String regionName;
 
-    @TableField("Interface_id")
-    private  String InterfaceId;
+    @ApiModelProperty("接口人Id")
+    private String interfaceId;
 
+    @ApiModelProperty("接口人名称")
+    private String interfaceName;
 
-    @TableField("Interface_name")
-    private  String InterfaceName;
+    @ApiModelProperty("客户Id")
+    private String customerId;
 
-    @TableField("customer_id")
-    private  String customerId;
+    @ApiModelProperty("客户名称")
+    private String customerName;
 
-    @TableField("customer_name")
-    private  String customerName;
-
-    @TableField("project")
-    private  String project;
+    @ApiModelProperty("项目名称")
+    private String projectName;
 
     @ApiModelProperty("员工状态")
-    @TableField("status")
     private String status;
 
     @ApiModelProperty("岗位")
-    @TableField("post_name")
     private String postName;
+
+    @ApiModelProperty("状态时间")
+    private String statusTime;
 
 
 }

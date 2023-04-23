@@ -4,28 +4,29 @@
 
     <select id="manualPage" resultType="baseline.app.pojo.vo.PostVo">
         SELECT
-        post.post_id,
-        post.post_name,
+        post.id,
+        post.name,
         post.skill,
-        post.project_id,
-        proj.project,
         post.address,
-        cust.customer_name,
         post.number,
         post.date,
         post.position,
         post.requirements,
-        post.update_time
+        post.update_time as updateTime,
+        proj.id as projectId,
+        proj.name as projectName,
+        cust.id as customerId,
+        cust.name as customerName
         FROM
         t_post post
-        LEFT JOIN t_project proj ON post.project_id = proj.project_id
-        left join t_customer cust on post.customer = cust.customer_id
+        LEFT JOIN t_project proj ON post.project_id = proj.id
+        left join t_customer cust on post.customer_id = cust.id
         <where>
-            <if test="param.postName!=null and param.postName!=''">
-                and post.post_name like concat('%',concat(#{param.postName},'%'))
+            <if test="param.name!=null and param.name!=''">
+                and post.name like concat('%',concat(#{param.name},'%'))
             </if>
-            <if test="param.project!=null and param.project!=''">
-                and proj.project = #{param.project}
+            <if test="param.projectName!=null and param.projectName!=''">
+                and proj.name = #{param.projectName}
             </if>
             <if test="param.address!=null and param.address!=''">
                 and post.address = #{param.address}

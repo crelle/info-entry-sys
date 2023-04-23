@@ -1,5 +1,6 @@
 package baseline.app.pojo.entity;
 
+import baseline.common.pojo.entity.BaseDo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -21,7 +22,7 @@ import lombok.Setter;
 @Setter
 @TableName("t_contact_person_project")
 @ApiModel(value = "ContactPersonProject对象", description = "接口人项目关系表")
-public class ContactPersonProject {
+public class ContactPersonProject extends BaseDo {
 
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)

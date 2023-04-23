@@ -9,27 +9,28 @@
         FROM
         (SELECT
         e.*,
-        dep.department_id,
-        dep.department,
-        reg.region_id,
-        reg.region_name,
-        con.Interface_id,
-        con.Interface_name,
-        cus.customer_id,
-        cus.customer_name,
-        pro.project,
-        post.post_name,
+        dep.id as departmentId,
+        dep.name as departmentName,
+        reg.id as regionId,
+        reg.name as regionName,
+        con.id as interfaceId,
+        con.name as interfaceName,
+        cus.id as customerId,
+        cus.name as customerName,
+        pro.name as projectName,
+        post.name as postName,
         sta.status ,
         sta.create_time statusTime
         FROM
         t_employee e
         LEFT JOIN t_status_record sta ON e.job_no = sta.job_no
-        LEFT JOIN t_project pro ON e.project_id = pro.project_id
-        left join t_post post on e.post_id = post.post_id
-        LEFT JOIN t_contact_person con ON pro.Interface_id = con.Interface_id
-        LEFT JOIN t_region reg ON pro.region_id = reg.region_id
-        LEFT JOIN t_department dep ON pro.department_id = dep.department_id
-        LEFT JOIN t_customer cus ON con.customer_id = cus.customer_id
+        left join t_post post on e.post_id = post.id
+        LEFT JOIN t_project pro ON e.project_id = pro.id
+        left join t_contact_person_project cpp on cpp.project_id = pro.id
+        left join t_contact_person con on cpp.contact_person_id = con.id
+        LEFT JOIN t_region reg ON pro.region_id = reg.id
+        LEFT JOIN t_department dep ON pro.department_id = dep.id
+        LEFT JOIN t_customer cus ON con.customer_id = cus.id
         ORDER BY statusTime DESC
         LIMIT 10000) a
         <where>
@@ -37,37 +38,37 @@
                 and a.name like concat('%',concat(#{param.name},'%'))
             </if>
             <if test="param.departmentId!=null and param.departmentId!=''">
-                and a.department_id = #{param.departmentId}
+                and a.departmentId = #{param.departmentId}
             </if>
-            <if test="param.department!=null and param.department!=''">
-                and a.department = #{param.department}
+            <if test="param.departmentName!=null and param.departmentName!=''">
+                and a.departmentName = #{param.departmentName}
             </if>
             <if test="param.regionId!=null and param.regionId!=''">
-                and a.region_id = #{param.regionId}
+                and a.regionId = #{param.regionId}
             </if>
             <if test="param.regionName!=null and param.regionName!=''">
-                and a.region_name = #{param.regionName}
+                and a.regionName = #{param.regionName}
             </if>
-            <if test="param.InterfaceId!=null and param.InterfaceId!=''">
-                and a.Interface_id = #{param.InterfaceId}
+            <if test="param.interfaceId!=null and param.interfaceId!=''">
+                and a.interfaceId = #{param.interfaceId}
             </if>
             <if test="param.InterfaceName!=null and param.InterfaceName!=''">
-                and a.Interface_name = #{param.InterfaceName}
+                and a.interfaceName = #{param.interfaceName}
             </if>
             <if test="param.customerId!=null and param.customerId!=''">
-                and a.customer_id = #{param.customerId}
+                and a.customerId = #{param.customerId}
             </if>
             <if test="param.customerName!=null and param.customerName!=''">
-                and a.customer_name = #{param.customerName}
+                and a.customerName = #{param.customerName}
             </if>
-            <if test="param.project!=null and param.project!=''">
-                and a.project = #{param.project}
+            <if test="param.projectName!=null and param.projectName!=''">
+                and a.projectName = #{param.projectName}
             </if>
             <if test="param.status!=null and param.status!=''">
                 and a.status = #{param.status}
             </if>
             <if test="param.postName!=null and param.postName!=''">
-                and a.post_name = #{param.postName}
+                and a.postName = #{param.postName}
             </if>
         </where>
         GROUP BY name

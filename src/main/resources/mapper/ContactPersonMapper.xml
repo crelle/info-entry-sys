@@ -4,24 +4,24 @@
 
     <select id="manualPage" resultType="baseline.app.pojo.vo.ContactPersonVo">
         SELECT
-        a.Interface_id,
-        a.Interface_name,
+        a.id,
+        a.name,
         a.gender,
-        a.cell_phone,
+        a.cell_phone as cellPhone,
         a.email,
-        a.customer_id,
-        a.update_time,
-        b.customer_name
+        a.customer_id as customerId,
+        a.update_time as updateTime,
+        b.name as customerName
         FROM
         t_contact_person a
         LEFT JOIN
-        t_customer b ON a.customer_id = b.customer_id
+        t_customer b ON a.customer_id = b.id
         <where>
-            <if test="param.interfaceName!=null and param.interfaceName!=''">
-                and a.Interface_name like concat('%',concat(#{param.interfaceName},'%'))
+            <if test="param.name!=null and param.name!=''">
+                and a.name like concat('%',concat(#{param.name},'%'))
             </if>
             <if test="param.customerName!=null and param.customerName!=''">
-                AND b.customer_name = #{param.customerName}
+                AND b.name = #{param.customerName}
             </if>
         </where>
         order by a.update_time desc

@@ -1,5 +1,6 @@
 package baseline.app.pojo.entity;
 
+import baseline.common.pojo.entity.BaseDo;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -25,7 +26,7 @@ import lombok.Setter;
 @Setter
 @TableName("t_status_record")
 @ApiModel(value = "StatusRecord对象", description = "状态记录表")
-public class StatusRecord {
+public class StatusRecord extends BaseDo {
 
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
@@ -58,26 +59,5 @@ public class StatusRecord {
     @ApiModelProperty("出差周期")
     @TableField("cycle")
     private String cycle;
-
-    @ApiModelProperty("创建时间")
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
-    private Date createTime;
-
-    @ApiModelProperty("创建人")
-    @TableField("create_by")
-    private String createBy;
-
-    @ApiModelProperty("修改时间")
-    @TableField("update_time")
-    private Date updateTime;
-
-    @ApiModelProperty("修改人")
-    @TableField("update_by")
-    private String updateBy;
-
-    @ApiModelProperty("账号是否可用，1可以，0不可用，默认1")
-    @TableField("enabled")
-    private Boolean enabled;
-
 
 }

@@ -32,6 +32,10 @@ public class Region {
     @TableField("name")
     private String name;
 
+    @ApiModelProperty("地域编码")
+    @TableField("code")
+    private String code;
+
     @ApiModelProperty("创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
