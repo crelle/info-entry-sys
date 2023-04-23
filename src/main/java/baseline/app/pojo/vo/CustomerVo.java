@@ -21,27 +21,18 @@ import java.util.Date;
 @Setter
 @TableName("t_customer")
 @ApiModel(value = "Customer对象", description = "客户表")
-public class CustomerVo{
+public class CustomerVo {
 
     @ApiModelProperty("客户编号")
-    @TableId(value = "customer_id", type = IdType.ASSIGN_UUID)
-    private String customerId;
-
-    @ApiModelProperty("用户id")
-    @TableField("id")
     private String id;
 
     @ApiModelProperty("地域编号")
-    @TableField("t_r_region_id")
-    private String tRRegionId;
+    private String regionId;
 
     @ApiModelProperty("客户名称")
     @TableField("customer_name")
     private String customerName;
 
-    @ApiModelProperty("地域ID")
-    @TableField("region_id")
-    private String regionId;
 
     @ApiModelProperty("地域")
     @TableField("region_name")
@@ -68,11 +59,9 @@ public class CustomerVo{
     private String introduce;
 
 
-
     @ApiModelProperty("修改时间")
     @TableField("update_time")
     private Date updateTime;
-
 
 
 }

@@ -24,12 +24,13 @@ import lombok.Setter;
 public class RegionVo {
 
     @ApiModelProperty("地域编号")
-    @TableId(value = "region_id", type = IdType.ASSIGN_UUID)
-    private String regionId;
+    private String id;
 
     @ApiModelProperty("地域名称")
-    @TableField("region_name")
-    private String regionName;
+    private String name;
+
+    @ApiModelProperty("地域编码")
+    private String code;
 
 
 }

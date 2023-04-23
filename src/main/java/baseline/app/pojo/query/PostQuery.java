@@ -10,10 +10,10 @@ import lombok.Data;
 public class PostQuery {
 
     @ApiModelProperty("岗位id")
-    private String postId;
+    private String id;
 
     @ApiModelProperty("岗位名称")
-    private String postName;
+    private String name;
 
     @ApiModelProperty("技能")
     private String skill;

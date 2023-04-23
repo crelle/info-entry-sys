@@ -1,11 +1,14 @@
 package baseline.app.pojo.entity;
+
 import baseline.common.pojo.entity.BaseDo;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -38,15 +41,15 @@ public class Asset extends BaseDo {
     private String employeeId;
 
     @ApiModelProperty("资产编号")
-    @TableField("asset_no")
-    private String assetNo;
+    @TableField("no")
+    private String no;
 
     @ApiModelProperty("资产序列号")
-    @TableField("asset_serial_number")
-    private String assetSerialNumber;
+    @TableField("serial_number")
+    private String serialNumber;
 
     @ApiModelProperty("资产名称")
-    @TableField("asset_name")
-    private String assetName;
+    @TableField("name")
+    private String name;
 
 }

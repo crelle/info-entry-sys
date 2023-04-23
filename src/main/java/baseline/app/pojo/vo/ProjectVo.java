@@ -54,20 +54,20 @@ public class ProjectVo extends BaseDo {
 
     @ApiModelProperty("客户")
     @TableField("customer_id")
-    private String customer_id;
+    private String customerId;
 
     @ApiModelProperty("客户")
     @TableField("customer_name")
     private String customerName;
 
 
-    @ApiModelProperty("部门")
+    @ApiModelProperty("部门Id")
     @TableField("department_id")
     private String departmentId;
 
-    @ApiModelProperty("部门")
-    @TableField("department")
-    private String department;
+    @ApiModelProperty("部门名称")
+    @TableField("departmentName")
+    private String departmentName;
 
     @ApiModelProperty("区域")
     @TableField("region_id")
