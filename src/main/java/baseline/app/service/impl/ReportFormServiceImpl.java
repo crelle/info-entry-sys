@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -52,7 +53,7 @@ public class ReportFormServiceImpl implements ReportFormService {
     public List<EmployeeAnalysisVO> employeeAnalysis(EmployeeAnalysisQuery employeeAnalysisQuery) {
         List<EmployeeAnalysisDto> employeeAnalysisDtos = reportFormMapper.employeeAnalysis(employeeAnalysisQuery);
         if (CollectionUtils.isEmpty(employeeAnalysisDtos)) {
-            return null;
+            return Collections.emptyList();
         }
         List<EmployeeAnalysisVO> list = new ArrayList<>(employeeAnalysisDtos.size());
         employeeAnalysisDtos.forEach(employeeAnalysisDto -> {
@@ -71,7 +72,7 @@ public class ReportFormServiceImpl implements ReportFormService {
     public List<EmployeeSeniorityVO> employeeSeniority(EmployeeSeniorityQuery employeeSeniorityQuery) {
         List<EmployeeSeniorityDto> employeeSeniorityDtos = reportFormMapper.employeeSeniority(employeeSeniorityQuery);
         if (CollectionUtils.isEmpty(employeeSeniorityDtos)) {
-            return null;
+            return Collections.emptyList();
         }
         List<EmployeeSeniorityVO> employeeSeniorityVOS = new ArrayList<>(employeeSeniorityDtos.size());
         employeeSeniorityDtos.forEach(employeeSeniorityDto -> {
@@ -87,7 +88,7 @@ public class ReportFormServiceImpl implements ReportFormService {
     public List<EmployeeAgeVO> employeeAge(EmployeeAgeQuery employeeAgeQuery) {
         List<EmployeeAgeDto> employeeAgeDtos = reportFormMapper.employeeAge(employeeAgeQuery);
         if (CollectionUtils.isEmpty(employeeAgeDtos)) {
-            return null;
+            return Collections.emptyList();
         }
         List<EmployeeAgeVO> employeeAgeVOS = new ArrayList<>(employeeAgeDtos.size());
         employeeAgeDtos.forEach(employeeAgeDto -> {
@@ -102,7 +103,7 @@ public class ReportFormServiceImpl implements ReportFormService {
     public List<EmployeeCustomerVO> employeeCustomer(EmployeeCustomerQuery employeeCustomerQuery) {
         List<EmployeeCustomerDto> employeeCustomerDtos = reportFormMapper.employeeCustomer(employeeCustomerQuery);
         if (CollectionUtils.isEmpty(employeeCustomerDtos)) {
-            return null;
+            return Collections.emptyList();
         }
         List<EmployeeCustomerVO> employeeCustomerVOS = new ArrayList<>(employeeCustomerDtos.size());
         employeeCustomerDtos.forEach(employeeCustomerDto -> {

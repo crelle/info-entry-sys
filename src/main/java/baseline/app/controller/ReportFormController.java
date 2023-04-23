@@ -8,6 +8,7 @@ import baseline.common.pojo.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -99,7 +100,9 @@ public class ReportFormController {
         try {
             List<EmployeeSeniorityVO> employeeSeniorityVOS = reportFormService.employeeSeniority(employeeSeniorityQuery);
             responseResult.setData(employeeSeniorityVOS);
-            responseResult.setTotal(employeeSeniorityVOS.stream().map(EmployeeSeniorityVO::getNum).count());
+            if (CollectionUtils.isNotEmpty(employeeSeniorityVOS)) {
+                responseResult.setTotal(employeeSeniorityVOS.stream().map(EmployeeSeniorityVO::getNum).count());
+            }
         } catch (Exception e) {
             throw e;
         }
@@ -114,7 +117,9 @@ public class ReportFormController {
         try {
             List<EmployeeAgeVO> employeeAgeVOS = reportFormService.employeeAge(employeeAgeQuery);
             responseResult.setData(employeeAgeVOS);
-            responseResult.setTotal(employeeAgeVOS.stream().map(EmployeeAgeVO::getNum).count());
+            if (CollectionUtils.isNotEmpty(employeeAgeVOS)) {
+                responseResult.setTotal(employeeAgeVOS.stream().map(EmployeeAgeVO::getNum).count());
+            }
         } catch (Exception e) {
             throw e;
         }
@@ -129,7 +134,9 @@ public class ReportFormController {
         try {
             List<EmployeeCustomerVO> employeeCustomerVOS = reportFormService.employeeCustomer(employeeCustomerQuery);
             responseResult.setData(employeeCustomerVOS);
-            responseResult.setTotal(employeeCustomerVOS.stream().map(EmployeeCustomerVO::getEmployeeNum).count());
+            if (CollectionUtils.isNotEmpty(employeeCustomerVOS)) {
+                responseResult.setTotal(employeeCustomerVOS.stream().map(EmployeeCustomerVO::getEmployeeNum).count());
+            }
         } catch (Exception e) {
             throw e;
         }
