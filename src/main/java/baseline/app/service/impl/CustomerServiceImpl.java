@@ -1,8 +1,7 @@
 package baseline.app.service.impl;
 
-import baseline.app.pojo.entity.Customer;
 import baseline.app.mapper.CustomerMapper;
-import baseline.app.pojo.entity.Department;
+import baseline.app.pojo.entity.Customer;
 import baseline.app.pojo.query.CustomerQuery;
 import baseline.app.pojo.vo.CustomerVo;
 import baseline.app.service.CustomerService;
@@ -60,7 +59,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         Customer customer = page.getRecords().get(0);
         LambdaQueryWrapper<Customer> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper
-                .like(StringUtils.isNotBlank(customer.getCustomerName()), Customer::getCustomerName, customer.getCustomerName())
+                .like(StringUtils.isNotBlank(customer.getName()), Customer::getName, customer.getName())
                 .like(StringUtils.isNotBlank(customer.getRegionId()), Customer::getRegionId, customer.getRegionId())
                 .like(StringUtils.isNotBlank(customer.getUserId()), Customer::getUserId, customer.getUserId());
 

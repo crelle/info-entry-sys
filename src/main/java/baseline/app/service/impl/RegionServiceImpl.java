@@ -1,7 +1,7 @@
 package baseline.app.service.impl;
 
-import baseline.app.pojo.entity.Region;
 import baseline.app.mapper.RegionMapper;
+import baseline.app.pojo.entity.Region;
 import baseline.app.pojo.query.RegionQuery;
 import baseline.app.pojo.vo.RegionVo;
 import baseline.app.service.RegionService;
@@ -52,8 +52,8 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
     public Page<Region> pageByCondition(Page<Region> page) {
         Region region = page.getRecords().get(0);
         QueryWrapper<Region> queryWrapper = new QueryWrapper<>(region);
-        if (StringUtils.isNotBlank(region.getRegionName())) {
-            queryWrapper.select().like("region_name", region.getRegionName());
+        if (StringUtils.isNotBlank(region.getName())) {
+            queryWrapper.select().like("region_name", region.getName());
             return page(page, queryWrapper);
         } else {
             return page(page);

@@ -1,14 +1,11 @@
 package baseline.app.pojo.entity;
 
-import baseline.common.pojo.entity.BaseDo;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
 import java.util.Date;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -20,25 +17,21 @@ import lombok.Setter;
  * </p>
  *
  * @author crelle
- * @since 2022-12-06 05:57:05
+ * @since 2023-04-23 02:35:38
  */
 @Getter
 @Setter
 @TableName("t_contact_person")
 @ApiModel(value = "ContactPerson对象", description = "接口人表")
-public class ContactPerson extends BaseDo {
+public class ContactPerson {
 
-    @ApiModelProperty("接口人编号")
-    @TableId(value = "Interface_id", type = IdType.ASSIGN_UUID)
-    private String interfaceId;
-
-    @ApiModelProperty("客户编号")
-    @TableField("t_c_customer_id")
-    private String tCCustomerId;
+    @ApiModelProperty("id")
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private String id;
 
     @ApiModelProperty("接口人姓名")
-    @TableField("Interface_name")
-    private String interfaceName;
+    @TableField("name")
+    private String name;
 
     @ApiModelProperty("性别")
     @TableField("gender")
@@ -56,6 +49,10 @@ public class ContactPerson extends BaseDo {
     @TableField("address")
     private String address;
 
+    @ApiModelProperty("详细地址")
+    @TableField("address_detail")
+    private String addressDetail;
+
     @ApiModelProperty("介绍")
     @TableField("introduce")
     private String introduce;
@@ -63,6 +60,10 @@ public class ContactPerson extends BaseDo {
     @ApiModelProperty("客户ID")
     @TableField("customer_id")
     private String customerId;
+
+    @ApiModelProperty("项目Id")
+    @TableField("project_id")
+    private String projectId;
 
     @ApiModelProperty("创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
@@ -83,10 +84,6 @@ public class ContactPerson extends BaseDo {
     @ApiModelProperty("账号是否可用，1可以，0不可用，默认1")
     @TableField("enabled")
     private Boolean enabled;
-
-    @ApiModelProperty("详细地址")
-    @TableField("address_detail")
-    private String addressDetail;
 
 
 }

@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/app/customer")
 @Api(tags = "客户服务")
-public class CustomerController implements BaseController<CustomerVo,Customer, CustomerQuery> {
+public class CustomerController implements BaseController<CustomerVo, Customer, CustomerQuery> {
 
     @Autowired
     private CustomerService customerService;
@@ -50,7 +50,7 @@ public class CustomerController implements BaseController<CustomerVo,Customer, C
     public ResponseResult<Customer> create(Customer object) {
         ResponseResult<Customer> result = new ResponseResult<>();
         customerService.create(object);
-        result.setData(customerService.getById(object.getCustomerId()));
+        result.setData(customerService.getById(object.getId()));
         return result;
     }
 

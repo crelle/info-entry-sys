@@ -1,8 +1,7 @@
 package baseline.app.service.impl;
 
-import baseline.app.pojo.entity.Department;
 import baseline.app.mapper.DepartmentMapper;
-import baseline.app.pojo.entity.Project;
+import baseline.app.pojo.entity.Department;
 import baseline.app.pojo.query.DepartmentQuery;
 import baseline.app.pojo.vo.DepartmentVo;
 import baseline.app.service.DepartmentService;
@@ -58,8 +57,8 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     public Page<Department> pageByCondition(Page<Department> page) {
         Department department = page.getRecords().get(0);
         QueryWrapper<Department> queryWrapper = new QueryWrapper<>(department);
-        if (StringUtils.isNotBlank(department.getDepartment())) {
-            queryWrapper.select().like("department", department.getDepartment());
+        if (StringUtils.isNotBlank(department.getName())) {
+            queryWrapper.select().like("name", department.getName());
             return page(page, queryWrapper);
         } else {
             return page(page);

@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
 import java.util.Date;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -18,7 +16,7 @@ import lombok.Setter;
  * </p>
  *
  * @author crelle
- * @since 2022-12-06 05:57:05
+ * @since 2023-04-23 02:35:38
  */
 @Getter
 @Setter
@@ -26,17 +24,13 @@ import lombok.Setter;
 @ApiModel(value = "Post对象", description = "岗位表")
 public class Post {
 
-    @ApiModelProperty("岗位编号")
-    @TableId(value = "post_id", type = IdType.ASSIGN_UUID)
-    private String postId;
-
-    @ApiModelProperty("项目编号")
-    @TableField("t_p_project_id")
-    private String tPProjectId;
+    @ApiModelProperty("岗位id")
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private String id;
 
     @ApiModelProperty("岗位名称")
-    @TableField("post_name")
-    private String postName;
+    @TableField("name")
+    private String name;
 
     @ApiModelProperty("岗位职责")
     @TableField("position")
@@ -73,9 +67,6 @@ public class Post {
     @ApiModelProperty("到岗最晚时间")
     @TableField("latest_arrival_time")
     private Date latestArrivalTime;
-
-    @TableField("detail_address")
-    private String detailAddress;
 
     @ApiModelProperty("创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)

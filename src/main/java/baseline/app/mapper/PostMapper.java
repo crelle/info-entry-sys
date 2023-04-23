@@ -4,7 +4,6 @@ import baseline.app.pojo.entity.Post;
 import baseline.app.pojo.query.PostQuery;
 import baseline.app.pojo.vo.PostVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

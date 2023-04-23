@@ -1,7 +1,7 @@
 package baseline.app.service.impl;
 
-import baseline.app.pojo.entity.Communicate;
 import baseline.app.mapper.CommunicateMapper;
+import baseline.app.pojo.entity.Communicate;
 import baseline.app.pojo.query.CommunicateQuery;
 import baseline.app.pojo.vo.CommunicateVo;
 import baseline.app.service.CommunicateService;

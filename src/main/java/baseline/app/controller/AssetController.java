@@ -2,11 +2,8 @@ package baseline.app.controller;
 
 
 import baseline.app.pojo.entity.Asset;
-import baseline.app.pojo.entity.Department;
 import baseline.app.pojo.query.AssetQuery;
-import baseline.app.pojo.query.DepartmentQuery;
 import baseline.app.pojo.vo.AssetVo;
-import baseline.app.pojo.vo.DepartmentVo;
 import baseline.app.service.AssetService;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;

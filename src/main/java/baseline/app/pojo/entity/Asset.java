@@ -1,5 +1,4 @@
 package baseline.app.pojo.entity;
-
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -17,7 +16,7 @@ import lombok.Setter;
  * </p>
  *
  * @author crelle
- * @since 2023-02-28 05:09:23
+ * @since 2023-04-23 02:35:38
  */
 @Getter
 @Setter
@@ -26,17 +25,16 @@ import lombok.Setter;
 public class Asset {
 
     @ApiModelProperty("主键")
-    @TableId(value = "asset_id", type = IdType.ASSIGN_UUID)
-    private String assetId;
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private String id;
+
+    @ApiModelProperty("部门id")
+    @TableField("project_id")
+    private String projectId;
 
     @ApiModelProperty("员工id")
     @TableField("employee_id")
     private String employeeId;
-
-
-    @ApiModelProperty("员工id")
-    @TableField("department_id")
-    private String departmentId;
 
     @ApiModelProperty("资产编号")
     @TableField("asset_no")
@@ -49,18 +47,6 @@ public class Asset {
     @ApiModelProperty("资产名称")
     @TableField("asset_name")
     private String assetName;
-
-    @ApiModelProperty("资产状态")
-    @TableField("asset_status")
-    private String assetStatus;
-
-    @ApiModelProperty("资产价值")
-    @TableField("asset_value")
-    private String assetValue;
-
-    @ApiModelProperty("资产类型")
-    @TableField("asset_type")
-    private String assetType;
 
     @ApiModelProperty("创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)

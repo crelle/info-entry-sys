@@ -1,14 +1,11 @@
 package baseline.app.pojo.entity;
 
-import baseline.common.pojo.entity.BaseDo;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
 import java.util.Date;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -20,29 +17,21 @@ import lombok.Setter;
  * </p>
  *
  * @author crelle
- * @since 2022-12-06 05:57:05
+ * @since 2023-04-23 02:35:38
  */
 @Getter
 @Setter
 @TableName("t_customer")
 @ApiModel(value = "Customer对象", description = "客户表")
-public class Customer extends BaseDo {
+public class Customer {
 
     @ApiModelProperty("客户编号")
-    @TableId(value = "customer_id", type = IdType.ASSIGN_UUID)
-    private String customerId;
-
-    @ApiModelProperty("用户id")
-    @TableField("id")
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;
 
-    @ApiModelProperty("地域编号")
-    @TableField("t_r_region_id")
-    private String tRRegionId;
-
     @ApiModelProperty("客户名称")
-    @TableField("customer_name")
-    private String customerName;
+    @TableField("name")
+    private String name;
 
     @ApiModelProperty("地域ID")
     @TableField("region_id")

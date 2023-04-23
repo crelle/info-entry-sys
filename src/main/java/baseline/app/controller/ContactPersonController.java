@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @Api(tags = "接口人服务")
 @RestController
 @RequestMapping("/app/contact-person")
-public class ContactPersonController implements BaseController<ContactPersonVo,ContactPerson, ContactPersonQuery> {
+public class ContactPersonController implements BaseController<ContactPersonVo, ContactPerson, ContactPersonQuery> {
     @Autowired
     private ContactPersonService contactPersonService;
 
@@ -65,14 +65,15 @@ public class ContactPersonController implements BaseController<ContactPersonVo,C
     @Override
     public ResponseResult<String> deleteById(String id) {
         ResponseResult result = new ResponseResult();
-        List<Project> projectList = projectService
-                .list()
-                .stream().filter(project -> project.getInterfaceId().equals(id))
-                .collect(Collectors.toList());
-        if (!projectList.isEmpty()) {
-            result.buildFail("有项目在使用此接口，无法删除！");
-            return result;
-        }
+//        List<Project> projectList = projectService
+//                .list()
+                //TODO
+//                .stream().filter(project -> project.getInterfaceId().equals(id))
+//                .collect(Collectors.toList());
+//        if (!projectList.isEmpty()) {
+//            result.buildFail("有项目在使用此接口，无法删除！");
+//            return result;
+//        }
         contactPersonService.deleteById(id);
         return result;
     }

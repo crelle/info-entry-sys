@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
 public class EmployeeQuery extends Employee {
     @TableField("department_id")

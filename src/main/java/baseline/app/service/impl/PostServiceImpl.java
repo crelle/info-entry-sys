@@ -1,8 +1,7 @@
 package baseline.app.service.impl;
 
-import baseline.app.mapper.EmployeeMapper;
-import baseline.app.pojo.entity.Post;
 import baseline.app.mapper.PostMapper;
+import baseline.app.pojo.entity.Post;
 import baseline.app.pojo.query.PostQuery;
 import baseline.app.pojo.vo.PostVo;
 import baseline.app.service.EmployeeService;
@@ -64,7 +63,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     public Page<Post> pageByCondition(Page<Post> page) {
         Post post = page.getRecords().get(0);
         LambdaQueryWrapper<Post> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(StringUtils.isNotBlank(post.getPostName()), Post::getPostName, post.getPostName())
+        queryWrapper.like(StringUtils.isNotBlank(post.getName()), Post::getName, post.getName())
                 .like(StringUtils.isNotBlank(post.getAddress()), Post::getAddress, post.getAddress())
                 .like(StringUtils.isNotBlank(post.getProjectId()), Post::getProjectId, post.getProjectId())
                 .like(StringUtils.isNotBlank(post.getSkill()), Post::getSkill, post.getSkill());

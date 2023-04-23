@@ -32,7 +32,7 @@ import java.util.List;
 @Api(tags = "岗位服务")
 @RestController
 @RequestMapping("/app/post")
-public class PostController implements BaseController<PostVo,Post, PostQuery> {
+public class PostController implements BaseController<PostVo, Post, PostQuery> {
     @Autowired
     private PostService postService;
 

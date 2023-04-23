@@ -1,13 +1,10 @@
 package baseline.app.pojo.entity;
-
-import baseline.common.pojo.entity.BaseDo;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
 import java.util.Date;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -19,13 +16,17 @@ import lombok.Setter;
  * </p>
  *
  * @author crelle
- * @since 2022-12-06 05:57:05
+ * @since 2023-04-23 02:35:38
  */
 @Getter
 @Setter
 @TableName("t_employee")
 @ApiModel(value = "Employee对象", description = "员工表")
-public class Employee extends BaseDo {
+public class Employee {
+
+    @ApiModelProperty("主键")
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private String id;
 
     @ApiModelProperty("员工姓名")
     @TableField("name")
@@ -104,7 +105,7 @@ public class Employee extends BaseDo {
     private String skill;
 
     @ApiModelProperty("工号")
-    @TableId(value = "job_no", type = IdType.ASSIGN_UUID)
+    @TableField("job_no")
     private String jobNo;
 
     @ApiModelProperty("入职时间")
@@ -115,24 +116,33 @@ public class Employee extends BaseDo {
     @TableField("project_id")
     private String projectId;
 
+    @ApiModelProperty("岗位id")
     @TableField("post_id")
     private String postId;
-
-    @ApiModelProperty("项目编号")
-    @TableField("t_p_project_id")
-    private String tPProjectId;
 
     @ApiModelProperty("户籍地址")
     @TableField("native_address")
     private String nativeAddress;
 
-    @ApiModelProperty("经度")
-    @TableField("longitude")
-    private String longitude;
+    @ApiModelProperty("创建时间")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
 
-    @ApiModelProperty("维度")
-    @TableField("latitude")
-    private String latitude;
+    @ApiModelProperty("创建人")
+    @TableField("create_by")
+    private String createBy;
+
+    @ApiModelProperty("修改时间")
+    @TableField("update_time")
+    private Date updateTime;
+
+    @ApiModelProperty("修改人")
+    @TableField("update_by")
+    private String updateBy;
+
+    @ApiModelProperty("账号是否可用，1可以，0不可用，默认1")
+    @TableField("enabled")
+    private Boolean enabled;
 
 
 }

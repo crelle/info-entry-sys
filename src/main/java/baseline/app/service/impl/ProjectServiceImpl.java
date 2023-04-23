@@ -1,13 +1,11 @@
 package baseline.app.service.impl;
 
-import baseline.app.pojo.entity.Project;
 import baseline.app.mapper.ProjectMapper;
-import baseline.app.pojo.entity.Region;
+import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.query.ProjectQuery;
 import baseline.app.pojo.vo.ProjectVo;
 import baseline.app.service.ProjectService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
@@ -27,7 +25,7 @@ import java.util.List;
  */
 @Service
 public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> implements ProjectService {
-    @Autowired
+        @Autowired
     private ProjectMapper projectMapper;
 
     @Override
@@ -60,10 +58,9 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         Project project = page.getRecords().get(0);
         LambdaQueryWrapper<Project> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper
-                .like(StringUtils.isNotBlank(project.getProject()), Project::getProject, project.getProject())
+                .like(StringUtils.isNotBlank(project.getName()), Project::getName, project.getName())
                 .like(StringUtils.isNotBlank(project.getStatus()), Project::getStatus, project.getStatus())
                 .like(StringUtils.isNotBlank(project.getRegionId()), Project::getRegionId, project.getRegionId())
-                .like(StringUtils.isNotBlank(project.getInterfaceId()), Project::getInterfaceId, project.getInterfaceId())
                 .like(StringUtils.isNotBlank(project.getDepartmentId()), Project::getDepartmentId, project.getDepartmentId());
         return page(page, queryWrapper);
     }
