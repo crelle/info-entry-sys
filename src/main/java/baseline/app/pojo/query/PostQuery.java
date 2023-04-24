@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @ApiModel("岗位服务查询请求体")
 public class PostQuery {
@@ -38,6 +40,9 @@ public class PostQuery {
 
     @ApiModelProperty("计划满足日期")
     private String date;
+
+    @ApiModelProperty("到岗最晚时间")
+    private Date latestArrivalTime;
 
     @ApiModelProperty("岗位职责")
     private String position;
