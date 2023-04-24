@@ -14,6 +14,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * <p>
  *
@@ -30,10 +32,12 @@ public class Department extends BaseDo {
 
     @ApiModelProperty("部门id")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @NotBlank(groups = {DELETE.class,PUT.class})
     private String id;
 
     @ApiModelProperty("部门名称")
     @TableField("name")
+    @NotBlank(groups = POST.class)
     private String name;
 
     @ApiModelProperty("负责人id")
@@ -50,6 +54,7 @@ public class Department extends BaseDo {
 
     @ApiModelProperty("部门地址")
     @TableField("address")
+    @NotBlank(groups = POST.class)
     private String address;
 
     @ApiModelProperty("部门介绍")

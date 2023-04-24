@@ -17,11 +17,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -37,7 +39,7 @@ import java.util.stream.Collectors;
 @Api(tags = "区域服务")
 @RestController
 @RequestMapping("/app/region")
-public class RegionController implements BaseController<RegionVo,Region, RegionQuery> {
+public class RegionController implements BaseController<RegionVo, Region, RegionQuery> {
     @Autowired
     private RegionService regionService;
 
@@ -51,7 +53,7 @@ public class RegionController implements BaseController<RegionVo,Region, RegionQ
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Region> create(Region object) {
+    public ResponseResult<Region> create(@Validated(Region.POST.class) Region object) {
         ResponseResult<Region> regionResponseResult = new ResponseResult<>();
         boolean isSuccess = regionService.create(object);
         if (!isSuccess) {
@@ -64,7 +66,7 @@ public class RegionController implements BaseController<RegionVo,Region, RegionQ
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/creates", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Region> creates(List<Region> objects) {
+    public ResponseResult<Region> creates(@Validated(Region.POST.class) List<Region> objects) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = regionService.create(objects);
         if (!isSuccess) {
@@ -77,7 +79,7 @@ public class RegionController implements BaseController<RegionVo,Region, RegionQ
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> deleteById(String id) {
+    public ResponseResult<String> deleteById(@NotBlank String id) {
         ResponseResult result = new ResponseResult();
         //客户 项目  是否绑定地域
         List<Customer> customerList = customerService
@@ -119,7 +121,7 @@ public class RegionController implements BaseController<RegionVo,Region, RegionQ
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/updateById", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> updateById(Region object) {
+    public ResponseResult<String> updateById(@Validated(Region.PUT.class) Region object) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = regionService.update(object);
         if (!isSuccess) {

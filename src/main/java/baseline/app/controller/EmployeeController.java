@@ -14,11 +14,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class EmployeeController implements BaseController<EmployeeVo, Employee, 
     @ApiOperation("创建")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Employee> create(Employee object) {
+    public ResponseResult<Employee> create(@Validated(Employee.POST.class) Employee object) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = employeeService.create(object);
         if (!isSuccess) {
@@ -53,7 +55,7 @@ public class EmployeeController implements BaseController<EmployeeVo, Employee, 
     @ApiOperation("批量创建")
     @RequestMapping(value = "/creates", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Employee> creates(List<Employee> objects) {
+    public ResponseResult<Employee> creates(@Validated(Employee.POST.class) List<Employee> objects) {
         ResponseResult result = new ResponseResult();
         employeeService.create(objects);
         return result;
@@ -62,7 +64,7 @@ public class EmployeeController implements BaseController<EmployeeVo, Employee, 
     @ApiOperation("删除")
     @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> deleteById(String id) {
+    public ResponseResult<String> deleteById(@NotBlank String id) {
         ResponseResult result = new ResponseResult();
         employeeService.deleteById(id);
         return result;
@@ -80,7 +82,7 @@ public class EmployeeController implements BaseController<EmployeeVo, Employee, 
     @ApiOperation("更新")
     @RequestMapping(value = "/updateById", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> updateById(Employee object) {
+    public ResponseResult<String> updateById(@Validated(Employee.PUT.class) Employee object) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = employeeService.update(object);
         if (!isSuccess) {

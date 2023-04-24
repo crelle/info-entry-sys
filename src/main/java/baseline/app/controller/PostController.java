@@ -14,11 +14,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -40,7 +42,7 @@ public class PostController implements BaseController<PostVo, Post, PostQuery> {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Post> create(Post object) {
+    public ResponseResult<Post> create(@Validated(Post.POST.class) Post object) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = postService.create(object);
         if (!isSuccess) {
@@ -53,7 +55,7 @@ public class PostController implements BaseController<PostVo, Post, PostQuery> {
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/creates", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Post> creates(List<Post> objects) {
+    public ResponseResult<Post> creates(@Validated(Post.POST.class) List<Post> objects) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = postService.create(objects);
         if (!isSuccess) {
@@ -66,7 +68,7 @@ public class PostController implements BaseController<PostVo, Post, PostQuery> {
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> deleteById(String id) {
+    public ResponseResult<String> deleteById(@NotBlank String id) {
         ResponseResult result = new ResponseResult();
         postService.deleteById(id);
         return result;
@@ -86,7 +88,7 @@ public class PostController implements BaseController<PostVo, Post, PostQuery> {
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/updateById", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> updateById(Post object) {
+    public ResponseResult<String> updateById(@Validated(Post.PUT.class) Post object) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = postService.update(object);
         if (!isSuccess) {

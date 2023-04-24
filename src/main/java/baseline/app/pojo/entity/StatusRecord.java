@@ -14,6 +14,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * <p>
  * 状态记录表
@@ -30,14 +32,17 @@ public class StatusRecord extends BaseDo {
 
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @NotBlank(groups = {DELETE.class,PUT.class})
     private String id;
 
     @ApiModelProperty("工号")
     @TableField("job_no")
+    @NotBlank(groups = POST.class)
     private String jobNo;
 
     @ApiModelProperty("员工状态")
     @TableField("status")
+    @NotBlank(groups = POST.class)
     private String status;
 
     @ApiModelProperty("操作人工号")

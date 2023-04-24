@@ -14,6 +14,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * <p>
  * 资产表
@@ -30,6 +32,7 @@ public class Asset extends BaseDo {
 
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @NotBlank(groups = {PUT.class, DELETE.class})
     private String id;
 
     @ApiModelProperty("部门id")
@@ -42,14 +45,17 @@ public class Asset extends BaseDo {
 
     @ApiModelProperty("资产编号")
     @TableField("no")
+    @NotBlank(groups = {POST.class})
     private String no;
 
     @ApiModelProperty("资产序列号")
     @TableField("serial_number")
+    @NotBlank(groups = {POST.class})
     private String serialNumber;
 
     @ApiModelProperty("资产名称")
     @TableField("name")
+    @NotBlank(groups = {POST.class})
     private String name;
 
 }

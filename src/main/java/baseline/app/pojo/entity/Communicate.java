@@ -14,6 +14,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * <p>
  * 员工沟通记录表
@@ -30,6 +32,7 @@ public class Communicate extends BaseDo {
 
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @NotBlank(groups = {DELETE.class,PUT.class})
     private String id;
 
     @ApiModelProperty("工号")
@@ -50,5 +53,6 @@ public class Communicate extends BaseDo {
 
     @ApiModelProperty("沟通信息")
     @TableField("text")
+    @NotBlank(groups = POST.class)
     private String text;
 }

@@ -1,14 +1,21 @@
 package baseline.app.pojo.entity;
+
+import baseline.common.pojo.entity.BaseDo;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>
@@ -22,39 +29,20 @@ import lombok.Setter;
 @Setter
 @TableName("t_region")
 @ApiModel(value = "Region对象", description = "区域表")
-public class Region {
+public class Region extends BaseDo {
 
     @ApiModelProperty("地域id")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @NotBlank(groups = {DELETE.class,PUT.class})
     private String id;
 
     @ApiModelProperty("地域名称")
     @TableField("name")
+    @NotBlank(groups = POST.class)
     private String name;
 
     @ApiModelProperty("地域编码")
     @TableField("code")
+    @NotBlank(groups = POST.class)
     private String code;
-
-    @ApiModelProperty("创建时间")
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
-    private Date createTime;
-
-    @ApiModelProperty("创建人")
-    @TableField("create_by")
-    private String createBy;
-
-    @ApiModelProperty("修改时间")
-    @TableField("update_time")
-    private Date updateTime;
-
-    @ApiModelProperty("修改人")
-    @TableField("update_by")
-    private String updateBy;
-
-    @ApiModelProperty("账号是否可用，1可以，0不可用，默认1")
-    @TableField("enabled")
-    private Boolean enabled;
-
-
 }

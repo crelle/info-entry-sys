@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,7 +40,7 @@ public class CommunicateController implements BaseController<CommunicateVo, Comm
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Communicate> create(Communicate object) {
+    public ResponseResult<Communicate> create(@Validated(Communicate.POST.class) Communicate object) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = communicateService.create(object);
         if (!isSuccess) {

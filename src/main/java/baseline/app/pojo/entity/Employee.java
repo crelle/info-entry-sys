@@ -14,6 +14,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * <p>
  * 员工表
@@ -30,30 +32,37 @@ public class Employee extends BaseDo {
 
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @NotBlank(groups = {DELETE.class,PUT.class})
     private String id;
 
     @ApiModelProperty("员工姓名")
     @TableField("name")
+    @NotBlank(groups = POST.class)
     private String name;
 
     @ApiModelProperty("性别")
     @TableField("gender")
+    @NotBlank(groups = POST.class)
     private String gender;
 
     @ApiModelProperty("年龄")
     @TableField("age")
+    @NotBlank(groups = POST.class)
     private Integer age;
 
     @ApiModelProperty("出生年月")
     @TableField("birthday")
+    @NotBlank(groups = POST.class)
     private Date birthday;
 
     @ApiModelProperty("联系电话")
     @TableField("cell_phone")
+    @NotBlank(groups = POST.class)
     private String cellPhone;
 
     @ApiModelProperty("电子邮箱")
     @TableField("email")
+    @NotBlank(groups = POST.class)
     private String email;
 
     @ApiModelProperty("户籍地")
@@ -62,10 +71,12 @@ public class Employee extends BaseDo {
 
     @ApiModelProperty("现居住地")
     @TableField("residence")
+    @NotBlank(groups = POST.class)
     private String residence;
 
     @ApiModelProperty("紧急联系人")
     @TableField("emergency")
+    @NotBlank(groups = POST.class)
     private String emergency;
 
     @ApiModelProperty("紧急联系人电话")
@@ -82,14 +93,17 @@ public class Employee extends BaseDo {
 
     @ApiModelProperty("毕业时间")
     @TableField("school_time")
+    @NotBlank(groups = POST.class)
     private Date schoolTime;
 
     @ApiModelProperty("工作年限")
     @TableField("working_hours")
+    @NotBlank(groups = POST.class)
     private Integer workingHours;
 
     @ApiModelProperty("婚姻状况")
     @TableField("marriage")
+    @NotBlank(groups = POST.class)
     private String marriage;
 
     @ApiModelProperty("有无小孩")
@@ -110,10 +124,12 @@ public class Employee extends BaseDo {
 
     @ApiModelProperty("工号")
     @TableField("job_no")
+    @NotBlank(groups = POST.class)
     private String jobNo;
 
     @ApiModelProperty("入职时间")
     @TableField("time")
+    @NotBlank(groups = POST.class)
     private Date time;
 
     @ApiModelProperty("项目ID")

@@ -18,11 +18,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,7 +53,7 @@ public class ProjectController implements BaseController<ProjectVo, Project, Pro
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Project> create(Project object) {
+    public ResponseResult<Project> create(@Validated(Project.POST.class) Project object) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = projectService.create(object);
         if (!isSuccess) {
@@ -64,7 +66,7 @@ public class ProjectController implements BaseController<ProjectVo, Project, Pro
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/creates", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Project> creates(List<Project> objects) {
+    public ResponseResult<Project> creates(@Validated(Project.POST.class) List<Project> objects) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = projectService.create(objects);
         if (!isSuccess) {
@@ -77,7 +79,7 @@ public class ProjectController implements BaseController<ProjectVo, Project, Pro
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> deleteById(String id) {
+    public ResponseResult<String> deleteById(@NotBlank String id) {
         ResponseResult result = new ResponseResult();
         List<Post> postList = postService
                 .list()
@@ -115,7 +117,7 @@ public class ProjectController implements BaseController<ProjectVo, Project, Pro
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/updateById", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> updateById(Project object) {
+    public ResponseResult<String> updateById(@Validated(Project.PUT.class) Project object) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = projectService.update(object);
         if (!isSuccess) {

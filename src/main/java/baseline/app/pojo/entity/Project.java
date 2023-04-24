@@ -14,6 +14,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * <p>
  * 项目表
@@ -30,10 +32,12 @@ public class Project extends BaseDo {
 
     @ApiModelProperty("项目编号")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @NotBlank(groups = {DELETE.class,PUT.class})
     private String id;
 
     @ApiModelProperty("项目名称")
     @TableField("name")
+    @NotBlank(groups = POST.class)
     private String name;
 
     @ApiModelProperty("立项时间")

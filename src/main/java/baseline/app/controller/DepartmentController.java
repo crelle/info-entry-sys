@@ -16,11 +16,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +37,7 @@ import java.util.stream.Collectors;
 @Api(tags = "部门服务")
 @RestController
 @RequestMapping("/app/department")
-public class DepartmentController implements BaseController<DepartmentVo,Department, DepartmentQuery> {
+public class DepartmentController implements BaseController<DepartmentVo, Department, DepartmentQuery> {
 
     @Autowired
     private DepartmentService departmentService;
@@ -47,7 +49,7 @@ public class DepartmentController implements BaseController<DepartmentVo,Departm
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Department> create(Department object) {
+    public ResponseResult<Department> create(@Validated(Department.POST.class) Department object) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = departmentService.create(object);
         if (!isSuccess) {
@@ -60,7 +62,7 @@ public class DepartmentController implements BaseController<DepartmentVo,Departm
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/creates", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<Department> creates(List<Department> objects) {
+    public ResponseResult<Department> creates(@Validated(Department.POST.class) List<Department> objects) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = departmentService.create(objects);
         if (!isSuccess) {
@@ -73,7 +75,7 @@ public class DepartmentController implements BaseController<DepartmentVo,Departm
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> deleteById(String id) {
+    public ResponseResult<String> deleteById(@NotBlank String id) {
         ResponseResult result = new ResponseResult();
         List<Project> projectList = projectService
                 .list()
@@ -101,7 +103,7 @@ public class DepartmentController implements BaseController<DepartmentVo,Departm
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/updateById", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> updateById(Department object) {
+    public ResponseResult<String> updateById(@Validated(Department.PUT.class) Department object) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = departmentService.update(object);
         if (!isSuccess) {

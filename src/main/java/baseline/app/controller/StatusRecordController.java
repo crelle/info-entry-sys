@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +32,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/app/status-record")
 @Api(tags = "状态服务")
-public class StatusRecordController implements BaseController<StatusRecordVo,StatusRecord, StatusRecordQuery> {
+public class StatusRecordController implements BaseController<StatusRecordVo, StatusRecord, StatusRecordQuery> {
     @Autowired
     private StatusRecordService statusRecordService;
 
@@ -39,7 +40,7 @@ public class StatusRecordController implements BaseController<StatusRecordVo,Sta
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<StatusRecord> create(StatusRecord object) {
+    public ResponseResult<StatusRecord> create(@Validated(StatusRecord.POST.class) StatusRecord object) {
         ResponseResult result = new ResponseResult();
         boolean isSuccess = statusRecordService.create(object);
         if (!isSuccess) {
