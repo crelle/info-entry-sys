@@ -13,6 +13,7 @@
         post.position,
         post.requirements,
         post.update_time as updateTime,
+        post.latest_arrival_time as latestArrivalTime,
         proj.id as projectId,
         proj.name as projectName,
         cust.id as customerId,
