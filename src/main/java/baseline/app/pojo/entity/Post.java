@@ -60,8 +60,8 @@ public class Post extends BaseDo {
     private String projectId;
 
     @ApiModelProperty("客户")
-    @TableField("customer")
-    private String customer;
+    @TableField("customer_id")
+    private String customerId;
 
     @ApiModelProperty("岗位需求人数")
     @TableField("number")
