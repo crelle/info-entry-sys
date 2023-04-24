@@ -6,9 +6,11 @@ import baseline.app.pojo.dto.reportform.EmployeeAnalysisDto;
 import baseline.app.pojo.dto.reportform.EmployeeCustomerDto;
 import baseline.app.pojo.dto.reportform.EmployeeSeniorityDto;
 import baseline.app.pojo.query.reportform.*;
+import baseline.app.pojo.vo.EmployeeVo;
 import baseline.app.pojo.vo.reportform.*;
 import baseline.app.service.ReportFormService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -112,5 +114,49 @@ public class ReportFormServiceImpl implements ReportFormService {
             employeeCustomerVOS.add(employeeCustomerVO);
         });
         return employeeCustomerVOS;
+    }
+
+    @Override
+    public EmployeeMarriageAndChildbirthAndSexVO employeeMarriageAndChildbirth(EmployeeMarriageAndChildbirthAndSexQuery marriageAndChildbirthQuery) {
+        List<EmployeeVo> employeeVos = reportFormMapper.employeeMarriageAndChildbirthAndSex(marriageAndChildbirthQuery);
+        if (CollectionUtils.isEmpty(employeeVos)) {
+            return null;
+        }
+        EmployeeMarriageAndChildbirthAndSexVO result = new EmployeeMarriageAndChildbirthAndSexVO();
+        result.setTotal(Long.valueOf(employeeVos.size()));
+        long manNum = employeeVos.stream().filter(employeeVo -> {
+            return StringUtils.equals(employeeVo.getGender(), "1");
+        }).count();
+        result.setManNum(manNum);
+        long womanNum = employeeVos.stream().filter(employeeVo -> {
+            return StringUtils.equals(employeeVo.getGender(), "0");
+        }).count();
+        result.setWomenNum(womanNum);
+        long marriedAndNoPregnantNum = employeeVos.stream().filter(employeeVo -> {
+            if (StringUtils.equals(employeeVo.getMarriage(), "1") && StringUtils.equals(employeeVo.getChild(), "0")) {
+                return true;
+            } else {
+                return false;
+            }
+        }).count();
+        result.setMarriedAndNoPregnantNum(marriedAndNoPregnantNum);
+
+        long marriedAndPregnantNum = employeeVos.stream().filter(employeeVo -> {
+            if (StringUtils.equals(employeeVo.getMarriage(), "1") && StringUtils.equals(employeeVo.getChild(), "1")) {
+                return true;
+            } else {
+                return false;
+            }
+        }).count();
+        result.setMarriedAndPregnantNum(marriedAndPregnantNum);
+        long noMarriedAndNoPregnantNum = employeeVos.stream().filter(employeeVo -> {
+            if (StringUtils.equals(employeeVo.getMarriage(), "0") && StringUtils.equals(employeeVo.getChild(), "1")) {
+                return true;
+            } else {
+                return false;
+            }
+        }).count();
+        result.setNoMarriedAndNoPregnantNum(noMarriedAndNoPregnantNum);
+        return result;
     }
 }

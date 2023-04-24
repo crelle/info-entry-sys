@@ -142,4 +142,19 @@ public class ReportFormController {
         }
         return responseResult;
     }
+
+    @ApiOperation(value = "婚育和性别分布")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/employeeMarriageAndChildbirthAndSex", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    ResponseResult<EmployeeMarriageAndChildbirthAndSexVO> employeeMarriageAndChildbirthAndSex(EmployeeMarriageAndChildbirthAndSexQuery employeeMarriageAndChildbirthAndSexQuery) {
+        ResponseResult responseResult = ResponseResult.ok();
+        try {
+            EmployeeMarriageAndChildbirthAndSexVO employeeMarriageAndChildbirthAndSexVO = reportFormService.employeeMarriageAndChildbirth(employeeMarriageAndChildbirthAndSexQuery);
+            responseResult.setData(employeeMarriageAndChildbirthAndSexVO);
+            responseResult.setTotal(employeeMarriageAndChildbirthAndSexVO.getTotal());
+        } catch (Exception e) {
+            throw e;
+        }
+        return responseResult;
+    }
 }

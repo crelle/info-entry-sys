@@ -5,6 +5,7 @@ import baseline.app.pojo.dto.reportform.EmployeeAnalysisDto;
 import baseline.app.pojo.dto.reportform.EmployeeCustomerDto;
 import baseline.app.pojo.dto.reportform.EmployeeSeniorityDto;
 import baseline.app.pojo.query.reportform.*;
+import baseline.app.pojo.vo.EmployeeVo;
 import baseline.app.pojo.vo.reportform.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -32,4 +33,6 @@ public interface ReportFormMapper {
     List<EmployeeAgeDto> employeeAge(@Param("param") EmployeeAgeQuery employeeAgeQuery);
 
     List<EmployeeCustomerDto> employeeCustomer(@Param("param") EmployeeCustomerQuery employeeCustomerQuery);
+
+    List<EmployeeVo> employeeMarriageAndChildbirthAndSex(@Param("parem") EmployeeMarriageAndChildbirthAndSexQuery employeeMarriageAndChildbirthAndSexQuery);
 }

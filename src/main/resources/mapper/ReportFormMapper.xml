@@ -135,4 +135,26 @@
         GROUP BY temp.customerName;
     </select>
 
+    <select id="employeeMarriageAndChildbirthAndSex"
+            resultType="baseline.app.pojo.vo.EmployeeVo">
+        SELECT
+        emp.*
+        FROM
+        t_employee emp
+        LEFT JOIN t_project pro ON emp.project_id = pro.id
+        LEFT JOIN t_region reg ON reg.id = pro.region_id
+        left join t_department dept on dept.id = pro.department_id
+        <where>
+            <if test="param.departmentName!=null and param.departmentName!=''">
+                and dept.name = #{param.departmentName}
+            </if>
+            <if test="param.regionName!=null and param.regionName!=''">
+                and reg.name = #{param.regionName}
+            </if>
+            <if test="param.projectName！=null and param.projectName!=''">
+                and pro.name = #{param.projectName}
+            </if>
+        </where>
+    </select>
+
 </mapper>

@@ -1,9 +1,7 @@
 package baseline.app.service;
 
-import baseline.app.pojo.dto.reportform.EmployeeCustomerDto;
 import baseline.app.pojo.query.reportform.*;
 import baseline.app.pojo.vo.reportform.*;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -26,13 +24,15 @@ public interface ReportFormService {
 
     /**
      * 员工工龄分布
+     *
      * @param employeeSeniorityQuery
      * @return
      */
-    List<EmployeeSeniorityVO>  employeeSeniority( EmployeeSeniorityQuery employeeSeniorityQuery);
+    List<EmployeeSeniorityVO> employeeSeniority(EmployeeSeniorityQuery employeeSeniorityQuery);
 
     /**
      * 员工年龄分布
+     *
      * @param employeeAgeQuery
      * @return
      */
@@ -40,8 +40,16 @@ public interface ReportFormService {
 
     /**
      * 员工客户分布
+     *
      * @param employeeCustomerQuery
      * @return
      */
     List<EmployeeCustomerVO> employeeCustomer(EmployeeCustomerQuery employeeCustomerQuery);
+
+    /**
+     * 员工婚育和性别分析
+     *
+     * @return
+     */
+    EmployeeMarriageAndChildbirthAndSexVO employeeMarriageAndChildbirth(EmployeeMarriageAndChildbirthAndSexQuery marriageAndChildbirthQuery);
 }
