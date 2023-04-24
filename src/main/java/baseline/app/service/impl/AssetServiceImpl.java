@@ -8,6 +8,9 @@ import baseline.app.service.AssetService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -24,6 +27,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class AssetServiceImpl extends ServiceImpl<AssetMapper, Asset> implements AssetService {
+
+    @Autowired
+    private AssetMapper assetMapper;
 
     @Override
     public boolean create(Asset object) {
@@ -60,7 +66,14 @@ public class AssetServiceImpl extends ServiceImpl<AssetMapper, Asset> implements
 
     @Override
     public Page<AssetVo> manualPage(Page<AssetQuery> pageBean) {
-        return null;
+        Page<AssetVo> page = new Page<>();
+        List<AssetVo> assetVoList = assetMapper.manualPage(pageBean.getRecords().get(0));
+        PageInfo<AssetVo> pageInfo = new PageInfo<>(assetVoList);
+        page.setRecords(assetVoList);
+        if (CollectionUtils.isNotEmpty(assetVoList)) {
+            page.setTotal(pageInfo.getTotal());
+        }
+        return page;
     }
 
     @Override

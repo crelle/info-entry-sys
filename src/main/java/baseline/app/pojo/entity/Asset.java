@@ -36,8 +36,8 @@ public class Asset extends BaseDo {
     private String id;
 
     @ApiModelProperty("部门id")
-    @TableField("project_id")
-    private String projectId;
+    @TableField("department_id")
+    private String departmentId;
 
     @ApiModelProperty("员工id")
     @TableField("employee_id")

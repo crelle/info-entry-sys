@@ -5,6 +5,7 @@ import baseline.app.pojo.query.AssetQuery;
 import baseline.app.pojo.vo.AssetVo;
 import baseline.common.baseBean.BaseService;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

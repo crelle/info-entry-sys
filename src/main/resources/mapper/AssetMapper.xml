@@ -2,4 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="baseline.app.mapper.AssetMapper">
 
+    <select id="manualPage" resultType="baseline.app.pojo.vo.AssetVo">
+        SELECT
+        ta.id,
+        ta.department_id AS departmentId,
+        ta.employee_id AS employeeId,
+        ta.no,
+        ta.serial_number AS serialNumber,
+        ta.name,
+        te.name AS employeeName,
+        td.name AS departmentName
+        FROM
+        t_asset ta
+        LEFT JOIN
+        t_employee te ON ta.employee_id = te.id
+        LEFT JOIN
+        t_department td ON td.id = ta.department_id
+        <where>
+            <if test="param.employeeName!=null and param.employeeName!=''">
+                and te.name LIKE concat('%',#{param.employeeName},'%')
+            </if>
+            <if test="param.departmentName!=null and param.departmentName!=''">
+                AND td.name LIKE concat('%',#{param.departmentName},'%')
+            </if>
+            <if test="param.no!=null and param.no!=''">
+                AND ta.no LIKE concat('%',#{param.no},'%')
+            </if>
+            <if test="param.serialNumber!=null and param.serialNumber!=''">
+                AND ta.serial_number LIKE concat('%',#{param.serialNumber},'%')
+            </if>
+            <if test="param.name!=null and param.name!=''">
+                AND ta.name LIKE concat('%',#{param.name},'%')
+            </if>
+            <if test="param.enabled!=null and param.enabled!=''">
+                AND ta.enabled = #{param.enabled}
+            </if>
+        </where>
+
+    </select>
 </mapper>

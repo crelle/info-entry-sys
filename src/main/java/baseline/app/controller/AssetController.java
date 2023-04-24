@@ -5,6 +5,7 @@ import baseline.app.pojo.entity.Asset;
 import baseline.app.pojo.query.AssetQuery;
 import baseline.app.pojo.vo.AssetVo;
 import baseline.app.service.AssetService;
+import baseline.common.annotation.EnablePagination;
 import baseline.common.baseBean.BaseController;
 import baseline.common.pojo.vo.ResponseResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -107,8 +108,15 @@ public class AssetController implements BaseController<AssetVo, Asset, AssetQuer
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
+    @EnablePagination
     public ResponseResult<Page<AssetVo>> manualPage(Page<AssetQuery> pageBean) {
-        return null;
+        ResponseResult responseResult = ResponseResult.ok();
+        try {
+            responseResult.setData(assetService.manualPage(pageBean));
+        } catch (Exception e) {
+            throw e;
+        }
+        return responseResult;
     }
 
     @ApiOperation(value = "根据员工id查询资产信息")
