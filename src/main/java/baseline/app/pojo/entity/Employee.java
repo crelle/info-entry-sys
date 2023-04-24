@@ -1,7 +1,6 @@
 package baseline.app.pojo.entity;
 
 import baseline.common.pojo.entity.BaseDo;
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -14,7 +13,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 
 /**
  * <p>
@@ -52,7 +53,7 @@ public class Employee extends BaseDo {
 
     @ApiModelProperty("出生年月")
     @TableField("birthday")
-    @NotBlank(groups = POST.class)
+    @Past(groups = POST.class)
     private Date birthday;
 
     @ApiModelProperty("联系电话")
@@ -93,7 +94,8 @@ public class Employee extends BaseDo {
 
     @ApiModelProperty("毕业时间")
     @TableField("school_time")
-    @NotBlank(groups = POST.class)
+    @Past(groups = POST.class)
+    @Future(groups = POST.class)
     private Date schoolTime;
 
     @ApiModelProperty("工作年限")
@@ -129,7 +131,8 @@ public class Employee extends BaseDo {
 
     @ApiModelProperty("入职时间")
     @TableField("time")
-    @NotBlank(groups = POST.class)
+    @Past(groups = POST.class)
+    @Future(groups = POST.class)
     private Date time;
 
     @ApiModelProperty("项目ID")
