@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -68,7 +69,7 @@ public class PostController implements BaseController<PostVo, Post, PostQuery> {
     @ApiParam(required = true, name = "id", value = "入参")
     @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
-    public ResponseResult<String> deleteById(@NotBlank String id) {
+    public ResponseResult<String> deleteById(@PathVariable @NotBlank String id) {
         ResponseResult result = new ResponseResult();
         postService.deleteById(id);
         return result;

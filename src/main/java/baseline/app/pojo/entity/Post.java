@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -69,7 +70,7 @@ public class Post extends BaseDo {
 
     @ApiModelProperty("计划满足日期")
     @TableField("date")
-    @NotBlank(groups = POST.class)
+    @FutureOrPresent(groups = POST.class)
     private Date date;
 
     @ApiModelProperty("办公地点")
@@ -79,7 +80,7 @@ public class Post extends BaseDo {
 
     @ApiModelProperty("到岗最晚时间")
     @TableField("latest_arrival_time")
-    @NotBlank(groups = POST.class)
+    @FutureOrPresent(groups = POST.class)
     private Date latestArrivalTime;
 
 }
