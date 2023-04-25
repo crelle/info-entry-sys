@@ -102,7 +102,7 @@ public class EmployeeController implements BaseController<EmployeeVo, Employee, 
 
     @ApiOperation(value = "手动分页查询")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/queryByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @EnablePagination
     public ResponseResult<Page<EmployeeVo>> manualPage(Page<EmployeeQuery> pageBean) {
         ResponseResult result = new ResponseResult();
