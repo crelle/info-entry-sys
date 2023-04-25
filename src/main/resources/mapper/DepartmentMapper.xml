@@ -5,23 +5,30 @@
 
     <select id="manualPage" resultType="baseline.app.pojo.vo.DepartmentVo">
         SELECT
-        department1.id,
-        department1.name,
-        department1.user_Id as userId,
-        department1.address,
-        department1.update_time as updateTime,
-        department2.name as  department_up
+        child.id,
+        child.name,
+        child.user_Id as userId,
+        child.address,
+        child.update_time as updateTime,
+        parent.id as parentId,
+        parent.name as parentName,
+        tuser.job_no as jobNo,
+        tuser.user_phone as cellPhone,
+        tuser.user_email as email
         FROM
-        t_department department1,
-        t_department department2
+        t_department child
+        left join
+        t_department parent
+        on parent.id = child.parent_id
+        left join t_user tuser
+        on tuser.id = child.user_id
         <where>
-            department1.id = department2.id
-            AND department1.department_up = department2.id
+            and
             <if test="param.name!=null and param.name!=''">
-                AND department1.name like concat('%',concat(#{param.name},'%'))
+                AND child.name like concat('%',concat(#{param.name},'%'))
             </if>
         </where>
-        order by department1.update_time
+        order by child.update_time
     </select>
 
 </mapper>

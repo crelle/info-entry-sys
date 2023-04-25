@@ -44,14 +44,6 @@ public class Department extends BaseDo {
     @TableField("user_id")
     private String userId;
 
-    @ApiModelProperty("联系电话")
-    @TableField("cell_phone")
-    private String cellPhone;
-
-    @ApiModelProperty("电子邮箱")
-    @TableField("email")
-    private String email;
-
     @ApiModelProperty(value = "部门地址",required = true)
     @TableField("address")
     @NotBlank(groups = POST.class)
@@ -62,7 +54,7 @@ public class Department extends BaseDo {
     private String introduce;
 
     @ApiModelProperty("上级部门")
-    @TableField("department_up")
-    private String departmentUp;
+    @TableField("parent_id")
+    private String parentId;
 
 }

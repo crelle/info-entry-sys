@@ -29,16 +29,16 @@ public class DepartmentVo extends BaseDo {
     @ApiModelProperty("部门名称")
     private String name;
 
-    @ApiModelProperty("用户ID")
+    @ApiModelProperty("负责人Id")
     private String userId;
 
-    @ApiModelProperty("工号")
+    @ApiModelProperty("负责人工号")
     private String jobNo;
 
-    @ApiModelProperty("联系电话")
+    @ApiModelProperty("负责人电话")
     private String cellPhone;
 
-    @ApiModelProperty("电子邮箱")
+    @ApiModelProperty("负责人邮箱")
     private String email;
 
     @ApiModelProperty("部门地址")
@@ -47,8 +47,11 @@ public class DepartmentVo extends BaseDo {
     @ApiModelProperty("部门介绍")
     private String introduce;
 
-    @TableField("department_up")
-    private String departmentUp;
+    @ApiModelProperty("上级部门Id")
+    private String parentId;
+
+    @ApiModelProperty("上级部门名称")
+    private String parentName;
 
     @ApiModelProperty("创建时间")
     private Date createTime;
