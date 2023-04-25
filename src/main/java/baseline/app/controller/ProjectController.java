@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -84,6 +85,7 @@ public class ProjectController implements BaseController<ProjectVo, Project, Pro
         List<Post> postList = postService
                 .list()
                 .stream()
+                .filter(post -> StringUtils.isNotBlank(post.getProjectId()))
                 .filter(post -> post.getProjectId().equals(id))
                 .collect(Collectors.toList());
         if (!postList.isEmpty()) {
@@ -93,6 +95,7 @@ public class ProjectController implements BaseController<ProjectVo, Project, Pro
         List<Employee> employeeList = employeeService
                 .list()
                 .stream()
+                .filter(employee -> StringUtils.isNotBlank(employee.getProjectId()))
                 .filter(employee -> employee.getProjectId().equals(id))
                 .collect(Collectors.toList());
         if (!employeeList.isEmpty()) {

@@ -26,13 +26,12 @@ public class CustomerVo {
     @ApiModelProperty("客户编号")
     private String id;
 
+    @ApiModelProperty("客户名称")
+    @TableField("name")
+    private String name;
+
     @ApiModelProperty("地域编号")
     private String regionId;
-
-    @ApiModelProperty("客户名称")
-    @TableField("customer_name")
-    private String customerName;
-
 
     @ApiModelProperty("地域")
     @TableField("region_name")
