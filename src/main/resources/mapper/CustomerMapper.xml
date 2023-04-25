@@ -4,13 +4,21 @@
 
     <select id="manualPage" resultType="baseline.app.pojo.vo.CustomerVo">
         SELECT
-        a.*,
-        b.name as regionName
+        a.id,
+        a.name,
+        a.address,
+        a.user_id AS userId,
+        c.user_nick_name AS userName,
+        a.cell_phone AS cellPhone,
+        a.email,
+        b.name AS regionName
         FROM
         t_customer a
         left join
         t_region b
         on a.region_id = b.id
+        LEFT JOIN
+        t_user c ON c.id = a.user_id
         <where>
             <if test="param.name!=null and param.name!=''">
                 and a.name like concat('%',concat(#{param.name},'%'))
@@ -19,7 +27,7 @@
                 AND b.id = #{param.regionId}
             </if>
             <if test="param.userId!=null and param.userId!=''">
-                AND a.user_id = #{param.userId}
+                AND c.id = #{param.userId}
             </if>
         </where>
         order by a.update_time
