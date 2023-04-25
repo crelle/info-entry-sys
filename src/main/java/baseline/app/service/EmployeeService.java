@@ -22,8 +22,6 @@ import java.io.IOException;
  */
 public interface EmployeeService extends IService<Employee>, BaseService<EmployeeVo, Employee, EmployeeQuery> {
 
-    Page<EmployeeQuery> queryByCondition(Page<EmployeeQuery> pageBean);
-
     String importEmployee(MultipartFile file) throws IOException;
 
     /**

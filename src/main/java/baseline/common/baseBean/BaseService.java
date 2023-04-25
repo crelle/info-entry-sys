@@ -46,7 +46,7 @@ public interface BaseService<V, T, Q> {
     boolean update(T object);
 
     /**
-     * 奏定分页查询
+     * 自动分页查询，仅仅适用于单表查询
      *
      * @param page
      * @return
@@ -54,7 +54,7 @@ public interface BaseService<V, T, Q> {
     Page<T> pageByCondition(Page<T> page);
 
     /**
-     * 使用mybatis plus手动分页，自定义查询语句
+     * 手动分页查询，用于多表查询
      *
      * @param pageBean
      * @return

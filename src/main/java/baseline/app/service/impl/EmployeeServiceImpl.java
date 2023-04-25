@@ -2,6 +2,7 @@ package baseline.app.service.impl;
 
 import baseline.app.mapper.EmployeeMapper;
 import baseline.app.pojo.entity.Communicate;
+import baseline.app.pojo.entity.Department;
 import baseline.app.pojo.entity.Employee;
 import baseline.app.pojo.entity.StatusRecord;
 import baseline.app.pojo.query.EmployeeQuery;
@@ -16,6 +17,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
@@ -165,7 +167,12 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     @Override
     public Page<EmployeeVo> manualPage(Page<EmployeeQuery> pageBean) {
-        return null;
+        Page<EmployeeVo> result = new Page<>();
+        List<EmployeeVo> employeeQueries = employeeMapper.queryByCondition(pageBean.getRecords().get(0));
+        PageInfo<EmployeeVo> pageInfo = new PageInfo<>(employeeQueries);
+        result.setTotal(pageInfo.getTotal());
+        result.setRecords(employeeQueries);
+        return result;
     }
 
     @Override
@@ -173,11 +180,6 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         return null;
     }
 
-    public Page<EmployeeQuery> queryByCondition(@RequestBody Page<EmployeeQuery> pageBean) {
-        EmployeeQuery employeeQuery = pageBean.getRecords().get(0);
-        Page<EmployeeQuery> employeeQueryPage = new Page<>();
-        return employeeMapper.queryByCondition(employeeQueryPage, employeeQuery);
-    }
 
     public List<Employee> queryByEmpId(String id) {
         QueryWrapper<Employee> wrapper = new QueryWrapper<>();
@@ -243,8 +245,8 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             return null;
         }
         // 导出excel逻辑处理
-        buildExcel(purchaseOrderSubVOList,fileName);
-        return "导出成功! 文件存放在:"+fileAddress;
+        buildExcel(purchaseOrderSubVOList, fileName);
+        return "导出成功! 文件存放在:" + fileAddress;
     }
 
     @Override
@@ -255,8 +257,8 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
         employees.add(employee);
         // 导出excel逻辑处理
-        buildExcel(employees,fileNameTemplate);
-        return "导出成功! 文件存放在:"+fileAddress;
+        buildExcel(employees, fileNameTemplate);
+        return "导出成功! 文件存放在:" + fileAddress;
     }
 
     /**
@@ -264,7 +266,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
      *
      * @param employees response
      */
-    private void buildExcel( List<Employee> employees,String fileName) throws Exception {
+    private void buildExcel(List<Employee> employees, String fileName) throws Exception {
         List<String> headers = Arrays.asList("工号",
                 "员工姓名",
                 "性别",
@@ -305,7 +307,6 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             System.err.println(e.getMessage());
         }
     }
-
 
 
     private void setEmployInfo(int totalCell, Row row, Employee employee) {

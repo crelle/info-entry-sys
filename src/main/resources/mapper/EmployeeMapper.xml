@@ -3,7 +3,7 @@
 <mapper namespace="baseline.app.mapper.EmployeeMapper">
 
 
-    <select id="queryByCondition" resultType="baseline.app.pojo.query.EmployeeQuery">
+    <select id="queryByCondition" resultType="baseline.app.pojo.vo.EmployeeVo">
         SELECT
         *
         FROM

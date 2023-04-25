@@ -5,6 +5,7 @@ import baseline.app.pojo.entity.Employee;
 import baseline.app.pojo.query.EmployeeQuery;
 import baseline.app.pojo.vo.EmployeeVo;
 import baseline.app.service.EmployeeService;
+import baseline.common.annotation.EnablePagination;
 import baseline.common.baseBean.BaseController;
 import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
@@ -91,7 +92,7 @@ public class EmployeeController implements BaseController<EmployeeVo, Employee, 
         return result;
     }
 
-    @ApiOperation("分页查询")
+    @ApiOperation("自动分页查询")
     @RequestMapping(value = "/pageByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseResult<Page<Employee>> page(@RequestBody Page<Employee> pageBean) {
         ResponseResult result = new ResponseResult();
@@ -99,17 +100,13 @@ public class EmployeeController implements BaseController<EmployeeVo, Employee, 
         return result;
     }
 
-    @Override
-    public ResponseResult<Page<EmployeeVo>> manualPage(Page<EmployeeQuery> pageBean) {
-        return null;
-    }
-
     @ApiOperation(value = "手动分页查询")
     @ApiParam(required = true, name = "", value = "入参")
-    @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseResult<Page<EmployeeQuery>> queryByCondition(@RequestBody Page<EmployeeQuery> pageBean) {
+    @RequestMapping(value = "/queryByCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @EnablePagination
+    public ResponseResult<Page<EmployeeVo>> manualPage(Page<EmployeeQuery> pageBean) {
         ResponseResult result = new ResponseResult();
-        result.setData(employeeService.queryByCondition(pageBean));
+        result.setData(employeeService.manualPage(pageBean));
         return result;
     }
 
