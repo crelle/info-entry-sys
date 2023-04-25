@@ -53,7 +53,7 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
         Region region = page.getRecords().get(0);
         QueryWrapper<Region> queryWrapper = new QueryWrapper<>(region);
         if (StringUtils.isNotBlank(region.getName())) {
-            queryWrapper.select().like("region_name", region.getName());
+            queryWrapper.select().like("name", region.getName());
             return page(page, queryWrapper);
         } else {
             return page(page);
