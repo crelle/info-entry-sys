@@ -35,7 +35,7 @@ public class Department extends BaseDo {
     @NotBlank(groups = {DELETE.class,PUT.class})
     private String id;
 
-    @ApiModelProperty("部门名称")
+    @ApiModelProperty(value = "部门名称",required = true)
     @TableField("name")
     @NotBlank(groups = POST.class)
     private String name;
@@ -52,7 +52,7 @@ public class Department extends BaseDo {
     @TableField("email")
     private String email;
 
-    @ApiModelProperty("部门地址")
+    @ApiModelProperty(value = "部门地址",required = true)
     @TableField("address")
     @NotBlank(groups = POST.class)
     private String address;

@@ -32,7 +32,7 @@ public class Communicate extends BaseDo {
 
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    @NotBlank(groups = {DELETE.class,PUT.class})
+    @NotBlank(groups = {DELETE.class, PUT.class})
     private String id;
 
     @ApiModelProperty("工号")
@@ -51,7 +51,7 @@ public class Communicate extends BaseDo {
     @TableField("recorder_name")
     private String recorderName;
 
-    @ApiModelProperty("沟通信息")
+    @ApiModelProperty(value = "沟通信息", required = true)
     @TableField("text")
     @NotBlank(groups = POST.class)
     private String text;

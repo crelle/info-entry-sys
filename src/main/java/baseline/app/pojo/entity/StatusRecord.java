@@ -35,12 +35,12 @@ public class StatusRecord extends BaseDo {
     @NotBlank(groups = {DELETE.class,PUT.class})
     private String id;
 
-    @ApiModelProperty("工号")
+    @ApiModelProperty(value = "工号",required = true)
     @TableField("job_no")
     @NotBlank(groups = POST.class)
     private String jobNo;
 
-    @ApiModelProperty("员工状态")
+    @ApiModelProperty(value = "员工状态",required = true)
     @TableField("status")
     @NotBlank(groups = POST.class)
     private String status;

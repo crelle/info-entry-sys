@@ -43,17 +43,17 @@ public class Asset extends BaseDo {
     @TableField("employee_id")
     private String employeeId;
 
-    @ApiModelProperty("资产编号")
+    @ApiModelProperty(value = "资产编号", required = true)
     @TableField("no")
     @NotBlank(groups = {POST.class})
     private String no;
 
-    @ApiModelProperty("资产序列号")
+    @ApiModelProperty(value = "资产序列号", required = true)
     @TableField("serial_number")
     @NotBlank(groups = {POST.class})
     private String serialNumber;
 
-    @ApiModelProperty("资产名称")
+    @ApiModelProperty(value = "资产名称" ,required = true)
     @TableField("name")
     @NotBlank(groups = {POST.class})
     private String name;

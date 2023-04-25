@@ -35,22 +35,22 @@ public class Post extends BaseDo {
     @NotBlank(groups = {DELETE.class,PUT.class})
     private String id;
 
-    @ApiModelProperty("岗位名称")
+    @ApiModelProperty(value = "岗位名称",required = true)
     @TableField("name")
     @NotBlank(groups = POST.class)
     private String name;
 
-    @ApiModelProperty("岗位职责")
+    @ApiModelProperty(value = "岗位职责",required = true)
     @TableField("position")
     @NotBlank(groups = POST.class)
     private String position;
 
-    @ApiModelProperty("岗位要求")
+    @ApiModelProperty(value = "岗位要求",required = true)
     @TableField("requirements")
     @NotBlank(groups = POST.class)
     private String requirements;
 
-    @ApiModelProperty("技能")
+    @ApiModelProperty(value = "技能",required = true)
     @TableField("skill")
     @NotBlank(groups = POST.class)
     private String skill;
@@ -63,22 +63,22 @@ public class Post extends BaseDo {
     @TableField("customer_id")
     private String customerId;
 
-    @ApiModelProperty("岗位需求人数")
+    @ApiModelProperty(value = "岗位需求人数",required = true)
     @TableField("number")
     @NotBlank(groups = POST.class)
     private String number;
 
-    @ApiModelProperty("计划满足日期")
+    @ApiModelProperty(value = "计划满足日期",required = true)
     @TableField("date")
     @FutureOrPresent(groups = POST.class)
     private Date date;
 
-    @ApiModelProperty("办公地点")
+    @ApiModelProperty(value = "办公地点",required = true)
     @TableField("address")
     @NotBlank(groups = POST.class)
     private String address;
 
-    @ApiModelProperty("到岗最晚时间")
+    @ApiModelProperty(value = "到岗最晚时间",required = true)
     @TableField("latest_arrival_time")
     @FutureOrPresent(groups = POST.class)
     private Date latestArrivalTime;

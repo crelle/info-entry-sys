@@ -35,7 +35,7 @@ public class Project extends BaseDo {
     @NotBlank(groups = {DELETE.class,PUT.class})
     private String id;
 
-    @ApiModelProperty("项目名称")
+    @ApiModelProperty(value = "项目名称",required = true)
     @TableField("name")
     @NotBlank(groups = POST.class)
     private String name;

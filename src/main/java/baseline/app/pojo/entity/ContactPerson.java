@@ -35,7 +35,7 @@ public class ContactPerson extends BaseDo {
     @NotBlank(groups = {PUT.class, DELETE.class})
     private String id;
 
-    @ApiModelProperty("接口人姓名")
+    @ApiModelProperty(value = "接口人姓名", required = true)
     @TableField("name")
     @NotBlank(groups = {POST.class})
     private String name;
@@ -44,7 +44,7 @@ public class ContactPerson extends BaseDo {
     @TableField("gender")
     private String gender;
 
-    @ApiModelProperty("联系电话")
+    @ApiModelProperty(value = "联系电话", required = true)
     @TableField("cell_phone")
     @NotBlank(groups = {POST.class})
     private String cellPhone;
@@ -53,7 +53,7 @@ public class ContactPerson extends BaseDo {
     @TableField("email")
     private String email;
 
-    @ApiModelProperty("办公地址")
+    @ApiModelProperty(value = "办公地址", required = true)
     @TableField("address")
     @NotBlank(groups = {POST.class})
     private String address;

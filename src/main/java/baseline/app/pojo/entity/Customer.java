@@ -35,7 +35,7 @@ public class Customer extends BaseDo {
     @NotBlank(groups = {DELETE.class, PUT.class})
     private String id;
 
-    @ApiModelProperty("客户名称")
+    @ApiModelProperty(value = "客户名称",required = true)
     @TableField("name")
     @NotBlank(groups = POST.class)
     private String name;
@@ -44,7 +44,7 @@ public class Customer extends BaseDo {
     @TableField("region_id")
     private String regionId;
 
-    @ApiModelProperty("办公地点")
+    @ApiModelProperty(value = "办公地点",required = true)
     @TableField("address")
     @NotBlank(groups = POST.class)
     private String address;

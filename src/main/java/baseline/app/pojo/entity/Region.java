@@ -36,12 +36,12 @@ public class Region extends BaseDo {
     @NotBlank(groups = {DELETE.class,PUT.class})
     private String id;
 
-    @ApiModelProperty("地域名称")
+    @ApiModelProperty(value = "地域名称",required = true)
     @TableField("name")
     @NotBlank(groups = POST.class)
     private String name;
 
-    @ApiModelProperty("地域编码")
+    @ApiModelProperty(value = "地域编码",required = true)
     @TableField("code")
     @NotBlank(groups = POST.class)
     private String code;
