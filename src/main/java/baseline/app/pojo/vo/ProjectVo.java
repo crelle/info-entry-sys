@@ -1,16 +1,12 @@
 package baseline.app.pojo.vo;
 
-import baseline.common.pojo.entity.BaseDo;
-import com.baomidou.mybatisplus.annotation.IdType;
+import baseline.app.pojo.entity.Project;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
 
 /**
  * <p>
@@ -23,57 +19,30 @@ import java.util.Date;
 @Getter
 @Setter
 @ApiModel(value = "ProjectVo", description = "项目表页面模型")
-public class ProjectVo extends BaseDo {
-
-    @ApiModelProperty("项目编号")
-    private String id;
-
-    @ApiModelProperty("项目名称")
-    private String name;
+public class ProjectVo extends Project {
 
     @ApiModelProperty("接口人ID")
-    @TableField("Interface_id")
     private String interfaceId;
 
-    @ApiModelProperty("接口人")
-    @TableField("Interface_name")
+    @ApiModelProperty("接口人姓名")
     private String InterfaceName;
 
-    @ApiModelProperty("手机号")
-    @TableField("cell_phone")
+    @ApiModelProperty("接口人手机号")
     private String cellPhone;
 
-    @ApiModelProperty("邮箱")
-    @TableField("email")
+    @ApiModelProperty("接口人邮箱")
     private String email;
 
-    @ApiModelProperty("项目状态")
-    @TableField("status")
-    private String status;
-
     @ApiModelProperty("客户")
-    @TableField("customer_id")
     private String customerId;
 
     @ApiModelProperty("客户")
-    @TableField("customer_name")
     private String customerName;
 
-
-    @ApiModelProperty("部门Id")
-    @TableField("department_id")
-    private String departmentId;
-
     @ApiModelProperty("部门名称")
-    @TableField("departmentName")
     private String departmentName;
 
     @ApiModelProperty("区域")
-    @TableField("region_id")
-    private String regionId;
-
-    @ApiModelProperty("区域")
-    @TableField("region_name")
     private String regionName;
 
 
