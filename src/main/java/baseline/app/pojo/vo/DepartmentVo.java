@@ -32,6 +32,9 @@ public class DepartmentVo extends BaseDo {
     @ApiModelProperty("负责人Id")
     private String userId;
 
+    @ApiModelProperty("负责人名字")
+    private String userName;
+
     @ApiModelProperty("负责人工号")
     private String jobNo;
 

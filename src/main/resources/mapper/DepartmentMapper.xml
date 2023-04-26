@@ -14,7 +14,8 @@
         parent.name as parentName,
         tuser.job_no as jobNo,
         tuser.user_phone as cellPhone,
-        tuser.user_email as email
+        tuser.user_email as email,
+        tuser.username as userName
         FROM
         t_department child
         left join
