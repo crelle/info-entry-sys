@@ -24,7 +24,6 @@
         left join t_user tuser
         on tuser.id = child.user_id
         <where>
-            and
             <if test="param.name!=null and param.name!=''">
                 AND child.name like concat('%',concat(#{param.name},'%'))
             </if>
