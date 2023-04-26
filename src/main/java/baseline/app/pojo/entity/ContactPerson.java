@@ -27,7 +27,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @TableName("t_contact_person")
-@ApiModel(value = "ContactPerson对象", description = "接口人表")
+@ApiModel(value = "ContactPerson", description = "接口人表实体模型")
 public class ContactPerson extends BaseDo {
 
     @ApiModelProperty("id")

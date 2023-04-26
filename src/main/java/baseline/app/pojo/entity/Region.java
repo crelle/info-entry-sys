@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlType;
 @Getter
 @Setter
 @TableName("t_region")
-@ApiModel(value = "Region对象", description = "区域表")
+@ApiModel(value = "Region", description = "区域表实体模型")
 public class Region extends BaseDo {
 
     @ApiModelProperty("地域id")

@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("t_contact_person_project")
-@ApiModel(value = "ContactPersonProject对象", description = "接口人项目关系表")
+@ApiModel(value = "ContactPersonProject", description = "接口人项目关系表实体模型")
 public class ContactPersonProject extends BaseDo {
 
     @ApiModelProperty("主键")

@@ -27,7 +27,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @TableName("t_asset")
-@ApiModel(value = "Asset对象", description = "资产表")
+@ApiModel(value = "Asset", description = "资产表实体模型")
 public class Asset extends BaseDo {
 
     @ApiModelProperty("主键")

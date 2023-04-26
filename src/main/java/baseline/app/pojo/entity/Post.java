@@ -27,7 +27,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @TableName("t_post")
-@ApiModel(value = "Post对象", description = "岗位表")
+@ApiModel(value = "Post", description = "岗位表实体模型")
 public class Post extends BaseDo {
 
     @ApiModelProperty("岗位id")

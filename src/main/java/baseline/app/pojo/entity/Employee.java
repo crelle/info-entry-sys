@@ -28,40 +28,40 @@ import javax.validation.constraints.Past;
 @Getter
 @Setter
 @TableName("t_employee")
-@ApiModel(value = "Employee对象", description = "员工表")
+@ApiModel(value = "Employee", description = "员工表实体模型")
 public class Employee extends BaseDo {
 
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    @NotBlank(groups = {DELETE.class,PUT.class})
+    @NotBlank(groups = {DELETE.class, PUT.class})
     private String id;
 
-    @ApiModelProperty(value = "员工姓名",required = true)
+    @ApiModelProperty(value = "员工姓名", required = true)
     @TableField("name")
     @NotBlank(groups = POST.class)
     private String name;
 
-    @ApiModelProperty(value = "性别",required = true)
+    @ApiModelProperty(value = "性别", required = true)
     @TableField("gender")
     @NotBlank(groups = POST.class)
     private String gender;
 
-    @ApiModelProperty(value = "年龄",required = true)
+    @ApiModelProperty(value = "年龄", required = true)
     @TableField("age")
     @NotBlank(groups = POST.class)
     private Integer age;
 
-    @ApiModelProperty(value = "出生年月",required = true)
+    @ApiModelProperty(value = "出生年月", required = true)
     @TableField("birthday")
     @Past(groups = POST.class)
     private Date birthday;
 
-    @ApiModelProperty(value = "联系电话",required = true)
+    @ApiModelProperty(value = "联系电话", required = true)
     @TableField("cell_phone")
     @NotBlank(groups = POST.class)
     private String cellPhone;
 
-    @ApiModelProperty(value = "电子邮箱",required = true)
+    @ApiModelProperty(value = "电子邮箱", required = true)
     @TableField("email")
     @NotBlank(groups = POST.class)
     private String email;
@@ -70,12 +70,12 @@ public class Employee extends BaseDo {
     @TableField("registered_residence")
     private String registeredResidence;
 
-    @ApiModelProperty(value = "现居住地",required = true)
+    @ApiModelProperty(value = "现居住地", required = true)
     @TableField("residence")
     @NotBlank(groups = POST.class)
     private String residence;
 
-    @ApiModelProperty(value = "紧急联系人",required = true)
+    @ApiModelProperty(value = "紧急联系人", required = true)
     @TableField("emergency")
     @NotBlank(groups = POST.class)
     private String emergency;
@@ -92,18 +92,18 @@ public class Employee extends BaseDo {
     @TableField("school")
     private String school;
 
-    @ApiModelProperty(value = "毕业时间",required = true)
+    @ApiModelProperty(value = "毕业时间", required = true)
     @TableField("school_time")
     @Past(groups = POST.class)
     @Future(groups = POST.class)
     private Date schoolTime;
 
-    @ApiModelProperty(value = "工作年限",required = true)
+    @ApiModelProperty(value = "工作年限", required = true)
     @TableField("working_hours")
     @NotBlank(groups = POST.class)
     private Integer workingHours;
 
-    @ApiModelProperty(value = "婚姻状况",required = true)
+    @ApiModelProperty(value = "婚姻状况", required = true)
     @TableField("marriage")
     @NotBlank(groups = POST.class)
     private String marriage;
@@ -124,12 +124,12 @@ public class Employee extends BaseDo {
     @TableField("skill")
     private String skill;
 
-    @ApiModelProperty(value = "工号",required = true)
+    @ApiModelProperty(value = "工号", required = true)
     @TableField("job_no")
     @NotBlank(groups = POST.class)
     private String jobNo;
 
-    @ApiModelProperty(value = "入职时间",required = true)
+    @ApiModelProperty(value = "入职时间", required = true)
     @TableField("time")
     @Past(groups = POST.class)
     @Future(groups = POST.class)

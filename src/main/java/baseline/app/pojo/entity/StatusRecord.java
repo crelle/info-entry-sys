@@ -27,7 +27,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @TableName("t_status_record")
-@ApiModel(value = "StatusRecord对象", description = "状态记录表")
+@ApiModel(value = "StatusRecord", description = "状态记录表实体模型")
 public class StatusRecord extends BaseDo {
 
     @ApiModelProperty("主键")

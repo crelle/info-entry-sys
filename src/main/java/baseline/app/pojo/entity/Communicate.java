@@ -27,7 +27,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @TableName("t_communicate")
-@ApiModel(value = "Communicate对象", description = "员工沟通记录表")
+@ApiModel(value = "Communicate", description = "员工沟通记录表实体模型")
 public class Communicate extends BaseDo {
 
     @ApiModelProperty("主键")

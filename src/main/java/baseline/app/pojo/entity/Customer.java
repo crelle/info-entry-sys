@@ -27,7 +27,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @TableName("t_customer")
-@ApiModel(value = "Customer对象", description = "客户表")
+@ApiModel(value = "Customer", description = "客户表实体模型")
 public class Customer extends BaseDo {
 
     @ApiModelProperty("客户编号")
