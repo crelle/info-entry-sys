@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @TableName("t_dictionary")
+@ApiModel(value = "Dictionary",description = "字典表实体模型")
 public class Dictionary extends Validation {
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)

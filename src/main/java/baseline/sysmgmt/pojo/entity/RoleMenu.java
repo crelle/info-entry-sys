@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("t_role_menu")
-@ApiModel(value = "RoleMenu对象", description = "用户菜单关系表")
+@ApiModel(value = "RoleMenu", description = "用户菜单关系表实体模型")
 public class RoleMenu extends BaseDo {
 
     @ApiModelProperty("主键")

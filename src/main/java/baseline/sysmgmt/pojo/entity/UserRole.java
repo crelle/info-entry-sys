@@ -25,7 +25,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("t_user_role")
-@ApiModel(value = "UserRole对象", description = "用户角色关系表")
+@ApiModel(value = "UserRole", description = "用户角色关系表实体模型")
 public class UserRole extends BaseDo {
 
     @ApiModelProperty("主键")

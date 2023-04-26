@@ -24,7 +24,7 @@ import java.util.List;
 @Getter
 @Setter
 @TableName("t_role")
-@ApiModel(value = "Role对象", description = "角色表")
+@ApiModel(value = "Role", description = "角色表实体模型")
 public class Role extends BaseDo {
 
     @ApiModelProperty("角色id")

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@ApiModel(value = "DictionaryQuery对象", description = "字典表")
+@ApiModel(value = "DictionaryQuery", description = "字典表查询体")
 public class DictionaryQuery extends Dictionary {
 
     @ApiModelProperty("子级名称")

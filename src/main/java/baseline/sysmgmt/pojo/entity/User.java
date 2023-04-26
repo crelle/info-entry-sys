@@ -23,7 +23,7 @@ import java.util.List;
  * @since 2022-10-01 12:06:26
  */
 @TableName("t_user")
-@ApiModel(value = "User对象", description = "")
+@ApiModel(value = "User", description = "用户表实体模型")
 public class User extends Validation implements UserDetails {
 
     @TableId(value = "id", type = IdType.ASSIGN_UUID)

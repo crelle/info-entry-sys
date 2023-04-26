@@ -18,7 +18,7 @@ import java.util.Set;
  * @since 2022-10-01 12:06:26
  */
 @TableName("t_menu")
-@ApiModel(value = "Menu对象", description = "")
+@ApiModel(value = "Menu", description = "菜单表实体模型")
 public class Menu extends BaseDo {
 
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
