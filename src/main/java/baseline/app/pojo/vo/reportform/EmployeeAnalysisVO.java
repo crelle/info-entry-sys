@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@ApiModel(value = "员工分析")
+@ApiModel(value = "员工分析",description ="员工分析页面模型" )
 public class EmployeeAnalysisVO {
 
 

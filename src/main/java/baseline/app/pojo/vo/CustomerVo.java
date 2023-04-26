@@ -20,7 +20,7 @@ import java.util.Date;
 @Getter
 @Setter
 @TableName("t_customer")
-@ApiModel(value = "Customer对象", description = "客户表")
+@ApiModel(value = "CustomerVo", description = "客户表页面模型")
 public class CustomerVo {
 
     @ApiModelProperty("客户编号")

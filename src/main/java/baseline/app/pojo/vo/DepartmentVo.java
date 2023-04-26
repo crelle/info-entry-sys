@@ -20,7 +20,7 @@ import java.util.Date;
 @Getter
 @Setter
 @TableName("t_department")
-@ApiModel(value = "Department对象", description = "部门表")
+@ApiModel(value = "DepartmentVo", description = "部门表页面模型")
 public class DepartmentVo extends BaseDo {
 
     @ApiModelProperty("部门编号")

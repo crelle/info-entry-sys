@@ -22,8 +22,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-@TableName("t_project")
-@ApiModel(value = "Project对象", description = "项目表")
+@ApiModel(value = "ProjectVo", description = "项目表页面模型")
 public class ProjectVo extends BaseDo {
 
     @ApiModelProperty("项目编号")

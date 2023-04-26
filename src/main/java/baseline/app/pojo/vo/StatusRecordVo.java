@@ -22,7 +22,7 @@ import java.util.Date;
 @Getter
 @Setter
 @TableName("t_status_record")
-@ApiModel(value = "StatusRecord对象", description = "记录表")
+@ApiModel(value = "StatusRecordVo", description = "状态记录表页面模型")
 public class StatusRecordVo {
 
     @ApiModelProperty("id")

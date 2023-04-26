@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@ApiModel("岗位服务查询请求体")
+@ApiModel(value = "PostQuery",description = "岗位查询体")
 public class PostQuery {
 
     @ApiModelProperty("岗位id")

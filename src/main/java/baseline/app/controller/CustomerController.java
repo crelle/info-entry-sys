@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -78,6 +79,7 @@ public class CustomerController implements BaseController<CustomerVo, Customer, 
         List<ContactPerson> contactPersonList = contactPersonService
                 .list()
                 .stream()
+                .filter(contactPerson -> StringUtils.isNotBlank(contactPerson.getCustomerId()))
                 .filter(contactPerson -> contactPerson.getCustomerId().equals(id))
                 .collect(Collectors.toList());
         if (!contactPersonList.isEmpty()) {

@@ -3,7 +3,7 @@ package baseline.app.pojo.query.reportform;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel("员工婚育和性别分析请求体")
+@ApiModel(value = "EmployeeMarriageAndChildbirthAndSexQuery", description = "员工婚育和性别分析请求体")
 public class EmployeeMarriageAndChildbirthAndSexQuery {
 
     @ApiModelProperty(value = "区域名称")

@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@ApiModel("员工服务请求体")
+@ApiModel(value = "EmployeeQuery",description = "员工查询体")
 public class EmployeeQuery extends Employee {
     @ApiModelProperty("部门Id")
     private String departmentId;

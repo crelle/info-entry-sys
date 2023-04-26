@@ -19,7 +19,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-@ApiModel(value = "ContactPersonVo对象", description = "接口人表")
+@ApiModel(value = "ContactPersonVo", description = "接口人表页面模型")
 public class ContactPersonVo  {
 
     @ApiModelProperty("接口人编号")

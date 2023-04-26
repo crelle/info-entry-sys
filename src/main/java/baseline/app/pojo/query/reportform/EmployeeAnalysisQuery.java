@@ -6,7 +6,7 @@ import lombok.Data;
 
 import java.util.Date;
 
-@ApiModel(value = "员工分析请求体")
+@ApiModel(value = "EmployeeAnalysisQuery",description = "员工分析请求体")
 @Data
 public class EmployeeAnalysisQuery {
 

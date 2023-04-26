@@ -25,7 +25,7 @@ import java.util.List;
 @Getter
 @Setter
 @TableName("t_employee")
-@ApiModel(value = "Employee对象", description = "员工表")
+@ApiModel(value = "EmployeeVo", description = "员工表页面模型")
 public class EmployeeVo extends Employee {
 
     @ApiModelProperty("部门Id")

@@ -19,12 +19,12 @@
         b.`name` as regionName
         FROM
         t_project a
-        LEFT JOIN t_region b
-        ON a.region_id = b.id
         LEFT JOIN t_contact_person_project tpp
         ON tpp.project_id = a.id
         left join t_contact_person c
         on c.id = tpp.contact_person_id
+        LEFT JOIN t_region b
+        ON a.region_id = b.id
         LEFT JOIN t_customer d
         ON c.customer_id = d.id
         LEFT JOIN t_department e

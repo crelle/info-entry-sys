@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@ApiModel(value = "项目人数分析页面模型", description = "项目人数分析页面模型")
+@ApiModel(value = "ProjectNumberAnalysisVO", description = "项目人数分析页面模型")
 public class ProjectNumberAnalysisVO {
 
     @ApiModelProperty("项目名称")

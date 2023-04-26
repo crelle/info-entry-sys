@@ -11,7 +11,8 @@
         c.user_nick_name AS userName,
         a.cell_phone AS cellPhone,
         a.email,
-        b.name AS regionName
+        b.name AS regionName,
+        b.id as regionId
         FROM
         t_customer a
         left join

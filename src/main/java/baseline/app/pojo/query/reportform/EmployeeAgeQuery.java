@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel("员工年龄分布请求体")
+@ApiModel(value = "EmployeeAgeQuery", description = "员工年龄分布请求体")
 public class EmployeeAgeQuery {
 
     @ApiModelProperty(value = "区域")

@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-@ApiModel("员工婚育和性别分析返回体")
+@ApiModel(value = "EmployeeMarriageAndChildbirthAndSexVO",description = "员工婚育和性别分析页面模型")
 @Data
 public class EmployeeMarriageAndChildbirthAndSexVO {
 

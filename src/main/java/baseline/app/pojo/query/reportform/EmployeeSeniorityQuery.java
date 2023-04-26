@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-@ApiModel(value = "工龄分布查询体")
+@ApiModel(value = "EmployeeSeniorityQuery", description = "工龄分布查询体")
 @Getter
 @Setter
 public class EmployeeSeniorityQuery extends Validation {

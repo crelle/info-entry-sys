@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel("客户分布返回体")
+@ApiModel(value = "EmployeeCustomerVO",description = "客户分析页面模型")
 public class EmployeeCustomerVO {
 
     @ApiModelProperty("客户姓名")

@@ -10,6 +10,7 @@
         child.user_Id as userId,
         child.address,
         child.update_time as updateTime,
+        child.introduce as introduce,
         parent.id as parentId,
         parent.name as parentName,
         tuser.job_no as jobNo,

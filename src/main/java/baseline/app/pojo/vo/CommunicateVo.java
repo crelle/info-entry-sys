@@ -22,7 +22,7 @@ import java.util.Date;
 @Getter
 @Setter
 @TableName("t_communicate")
-@ApiModel(value = "Communicate对象", description = "沟通记录表")
+@ApiModel(value = "CommunicateVo", description = "沟通记录表页面模型")
 public class CommunicateVo {
 
     @ApiModelProperty("id")

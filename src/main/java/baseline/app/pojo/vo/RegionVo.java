@@ -20,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("t_region")
-@ApiModel(value = "Region对象", description = "区域表")
+@ApiModel(value = "RegionVo", description = "区域表页面模型")
 public class RegionVo {
 
     @ApiModelProperty("地域编号")

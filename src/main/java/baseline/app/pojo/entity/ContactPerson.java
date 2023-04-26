@@ -70,8 +70,4 @@ public class ContactPerson extends BaseDo {
     @TableField("customer_id")
     private String customerId;
 
-    @ApiModelProperty("项目Id")
-    @TableField("project_id")
-    private String projectId;
-
 }
