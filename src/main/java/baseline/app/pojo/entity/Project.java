@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
+import java.util.List;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -32,10 +33,10 @@ public class Project extends BaseDo {
 
     @ApiModelProperty("项目编号")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    @NotBlank(groups = {DELETE.class,PUT.class})
+    @NotBlank(groups = {DELETE.class, PUT.class})
     private String id;
 
-    @ApiModelProperty(value = "项目名称",required = true)
+    @ApiModelProperty(value = "项目名称", required = true)
     @TableField("name")
     @NotBlank(groups = POST.class)
     private String name;
@@ -63,5 +64,8 @@ public class Project extends BaseDo {
     @ApiModelProperty("地域ID")
     @TableField("region_id")
     private String regionId;
+
+    @ApiModelProperty("接口人")
+    private List<ContactPerson> contactPeoples;
 
 }
