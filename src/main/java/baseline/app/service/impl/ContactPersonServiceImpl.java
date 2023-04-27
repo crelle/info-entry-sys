@@ -69,7 +69,7 @@ public class ContactPersonServiceImpl extends ServiceImpl<ContactPersonMapper, C
         List<ContactPersonVo> contactPersonVoList = contactPersonMapper.manualPage(contactPersonQuery);
         PageInfo<ContactPersonVo> personVoPageInfo = new PageInfo<>(contactPersonVoList);
         Page<ContactPersonVo> result = new Page<>();
-        pageBean.setTotal(personVoPageInfo.getTotal());
+        result.setTotal(personVoPageInfo.getTotal());
         result.setRecords(contactPersonVoList);
         return result;
     }

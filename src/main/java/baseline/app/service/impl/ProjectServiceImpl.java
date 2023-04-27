@@ -1,18 +1,24 @@
 package baseline.app.service.impl;
 
 import baseline.app.mapper.ProjectMapper;
+import baseline.app.pojo.entity.ContactPerson;
+import baseline.app.pojo.entity.ContactPersonProject;
 import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.query.ProjectQuery;
 import baseline.app.pojo.vo.ProjectVo;
+import baseline.app.service.ContactPersonProjectService;
 import baseline.app.service.ProjectService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,16 +31,33 @@ import java.util.List;
  */
 @Service
 public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> implements ProjectService {
-        @Autowired
+    @Autowired
     private ProjectMapper projectMapper;
 
+    private ContactPersonProjectService contactPersonProjectService;
+
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean create(Project object) {
+        List<ContactPerson> contactPeoples = object.getContactPeoples();
+        List<ContactPersonProject> contactPersonProjects = new ArrayList<>(contactPeoples.size());
+        if(CollectionUtils.isNotEmpty(contactPeoples)){
+            contactPeoples.forEach(contactPerson -> {
+                ContactPersonProject contactPersonProject = new ContactPersonProject();
+                contactPersonProject.setContactPersonId(contactPerson.getId());
+                contactPersonProject.setProjectId(object.getId());
+                contactPersonProjects.add(contactPersonProject);
+            });
+        }
+        contactPersonProjectService.saveBatch(contactPersonProjects);
         return save(object);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean create(List<Project> objects) {
+
         return saveBatch(objects);
     }
 
