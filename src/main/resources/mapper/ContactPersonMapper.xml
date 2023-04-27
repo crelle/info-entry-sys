@@ -9,6 +9,8 @@
         a.gender,
         a.cell_phone as cellPhone,
         a.email,
+        a.address,
+        a.address_detail as addressDetail,
         a.customer_id as customerId,
         a.update_time as updateTime,
         b.name as customerName
@@ -20,8 +22,8 @@
             <if test="param.name!=null and param.name!=''">
                 and a.name like concat('%',concat(#{param.name},'%'))
             </if>
-            <if test="param.customerName!=null and param.customerName!=''">
-                AND b.name = #{param.customerName}
+            <if test="param.customerId!=null and param.customerId!=''">
+                AND b.id = #{param.customerId}
             </if>
         </where>
         order by a.update_time desc

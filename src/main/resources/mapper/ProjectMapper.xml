@@ -2,21 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="baseline.app.mapper.ProjectMapper">
 
-    <select id="manualPage" resultType="baseline.app.pojo.vo.ProjectVo">
+    <resultMap id="projectVoMap" type="baseline.app.pojo.vo.ProjectVo">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="status" column="status"></result>
+        <result property="customerId" column="customer_id"></result>
+        <result property="customerName" column="customer_name"></result>
+        <result property="departmentId" column="department_id"></result>
+        <result property="regionId" column="region_id"></result>
+        <result property="regionName" column="region_name"></result>
+        <collection property="contactPeoples" ofType="baseline.app.pojo.entity.ContactPerson">
+            <result property="id" column="interface_id"></result>
+            <result property="name" column="interface_name"></result>
+            <result property="cellPhone" column="cell_phone"></result>
+            <result property="email" column="email"></result>
+        </collection>
+
+    </resultMap>
+
+    <select id="manualPage" resultMap="projectVoMap">
         SELECT
         a.`id`,
         a.`name`,
-        c.`id` as interfaceId,
-        c.`name` as interfaceName,
-        c.`cell_phone` as cellPhone,
-        c.`email`,
         a.`status`,
-        d.`id` as customerId,
-        d.`name` as customerName,
-        e.`id` as departmentId,
-        e.`name` as departmentName,
-        b.`id` as regionId,
-        b.`name` as regionName
+        c.`id` as interface_id,
+        c.`name` as interface_name,
+        c.`cell_phone`,
+        c.`email`,
+        d.`id` as customer_id,
+        d.`name` as customer_name,
+        e.`id` as department_id,
+        e.`name` as department_name,
+        b.`id` as region_id,
+        b.`name` as region_name
         FROM
         t_project a
         LEFT JOIN t_contact_person_project tpp
@@ -42,8 +60,11 @@
             <if test="param.departmentName!=null and param.departmentName!=''">
                 and e.name = #{param.departmentName}
             </if>
-            <if test="param.interfaceName!=null and param.interfaceName!=''">
-                and c.name = #{param.interfaceName}
+            <if test="param.contactPeoples!=null and param.contactPeoples.size()!=0">
+                and c.id in
+                <foreach item="item" index="index" collection="param.contactPeoples" open="(" separator="," close=")">
+                    #{item.id}
+                </foreach>
             </if>
             <if test="param.customerName!=null and param.customerName!=''">
                 and d.name = #{param.customerName}

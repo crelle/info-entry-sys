@@ -46,4 +46,10 @@ public class ContactPersonVo  {
     @ApiModelProperty("客户名")
     private String customerName;
 
+    @ApiModelProperty("地址")
+    private String address;
+
+    @ApiModelProperty("详细地址")
+    private String addressDetail;
+
 }

@@ -34,6 +34,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     @Autowired
     private ProjectMapper projectMapper;
 
+    @Autowired
     private ContactPersonProjectService contactPersonProjectService;
 
 
@@ -41,6 +42,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     @Transactional(rollbackFor = Exception.class)
     public boolean create(Project object) {
         List<ContactPerson> contactPeoples = object.getContactPeoples();
+        this.save(object);
         List<ContactPersonProject> contactPersonProjects = new ArrayList<>(contactPeoples.size());
         if(CollectionUtils.isNotEmpty(contactPeoples)){
             contactPeoples.forEach(contactPerson -> {
@@ -51,7 +53,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
             });
         }
         contactPersonProjectService.saveBatch(contactPersonProjects);
-        return save(object);
+        return true;
     }
 
     @Override

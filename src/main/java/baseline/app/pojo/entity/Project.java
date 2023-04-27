@@ -66,6 +66,7 @@ public class Project extends BaseDo {
     private String regionId;
 
     @ApiModelProperty("接口人")
+    @TableField(exist = false)
     private List<ContactPerson> contactPeoples;
 
 }
