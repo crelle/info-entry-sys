@@ -21,4 +21,6 @@ import java.util.List;
 public interface PostMapper extends BaseMapper<Post> {
 
     List<PostVo> manualPage(@Param("param") PostQuery postQuery);
+
+    List<Post> queryByProjectId(@Param("projectId") String projectId);
 }

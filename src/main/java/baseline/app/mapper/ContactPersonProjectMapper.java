@@ -23,4 +23,8 @@ public interface ContactPersonProjectMapper extends BaseMapper<ContactPersonProj
     List<ContactPersonProject> selectByContactPersonId(@Param("contactPersonId") String contactPersonId);
 
     List<ContactPersonProject> selectByProjectIdAndContactPersonId(@Param("projectId") String projectId, @Param("contactPersonId") String contactPersonId);
+
+    int deleteByProjectIdAndContactPersonId(@Param("projectId") String projectId, @Param("contactPersonId") String contactPersonId);
+
+    int updateContactPersonIdByProjectId(@Param("contactPersonId") String contactPersonId, @Param("projectId") String projectId);
 }

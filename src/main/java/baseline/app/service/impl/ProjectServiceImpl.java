@@ -2,6 +2,7 @@ package baseline.app.service.impl;
 
 import baseline.app.mapper.ContactPersonProjectMapper;
 import baseline.app.mapper.EmployeeMapper;
+import baseline.app.mapper.PostMapper;
 import baseline.app.mapper.ProjectMapper;
 import baseline.app.pojo.entity.ContactPerson;
 import baseline.app.pojo.entity.ContactPersonProject;
@@ -37,6 +38,9 @@ import java.util.List;
 @Service
 public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> implements ProjectService {
     @Autowired
+    private ContactPersonProjectService contactPersonProjectService;
+
+    @Autowired
     private ProjectMapper projectMapper;
 
     @Autowired
@@ -46,13 +50,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     private EmployeeMapper employeeMapper;
 
     @Autowired
-    private ContactPersonProjectService contactPersonProjectService;
-
-    @Autowired
-    private PostService postService;
-
-    @Autowired
-    private EmployeeService employeeService;
+    private PostMapper postMapper;
 
 
     @Override
@@ -87,11 +85,17 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         if (CollectionUtils.isNotEmpty(contactPersonProjectMapper.selectByProjectId(id))) {
             throw new BusinessException("项目有接口人在负责，无法删除");
         }
-
         //项目是否有员工
-
+        if (CollectionUtils.isNotEmpty(employeeMapper.queryByProjectId(id))) {
+            throw new BusinessException("有员工在项目内，无法删除");
+        }
         //项目是否有岗位
-
+        if (CollectionUtils.isNotEmpty(postMapper.queryByProjectId(id))) {
+            throw new BusinessException("有岗位在使用此项目，无法删除");
+        }
+        //解绑项目和接口人关系
+        contactPersonProjectMapper.deleteByProjectIdAndContactPersonId(id, null);
+        //删除项目
         removeById(id);
     }
 
@@ -100,8 +104,22 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         removeByIds(ids);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean update(Project object) {
+        //删除关系表
+        contactPersonProjectMapper.deleteByProjectIdAndContactPersonId(object.getId(), null);
+        //更新关系表
+        List<ContactPersonProject> contactPersonProjects = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(object.getContactPeoples())) {
+            object.getContactPeoples().forEach(contactPerson -> {
+                ContactPersonProject contactPersonProject = new ContactPersonProject();
+                contactPersonProject.setContactPersonId(contactPerson.getId());
+                contactPersonProject.setProjectId(object.getId());
+                contactPersonProjects.add(contactPersonProject);
+            });
+        }
+        contactPersonProjectService.saveBatch(contactPersonProjects);
         return updateById(object);
     }
 

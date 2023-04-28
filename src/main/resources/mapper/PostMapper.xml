@@ -64,5 +64,12 @@
         </where>
         order by post.update_time desc
     </select>
+    <select id="queryByProjectId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_post
+        where
+        project_id = #{projectId,jdbcType=VARCHAR}
+    </select>
 
 </mapper>

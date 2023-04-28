@@ -42,5 +42,22 @@
         where
         project_id = #{projectId,jdbcType=VARCHAR}
     </select>
+    <delete id="deleteByProjectIdAndContactPersonId">
+        delete
+        from t_contact_person_project
+        <where>
+            <if test="projectId!=null and projectId!=''">
+                and project_id = #{projectId,jdbcType=VARCHAR}
+            </if>
+            <if test="contactPersonId!=null and contactPersonId!=''">
+                and AND contact_person_id = #{contactPersonId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </delete>
+    <update id="updateContactPersonIdByProjectId">
+        update t_contact_person_project
+        set contact_person_id = #{contactPersonId,jdbcType=VARCHAR}
+        where project_id = #{projectId,jdbcType=VARCHAR}
+    </update>
 
 </mapper>
