@@ -8,6 +8,7 @@ import baseline.app.pojo.query.RegionQuery;
 import baseline.app.pojo.vo.RegionVo;
 import baseline.app.service.RegionService;
 import baseline.common.exception.BusinessException;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -72,13 +73,10 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
     @Override
     public Page<Region> pageByCondition(Page<Region> page) {
         Region region = page.getRecords().get(0);
-        QueryWrapper<Region> queryWrapper = new QueryWrapper<>(region);
-        if (StringUtils.isNotBlank(region.getName())) {
-            queryWrapper.select().like("name", region.getName());
-            return page(page, queryWrapper);
-        } else {
-            return page(page);
-        }
+        LambdaQueryWrapper<Region> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.like(StringUtils.isNotBlank(region.getName()), Region::getName, region.getName())
+                .orderByDesc(Region::getUpdateTime);
+        return page(page, lambdaQueryWrapper);
 
     }
 
