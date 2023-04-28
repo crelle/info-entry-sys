@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.baomidou.mybatisplus.generator.fill.Column;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -20,20 +21,23 @@ public class CodeGeneratorTest {
 
     //项目目录
     private final String basePath = System.getProperty("user.dir");
+
+    //TODO 1、设置父包名
+    private final String parentPackageName = "baseline";
     //模块名
-    //TODO
-    private final String parentModuleName = "app";
+    //TODO 2、设置模块名
+    private final String moduleName = "app";
+
+    //TODO 3、设置表名
+    private final String[] tableNames = {"t_contact_person_project"};
     //文件作者
     private final String author = "crelle";
     //数据库url
     private final String url = "jdbc:mysql://139.196.125.106:3306/archermind-system-db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
-    //    private final String url = "jdbc:mysql://127.0.0.1:3306/archermind-system-db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
     //数据库用户名
     private final String username = "crelle";
-    //    private final String username = "root";
     //数据库密码
     private final String password = "crelle@123";
-//    private final String password = "123456";
 
 
     @Test
@@ -52,8 +56,8 @@ public class CodeGeneratorTest {
                 })
                 //3、包配置
                 .packageConfig(builder -> {
-                    builder.parent("baseline") // 设置父包名
-                            .moduleName(parentModuleName)   //设置模块包名
+                    builder.parent(parentPackageName) // 设置父包名
+                            .moduleName(moduleName)   //设置模块包名
                             .entity("pojo.entity")   //pojo 实体类包名
                             .service("service") //Service 包名
                             .serviceImpl("service.impl") // ***ServiceImpl 包名
@@ -65,43 +69,34 @@ public class CodeGeneratorTest {
                 })
                 //4、策略配置
                 .strategyConfig(builder -> {
-                    //TODO
-                    builder.addInclude("t_contact_person_project") // 设置需要生成的数据表名
+                    builder.addInclude(StringUtils.join(tableNames, ",")) // 设置需要生成的数据表名
                             .addTablePrefix("t_", "c_") // 设置过滤表前缀
                             //4.1、Mapper策略配置
-                            .mapperBuilder()
-                            .superClass(BaseMapper.class)   //设置父类
+                            .mapperBuilder().superClass(BaseMapper.class)   //设置父类
                             .formatMapperFileName("%sMapper")   //格式化 mapper 文件名称
                             .enableMapperAnnotation()       //开启 @Mapper 注解
                             .formatXmlFileName("%sMapper") //格式化 Xml 文件名称
                             .enableBaseColumnList()     //生成baseColumn
                             .enableBaseResultMap()      //生成baseResultMap
+                            .enableMapperAnnotation()
                             //4.2、service 策略配置
-                            .serviceBuilder()
-                            .formatServiceFileName("%sService") //格式化 service 接口文件名称，%s进行匹配表名，如 UserService
+                            .serviceBuilder().formatServiceFileName("%sService") //格式化 service 接口文件名称，%s进行匹配表名，如 UserService
                             .formatServiceImplFileName("%sServiceImpl") //格式化 service 实现类文件名称，%s进行匹配表名，如 UserServiceImpl
 
                             //4.4、Controller策略配置
-                            .controllerBuilder()
-                            .formatFileName("%sController") //格式化 Controller 类文件名称，%s进行匹配表名，如 UserController
+                            .controllerBuilder().formatFileName("%sController") //格式化 Controller 类文件名称，%s进行匹配表名，如 UserController
                             .enableRestStyle() //开启生成 @RestController 控制器
 
                             //4.3、实体类策略配置
-                            .entityBuilder()
-                            .enableLombok() //开启 Lombok
+                            .entityBuilder().enableLombok() //开启 Lombok
                             .disableSerialVersionUID()  //不实现 Serializable 接口，不生产 SerialVersionUID
-                            .idType(IdType.ASSIGN_UUID)
-                            .logicDeleteColumnName("deleted")   //逻辑删除字段名
+                            .idType(IdType.ASSIGN_UUID).logicDeleteColumnName("deleted")   //逻辑删除字段名
                             .naming(NamingStrategy.underline_to_camel)  //数据库表映射到实体的命名策略：下划线转驼峰命
                             .columnNaming(NamingStrategy.underline_to_camel)    //数据库表字段映射到实体的命名策略：下划线转驼峰命
-                            .addTableFills(
-                                    new Column("create_time", FieldFill.INSERT),
-                                    new Column("modify_time", FieldFill.INSERT_UPDATE)
-                            )   //添加表字段填充，"create_time"字段自动填充为插入时间，"modify_time"字段自动填充为插入修改时间
+                            .addTableFills(new Column("create_time", FieldFill.INSERT), new Column("modify_time", FieldFill.INSERT_UPDATE))   //添加表字段填充，"create_time"字段自动填充为插入时间，"modify_time"字段自动填充为插入修改时间
                             .enableTableFieldAnnotation();      // 开启生成实体时生成字段注解
 
-                })
-                .templateEngine(new FreemarkerTemplateEngine()) //使用Freemarker引擎模板，默认的是Velocity引擎模板
+                }).templateEngine(new FreemarkerTemplateEngine()) //使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
     }
 

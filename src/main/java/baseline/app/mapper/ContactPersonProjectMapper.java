@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author crelle
- * @since 2023-04-28 11:46:31
+ * @since 2023-04-28 12:03:47
  */
 @Mapper
 public interface ContactPersonProjectMapper extends BaseMapper<ContactPersonProject> {

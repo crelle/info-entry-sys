@@ -3,7 +3,6 @@ package baseline.app.service.impl;
 import baseline.app.mapper.ProjectMapper;
 import baseline.app.pojo.entity.ContactPerson;
 import baseline.app.pojo.entity.ContactPersonProject;
-import baseline.app.pojo.entity.Post;
 import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.query.ProjectQuery;
 import baseline.app.pojo.vo.ProjectVo;
@@ -23,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -57,12 +55,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         if (CollectionUtils.isNotEmpty(contactPeoples)) {
             contactPeoples.forEach(contactPerson -> {
                 ContactPersonProject contactPersonProject = new ContactPersonProject();
-//                contactPersonProject.setContactPersonId(contactPerson.getId());
-//                contactPersonProject.setProjectId(object.getId());
+                contactPersonProject.setContactPersonId(contactPerson.getId());
+                contactPersonProject.setProjectId(object.getId());
                 contactPersonProjects.add(contactPersonProject);
             });
         }
-//        contactPersonProjectService.saveBatch(contactPersonProjects);
+        contactPersonProjectService.saveBatch(contactPersonProjects);
         return true;
     }
 
