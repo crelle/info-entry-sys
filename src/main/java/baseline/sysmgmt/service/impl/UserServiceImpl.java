@@ -109,16 +109,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Page<User> page(Page<User> page) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         if (CollectionUtils.isNotEmpty(page.getRecords())) {
-            User request = page.getRecords().get(0);
-            queryWrapper.select().eq("account_non_expired", request.isAccountNonExpired())
-                    .eq("account_non_locked", request.isAccountNonLocked())
-                    .eq("enabled", request.isEnabled())
-                    .like("user_phone", request.getUserPhone())
-                    .like("username", request.getUsername()).orderByDesc("update_time");
+            User user = page.getRecords().get(0);
+            lambdaQueryWrapper.eq(User::isAccountNonExpired, user.isAccountNonExpired())
+                    .eq(User::isAccountNonLocked, user.isAccountNonLocked())
+                    .eq(User::isEnabled, user.isEnabled())
+                    .like(StringUtils.isNotBlank( user.getUsername()), User::getUsername, user.getUsername())
+                    .like(StringUtils.isNotBlank(user.getUserPhone()), User::getUserPhone, user.getUserPhone())
+                    .orderByDesc(User::getUpdateTime);
         }
-        Page<User> userPage = super.page(page, queryWrapper);
+        Page<User> userPage = super.page(page, lambdaQueryWrapper);
         userPage.getRecords().forEach(user -> {
             //查询用户角色
             QueryWrapper<UserRole> queryWrapper1 = new QueryWrapper<>();
