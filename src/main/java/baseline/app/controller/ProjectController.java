@@ -44,12 +44,6 @@ public class ProjectController implements BaseController<ProjectVo, Project, Pro
     @Autowired
     private ProjectService projectService;
 
-    @Autowired
-    private PostService postService;
-
-    @Autowired
-    private EmployeeService employeeService;
-
     @ApiOperation(value = "创建")
     @ApiParam(required = true, name = "", value = "入参")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -82,26 +76,6 @@ public class ProjectController implements BaseController<ProjectVo, Project, Pro
     @Override
     public ResponseResult<String> deleteById(@NotBlank String id) {
         ResponseResult result = new ResponseResult();
-        List<Post> postList = postService
-                .list()
-                .stream()
-                .filter(post -> StringUtils.isNotBlank(post.getProjectId()))
-                .filter(post -> post.getProjectId().equals(id))
-                .collect(Collectors.toList());
-        if (!postList.isEmpty()) {
-            result.buildFail("有岗位在使用此项目，无法删除！");
-            return result;
-        }
-        List<Employee> employeeList = employeeService
-                .list()
-                .stream()
-                .filter(employee -> StringUtils.isNotBlank(employee.getProjectId()))
-                .filter(employee -> employee.getProjectId().equals(id))
-                .collect(Collectors.toList());
-        if (!employeeList.isEmpty()) {
-            result.buildFail("有员工在使用此项目，无法删除！");
-            return result;
-        }
         projectService.deleteById(id);
         return result;
     }

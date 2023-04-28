@@ -22,7 +22,7 @@ public class CodeGeneratorTest {
     private final String basePath = System.getProperty("user.dir");
     //模块名
     //TODO
-    private final String parentModuleName = "sysmgmt";
+    private final String parentModuleName = "app";
     //文件作者
     private final String author = "crelle";
     //数据库url
@@ -46,13 +46,13 @@ public class CodeGeneratorTest {
                             .outputDir(basePath + "/src/main/java")   //设置输出路径
                             .commentDate("yyyy-MM-dd hh:mm:ss")   //注释日期
                             .dateType(DateType.ONLY_DATE)   //定义生成的实体类中日期的类型 TIME_PACK=LocalDateTime;ONLY_DATE=Date;
-//                            .fileOverride()   //覆盖之前的文件
+                            .fileOverride()   //覆盖之前的文件
                             .enableSwagger()   //开启 swagger 模式
                             .disableOpenDir();   //禁止打开输出目录，默认打开
                 })
                 //3、包配置
                 .packageConfig(builder -> {
-                    builder.parent("temp") // 设置父包名
+                    builder.parent("baseline") // 设置父包名
                             .moduleName(parentModuleName)   //设置模块包名
                             .entity("pojo.entity")   //pojo 实体类包名
                             .service("service") //Service 包名
@@ -66,17 +66,7 @@ public class CodeGeneratorTest {
                 //4、策略配置
                 .strategyConfig(builder -> {
                     //TODO
-                    builder.addInclude("t_customer",
-                            "t_department",
-                            "t_region",
-                            "t_contact_person",
-                            "t_contact_person_project",
-                            "t_project",
-                            "t_post",
-                            "t_employee",
-                            "t_asset",
-                            "t_status_record",
-                            "t_communicate") // 设置需要生成的数据表名
+                    builder.addInclude("t_contact_person_project") // 设置需要生成的数据表名
                             .addTablePrefix("t_", "c_") // 设置过滤表前缀
                             //4.1、Mapper策略配置
                             .mapperBuilder()
@@ -84,7 +74,8 @@ public class CodeGeneratorTest {
                             .formatMapperFileName("%sMapper")   //格式化 mapper 文件名称
                             .enableMapperAnnotation()       //开启 @Mapper 注解
                             .formatXmlFileName("%sMapper") //格式化 Xml 文件名称
-
+                            .enableBaseColumnList()     //生成baseColumn
+                            .enableBaseResultMap()      //生成baseResultMap
                             //4.2、service 策略配置
                             .serviceBuilder()
                             .formatServiceFileName("%sService") //格式化 service 接口文件名称，%s进行匹配表名，如 UserService

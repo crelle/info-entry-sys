@@ -3,10 +3,13 @@ package baseline.app.service.impl;
 import baseline.app.mapper.ProjectMapper;
 import baseline.app.pojo.entity.ContactPerson;
 import baseline.app.pojo.entity.ContactPersonProject;
+import baseline.app.pojo.entity.Post;
 import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.query.ProjectQuery;
 import baseline.app.pojo.vo.ProjectVo;
 import baseline.app.service.ContactPersonProjectService;
+import baseline.app.service.EmployeeService;
+import baseline.app.service.PostService;
 import baseline.app.service.ProjectService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -37,6 +41,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     @Autowired
     private ContactPersonProjectService contactPersonProjectService;
 
+    @Autowired
+    private PostService postService;
+
+    @Autowired
+    private EmployeeService employeeService;
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -44,15 +54,15 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         List<ContactPerson> contactPeoples = object.getContactPeoples();
         this.save(object);
         List<ContactPersonProject> contactPersonProjects = new ArrayList<>(contactPeoples.size());
-        if(CollectionUtils.isNotEmpty(contactPeoples)){
+        if (CollectionUtils.isNotEmpty(contactPeoples)) {
             contactPeoples.forEach(contactPerson -> {
                 ContactPersonProject contactPersonProject = new ContactPersonProject();
-                contactPersonProject.setContactPersonId(contactPerson.getId());
-                contactPersonProject.setProjectId(object.getId());
+//                contactPersonProject.setContactPersonId(contactPerson.getId());
+//                contactPersonProject.setProjectId(object.getId());
                 contactPersonProjects.add(contactPersonProject);
             });
         }
-        contactPersonProjectService.saveBatch(contactPersonProjects);
+//        contactPersonProjectService.saveBatch(contactPersonProjects);
         return true;
     }
 
@@ -64,7 +74,15 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteById(String id) {
+        //TODO
+        //项目是否有接口人在负责
+
+        //项目是否有员工
+
+        //项目是否有岗位
+
         removeById(id);
     }
 
