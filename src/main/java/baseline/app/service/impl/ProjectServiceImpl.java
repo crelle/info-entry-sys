@@ -1,5 +1,7 @@
 package baseline.app.service.impl;
 
+import baseline.app.mapper.ContactPersonProjectMapper;
+import baseline.app.mapper.EmployeeMapper;
 import baseline.app.mapper.ProjectMapper;
 import baseline.app.pojo.entity.ContactPerson;
 import baseline.app.pojo.entity.ContactPersonProject;
@@ -10,6 +12,7 @@ import baseline.app.service.ContactPersonProjectService;
 import baseline.app.service.EmployeeService;
 import baseline.app.service.PostService;
 import baseline.app.service.ProjectService;
+import baseline.common.exception.BusinessException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -35,6 +38,12 @@ import java.util.List;
 public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> implements ProjectService {
     @Autowired
     private ProjectMapper projectMapper;
+
+    @Autowired
+    private ContactPersonProjectMapper contactPersonProjectMapper;
+
+    @Autowired
+    private EmployeeMapper employeeMapper;
 
     @Autowired
     private ContactPersonProjectService contactPersonProjectService;
@@ -74,8 +83,10 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteById(String id) {
-        //TODO
         //项目是否有接口人在负责
+        if (CollectionUtils.isNotEmpty(contactPersonProjectMapper.selectByProjectId(id))) {
+            throw new BusinessException("项目有接口人在负责，无法删除");
+        }
 
         //项目是否有员工
 
@@ -98,11 +109,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     public Page<Project> pageByCondition(Page<Project> page) {
         Project project = page.getRecords().get(0);
         LambdaQueryWrapper<Project> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper
-                .like(StringUtils.isNotBlank(project.getName()), Project::getName, project.getName())
-                .like(StringUtils.isNotBlank(project.getStatus()), Project::getStatus, project.getStatus())
-                .like(StringUtils.isNotBlank(project.getRegionId()), Project::getRegionId, project.getRegionId())
-                .like(StringUtils.isNotBlank(project.getDepartmentId()), Project::getDepartmentId, project.getDepartmentId());
+        queryWrapper.like(StringUtils.isNotBlank(project.getName()), Project::getName, project.getName()).like(StringUtils.isNotBlank(project.getStatus()), Project::getStatus, project.getStatus()).like(StringUtils.isNotBlank(project.getRegionId()), Project::getRegionId, project.getRegionId()).like(StringUtils.isNotBlank(project.getDepartmentId()), Project::getDepartmentId, project.getDepartmentId());
         return page(page, queryWrapper);
     }
 

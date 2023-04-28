@@ -2,4 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="baseline.app.mapper.StatusRecordMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="baseline.app.pojo.entity.StatusRecord">
+        <id column="id" property="id"/>
+        <result column="job_no" property="jobNo"/>
+        <result column="status" property="status"/>
+        <result column="recorder_no" property="recorderNo"/>
+        <result column="recorder_name" property="recorderName"/>
+        <result column="area" property="area"/>
+        <result column="time" property="time"/>
+        <result column="cycle" property="cycle"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="enabled" property="enabled"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , job_no, status, recorder_no, recorder_name, area, time, cycle, create_time, create_by, update_time, update_by, enabled
+    </sql>
+
 </mapper>

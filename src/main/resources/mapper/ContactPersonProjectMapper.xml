@@ -4,19 +4,43 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="baseline.app.pojo.entity.ContactPersonProject">
-        <id column="id" property="id" />
-        <result column="contact_person_id" property="contactPersonId" />
-        <result column="project_id" property="projectId" />
-        <result column="create_time" property="createTime" />
-        <result column="create_by" property="createBy" />
-        <result column="update_time" property="updateTime" />
-        <result column="update_by" property="updateBy" />
-        <result column="enabled" property="enabled" />
+        <id column="id" property="id"/>
+        <result column="contact_person_id" property="contactPersonId"/>
+        <result column="project_id" property="projectId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="enabled" property="enabled"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, contact_person_id, project_id, create_time, create_by, update_time, update_by, enabled
+        id
+        , contact_person_id, project_id, create_time, create_by, update_time, update_by, enabled
     </sql>
+
+    <select id="selectByContactPersonId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_contact_person_project
+        where
+        contact_person_id = #{contactPersonId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByProjectIdAndContactPersonId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_contact_person_project
+        where
+        project_id = #{projectId,jdbcType=VARCHAR}
+        AND contact_person_id = #{contactPersonId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByProjectId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_contact_person_project
+        where
+        project_id = #{projectId,jdbcType=VARCHAR}
+    </select>
 
 </mapper>

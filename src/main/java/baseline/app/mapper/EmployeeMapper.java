@@ -21,4 +21,5 @@ import java.util.List;
 public interface EmployeeMapper extends BaseMapper<Employee> {
     List<EmployeeVo> queryByCondition(@Param("param") EmployeeQuery employeeQuery);
 
+    List<Employee> queryByProjectId(@Param("projectId") String projectId);
 }

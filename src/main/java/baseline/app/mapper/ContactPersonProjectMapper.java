@@ -1,5 +1,9 @@
 package baseline.app.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import baseline.app.pojo.entity.ContactPersonProject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,5 +18,9 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ContactPersonProjectMapper extends BaseMapper<ContactPersonProject> {
+    List<ContactPersonProject> selectByProjectId(@Param("projectId") String projectId);
 
+    List<ContactPersonProject> selectByContactPersonId(@Param("contactPersonId") String contactPersonId);
+
+    List<ContactPersonProject> selectByProjectIdAndContactPersonId(@Param("projectId") String projectId, @Param("contactPersonId") String contactPersonId);
 }

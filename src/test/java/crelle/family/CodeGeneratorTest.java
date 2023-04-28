@@ -23,13 +23,14 @@ public class CodeGeneratorTest {
     private final String basePath = System.getProperty("user.dir");
 
     //TODO 1、设置父包名
-    private final String parentPackageName = "baseline";
+    private final String parentPackageName = "temp";
     //模块名
     //TODO 2、设置模块名
     private final String moduleName = "app";
 
-    //TODO 3、设置表名
-    private final String[] tableNames = {"t_contact_person_project"};
+    //TODO 3、设置mapper xml的路径
+    private final String mapperXmlPath = "/src/main/resources/mapperTemp";
+
     //文件作者
     private final String author = "crelle";
     //数据库url
@@ -50,7 +51,8 @@ public class CodeGeneratorTest {
                             .outputDir(basePath + "/src/main/java")   //设置输出路径
                             .commentDate("yyyy-MM-dd hh:mm:ss")   //注释日期
                             .dateType(DateType.ONLY_DATE)   //定义生成的实体类中日期的类型 TIME_PACK=LocalDateTime;ONLY_DATE=Date;
-                            .fileOverride()   //覆盖之前的文件
+                            //TODO 4、是否覆盖之前的文件
+//                            .fileOverride()   //覆盖之前的文件
                             .enableSwagger()   //开启 swagger 模式
                             .disableOpenDir();   //禁止打开输出目录，默认打开
                 })
@@ -65,11 +67,12 @@ public class CodeGeneratorTest {
                             .xml("mapper")  //Mapper XML 包名
                             .controller("controller") //Controller 包名
                             .other("common") //自定义文件包名
-                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, basePath + "/src/main/resources/mapper"));    //配置 **Mapper.xml 路径信息：项目的 resources 目录的 Mapper 目录下
+                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, basePath + mapperXmlPath));    //配置 **Mapper.xml 路径信息：项目的 resources 目录的 Mapper 目录下
                 })
                 //4、策略配置
                 .strategyConfig(builder -> {
-                    builder.addInclude(StringUtils.join(tableNames, ",")) // 设置需要生成的数据表名
+                    //TODO 5、设置表名
+                    builder.addInclude("t_customer", "t_department", "t_region", "t_contact_person", "t_contact_person_project", "t_project", "t_post", "t_employee", "t_asset", "t_status_record", "t_communicate") // 设置需要生成的数据表名
                             .addTablePrefix("t_", "c_") // 设置过滤表前缀
                             //4.1、Mapper策略配置
                             .mapperBuilder().superClass(BaseMapper.class)   //设置父类
