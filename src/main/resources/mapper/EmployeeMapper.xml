@@ -119,5 +119,12 @@
         where
         project_id = #{projectId,jdbcType=VARCHAR}
     </select>
+    <select id="queryByPostId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_employee
+        where
+        post_id = #{postId,jdbcType=VARCHAR}
+    </select>
 
 </mapper>

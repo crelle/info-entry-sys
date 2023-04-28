@@ -1,17 +1,22 @@
 package baseline.app.service.impl;
 
+import baseline.app.mapper.AssetMapper;
 import baseline.app.mapper.DepartmentMapper;
+import baseline.app.mapper.ProjectMapper;
 import baseline.app.pojo.entity.Department;
 import baseline.app.pojo.query.DepartmentQuery;
 import baseline.app.pojo.vo.DepartmentVo;
 import baseline.app.service.DepartmentService;
+import baseline.common.exception.BusinessException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,6 +33,12 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     @Autowired
     private DepartmentMapper departmentMapper;
 
+    @Autowired
+    private ProjectMapper projectMapper;
+
+    @Autowired
+    private AssetMapper assetMapper;
+
     @Override
     public boolean create(Department object) {
         return save(object);
@@ -38,8 +49,19 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         return saveBatch(objects);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteById(String id) {
+        if (CollectionUtils.isNotEmpty(departmentMapper.queryByParentId(id))) {
+            throw new BusinessException("此部门下面有子部门,无法删除");
+        }
+        if (CollectionUtils.isNotEmpty(projectMapper.queryByDepartmentId(id))) {
+            throw new BusinessException("此部门下面有项目,无法删除");
+        }
+
+        if (CollectionUtils.isNotEmpty(assetMapper.queryByDepartmentId(id))) {
+            throw new BusinessException("此部门下面有资产,无法删除");
+        }
         removeById(id);
     }
 

@@ -22,4 +22,6 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
     List<EmployeeVo> queryByCondition(@Param("param") EmployeeQuery employeeQuery);
 
     List<Employee> queryByProjectId(@Param("projectId") String projectId);
+
+    List<Employee> queryByPostId(@Param("postId") String postId);
 }

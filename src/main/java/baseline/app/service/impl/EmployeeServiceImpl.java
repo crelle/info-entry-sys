@@ -1,6 +1,8 @@
 package baseline.app.service.impl;
 
+import baseline.app.mapper.CommunicateMapper;
 import baseline.app.mapper.EmployeeMapper;
+import baseline.app.mapper.StatusRecordMapper;
 import baseline.app.pojo.entity.Communicate;
 import baseline.app.pojo.entity.Department;
 import baseline.app.pojo.entity.Employee;
@@ -54,10 +56,10 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     private EmployeeMapper employeeMapper;
 
     @Autowired
-    private StatusRecordService statusRecordService;
+    private StatusRecordMapper statusRecordMapper;
 
     @Autowired
-    private CommunicateService communicateService;
+    private CommunicateMapper communicateMapper;
 
     //工号 纯数字 六位
     public static final String jobNoPattern = "^\\d{6}$";
@@ -112,34 +114,13 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         return saveBatch(objects);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteById(String id) {
+        Employee employee = getById(id);
+        statusRecordMapper.deleteByJobNo(employee.getJobNo());
+        communicateMapper.deleteByJobNo(employee.getJobNo());
         removeById(id);
-        List<StatusRecord> statusRecordList = statusRecordService
-                .list()
-                .stream()
-                .filter(Objects::nonNull)
-                .filter(statusRecord -> statusRecord.getJobNo().equals(id))
-                .collect(toList());
 
-        if (!statusRecordList.isEmpty()) {
-            for (StatusRecord statusRecord : statusRecordList) {
-                statusRecordService.deleteById(statusRecord.getId());
-            }
-        }
-
-        List<Communicate> communicateList = communicateService
-                .list()
-                .stream()
-                .filter(Objects::nonNull)
-                .filter(communicate -> communicate.getJobNo().equals(id))
-                .collect(toList());
-
-        if (!communicateList.isEmpty()) {
-            for (Communicate communicate : communicateList) {
-                communicateService.deleteById(communicate.getId());
-            }
-        }
     }
 
     public void deleteByIds(List<String> ids) {

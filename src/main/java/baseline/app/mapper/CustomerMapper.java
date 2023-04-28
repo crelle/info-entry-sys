@@ -22,4 +22,5 @@ public interface CustomerMapper extends BaseMapper<Customer> {
 
     List<CustomerVo> manualPage(@Param("param") CustomerQuery customerQuery);
 
+    List<Customer> queryByRegionId(@Param("regionId") String regionId);
 }

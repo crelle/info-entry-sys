@@ -24,5 +24,10 @@
         id
         , job_no, status, recorder_no, recorder_name, area, time, cycle, create_time, create_by, update_time, update_by, enabled
     </sql>
+    <delete id="deleteByJobNo">
+        delete
+        from t_status_record
+        where job_no = #{jobNo,jdbcType=VARCHAR}
+    </delete>
 
 </mapper>

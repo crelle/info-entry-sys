@@ -56,4 +56,11 @@
         </where>
         order by a.update_time
     </select>
+    <select id="queryByRegionId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_customer
+        where
+        region_id = #{regionId,jdbcType=VARCHAR}
+    </select>
 </mapper>

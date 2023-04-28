@@ -23,4 +23,6 @@ public interface DepartmentMapper extends BaseMapper<Department> {
     List<DepartmentVo> manualPage(@Param("param") DepartmentQuery departmentQuery);
 
 
+    List<Department> queryByParentId(@Param("parentId") String parentId);
+
 }

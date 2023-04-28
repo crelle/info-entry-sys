@@ -1,15 +1,18 @@
 package baseline.app.service.impl;
 
+import baseline.app.mapper.EmployeeMapper;
 import baseline.app.mapper.PostMapper;
 import baseline.app.pojo.entity.Post;
 import baseline.app.pojo.query.PostQuery;
 import baseline.app.pojo.vo.PostVo;
 import baseline.app.service.EmployeeService;
 import baseline.app.service.PostService;
+import baseline.common.exception.BusinessException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private EmployeeMapper employeeMapper;
+
     @Override
     public boolean create(Post object) {
         return save(object);
@@ -46,6 +52,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
 
     @Override
     public void deleteById(String id) {
+        if (CollectionUtils.isNotEmpty(employeeMapper.queryByPostId(id))) {
+            throw new BusinessException("无法删除此岗位，有员工在使用");
+        }
         removeById(id);
     }
 
@@ -84,7 +93,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
             int postSize = employeeService
                     .list()
                     .stream()
-                    .filter(employee -> StringUtils.equals(employee.getPostId(),record.getId()))
+                    .filter(employee -> StringUtils.equals(employee.getPostId(), record.getId()))
                     .collect(Collectors.toList())
                     .size();
             int number = StringUtils.isBlank(record.getNumber()) ? 0 : Integer.valueOf(record.getNumber());

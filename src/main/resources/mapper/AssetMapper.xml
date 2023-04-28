@@ -61,4 +61,11 @@
         </where>
 
     </select>
+    <select id="queryByDepartmentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_asset
+        where
+        department_id = #{departmentId,jdbcType=VARCHAR}
+    </select>
 </mapper>

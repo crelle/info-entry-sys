@@ -22,4 +22,5 @@ public interface ContactPersonMapper extends BaseMapper<ContactPerson> {
 
     List<ContactPersonVo> manualPage(@Param("param") ContactPersonQuery contactPersonQuery);
 
+    List<ContactPerson> queryByCustomerId(@Param("customerId") String customerId);
 }

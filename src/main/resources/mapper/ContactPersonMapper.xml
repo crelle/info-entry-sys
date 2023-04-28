@@ -52,4 +52,11 @@
         </where>
         order by a.update_time desc
     </select>
+    <select id="queryByCustomerId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_contact_person
+        where
+        customer_id = #{customerId,jdbcType=VARCHAR}
+    </select>
 </mapper>

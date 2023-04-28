@@ -22,4 +22,9 @@
         id
         , job_no, time, recorder_no, recorder_name, text, create_time, create_by, update_time, update_by, enabled
     </sql>
+    <delete id="deleteByJobNo">
+        delete
+        from t_communicate
+        where job_no = #{jobNo,jdbcType=VARCHAR}
+    </delete>
 </mapper>

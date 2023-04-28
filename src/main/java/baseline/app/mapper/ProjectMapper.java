@@ -20,4 +20,8 @@ import java.util.List;
 @Mapper
 public interface ProjectMapper extends BaseMapper<Project> {
     List<ProjectVo> manualPage(@Param("param") ProjectQuery projectQuery);
+
+    List<Project> queryByRegionId(@Param("regionId") String regionId);
+
+    List<Project> queryByDepartmentId(@Param("departmentId") String departmentId);
 }

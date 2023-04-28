@@ -21,4 +21,6 @@ import java.util.List;
 public interface AssetMapper extends BaseMapper<Asset> {
 
     List<AssetVo> manualPage(@Param("param")AssetQuery assetQuery);
+
+    List<Asset> queryByDepartmentId(@Param("departmentId") String departmentId);
 }

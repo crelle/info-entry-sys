@@ -1,17 +1,22 @@
 package baseline.app.service.impl;
 
+import baseline.app.mapper.ContactPersonMapper;
 import baseline.app.mapper.CustomerMapper;
+import baseline.app.mapper.PostMapper;
 import baseline.app.pojo.entity.Customer;
 import baseline.app.pojo.query.CustomerQuery;
 import baseline.app.pojo.vo.CustomerVo;
 import baseline.app.service.CustomerService;
+import baseline.common.exception.BusinessException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,6 +34,12 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     @Autowired
     private CustomerMapper customerMapper;
 
+    @Autowired
+    private ContactPersonMapper contactPersonMapper;
+
+    @Autowired
+    private PostMapper postMapper;
+
     @Override
     public boolean create(Customer object) {
         return save(object);
@@ -39,8 +50,16 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         return saveBatch(objects);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteById(String id) {
+        if (CollectionUtils.isNotEmpty(contactPersonMapper.queryByCustomerId(id))) {
+            throw new BusinessException("客户下面有接口人,无法删除");
+        }
+
+        if (CollectionUtils.isNotEmpty(postMapper.queryByCustomerId(id))) {
+            throw new BusinessException("客户下面有岗位，无法删除");
+        }
         removeById(id);
     }
 

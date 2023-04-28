@@ -1,4 +1,5 @@
 package baseline.app.mapper;
+import org.apache.ibatis.annotations.Param;
 
 import baseline.app.pojo.entity.Communicate;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -14,5 +15,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface CommunicateMapper extends BaseMapper<Communicate> {
-
+    int deleteByJobNo(@Param("jobNo") String jobNo);
 }

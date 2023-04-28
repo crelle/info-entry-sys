@@ -71,5 +71,12 @@
         where
         project_id = #{projectId,jdbcType=VARCHAR}
     </select>
+    <select id="queryByCustomerId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_post
+        where
+        customer_id = #{customerId,jdbcType=VARCHAR}
+    </select>
 
 </mapper>

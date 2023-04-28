@@ -95,4 +95,18 @@
             </if>
         </where>
     </select>
+    <select id="queryByRegionId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project
+        where
+        region_id = #{regionId,jdbcType=VARCHAR}
+    </select>
+    <select id="queryByDepartmentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project
+        where
+        department_id = #{departmentId,jdbcType=VARCHAR}
+    </select>
 </mapper>
