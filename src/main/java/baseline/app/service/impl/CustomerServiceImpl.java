@@ -80,7 +80,8 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         queryWrapper
                 .like(StringUtils.isNotBlank(customer.getName()), Customer::getName, customer.getName())
                 .like(StringUtils.isNotBlank(customer.getRegionId()), Customer::getRegionId, customer.getRegionId())
-                .like(StringUtils.isNotBlank(customer.getUserId()), Customer::getUserId, customer.getUserId());
+                .like(StringUtils.isNotBlank(customer.getUserId()), Customer::getUserId, customer.getUserId())
+                .orderByDesc(Customer::getUpdateTime);
 
         return page(page, queryWrapper);
 
