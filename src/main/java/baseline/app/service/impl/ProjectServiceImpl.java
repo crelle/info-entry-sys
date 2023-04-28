@@ -93,8 +93,6 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         if (CollectionUtils.isNotEmpty(postMapper.queryByProjectId(id))) {
             throw new BusinessException("有岗位在使用此项目，无法删除");
         }
-        //解绑项目和接口人关系
-        contactPersonProjectMapper.deleteByProjectIdAndContactPersonId(id, null);
         //删除项目
         removeById(id);
     }

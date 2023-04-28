@@ -1,19 +1,29 @@
 package baseline.app.service.impl;
 
 import baseline.app.mapper.ContactPersonMapper;
+import baseline.app.mapper.ContactPersonProjectMapper;
 import baseline.app.pojo.entity.ContactPerson;
+import baseline.app.pojo.entity.ContactPersonProject;
+import baseline.app.pojo.entity.Project;
 import baseline.app.pojo.query.ContactPersonQuery;
 import baseline.app.pojo.vo.ContactPersonVo;
+import baseline.app.service.ContactPersonProjectService;
 import baseline.app.service.ContactPersonService;
+import baseline.app.service.ProjectService;
+import baseline.common.exception.BusinessException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -28,9 +38,31 @@ public class ContactPersonServiceImpl extends ServiceImpl<ContactPersonMapper, C
     @Autowired
     private ContactPersonMapper contactPersonMapper;
 
+    @Autowired
+    private ContactPersonProjectMapper contactPersonProjectMapper;
+
+    @Autowired
+    private ProjectService projectService;
+
+    @Autowired
+    private ContactPersonProjectService contactPersonProjectService;
+
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean create(ContactPerson object) {
-        return save(object);
+        save(object);
+        List<Project> projects = object.getProjects();
+        List<ContactPersonProject> contactPersonProjects = new ArrayList<>(projects.size());
+        if (CollectionUtils.isNotEmpty(projects)) {
+            projects.forEach(project -> {
+                ContactPersonProject contactPersonProject = new ContactPersonProject();
+                contactPersonProject.setProjectId(project.getId());
+                contactPersonProject.setContactPersonId(object.getId());
+                contactPersonProjects.add(contactPersonProject);
+            });
+        }
+        contactPersonProjectService.saveBatch(contactPersonProjects);
+        return true;
     }
 
     @Override
@@ -38,8 +70,21 @@ public class ContactPersonServiceImpl extends ServiceImpl<ContactPersonMapper, C
         return saveBatch(objects);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteById(String id) {
+        List<ContactPersonProject> contactPersonProjectList = contactPersonProjectMapper.selectByProjectIdAndContactPersonId(null, id);
+        ;
+        if (CollectionUtils.isNotEmpty(contactPersonProjectList)) {
+            List<String> projectIds = contactPersonProjectList.stream().map(ContactPersonProject::getProjectId).collect(Collectors.toList());
+            List<Project> projects = projectService.queryByIds(projectIds);
+            StringBuffer sb = new StringBuffer();
+            if (CollectionUtils.isNotEmpty(projects)) {
+                projects.forEach(project -> sb.append(project.getName()).append(","));
+            }
+            throw new BusinessException("此接口人负责了" + sb.toString() + "项目,无法删除!");
+        }
+        //删除接口人
         removeById(id);
     }
 
@@ -48,8 +93,20 @@ public class ContactPersonServiceImpl extends ServiceImpl<ContactPersonMapper, C
         removeByIds(ids);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean update(ContactPerson object) {
+        contactPersonProjectMapper.deleteByProjectIdAndContactPersonId(null, object.getId());
+        List<ContactPersonProject> contactPersonProjects = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(object.getProjects())) {
+            object.getProjects().forEach(project -> {
+                ContactPersonProject contactPersonProject = new ContactPersonProject();
+                contactPersonProject.setProjectId(project.getId());
+                contactPersonProject.setContactPersonId(object.getId());
+                contactPersonProjects.add(contactPersonProject);
+            });
+        }
+        contactPersonProjectService.saveBatch(contactPersonProjects);
         return updateById(object);
     }
 

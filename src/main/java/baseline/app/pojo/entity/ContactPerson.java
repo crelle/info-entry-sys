@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
+import java.util.List;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -69,5 +70,9 @@ public class ContactPerson extends BaseDo {
     @ApiModelProperty("客户ID")
     @TableField("customer_id")
     private String customerId;
+
+    @ApiModelProperty("项目")
+    @TableField(exist = false)
+    private List<Project> projects;
 
 }
