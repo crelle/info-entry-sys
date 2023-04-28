@@ -30,9 +30,11 @@
         <id property="id" column="id"></id>
         <result property="name" column="name"></result>
         <result property="status" column="status"></result>
+        <result property="cooperation" column="cooperation"></result>
         <result property="customerId" column="customer_id"></result>
         <result property="customerName" column="customer_name"></result>
         <result property="departmentId" column="department_id"></result>
+        <result property="departmentName" column="department_name"></result>
         <result property="regionId" column="region_id"></result>
         <result property="regionName" column="region_name"></result>
         <collection property="contactPeoples" ofType="baseline.app.pojo.entity.ContactPerson">
@@ -48,7 +50,8 @@
         SELECT
         a.`id`,
         a.`name`,
-        a.`status`,
+        (select t_dictionary.name from t_dictionary where id = a.status) as status,
+        (select t_dictionary.name from t_dictionary where id = a.cooperation) as cooperation,
         c.`id` as interface_id,
         c.`name` as interface_name,
         c.`cell_phone`,
