@@ -153,6 +153,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         });
         page.setRecords(userVos);
         page.setTotal(pageInfo.getTotal());
+        page.setCurrent(pageInfo.getPageNum());
         return page;
     }
 
