@@ -37,6 +37,7 @@
         <result property="departmentName" column="department_name"></result>
         <result property="regionId" column="region_id"></result>
         <result property="regionName" column="region_name"></result>
+        <result property="time" column="time"></result>
         <collection property="contactPeoples" ofType="baseline.app.pojo.entity.ContactPerson">
             <result property="id" column="interface_id"></result>
             <result property="name" column="interface_name"></result>
@@ -50,8 +51,9 @@
         SELECT
         a.`id`,
         a.`name`,
-        (select t_dictionary.name from t_dictionary where id = a.status) as status,
-        (select t_dictionary.name from t_dictionary where id = a.cooperation) as cooperation,
+        a.time,
+        a.status,
+        a.cooperation,
         c.`id` as interface_id,
         c.`name` as interface_name,
         c.`cell_phone`,
