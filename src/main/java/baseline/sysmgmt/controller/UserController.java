@@ -5,6 +5,7 @@ import baseline.app.pojo.entity.Customer;
 import baseline.app.pojo.entity.Department;
 import baseline.app.service.CustomerService;
 import baseline.app.service.DepartmentService;
+import baseline.common.annotation.EnablePagination;
 import baseline.common.enumeration.ResponseEnum;
 import baseline.common.exception.BusinessException;
 import baseline.common.pojo.vo.ResponseResult;
@@ -179,6 +180,7 @@ public class UserController implements BaseController<UserVo, User, UserQuery> {
     @ApiParam(required = true, name = "pageBean", value = "入参")
     @RequestMapping(value = "/manualPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Override
+    @EnablePagination
     public ResponseResult<Page<UserVo>> manualPage(Page<UserQuery> pageBean) {
         ResponseResult<Page<UserVo>> responseResult = new ResponseResult<>();
         try {

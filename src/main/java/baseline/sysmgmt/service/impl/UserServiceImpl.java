@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -115,7 +116,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             lambdaQueryWrapper.eq(User::isAccountNonExpired, user.isAccountNonExpired())
                     .eq(User::isAccountNonLocked, user.isAccountNonLocked())
                     .eq(User::isEnabled, user.isEnabled())
-                    .like(StringUtils.isNotBlank( user.getUsername()), User::getUsername, user.getUsername())
+                    .like(StringUtils.isNotBlank(user.getUsername()), User::getUsername, user.getUsername())
                     .like(StringUtils.isNotBlank(user.getUserPhone()), User::getUserPhone, user.getUserPhone())
                     .orderByDesc(User::getUpdateTime);
         }
@@ -137,9 +138,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Page<UserVo> manualPage(Page<UserQuery> userQueryPage) {
         UserQuery userQuery = userQueryPage.getRecords().get(0);
 
-        Page<User> page = new Page<>();
-        Page<UserVo> userPage = userMapper.manualPage(page, userQuery);
-        userPage.getRecords().forEach(user -> {
+        Page<UserVo> page = new Page<>();
+        List<UserVo> userVos = userMapper.manualPage(userQuery);
+        PageInfo<UserVo> pageInfo = new PageInfo<>(userVos);
+        userVos.forEach(user -> {
             //查询用户角色
             QueryWrapper<UserRole> queryWrapper1 = new QueryWrapper<>();
             queryWrapper1.select("role_id").eq("user_id", user.getId());
@@ -149,7 +151,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             List<Role> rolelist = roleService.list(queryWrapper2);
             user.setRoles(rolelist);
         });
-        return userPage;
+        page.setRecords(userVos);
+        page.setTotal(pageInfo.getTotal());
+        return page;
     }
 
     @Override

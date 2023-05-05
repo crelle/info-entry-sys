@@ -27,5 +27,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     int resetPassword(@Param(value = "userId")String userId, @Param(value = "password")String password);
 
-    Page<UserVo> manualPage(@Param("page") Page<User> page, UserQuery userQuery);
+    List<UserVo> manualPage(UserQuery userQuery);
 }
