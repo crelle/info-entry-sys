@@ -8,7 +8,8 @@
         where id = #{id,jdbcType=VARCHAR}
     </update>
     <update id="resetPassword">
-        update t_user set password = #{password}
+        update t_user
+        set password = #{password}
         where id = #{userId}
     </update>
     <select id="manualPage" resultType="baseline.sysmgmt.pojo.vo.UserVo">
@@ -21,19 +22,20 @@
         <where>
             user.id = userRole.user_id
             AND role.id = userRole.role_id
-            <if test="username!=null and username!=''">
-                and user.username like #{username}
+            <if test="param.username!=null and param.username!=''">
+                and user.username like concat("%",#{param.username},"%")
             </if>
-            <if test="userPhone!=null and userPhone!=''">
-                and user.user_phone like #{userPhone}
+            <if test="param.userPhone!=null and param.userPhone!=''">
+                and user.user_phone like concat("%",#{param.userPhone},"%")
             </if>
-            <if test="enabled!=null and enabled!=''">
-                and user.enabled =#{enabled}
+            <if test="param.enabled!=null">
+                and user.enabled =#{param.enabled}
             </if>
-            <if test="roleName!=null and roleName!=''">
-                and role.name =#{roleName}
+            <if test="param.roleName!=null and param.roleName!=''">
+                and role.name =#{param.roleName}
             </if>
         </where>
+            order by user.update_time desc
 
 
     </select>
