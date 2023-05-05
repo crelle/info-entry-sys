@@ -70,6 +70,7 @@ public class AssetServiceImpl extends ServiceImpl<AssetMapper, Asset> implements
         List<AssetVo> assetVoList = assetMapper.manualPage(pageBean.getRecords().get(0));
         PageInfo<AssetVo> pageInfo = new PageInfo<>(assetVoList);
         page.setRecords(assetVoList);
+        page.setCurrent(pageInfo.getPageNum());
         if (CollectionUtils.isNotEmpty(assetVoList)) {
             page.setTotal(pageInfo.getTotal());
         }

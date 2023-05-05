@@ -105,6 +105,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
         Page<DictionaryVo> result = new Page<>();
         result.setRecords(pageInfo.getList());
         result.setTotal(pageInfo.getTotal());
+        result.setCurrent(pageInfo.getPageNum());
         return result;
     }
 

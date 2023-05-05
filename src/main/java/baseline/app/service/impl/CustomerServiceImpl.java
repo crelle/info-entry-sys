@@ -95,6 +95,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         PageInfo<CustomerVo> pageInfo = new PageInfo<>(list);
         page.setTotal(pageInfo.getTotal());
         page.setRecords(list);
+        page.setCurrent(pageInfo.getPageNum());
         return page;
     }
 

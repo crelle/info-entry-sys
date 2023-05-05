@@ -153,6 +153,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         PageInfo<EmployeeVo> pageInfo = new PageInfo<>(employeeQueries);
         result.setTotal(pageInfo.getTotal());
         result.setRecords(employeeQueries);
+        result.setCurrent(pageInfo.getPageNum());
         return result;
     }
 

@@ -128,6 +128,7 @@ public class ContactPersonServiceImpl extends ServiceImpl<ContactPersonMapper, C
         Page<ContactPersonVo> result = new Page<>();
         result.setTotal(personVoPageInfo.getTotal());
         result.setRecords(contactPersonVoList);
+        result.setCurrent(personVoPageInfo.getPageNum());
         return result;
     }
 

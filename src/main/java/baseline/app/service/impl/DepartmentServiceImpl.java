@@ -95,6 +95,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         PageInfo<DepartmentVo> pageInfo = new PageInfo<>(list);
         page.setRecords(list);
         page.setTotal(pageInfo.getTotal());
+        page.setCurrent(pageInfo.getPageNum());
         return page;
     }
 

@@ -137,6 +137,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         PageInfo<ProjectVo> pageInfo = new PageInfo<>(list);
         page.setTotal(pageInfo.getTotal());
         page.setRecords(list);
+        page.setCurrent(pageInfo.getPageNum());
         return page;
     }
 

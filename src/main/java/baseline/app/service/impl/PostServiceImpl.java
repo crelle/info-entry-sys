@@ -103,6 +103,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         }
         //设置数据
         result.setRecords(postVos);
+        result.setCurrent(postVoPageInfo.getPageNum());
         return result;
     }
 
