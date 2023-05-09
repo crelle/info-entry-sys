@@ -31,5 +31,8 @@ public class ProjectVo extends Project {
     @ApiModelProperty("区域")
     private String regionName;
 
+    @ApiModelProperty("员工人数")
+    private String employeeNum;
+
 
 }

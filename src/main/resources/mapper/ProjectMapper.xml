@@ -38,6 +38,7 @@
         <result property="regionId" column="region_id"></result>
         <result property="regionName" column="region_name"></result>
         <result property="time" column="time"></result>
+        <result property="employeeNum" column="employee_num"></result>
         <collection property="contactPeoples" ofType="baseline.app.pojo.entity.ContactPerson">
             <result property="id" column="interface_id"></result>
             <result property="name" column="interface_name"></result>
@@ -63,7 +64,8 @@
         e.`id` as department_id,
         e.`name` as department_name,
         b.`id` as region_id,
-        b.`name` as region_name
+        b.`name` as region_name,
+        (select count(1) from t_employee where project_id = a.id) as employee_num
         FROM
         t_project a
         LEFT JOIN t_contact_person_project tpp
@@ -83,11 +85,11 @@
             <if test="param.status!=null and param.status!=''">
                 and a.status = #{param.status}
             </if>
-            <if test="param.regionName!=null and param.regionName!=''">
-                and b.name = #{param.regionName}
+            <if test="param.regionId!=null and param.regionId!=''">
+                and b.id = #{param.regionId}
             </if>
-            <if test="param.departmentName!=null and param.departmentName!=''">
-                and e.name = #{param.departmentName}
+            <if test="param.departmentId!=null and param.departmentId!=''">
+                and e.id = #{param.departmentId}
             </if>
             <if test="param.contactPeoples!=null and param.contactPeoples.size()!=0">
                 and c.id in
@@ -95,8 +97,8 @@
                     #{item.id}
                 </foreach>
             </if>
-            <if test="param.customerName!=null and param.customerName!=''">
-                and d.name = #{param.customerName}
+            <if test="param.customerId!=null and param.customerId!=''">
+                and d.id = #{param.customerId}
             </if>
         </where>
     </select>
