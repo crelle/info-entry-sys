@@ -6,6 +6,7 @@ import baseline.app.mapper.PostMapper;
 import baseline.app.pojo.entity.Customer;
 import baseline.app.pojo.query.CustomerQuery;
 import baseline.app.pojo.vo.CustomerVo;
+import baseline.app.pojo.vo.ProjectVo;
 import baseline.app.service.CustomerService;
 import baseline.common.exception.BusinessException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -107,5 +108,16 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     @Override
     public List<Customer> queryByIds(List<String> ids) {
         return null;
+    }
+
+    @Override
+    public Page<ProjectVo> queryProjectById(String id) {
+        Page<ProjectVo> page = new Page<>();
+        List<ProjectVo> projectVos = customerMapper.queryProjectById(id);
+        PageInfo<ProjectVo> pageInfo =new PageInfo<>(projectVos);
+        page.setTotal(pageInfo.getTotal());
+        page.setRecords(projectVos);
+        page.setCurrent(pageInfo.getPages());
+        return page;
     }
 }

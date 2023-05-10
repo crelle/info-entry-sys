@@ -52,7 +52,7 @@ public class ContactPersonServiceImpl extends ServiceImpl<ContactPersonMapper, C
     public boolean create(ContactPerson object) {
         save(object);
         List<Project> projects = object.getProjects();
-        List<ContactPersonProject> contactPersonProjects = new ArrayList<>(projects.size());
+        List<ContactPersonProject> contactPersonProjects = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(projects)) {
             projects.forEach(project -> {
                 ContactPersonProject contactPersonProject = new ContactPersonProject();

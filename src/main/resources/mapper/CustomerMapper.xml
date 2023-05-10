@@ -63,4 +63,35 @@
         where
         region_id = #{regionId,jdbcType=VARCHAR}
     </select>
+    <select id="queryProjectById" resultType="baseline.app.pojo.vo.ProjectVo">
+        SELECT
+        tproject.id,
+        tproject.name,
+        tproject.status,
+        (SELECT
+        COUNT(1)
+        FROM
+        t_employee
+        WHERE
+        t_employee.id = tproject.id) AS employeeNum,
+        tdepartment.id AS departmentId,
+        tdepartment.name AS departmentName,
+        tcp.id AS interfaceId,
+        tcp.name AS interfaceName
+        FROM
+        t_project tproject
+        INNER JOIN
+        t_department tdepartment ON tdepartment.id = tproject.department_id
+        INNER JOIN
+        t_contact_person_project tcpp ON tproject.id = tcpp.project_id
+        INNER JOIN
+        t_contact_person tcp ON tcp.id = tcpp.contact_person_id
+        INNER JOIN
+        t_customer tcustomer ON tcustomer.id = tcp.customer_id
+        <where>
+            <if test="param.id!=null and param.id!=''">
+                and tcustomer.id = #{param.id}
+            </if>
+        </where>
+    </select>
 </mapper>

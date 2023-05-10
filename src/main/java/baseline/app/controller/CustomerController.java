@@ -5,6 +5,7 @@ import baseline.app.pojo.entity.ContactPerson;
 import baseline.app.pojo.entity.Customer;
 import baseline.app.pojo.query.CustomerQuery;
 import baseline.app.pojo.vo.CustomerVo;
+import baseline.app.pojo.vo.ProjectVo;
 import baseline.app.service.ContactPersonService;
 import baseline.app.service.CustomerService;
 import baseline.common.annotation.EnablePagination;
@@ -18,10 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -127,6 +125,17 @@ public class CustomerController implements BaseController<CustomerVo, Customer, 
     public ResponseResult<Page<CustomerVo>> manualPage(Page<CustomerQuery> pageBean) {
         ResponseResult responseResult = new ResponseResult();
         Page<CustomerVo> page = customerService.manualPage(pageBean);
+        responseResult.setData(page);
+        return responseResult;
+    }
+
+    @ApiOperation(value = "根据客户Id查询项目")
+    @ApiParam(required = true, name = "", value = "入参")
+    @RequestMapping(value = "/queryProjectById/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @EnablePagination
+    public ResponseResult<Page<ProjectVo>> queryProjectById(@PathVariable("id") String id) {
+        ResponseResult responseResult = new ResponseResult();
+        Page<ProjectVo> page = customerService.queryProjectById(id);
         responseResult.setData(page);
         return responseResult;
     }
