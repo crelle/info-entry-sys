@@ -49,7 +49,7 @@
                 AND child.name like concat('%',concat(#{param.name},'%'))
             </if>
         </where>
-        order by child.update_time
+        order by child.update_time desc
     </select>
     <select id="queryByParentId" resultMap="BaseResultMap">
         select

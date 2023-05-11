@@ -93,5 +93,7 @@
                 and tcustomer.id = #{param.id}
             </if>
         </where>
+
+        order by tproject.update_time desc
     </select>
 </mapper>

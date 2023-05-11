@@ -59,7 +59,7 @@
                 AND ta.enabled = #{param.enabled}
             </if>
         </where>
-
+        order by ta.update_time desc
     </select>
     <select id="queryByDepartmentId" resultMap="BaseResultMap">
         select

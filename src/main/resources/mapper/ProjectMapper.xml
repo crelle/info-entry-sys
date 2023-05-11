@@ -103,6 +103,7 @@
                 and d.id = #{param.customerId}
             </if>
         </where>
+            order by a.update_time desc
     </select>
     <select id="queryByRegionId" resultMap="BaseResultMap">
         select

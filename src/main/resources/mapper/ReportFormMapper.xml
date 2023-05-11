@@ -79,7 +79,8 @@
         ) temp
         WHERE
         temp.working_hours IS NOT NULL
-        GROUP BY temp.working_hours;
+        GROUP BY temp.working_hours
+        order by emp.update_time desc
     </select>
 
     <select id="employeeAge" resultType="baseline.app.pojo.dto.reportform.EmployeeAgeDto">

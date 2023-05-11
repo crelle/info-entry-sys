@@ -111,6 +111,7 @@
             </if>
         </where>
         GROUP BY name
+        order by e.update_time desc
     </select>
     <select id="queryByProjectId" resultMap="BaseResultMap">
         select
