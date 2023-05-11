@@ -40,7 +40,7 @@
                 and parent.name LIKE concat('%',#{param.name},'%')
             </if>
         </where>
-        order by children.update_time desc;
+        order by children.update_time desc
     </select>
 
     <select id="queryByParentId" resultType="baseline.sysmgmt.pojo.vo.DictionaryVo">
