@@ -39,6 +39,7 @@
         <result property="regionName" column="region_name"></result>
         <result property="time" column="time"></result>
         <result property="employeeNum" column="employee_num"></result>
+        <result property="introduce" column="introduce"/>
         <collection property="contactPeoples" ofType="baseline.app.pojo.entity.ContactPerson">
             <result property="id" column="interface_id"></result>
             <result property="name" column="interface_name"></result>
@@ -55,6 +56,7 @@
         a.time,
         a.status,
         a.cooperation,
+        a.introduce,
         c.`id` as interface_id,
         c.`name` as interface_name,
         c.`cell_phone`,
